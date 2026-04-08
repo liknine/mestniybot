@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MESTNIY CATALOG</title>
+    
+    <!-- Telegram WebApp Script -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Поиск товаров..." id="searchInput">
+        </div>
+        <button class="currency-btn" id="currencyBtn">BYN</button>
+        <button class="favorites-btn" id="favoritesBtn">❤️</button>
+    </header>
+
+    <!-- Categories -->
+    <div class="categories" id="categories">
+        <button class="category-chip active" data-category="all">Все</button>
+        <button class="category-chip" data-category="1">👟 Обувь</button>
+        <button class="category-chip" data-category="2">🧥 Верхняя одежда</button>
+        <button class="category-chip" data-category="3">👖 Штаны</button>
+        <button class="category-chip" data-category="4">🎒 Аксессуары</button>
+        <button class="category-chip" data-category="5">🩳 Шорты</button>
+        <button class="category-chip" data-category="6">🧢 Головные уборы</button>
+    </div>
+
+    <!-- Products Grid -->
+    <main class="products-grid" id="productsGrid">
+        <!-- Товары загрузятся через JS -->
+    </main>
+
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            
+            <!-- Image Gallery -->
+            <div class="gallery" id="gallery">
+                <div class="gallery-images" id="galleryImages"></div>
+                <div class="gallery-dots" id="galleryDots"></div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1 class="product-title" id="productTitle"></h1>
+                <div class="product-prices" id="productPrices"></div>
+                <div class="product-stock" id="productStock"></div>
+                
+                <!-- Sizes -->
+                <div class="sizes-section">
+                    <h3>Размер:</h3>
+                    <div class="sizes-grid" id="sizesGrid"></div>
+                </div>
+                
+                <!-- Quantity -->
+                <div class="quantity-section">
+                    <h3>Количество:</h3>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" id="qtyMinus">−</button>
+                        <span class="qty-value" id="qtyValue">1</span>
+                        <button class="qty-btn" id="qtyPlus">+</button>
+                    </div>
+                </div>
+                
+                <!-- Description -->
+                <div class="description-section">
+                    <h3>Описание:</h3>
+                    <p class="description-text" id="productDescription"></p>
+                </div>
+            </div>
+            
+            <!-- Add to Cart Button -->
+            <div class="modal-footer">
+                <button class="add-to-cart-btn" id="addToCartBtn">
+                    <span>Добавить в корзину</span>
+                    <span class="btn-price" id="btnPrice"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <button class="modal-close" id="cartClose">✕</button>
+            
+            <h2 class="cart-title">🛒 Корзина <span id="cartCount">(0)</span></h2>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Товары корзины -->
+            </div>
+            
+            <div class="cart-empty" id="cartEmpty">
+                <span>🛒</span>
+                <p>Корзина пуста</p>
+            </div>
+            
+            <div class="cart-footer" id="cartFooter">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cartTotal">0 BYN</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <button class="modal-close" id="checkoutClose">✕</button>
+            
+            <h2 class="checkout-title">📦 Оформление заказа</h2>
+            
+            <form class="checkout-form" id="checkoutForm">
+                <!-- Delivery Type -->
+                <div class="form-section">
+                    <h3>Способ доставки:</h3>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="deliveryType" value="pickup" checked>
+                            <span>🏪 Самовывоз (бесплатно)</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="deliveryType" value="mail">
+                            <span>📮 Почтой</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Mail Service (hidden by default) -->
+                <div class="form-section mail-options" id="mailOptions" style="display: none;">
+                    <h3>Служба доставки:</h3>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="mailService" value="europochta">
+                            <span>Европочта</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mailService" value="belpochta">
+                            <span>Белпочта</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="mailService" value="sdek">
+                            <span>СДЭК</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="form-section">
+                    <h3>Контактные данные:</h3>
+                    <input type="text" class="form-input" id="customerName" placeholder="Имя *" required>
+                    <input type="tel" class="form-input" id="customerPhone" placeholder="Телефон *" required>
+                </div>
+                
+                <!-- Address (hidden by default) -->
+                <div class="form-section address-fields" id="addressFields" style="display: none;">
+                    <h3>Адрес доставки:</h3>
+                    <input type="text" class="form-input" id="city" placeholder="Город *">
+                    <input type="text" class="form-input" id="zipCode" placeholder="Индекс *">
+                    <input type="text" class="form-input" id="street" placeholder="Улица, дом, квартира *">
+                </div>
+                
+                <!-- Comment -->
+                <div class="form-section">
+                    <h3>Комментарий:</h3>
+                    <textarea class="form-input form-textarea" id="comment" placeholder="Комментарий к заказу (необязательно)"></textarea>
+                </div>
+                
+                <!-- Submit -->
+                <button type="submit" class="submit-btn" id="submitOrder">
+                    Подтвердить заказ
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-page="home" id="homeBtn">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </button>
+        <button class="nav-btn" data-page="favorites" id="navFavoritesBtn">
+            <span class="nav-icon">❤️</span>
+            <span class="nav-label">Избранное</span>
+        </button>
+        <button class="nav-btn" data-page="cart" id="cartBtn">
+            <span class="nav-icon">🛒</span>
+            <span class="nav-badge" id="cartBadge" style="display: none;">0</span>
+            <span class="nav-label">Корзина</span>
+        </button>
+    </nav>
+
+    <!-- Currency Selector Modal -->
+    <div class="currency-modal" id="currencyModal">
+        <div class="currency-options">
+            <button class="currency-option active" data-currency="BYN">🇧🇾 BYN</button>
+            <button class="currency-option" data-currency="RUB">🇷🇺 RUB</button>
+            <button class="currency-option" data-currency="USD">🇺🇸 USD</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-text">Добавлено в корзину</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
