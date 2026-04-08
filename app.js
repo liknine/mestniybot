@@ -864,46 +864,36 @@ function submitOrder() {
     
     orderData.comment = document.getElementById('comment').value.trim() || null;
     
-// Send to Telegram
-console.log('Telegram WebApp object:', tg);
-console.log('sendData function:', tg?.sendData);
-
-// Send to Telegram
-if (tg) {
-    const dataString = JSON.stringify(orderData);
-    console.log('Sending data:', dataString);
+    console.log('Order data:', orderData);
     
-    // Пробуем через sendData
-    if (tg.sendData) {
-        tg.sendData(dataString);
-    }
-    
-    // Закрываем WebApp
-    setTimeout(() => {
-        tg.close();
-    }, 500);
-}
-    
-    // Send to Telegram
-    if (tg) {
+    // Send to Telegram and close
+    if (tg && tg.sendData) {
+        // Clear cart before sending
+        state.cart = [];
+        saveCart();
+        
+        // Send data - это автоматически закроет WebApp
         tg.sendData(JSON.stringify(orderData));
+        
+    } else {
+        // Fallback если не в Telegram
+        console.log('Not in Telegram, showing success modal');
+        
+        // Show success
+        elements.checkoutModal.classList.remove('active');
+        elements.successModal.classList.add('active');
+        
+        // Clear cart
+        state.cart = [];
+        saveCart();
+        
+        // Reset form
+        elements.checkoutForm.reset();
+        resetCheckoutForm();
     }
-    
-    // Show success
-    elements.checkoutModal.classList.remove('active');
-    elements.successModal.classList.add('active');
-    
-    // Clear cart
-    state.cart = [];
-    saveCart();
-    
-    // Reset form
-    elements.checkoutForm.reset();
-    resetCheckoutForm();
     
     hapticFeedback('heavy');
 }
-
 // ==================== SUPPORT ====================
 function openSupport() {
     const supportUrl = `https://t.me/${SUPPORT_USERNAME}`;
