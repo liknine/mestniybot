@@ -8,7 +8,7 @@
     <!-- Telegram WebApp Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Google Fonts - SF Pro alternative -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -38,16 +38,37 @@
             </div>
         </header>
 
-        <!-- Categories -->
-        <div class="categories-wrapper">
-            <div class="categories" id="categories">
-                <button class="category-chip active" data-category="all">Все</button>
-                <button class="category-chip" data-category="1">Обувь</button>
-                <button class="category-chip" data-category="2">Верхняя одежда</button>
-                <button class="category-chip" data-category="3">Штаны</button>
-                <button class="category-chip" data-category="4">Аксессуары</button>
-                <button class="category-chip" data-category="5">Шорты</button>
-                <button class="category-chip" data-category="6">Головные уборы</button>
+        <!-- Filters -->
+        <div class="filters-wrapper">
+            <div class="filters">
+                <!-- Category Dropdown -->
+                <div class="filter-dropdown" id="categoryDropdown">
+                    <button class="filter-btn" id="categoryBtn">
+                        <span id="categoryText">Все категории</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="filter-menu" id="categoryMenu">
+                        <button class="filter-option active" data-category="all">Все категории</button>
+                        <button class="filter-option" data-category="1">👟 Обувь</button>
+                        <button class="filter-option" data-category="2">🧥 Верхняя одежда</button>
+                        <button class="filter-option" data-category="3">👖 Штаны</button>
+                        <button class="filter-option" data-category="4">🎒 Аксессуары</button>
+                        <button class="filter-option" data-category="5">🩳 Шорты</button>
+                        <button class="filter-option" data-category="6">🧢 Головные уборы</button>
+                    </div>
+                </div>
+                
+                <!-- Size Dropdown -->
+                <div class="filter-dropdown" id="sizeDropdown">
+                    <button class="filter-btn" id="sizeBtn">
+                        <span id="sizeText">Все размеры</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="filter-menu" id="sizeMenu">
+                        <button class="filter-option active" data-size="all">Все размеры</button>
+                        <!-- Sizes will be populated by JS -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -96,7 +117,6 @@
                 
                 <div class="product-meta">
                     <span class="product-stock" id="productStock"></span>
-                    <span class="product-prices-alt" id="productPricesAlt"></span>
                 </div>
                 
                 <!-- Sizes -->
@@ -267,7 +287,7 @@
                     <span>К оплате</span>
                     <span id="checkoutTotal">0 BYN</span>
                 </div>
-                <button type="submit" class="submit-btn" id="submitOrder">Подтвердить заказ</button>
+                <button type="button" class="submit-btn" id="submitOrder">Оформить заказ</button>
             </div>
         </div>
     </div>
@@ -343,24 +363,6 @@
                         </button>
                     </div>
                 </div>
-                
-                <div class="profile-section">
-                    <h3 class="profile-section-title">О магазине</h3>
-                    <div class="profile-menu">
-                        <button class="profile-menu-item" id="aboutBtn">
-                            <div class="profile-menu-icon">
-                                <i data-lucide="info"></i>
-                            </div>
-                            <div class="profile-menu-text">
-                                <div class="profile-menu-title">Информация</div>
-                                <div class="profile-menu-desc">Контакты и условия</div>
-                            </div>
-                            <div class="profile-menu-arrow">
-                                <i data-lucide="chevron-right"></i>
-                            </div>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -408,18 +410,6 @@
     <div class="toast" id="toast">
         <i data-lucide="check-circle"></i>
         <span class="toast-text" id="toastText">Добавлено в корзину</span>
-    </div>
-
-    <!-- Success Modal -->
-    <div class="success-modal" id="successModal">
-        <div class="success-content">
-            <div class="success-icon">
-                <i data-lucide="check"></i>
-            </div>
-            <h2>Заказ оформлен!</h2>
-            <p>Мы свяжемся с вами в ближайшее время</p>
-            <button class="success-btn" id="successBtn">Отлично</button>
-        </div>
     </div>
 
     <script src="app.js"></script>
