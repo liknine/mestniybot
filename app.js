@@ -865,6 +865,8 @@ function submitOrder() {
     orderData.comment = document.getElementById('comment').value.trim() || null;
     
     console.log('Order data:', orderData);
+    // Временно для отладки
+alert('Отправляю заказ: ' + JSON.stringify(orderData).substring(0, 100));
     
     // Send to Telegram
     if (tg) {
