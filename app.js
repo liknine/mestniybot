@@ -40,9 +40,22 @@ const state = {
 };
 
 // Размеры по категориям
+// Размеры по категориям
 const SIZES_BY_CATEGORY = {
-    shoes: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '46.5'],
-    clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    shoes: [
+        '36', '36.5', 
+        '37', '37.5', 
+        '38', '38.5', 
+        '39', '39.5', 
+        '40', '40.5', 
+        '41', '41.5', 
+        '42', '42.5', 
+        '43', '43.5', 
+        '44', '44.5', 
+        '45', '45.5', 
+        '46', '46.5'
+    ],
+    clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     onesize: ['ONE SIZE']
 };
 
@@ -289,6 +302,7 @@ function updateProfileStats() {
 }
 
 // ==================== SIZE FILTER ====================
+// ==================== SIZE FILTER ====================
 function updateSizeFilter() {
     const categoryId = state.currentCategory === 'all' ? null : parseInt(state.currentCategory);
     let sizes = [];
@@ -306,22 +320,39 @@ function updateSizeFilter() {
     }
     
     // Обновляем меню размеров
-    elements.sizeMenu.innerHTML = `
-        <button class="filter-option active" data-size="all">Все размеры</button>
-        ${sizes.map(size => `<button class="filter-option" data-size="${size}">${size}</button>`).join('')}
-    `;
+    let menuHtml = `<button class="filter-option active" data-size="all">Все размеры</button>`;
+    
+    // Группируем размеры попарно для обуви
+    if (categoryId === 1) { // Обувь
+        for (let i = 0; i < sizes.length; i += 2) {
+            const size1 = sizes[i];
+            const size2 = sizes[i + 1];
+            menuHtml += `<div class="filter-option-row">`;
+            menuHtml += `<button class="filter-option-size" data-size="${size1}">${size1}</button>`;
+            if (size2) {
+                menuHtml += `<button class="filter-option-size" data-size="${size2}">${size2}</button>`;
+            }
+            menuHtml += `</div>`;
+        }
+    } else {
+        sizes.forEach(size => {
+            menuHtml += `<button class="filter-option" data-size="${size}">${size}</button>`;
+        });
+    }
+    
+    elements.sizeMenu.innerHTML = menuHtml;
     
     // Сбрасываем выбранный размер
     state.currentSize = 'all';
     elements.sizeText.textContent = 'Все размеры';
     
     // Привязываем события
-    elements.sizeMenu.querySelectorAll('.filter-option').forEach(option => {
+    elements.sizeMenu.querySelectorAll('.filter-option, .filter-option-size').forEach(option => {
         option.addEventListener('click', () => {
-            elements.sizeMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
+            elements.sizeMenu.querySelectorAll('.filter-option, .filter-option-size').forEach(o => o.classList.remove('active'));
             option.classList.add('active');
             state.currentSize = option.dataset.size;
-            elements.sizeText.textContent = option.textContent;
+            elements.sizeText.textContent = option.dataset.size === 'all' ? 'Все размеры' : option.dataset.size;
             elements.sizeDropdown.classList.remove('open');
             filterProducts();
             hapticFeedback();
