@@ -8,6 +8,9 @@ if (tg) {
     tg.enableClosingConfirmation();
 }
 
+// ==================== CONFIG ====================
+const SUPPORT_USERNAME = 'username'; // Замени на реальный юзернейм поддержки
+
 // ==================== STATE ====================
 const state = {
     products: [],
@@ -19,6 +22,15 @@ const state = {
     selectedProduct: null,
     selectedSize: null,
     quantity: 1,
+    deliveryType: 'pickup',
+    mailService: 'europochta',
+    user: {
+        id: null,
+        firstName: 'Пользователь',
+        lastName: '',
+        username: '',
+        photoUrl: null
+    },
     exchangeRates: {
         BYN: 1,
         RUB: 26.76,
@@ -151,7 +163,8 @@ const elements = {
     checkoutBack: document.getElementById('checkoutBack'),
     checkoutForm: document.getElementById('checkoutForm'),
     mailOptions: document.getElementById('mailOptions'),
-    addressFields: document.getElementById('addressFields'),
+    europochtaFields: document.getElementById('europochtaFields'),
+    belpochtaFields: document.getElementById('belpochtaFields'),
     checkoutTotal: document.getElementById('checkoutTotal'),
     submitOrder: document.getElementById('submitOrder'),
     
@@ -162,10 +175,22 @@ const elements = {
     favoritesEmpty: document.getElementById('favoritesEmpty'),
     favoritesHeaderBtn: document.getElementById('favoritesHeaderBtn'),
     
+    // Profile
+    profileModal: document.getElementById('profileModal'),
+    profileBack: document.getElementById('profileBack'),
+    profileAvatar: document.getElementById('profileAvatar'),
+    profileName: document.getElementById('profileName'),
+    profileUsername: document.getElementById('profileUsername'),
+    profileCartCount: document.getElementById('profileCartCount'),
+    profileFavCount: document.getElementById('profileFavCount'),
+    supportBtn: document.getElementById('supportBtn'),
+    aboutBtn: document.getElementById('aboutBtn'),
+    
     // Navigation
     navHome: document.getElementById('navHome'),
     navFavorites: document.getElementById('navFavorites'),
     navCart: document.getElementById('navCart'),
+    navProfile: document.getElementById('navProfile'),
     
     // Other
     toast: document.getElementById('toast'),
@@ -204,6 +229,53 @@ function hapticFeedback(type = 'light') {
     if (tg?.HapticFeedback) {
         tg.HapticFeedback.impactOccurred(type);
     }
+}
+
+// ==================== USER DATA ====================
+function loadUserData() {
+    if (tg?.initDataUnsafe?.user) {
+        const user = tg.initDataUnsafe.user;
+        state.user = {
+            id: user.id,
+            firstName: user.first_name || 'Пользователь',
+            lastName: user.last_name || '',
+            username: user.username || '',
+            photoUrl: user.photo_url || null
+        };
+    }
+    updateProfileUI();
+}
+
+function updateProfileUI() {
+    // Name
+    const fullName = state.user.lastName 
+        ? `${state.user.firstName} ${state.user.lastName}`
+        : state.user.firstName;
+    elements.profileName.textContent = fullName;
+    
+    // Username
+    elements.profileUsername.textContent = state.user.username 
+        ? `@${state.user.username}` 
+        : 'Telegram User';
+    
+    // Avatar
+    if (state.user.photoUrl) {
+        elements.profileAvatar.innerHTML = `<img src="${state.user.photoUrl}" alt="Avatar">`;
+    } else {
+        elements.profileAvatar.innerHTML = '<i data-lucide="user"></i>';
+        lucide.createIcons();
+    }
+    
+    // Stats
+    updateProfileStats();
+}
+
+function updateProfileStats() {
+    const cartCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    const favCount = state.favorites.length;
+    
+    elements.profileCartCount.textContent = cartCount;
+    elements.profileFavCount.textContent = favCount;
 }
 
 // ==================== RENDER FUNCTIONS ====================
@@ -347,6 +419,7 @@ function updateCartBadge() {
     const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
     elements.cartBadge.textContent = count;
     elements.cartBadge.dataset.count = count;
+    updateProfileStats();
 }
 
 // ==================== MODAL FUNCTIONS ====================
@@ -427,16 +500,53 @@ function openCheckoutModal() {
     elements.checkoutModal.classList.add('active');
     
     // Reset form
+    resetCheckoutForm();
+}
+
+function resetCheckoutForm() {
+    // Reset delivery type
     document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.delivery === 'pickup');
     });
+    state.deliveryType = 'pickup';
+    state.mailService = 'europochta';
+    
+    // Hide all delivery fields
     elements.mailOptions.classList.remove('active');
-    elements.addressFields.classList.remove('active');
+    elements.europochtaFields.classList.remove('active');
+    elements.belpochtaFields.classList.remove('active');
+    
+    // Reset mail service selection
+    document.querySelector('input[name="mailService"][value="europochta"]').checked = true;
+}
+
+function updateDeliveryFields() {
+    // Hide all first
+    elements.europochtaFields.classList.remove('active');
+    elements.belpochtaFields.classList.remove('active');
+    
+    if (state.deliveryType === 'mail') {
+        elements.mailOptions.classList.add('active');
+        
+        if (state.mailService === 'europochta') {
+            elements.europochtaFields.classList.add('active');
+        } else if (state.mailService === 'belpochta') {
+            elements.belpochtaFields.classList.add('active');
+        }
+    } else {
+        elements.mailOptions.classList.remove('active');
+    }
 }
 
 function openFavoritesModal() {
     renderFavorites();
     elements.favoritesModal.classList.add('active');
+}
+
+function openProfileModal() {
+    updateProfileUI();
+    elements.profileModal.classList.add('active');
+    lucide.createIcons();
 }
 
 function closeAllModals() {
@@ -598,6 +708,7 @@ function toggleFavorite(productId) {
         state.favorites.splice(index, 1);
     }
     saveFavorites();
+    updateProfileStats();
 }
 
 function saveFavorites() {
@@ -634,43 +745,82 @@ function filterProducts() {
 
 // ==================== CHECKOUT ====================
 function submitOrder() {
-    const form = elements.checkoutForm;
-    const name = document.getElementById('customerName').value.trim();
+    const lastName = document.getElementById('customerLastName').value.trim();
+    const firstName = document.getElementById('customerFirstName').value.trim();
+    const middleName = document.getElementById('customerMiddleName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
     
-    if (!name || !phone) {
+    // Validation
+    if (!lastName || !firstName || !phone) {
         showToast('Заполните обязательные поля');
         return;
     }
     
-    // Get delivery type
-    const activeToggle = document.querySelector('.toggle-btn.active');
-    const deliveryType = activeToggle?.dataset.delivery || 'pickup';
+    // Additional validation for delivery
+    if (state.deliveryType === 'mail') {
+        if (state.mailService === 'europochta') {
+            const branch = document.getElementById('europochtaBranch').value.trim();
+            if (!branch) {
+                showToast('Укажите номер отделения Европочты');
+                return;
+            }
+        } else if (state.mailService === 'belpochta') {
+            const index = document.getElementById('belpochtaIndex').value.trim();
+            const city = document.getElementById('belpochtaCity').value.trim();
+            const address = document.getElementById('belpochtaAddress').value.trim();
+            if (!index || !city || !address) {
+                showToast('Заполните все поля адреса доставки');
+                return;
+            }
+        }
+    }
     
     // Build order data
     const orderData = {
-        items: state.cart,
+        items: state.cart.map(item => {
+            const product = state.products.find(p => p.id === item.productId);
+            return {
+                productId: item.productId,
+                name: product?.name,
+                size: item.size,
+                quantity: item.quantity,
+                price: product?.price_byn
+            };
+        }),
         total: state.cart.reduce((sum, item) => {
             const product = state.products.find(p => p.id === item.productId);
             return sum + (product?.price_byn || 0) * item.quantity;
         }, 0),
         currency: state.currency,
-        deliveryType: deliveryType,
-        name: name,
-        phone: phone
+        deliveryType: state.deliveryType,
+        customer: {
+            lastName: lastName,
+            firstName: firstName,
+            middleName: middleName || null,
+            phone: phone
+        }
     };
     
-    if (deliveryType === 'mail') {
-        const mailService = document.querySelector('input[name="mailService"]:checked')?.value;
-        orderData.mailService = mailService;
-        orderData.address = {
-            city: document.getElementById('city').value.trim(),
-            zipCode: document.getElementById('zipCode').value.trim(),
-            street: document.getElementById('street').value.trim()
-        };
+    // Add delivery info
+    if (state.deliveryType === 'mail') {
+        orderData.mailService = state.mailService;
+        
+        if (state.mailService === 'europochta') {
+            orderData.delivery = {
+                branch: document.getElementById('europochtaBranch').value.trim()
+            };
+        } else if (state.mailService === 'belpochta') {
+            orderData.delivery = {
+                index: document.getElementById('belpochtaIndex').value.trim(),
+                city: document.getElementById('belpochtaCity').value.trim(),
+                address: document.getElementById('belpochtaAddress').value.trim()
+            };
+        }
     }
     
-    orderData.comment = document.getElementById('comment').value.trim();
+    orderData.comment = document.getElementById('comment').value.trim() || null;
+    
+    console.log('Order data:', orderData);
     
     // Send to Telegram
     if (tg) {
@@ -685,7 +835,22 @@ function submitOrder() {
     state.cart = [];
     saveCart();
     
+    // Reset form
+    elements.checkoutForm.reset();
+    resetCheckoutForm();
+    
     hapticFeedback('heavy');
+}
+
+// ==================== SUPPORT ====================
+function openSupport() {
+    const supportUrl = `https://t.me/${SUPPORT_USERNAME}`;
+    
+    if (tg) {
+        tg.openTelegramLink(supportUrl);
+    } else {
+        window.open(supportUrl, '_blank');
+    }
 }
 
 // ==================== INIT EVENT LISTENERS ====================
@@ -774,7 +939,10 @@ function initEventListeners() {
     elements.addToCartBtn.addEventListener('click', addToCart);
     
     // Cart
-    elements.navCart.addEventListener('click', openCartModal);
+    elements.navCart.addEventListener('click', () => {
+        openCartModal();
+        setActiveNav('cart');
+    });
     elements.cartBack.addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.cartModal.querySelector('.modal-overlay').addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.clearCartBtn.addEventListener('click', clearCart);
@@ -793,9 +961,17 @@ function initEventListeners() {
             document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            const isMail = btn.dataset.delivery === 'mail';
-            elements.mailOptions.classList.toggle('active', isMail);
-            elements.addressFields.classList.toggle('active', isMail);
+            state.deliveryType = btn.dataset.delivery;
+            updateDeliveryFields();
+            hapticFeedback();
+        });
+    });
+    
+    // Mail service selection
+    document.querySelectorAll('input[name="mailService"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            state.mailService = e.target.value;
+            updateDeliveryFields();
             hapticFeedback();
         });
     });
@@ -803,16 +979,38 @@ function initEventListeners() {
     elements.submitOrder.addEventListener('click', submitOrder);
     
     // Favorites
-    elements.navFavorites.addEventListener('click', openFavoritesModal);
+    elements.navFavorites.addEventListener('click', () => {
+        openFavoritesModal();
+        setActiveNav('favorites');
+    });
     elements.favoritesHeaderBtn.addEventListener('click', openFavoritesModal);
     elements.favoritesBack.addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
     elements.favoritesModal.querySelector('.modal-overlay').addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
     
+    // Profile
+    elements.navProfile.addEventListener('click', () => {
+        openProfileModal();
+        setActiveNav('profile');
+    });
+    elements.profileBack.addEventListener('click', () => elements.profileModal.classList.remove('active'));
+    elements.profileModal.querySelector('.modal-overlay').addEventListener('click', () => elements.profileModal.classList.remove('active'));
+    
+    // Support button
+    elements.supportBtn.addEventListener('click', () => {
+        openSupport();
+        hapticFeedback();
+    });
+    
+    // About button (можно добавить модалку с информацией)
+    elements.aboutBtn.addEventListener('click', () => {
+        showToast('MESTNIY — магазин одежды 🛍');
+        hapticFeedback();
+    });
+    
     // Navigation
     elements.navHome.addEventListener('click', () => {
         closeAllModals();
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        elements.navHome.classList.add('active');
+        setActiveNav('home');
         hapticFeedback();
     });
     
@@ -820,11 +1018,21 @@ function initEventListeners() {
     elements.successBtn.addEventListener('click', () => {
         elements.successModal.classList.remove('active');
         closeAllModals();
+        setActiveNav('home');
+    });
+}
+
+function setActiveNav(page) {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === page);
     });
 }
 
 // ==================== INITIALIZATION ====================
 async function init() {
+    // Load user data
+    loadUserData();
+    
     // Load data
     state.products = testProducts; // Later: fetch from API
     loadCart();
