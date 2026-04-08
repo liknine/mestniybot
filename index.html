@@ -3,81 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MESTNIY CATALOG</title>
+    <title>MESTNIY</title>
     
     <!-- Telegram WebApp Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts - SF Pro alternative -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" placeholder="Поиск товаров..." id="searchInput">
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <h1 class="logo">MESTNIY</h1>
+                <div class="header-actions">
+                    <button class="icon-btn" id="currencyBtn">
+                        <span class="currency-text">BYN</span>
+                    </button>
+                    <button class="icon-btn" id="favoritesHeaderBtn">
+                        <i data-lucide="heart"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
+            </div>
+        </header>
+
+        <!-- Categories -->
+        <div class="categories-wrapper">
+            <div class="categories" id="categories">
+                <button class="category-chip active" data-category="all">Все</button>
+                <button class="category-chip" data-category="1">Обувь</button>
+                <button class="category-chip" data-category="2">Верхняя одежда</button>
+                <button class="category-chip" data-category="3">Штаны</button>
+                <button class="category-chip" data-category="4">Аксессуары</button>
+                <button class="category-chip" data-category="5">Шорты</button>
+                <button class="category-chip" data-category="6">Головные уборы</button>
+            </div>
         </div>
-        <button class="currency-btn" id="currencyBtn">BYN</button>
-        <button class="favorites-btn" id="favoritesBtn">❤️</button>
-    </header>
 
-    <!-- Categories -->
-    <div class="categories" id="categories">
-        <button class="category-chip active" data-category="all">Все</button>
-        <button class="category-chip" data-category="1">👟 Обувь</button>
-        <button class="category-chip" data-category="2">🧥 Верхняя одежда</button>
-        <button class="category-chip" data-category="3">👖 Штаны</button>
-        <button class="category-chip" data-category="4">🎒 Аксессуары</button>
-        <button class="category-chip" data-category="5">🩳 Шорты</button>
-        <button class="category-chip" data-category="6">🧢 Головные уборы</button>
+        <!-- Products Grid -->
+        <main class="products-grid" id="productsGrid">
+            <!-- Products will be loaded here -->
+        </main>
+
+        <!-- Loading State -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <i data-lucide="package-x"></i>
+            <p>Ничего не найдено</p>
+        </div>
     </div>
-
-    <!-- Products Grid -->
-    <main class="products-grid" id="productsGrid">
-        <!-- Товары загрузятся через JS -->
-    </main>
 
     <!-- Product Modal -->
     <div class="modal" id="productModal">
+        <div class="modal-overlay"></div>
         <div class="modal-content">
-            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header">
+                <button class="modal-back" id="modalBack">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="modal-favorite" id="modalFavorite">
+                    <i data-lucide="heart"></i>
+                </button>
+            </div>
             
             <!-- Image Gallery -->
             <div class="gallery" id="gallery">
-                <div class="gallery-images" id="galleryImages"></div>
+                <div class="gallery-track" id="galleryTrack"></div>
                 <div class="gallery-dots" id="galleryDots"></div>
             </div>
             
             <!-- Product Info -->
             <div class="product-info">
-                <h1 class="product-title" id="productTitle"></h1>
-                <div class="product-prices" id="productPrices"></div>
-                <div class="product-stock" id="productStock"></div>
+                <div class="product-header">
+                    <h1 class="product-title" id="productTitle"></h1>
+                    <div class="product-price-main" id="productPriceMain"></div>
+                </div>
+                
+                <div class="product-meta">
+                    <span class="product-stock" id="productStock"></span>
+                    <span class="product-prices-alt" id="productPricesAlt"></span>
+                </div>
                 
                 <!-- Sizes -->
-                <div class="sizes-section">
-                    <h3>Размер:</h3>
+                <div class="section">
+                    <h3 class="section-title">Размер</h3>
                     <div class="sizes-grid" id="sizesGrid"></div>
                 </div>
                 
                 <!-- Quantity -->
-                <div class="quantity-section">
-                    <h3>Количество:</h3>
+                <div class="section">
+                    <h3 class="section-title">Количество</h3>
                     <div class="quantity-controls">
-                        <button class="qty-btn" id="qtyMinus">−</button>
+                        <button class="qty-btn" id="qtyMinus">
+                            <i data-lucide="minus"></i>
+                        </button>
                         <span class="qty-value" id="qtyValue">1</span>
-                        <button class="qty-btn" id="qtyPlus">+</button>
+                        <button class="qty-btn" id="qtyPlus">
+                            <i data-lucide="plus"></i>
+                        </button>
                     </div>
                 </div>
                 
                 <!-- Description -->
-                <div class="description-section">
-                    <h3>Описание:</h3>
+                <div class="section">
+                    <h3 class="section-title">Описание</h3>
                     <p class="description-text" id="productDescription"></p>
                 </div>
             </div>
@@ -85,7 +129,8 @@
             <!-- Add to Cart Button -->
             <div class="modal-footer">
                 <button class="add-to-cart-btn" id="addToCartBtn">
-                    <span>Добавить в корзину</span>
+                    <span class="btn-text">В корзину</span>
+                    <span class="btn-divider"></span>
                     <span class="btn-price" id="btnPrice"></span>
                 </button>
             </div>
@@ -94,24 +139,34 @@
 
     <!-- Cart Modal -->
     <div class="modal" id="cartModal">
+        <div class="modal-overlay"></div>
         <div class="modal-content">
-            <button class="modal-close" id="cartClose">✕</button>
-            
-            <h2 class="cart-title">🛒 Корзина <span id="cartCount">(0)</span></h2>
-            
-            <div class="cart-items" id="cartItems">
-                <!-- Товары корзины -->
+            <div class="modal-header">
+                <button class="modal-back" id="cartBack">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <h2 class="modal-title">Корзина</h2>
+                <button class="clear-cart-btn" id="clearCartBtn">Очистить</button>
             </div>
             
+            <div class="cart-items" id="cartItems"></div>
+            
             <div class="cart-empty" id="cartEmpty">
-                <span>🛒</span>
+                <i data-lucide="shopping-bag"></i>
                 <p>Корзина пуста</p>
+                <span>Добавьте товары для оформления заказа</span>
             </div>
             
             <div class="cart-footer" id="cartFooter">
-                <div class="cart-total">
-                    <span>Итого:</span>
-                    <span id="cartTotal">0 BYN</span>
+                <div class="cart-summary">
+                    <div class="cart-row">
+                        <span>Товары</span>
+                        <span id="cartSubtotal">0 BYN</span>
+                    </div>
+                    <div class="cart-row cart-total">
+                        <span>Итого</span>
+                        <span id="cartTotal">0 BYN</span>
+                    </div>
                 </div>
                 <button class="checkout-btn" id="checkoutBtn">Оформить заказ</button>
             </div>
@@ -120,105 +175,171 @@
 
     <!-- Checkout Modal -->
     <div class="modal" id="checkoutModal">
+        <div class="modal-overlay"></div>
         <div class="modal-content">
-            <button class="modal-close" id="checkoutClose">✕</button>
-            
-            <h2 class="checkout-title">📦 Оформление заказа</h2>
+            <div class="modal-header">
+                <button class="modal-back" id="checkoutBack">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <h2 class="modal-title">Оформление</h2>
+                <div></div>
+            </div>
             
             <form class="checkout-form" id="checkoutForm">
                 <!-- Delivery Type -->
                 <div class="form-section">
-                    <h3>Способ доставки:</h3>
-                    <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="deliveryType" value="pickup" checked>
-                            <span>🏪 Самовывоз (бесплатно)</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="deliveryType" value="mail">
-                            <span>📮 Почтой</span>
-                        </label>
+                    <h3 class="form-section-title">Способ получения</h3>
+                    <div class="toggle-group">
+                        <button type="button" class="toggle-btn active" data-delivery="pickup">Самовывоз</button>
+                        <button type="button" class="toggle-btn" data-delivery="mail">Доставка</button>
                     </div>
                 </div>
                 
-                <!-- Mail Service (hidden by default) -->
-                <div class="form-section mail-options" id="mailOptions" style="display: none;">
-                    <h3>Служба доставки:</h3>
-                    <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="mailService" value="europochta">
-                            <span>Европочта</span>
+                <!-- Mail Service -->
+                <div class="form-section mail-options" id="mailOptions">
+                    <h3 class="form-section-title">Служба доставки</h3>
+                    <div class="radio-cards">
+                        <label class="radio-card">
+                            <input type="radio" name="mailService" value="europochta" checked>
+                            <div class="radio-card-content">
+                                <span class="radio-card-title">Европочта</span>
+                                <span class="radio-card-desc">2-3 дня</span>
+                            </div>
                         </label>
-                        <label class="radio-option">
+                        <label class="radio-card">
                             <input type="radio" name="mailService" value="belpochta">
-                            <span>Белпочта</span>
+                            <div class="radio-card-content">
+                                <span class="radio-card-title">Белпочта</span>
+                                <span class="radio-card-desc">3-5 дней</span>
+                            </div>
                         </label>
-                        <label class="radio-option">
+                        <label class="radio-card">
                             <input type="radio" name="mailService" value="sdek">
-                            <span>СДЭК</span>
+                            <div class="radio-card-content">
+                                <span class="radio-card-title">СДЭК</span>
+                                <span class="radio-card-desc">1-2 дня</span>
+                            </div>
                         </label>
                     </div>
                 </div>
                 
                 <!-- Contact Info -->
                 <div class="form-section">
-                    <h3>Контактные данные:</h3>
-                    <input type="text" class="form-input" id="customerName" placeholder="Имя *" required>
-                    <input type="tel" class="form-input" id="customerPhone" placeholder="Телефон *" required>
+                    <h3 class="form-section-title">Контактные данные</h3>
+                    <div class="input-group">
+                        <input type="text" class="form-input" id="customerName" placeholder="Имя" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" class="form-input" id="customerPhone" placeholder="Телефон" required>
+                    </div>
                 </div>
                 
-                <!-- Address (hidden by default) -->
-                <div class="form-section address-fields" id="addressFields" style="display: none;">
-                    <h3>Адрес доставки:</h3>
-                    <input type="text" class="form-input" id="city" placeholder="Город *">
-                    <input type="text" class="form-input" id="zipCode" placeholder="Индекс *">
-                    <input type="text" class="form-input" id="street" placeholder="Улица, дом, квартира *">
+                <!-- Address -->
+                <div class="form-section address-fields" id="addressFields">
+                    <h3 class="form-section-title">Адрес доставки</h3>
+                    <div class="input-group">
+                        <input type="text" class="form-input" id="city" placeholder="Город">
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <input type="text" class="form-input" id="zipCode" placeholder="Индекс">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-input" id="street" placeholder="Улица, дом, квартира">
+                    </div>
                 </div>
                 
                 <!-- Comment -->
                 <div class="form-section">
-                    <h3>Комментарий:</h3>
-                    <textarea class="form-input form-textarea" id="comment" placeholder="Комментарий к заказу (необязательно)"></textarea>
+                    <h3 class="form-section-title">Комментарий</h3>
+                    <textarea class="form-input form-textarea" id="comment" placeholder="Пожелания к заказу"></textarea>
                 </div>
-                
-                <!-- Submit -->
-                <button type="submit" class="submit-btn" id="submitOrder">
-                    Подтвердить заказ
-                </button>
             </form>
+            
+            <div class="checkout-footer">
+                <div class="checkout-total">
+                    <span>К оплате</span>
+                    <span id="checkoutTotal">0 BYN</span>
+                </div>
+                <button type="submit" class="submit-btn" id="submitOrder">Подтвердить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div class="modal" id="favoritesModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-back" id="favoritesBack">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <h2 class="modal-title">Избранное</h2>
+                <div></div>
+            </div>
+            
+            <div class="favorites-grid" id="favoritesGrid"></div>
+            
+            <div class="favorites-empty" id="favoritesEmpty">
+                <i data-lucide="heart"></i>
+                <p>Пока пусто</p>
+                <span>Добавляйте товары в избранное</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Currency Modal -->
+    <div class="dropdown-modal" id="currencyModal">
+        <div class="dropdown-content">
+            <button class="dropdown-item active" data-currency="BYN">
+                <span>BYN</span>
+                <span class="dropdown-check"><i data-lucide="check"></i></span>
+            </button>
+            <button class="dropdown-item" data-currency="RUB">
+                <span>RUB</span>
+                <span class="dropdown-check"><i data-lucide="check"></i></span>
+            </button>
+            <button class="dropdown-item" data-currency="USD">
+                <span>USD</span>
+                <span class="dropdown-check"><i data-lucide="check"></i></span>
+            </button>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <button class="nav-btn active" data-page="home" id="homeBtn">
-            <span class="nav-icon">🏠</span>
-            <span class="nav-label">Главная</span>
+        <button class="nav-btn active" data-page="home" id="navHome">
+            <i data-lucide="home"></i>
+            <span>Главная</span>
         </button>
-        <button class="nav-btn" data-page="favorites" id="navFavoritesBtn">
-            <span class="nav-icon">❤️</span>
-            <span class="nav-label">Избранное</span>
+        <button class="nav-btn" data-page="favorites" id="navFavorites">
+            <i data-lucide="heart"></i>
+            <span>Избранное</span>
         </button>
-        <button class="nav-btn" data-page="cart" id="cartBtn">
-            <span class="nav-icon">🛒</span>
-            <span class="nav-badge" id="cartBadge" style="display: none;">0</span>
-            <span class="nav-label">Корзина</span>
+        <button class="nav-btn" data-page="cart" id="navCart">
+            <i data-lucide="shopping-bag"></i>
+            <span class="nav-badge" id="cartBadge">0</span>
+            <span>Корзина</span>
         </button>
     </nav>
 
-    <!-- Currency Selector Modal -->
-    <div class="currency-modal" id="currencyModal">
-        <div class="currency-options">
-            <button class="currency-option active" data-currency="BYN">🇧🇾 BYN</button>
-            <button class="currency-option" data-currency="RUB">🇷🇺 RUB</button>
-            <button class="currency-option" data-currency="USD">🇺🇸 USD</button>
-        </div>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i data-lucide="check-circle"></i>
+        <span class="toast-text" id="toastText">Добавлено в корзину</span>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <span class="toast-icon">✓</span>
-        <span class="toast-text">Добавлено в корзину</span>
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">
+                <i data-lucide="check"></i>
+            </div>
+            <h2>Заказ оформлен</h2>
+            <p>Мы свяжемся с вами в ближайшее время</p>
+            <button class="success-btn" id="successBtn">Отлично</button>
+        </div>
     </div>
 
     <script src="app.js"></script>
