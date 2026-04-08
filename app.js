@@ -49,8 +49,10 @@ const testProducts = [
         sizes: ["38", "39", "40", "41", "42", "43", "44"],
         stock: 15,
         images: [
-            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/zwxes8uud05rkuei1mww/air-max-270-shoes.png",
-            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/mbhgt6vjlqgecylhri87/air-max-270-shoes.png"
+            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/skwgyqrbfzhu6ez4n45d/air-max-270-shoes-V4DfZQ.png",
+            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/qzqgvvfhcgsro9xtpw37/air-max-270-shoes-V4DfZQ.png",
+            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/ifd7zcxgwmjhgvmtxhqv/air-max-270-shoes-V4DfZQ.png",
+            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/j0jdpfvnbfykrm8ntrij/air-max-270-shoes-V4DfZQ.png"
         ]
     },
     {
@@ -74,7 +76,8 @@ const testProducts = [
         sizes: ["30", "32", "34", "36", "38"],
         stock: 20,
         images: [
-            "https://lsco.scene7.com/is/image/lsco/005010101-front-pdp?fmt=jpeg&qlt=70"
+            "https://lsco.scene7.com/is/image/lsco/005010101-front-pdp?fmt=jpeg&qlt=70",
+            "https://lsco.scene7.com/is/image/lsco/005010101-back-pdp?fmt=jpeg&qlt=70"
         ]
     },
     {
@@ -86,7 +89,9 @@ const testProducts = [
         sizes: ["ONE SIZE"],
         stock: 25,
         images: [
-            "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/add1f9c0f83e4e2c8f5aaf0800a23b9b_9366/Classic_Badge_of_Sport_Backpack_Black_HG0349_01_standard.jpg"
+            "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/add1f9c0f83e4e2c8f5aaf0800a23b9b_9366/Classic_Badge_of_Sport_Backpack_Black_HG0349_01_standard.jpg",
+            "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/45688e3f8a534f88a67faf0800a254c8_9366/Classic_Badge_of_Sport_Backpack_Black_HG0349_02_standard.jpg",
+            "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/8e7ab0ae1e3f493489e8af0800a26c0e_9366/Classic_Badge_of_Sport_Backpack_Black_HG0349_03_standard.jpg"
         ]
     },
     {
