@@ -908,16 +908,11 @@ function openSupport() {
 // ==================== INIT EVENT LISTENERS ====================
 function initEventListeners() {
     // Categories
-    elements.categories.addEventListener('click', (e) => {
-        const chip = e.target.closest('.category-chip');
-        if (!chip) return;
-        
-        document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        state.currentCategory = chip.dataset.category;
-        filterProducts();
-        hapticFeedback();
-    });
+// Submit order - ИСПРАВЛЕННАЯ ВЕРСИЯ
+elements.submitOrder.addEventListener('click', (e) => {
+    e.preventDefault();
+    submitOrder();
+});
     
     // Search
     let searchTimeout;
