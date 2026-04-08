@@ -864,9 +864,25 @@ function submitOrder() {
     
     orderData.comment = document.getElementById('comment').value.trim() || null;
     
-    console.log('Order data:', orderData);
-    // Временно для отладки
-alert('Отправляю заказ: ' + JSON.stringify(orderData).substring(0, 100));
+// Send to Telegram
+console.log('Telegram WebApp object:', tg);
+console.log('sendData function:', tg?.sendData);
+
+if (tg && tg.sendData) {
+    try {
+        const dataString = JSON.stringify(orderData);
+        console.log('Sending data:', dataString);
+        alert('Отправляю в Telegram...');
+        tg.sendData(dataString);
+        alert('sendData вызван!');
+    } catch (e) {
+        console.error('Error sending data:', e);
+        alert('Ошибка: ' + e.message);
+    }
+} else {
+    console.log('Telegram WebApp not available');
+    alert('Telegram WebApp недоступен! tg=' + tg);
+}
     
     // Send to Telegram
     if (tg) {
