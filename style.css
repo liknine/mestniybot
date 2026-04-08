@@ -696,16 +696,16 @@ body {
 }
 
 /* ==================== SIZES ==================== */
+/* ==================== SIZES ==================== */
 .sizes-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
 
 .size-chip {
-    min-width: 54px;
     height: 48px;
-    padding: 0 18px;
+    padding: 0 16px;
     border: 2px solid var(--border-strong);
     border-radius: var(--radius-sm);
     background: var(--card);
@@ -714,6 +714,9 @@ body {
     color: var(--text);
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .size-chip:active {
@@ -1782,4 +1785,41 @@ body {
 
 .filter-option:not(:last-child) {
     border-bottom: 1px solid var(--border);
+}
+
+
+/* ==================== FILTER SIZE ROWS ==================== */
+.filter-option-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.filter-option-row:last-child {
+    border-bottom: none;
+}
+
+.filter-option-size {
+    padding: 12px 8px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.filter-option-size:active {
+    background: var(--primary-bg);
+}
+
+.filter-option-size.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
 }
