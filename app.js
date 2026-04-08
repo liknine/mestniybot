@@ -5,21 +5,20 @@ const tg = window.Telegram?.WebApp;
 if (tg) {
     tg.ready();
     tg.expand();
-    tg.enableClosingConfirmation();
 }
 
 // ==================== CONFIG ====================
+const ADMIN_USERNAME = 'liknine'; // Юзернейм админа для заказов
 const SUPPORT_USERNAME = 'liknine';
-const API_URL = 'http://localhost:8080'; // Для локальной разработки
 
 // ==================== STATE ====================
 const state = {
     products: [],
-    categories: [],
     cart: [],
     favorites: [],
     currency: 'BYN',
     currentCategory: 'all',
+    currentSize: 'all',
     searchQuery: '',
     selectedProduct: null,
     selectedSize: null,
@@ -40,56 +39,24 @@ const state = {
     }
 };
 
-// ==================== API FUNCTIONS ====================
-async function fetchProducts() {
-    try {
-        const response = await fetch(`${API_URL}/api/products`);
-        if (response.ok) {
-            state.products = await response.json();
-            console.log('✅ Товары загружены из API:', state.products.length);
-            return true;
-        }
-    } catch (e) {
-        console.log('⚠️ API недоступен, используем тестовые данные');
-    }
-    
-    // Fallback на тестовые данные
-    state.products = testProducts;
-    return false;
-}
+// Размеры по категориям
+const SIZES_BY_CATEGORY = {
+    shoes: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '46.5'],
+    clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    onesize: ['ONE SIZE']
+};
 
-async function fetchCategories() {
-    try {
-        const response = await fetch(`${API_URL}/api/categories`);
-        if (response.ok) {
-            state.categories = await response.json();
-            return true;
-        }
-    } catch (e) {
-        console.log('⚠️ Категории недоступны');
-    }
-    return false;
-}
+// Категории с типами размеров
+const CATEGORY_SIZE_TYPE = {
+    1: 'shoes',      // Обувь
+    2: 'clothing',   // Верхняя одежда
+    3: 'clothing',   // Штаны
+    4: 'onesize',    // Аксессуары
+    5: 'clothing',   // Шорты
+    6: 'onesize'     // Головные уборы
+};
 
-async function fetchRates() {
-    try {
-        const response = await fetch(`${API_URL}/api/rates`);
-        if (response.ok) {
-            const rates = await response.json();
-            state.exchangeRates = {
-                BYN: 1,
-                RUB: rates.RUB?.rate || 28.5,
-                USD: rates.USD?.rate || 0.31
-            };
-            return true;
-        }
-    } catch (e) {
-        console.log('⚠️ Курсы недоступны');
-    }
-    return false;
-}
-
-// ==================== TEST DATA (fallback) ====================
+// ==================== TEST DATA ====================
 const testProducts = [
     {
         id: 1,
@@ -121,7 +88,7 @@ const testProducts = [
         name: "Джинсы Levi's 501",
         description: "Легендарные прямые джинсы Levi's 501. 100% хлопок, классический крой.",
         price_byn: 320.00,
-        sizes: ["30", "32", "34", "36", "38"],
+        sizes: ["S", "M", "L", "XL"],
         stock: 20,
         images: ["https://lsco.scene7.com/is/image/lsco/005010101-front-pdp?fmt=jpeg&qlt=70"]
     },
@@ -159,6 +126,7 @@ const testProducts = [
         images: ["https://www.neweracap.eu/globalassets/products/b9266_282/12380782/new-era-league-essential-9fifty-snapback-12380782-1.jpg"]
     }
 ];
+
 // ==================== DOM ELEMENTS ====================
 const elements = {
     // Main
@@ -166,7 +134,16 @@ const elements = {
     loading: document.getElementById('loading'),
     emptyState: document.getElementById('emptyState'),
     searchInput: document.getElementById('searchInput'),
-    categories: document.getElementById('categories'),
+    
+    // Filters
+    categoryDropdown: document.getElementById('categoryDropdown'),
+    categoryBtn: document.getElementById('categoryBtn'),
+    categoryText: document.getElementById('categoryText'),
+    categoryMenu: document.getElementById('categoryMenu'),
+    sizeDropdown: document.getElementById('sizeDropdown'),
+    sizeBtn: document.getElementById('sizeBtn'),
+    sizeText: document.getElementById('sizeText'),
+    sizeMenu: document.getElementById('sizeMenu'),
     
     // Currency
     currencyBtn: document.getElementById('currencyBtn'),
@@ -181,7 +158,6 @@ const elements = {
     productTitle: document.getElementById('productTitle'),
     productPriceMain: document.getElementById('productPriceMain'),
     productStock: document.getElementById('productStock'),
-    productPricesAlt: document.getElementById('productPricesAlt'),
     sizesGrid: document.getElementById('sizesGrid'),
     qtyMinus: document.getElementById('qtyMinus'),
     qtyPlus: document.getElementById('qtyPlus'),
@@ -228,7 +204,6 @@ const elements = {
     profileCartCount: document.getElementById('profileCartCount'),
     profileFavCount: document.getElementById('profileFavCount'),
     supportBtn: document.getElementById('supportBtn'),
-    aboutBtn: document.getElementById('aboutBtn'),
     
     // Navigation
     navHome: document.getElementById('navHome'),
@@ -238,9 +213,7 @@ const elements = {
     
     // Other
     toast: document.getElementById('toast'),
-    toastText: document.getElementById('toastText'),
-    successModal: document.getElementById('successModal'),
-    successBtn: document.getElementById('successBtn')
+    toastText: document.getElementById('toastText')
 };
 
 // ==================== UTILITIES ====================
@@ -291,26 +264,19 @@ function loadUserData() {
 }
 
 function updateProfileUI() {
-    // Name
     const fullName = state.user.lastName 
         ? `${state.user.firstName} ${state.user.lastName}`
         : state.user.firstName;
     elements.profileName.textContent = fullName;
     
-    // Username
     elements.profileUsername.textContent = state.user.username 
         ? `@${state.user.username}` 
         : 'Telegram User';
     
-    // Avatar
     if (state.user.photoUrl) {
         elements.profileAvatar.innerHTML = `<img src="${state.user.photoUrl}" alt="Avatar">`;
-    } else {
-        elements.profileAvatar.innerHTML = '<i data-lucide="user"></i>';
-        lucide.createIcons();
     }
     
-    // Stats
     updateProfileStats();
 }
 
@@ -320,6 +286,47 @@ function updateProfileStats() {
     
     elements.profileCartCount.textContent = cartCount;
     elements.profileFavCount.textContent = favCount;
+}
+
+// ==================== SIZE FILTER ====================
+function updateSizeFilter() {
+    const categoryId = state.currentCategory === 'all' ? null : parseInt(state.currentCategory);
+    let sizes = [];
+    
+    if (categoryId) {
+        const sizeType = CATEGORY_SIZE_TYPE[categoryId];
+        sizes = SIZES_BY_CATEGORY[sizeType] || [];
+    } else {
+        // Все размеры
+        sizes = [...new Set([
+            ...SIZES_BY_CATEGORY.shoes,
+            ...SIZES_BY_CATEGORY.clothing,
+            ...SIZES_BY_CATEGORY.onesize
+        ])];
+    }
+    
+    // Обновляем меню размеров
+    elements.sizeMenu.innerHTML = `
+        <button class="filter-option active" data-size="all">Все размеры</button>
+        ${sizes.map(size => `<button class="filter-option" data-size="${size}">${size}</button>`).join('')}
+    `;
+    
+    // Сбрасываем выбранный размер
+    state.currentSize = 'all';
+    elements.sizeText.textContent = 'Все размеры';
+    
+    // Привязываем события
+    elements.sizeMenu.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', () => {
+            elements.sizeMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
+            option.classList.add('active');
+            state.currentSize = option.dataset.size;
+            elements.sizeText.textContent = option.textContent;
+            elements.sizeDropdown.classList.remove('open');
+            filterProducts();
+            hapticFeedback();
+        });
+    });
 }
 
 // ==================== RENDER FUNCTIONS ====================
@@ -481,17 +488,13 @@ function openProductModal(product) {
         `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
     ).join('');
     
-    // Info
+    // Info - только выбранная валюта
     elements.productTitle.textContent = product.name;
     elements.productPriceMain.textContent = formatPrice(product.price_byn);
     
     const stockStatus = getStockStatus(product.stock);
     elements.productStock.textContent = stockStatus.text;
     elements.productStock.className = `product-stock ${stockStatus.class}`;
-    
-    // Alternative prices
-    const altCurrencies = ['BYN', 'RUB', 'USD'].filter(c => c !== state.currency);
-    elements.productPricesAlt.textContent = altCurrencies.map(c => formatPrice(product.price_byn, c)).join(' • ');
     
     // Sizes
     elements.sizesGrid.innerHTML = product.sizes.map(size => 
@@ -542,30 +545,24 @@ function openCartModal() {
 function openCheckoutModal() {
     elements.cartModal.classList.remove('active');
     elements.checkoutModal.classList.add('active');
-    
-    // Reset form
     resetCheckoutForm();
 }
 
 function resetCheckoutForm() {
-    // Reset delivery type
     document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.delivery === 'pickup');
     });
     state.deliveryType = 'pickup';
     state.mailService = 'europochta';
     
-    // Hide all delivery fields
     elements.mailOptions.classList.remove('active');
     elements.europochtaFields.classList.remove('active');
     elements.belpochtaFields.classList.remove('active');
     
-    // Reset mail service selection
     document.querySelector('input[name="mailService"][value="europochta"]').checked = true;
 }
 
 function updateDeliveryFields() {
-    // Hide all first
     elements.europochtaFields.classList.remove('active');
     elements.belpochtaFields.classList.remove('active');
     
@@ -601,7 +598,6 @@ function closeAllModals() {
 
 // ==================== EVENT LISTENERS ====================
 function attachProductListeners() {
-    // Card click
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (e.target.closest('.product-favorite')) return;
@@ -615,7 +611,6 @@ function attachProductListeners() {
         });
     });
     
-    // Favorite button
     document.querySelectorAll('.product-favorite').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -628,7 +623,6 @@ function attachProductListeners() {
 }
 
 function attachProductModalListeners() {
-    // Gallery scroll
     elements.galleryTrack.addEventListener('scroll', () => {
         const scrollLeft = elements.galleryTrack.scrollLeft;
         const width = elements.galleryTrack.offsetWidth;
@@ -639,7 +633,6 @@ function attachProductModalListeners() {
         });
     });
     
-    // Size selection
     elements.sizesGrid.querySelectorAll('.size-chip').forEach(chip => {
         chip.addEventListener('click', () => {
             elements.sizesGrid.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
@@ -652,7 +645,6 @@ function attachProductModalListeners() {
 }
 
 function attachCartListeners() {
-    // Quantity buttons
     document.querySelectorAll('.cart-qty-minus').forEach(btn => {
         btn.addEventListener('click', () => {
             const item = btn.closest('.cart-item');
@@ -667,7 +659,6 @@ function attachCartListeners() {
         });
     });
     
-    // Delete buttons
     document.querySelectorAll('.cart-item-delete').forEach(btn => {
         btn.addEventListener('click', () => {
             const item = btn.closest('.cart-item');
@@ -775,6 +766,11 @@ function filterProducts() {
         filtered = filtered.filter(p => p.category_id === parseInt(state.currentCategory));
     }
     
+    // Size filter
+    if (state.currentSize !== 'all') {
+        filtered = filtered.filter(p => p.sizes.includes(state.currentSize));
+    }
+    
     // Search filter
     if (state.searchQuery) {
         const query = state.searchQuery.toLowerCase();
@@ -805,7 +801,7 @@ function submitOrder() {
         if (state.mailService === 'europochta') {
             const branch = document.getElementById('europochtaBranch').value.trim();
             if (!branch) {
-                showToast('Укажите номер отделения Европочты');
+                showToast('Укажите номер отделения');
                 return;
             }
         } else if (state.mailService === 'belpochta') {
@@ -813,87 +809,79 @@ function submitOrder() {
             const city = document.getElementById('belpochtaCity').value.trim();
             const address = document.getElementById('belpochtaAddress').value.trim();
             if (!index || !city || !address) {
-                showToast('Заполните все поля адреса доставки');
+                showToast('Заполните адрес доставки');
                 return;
             }
         }
     }
     
-    // Build order data
-    const orderData = {
-        items: state.cart.map(item => {
-            const product = state.products.find(p => p.id === item.productId);
-            return {
-                productId: item.productId,
-                name: product?.name,
-                size: item.size,
-                quantity: item.quantity,
-                price: product?.price_byn
-            };
-        }),
-        total: state.cart.reduce((sum, item) => {
-            const product = state.products.find(p => p.id === item.productId);
-            return sum + (product?.price_byn || 0) * item.quantity;
-        }, 0),
-        currency: state.currency,
-        deliveryType: state.deliveryType,
-        customer: {
-            lastName: lastName,
-            firstName: firstName,
-            middleName: middleName || null,
-            phone: phone
+    // Build order text
+    let orderText = `🛒 *НОВЫЙ ЗАКАЗ*\n\n`;
+    orderText += `👤 *Клиент:*\n`;
+    orderText += `${lastName} ${firstName}`;
+    if (middleName) orderText += ` ${middleName}`;
+    orderText += `\n📞 ${phone}\n\n`;
+    
+    orderText += `📦 *Товары:*\n`;
+    let total = 0;
+    state.cart.forEach(item => {
+        const product = state.products.find(p => p.id === item.productId);
+        if (product) {
+            const itemTotal = product.price_byn * item.quantity;
+            total += itemTotal;
+            orderText += `• ${product.name}\n`;
+            orderText += `  Размер: ${item.size}, Кол-во: ${item.quantity}\n`;
+            orderText += `  ${formatPrice(itemTotal)}\n`;
         }
-    };
+    });
     
-    // Add delivery info
-    if (state.deliveryType === 'mail') {
-        orderData.mailService = state.mailService;
-        
-        if (state.mailService === 'europochta') {
-            orderData.delivery = {
-                branch: document.getElementById('europochtaBranch').value.trim()
-            };
-        } else if (state.mailService === 'belpochta') {
-            orderData.delivery = {
-                index: document.getElementById('belpochtaIndex').value.trim(),
-                city: document.getElementById('belpochtaCity').value.trim(),
-                address: document.getElementById('belpochtaAddress').value.trim()
-            };
-        }
-    }
+    orderText += `\n💰 *Итого: ${formatPrice(total)}*\n\n`;
     
-    orderData.comment = document.getElementById('comment').value.trim() || null;
-    
-    console.log('Order data:', orderData);
-    
-    // Send to Telegram and close
-    if (tg && tg.sendData) {
-        // Clear cart before sending
-        state.cart = [];
-        saveCart();
-        
-        // Send data - это автоматически закроет WebApp
-        tg.sendData(JSON.stringify(orderData));
-        
+    orderText += `🚚 *Доставка:* `;
+    if (state.deliveryType === 'pickup') {
+        orderText += `Самовывоз\n`;
     } else {
-        // Fallback если не в Telegram
-        console.log('Not in Telegram, showing success modal');
-        
-        // Show success
-        elements.checkoutModal.classList.remove('active');
-        elements.successModal.classList.add('active');
-        
-        // Clear cart
-        state.cart = [];
-        saveCart();
-        
-        // Reset form
-        elements.checkoutForm.reset();
-        resetCheckoutForm();
+        if (state.mailService === 'europochta') {
+            const branch = document.getElementById('europochtaBranch').value.trim();
+            orderText += `Европочта\n📍 Отделение: ${branch}\n`;
+        } else if (state.mailService === 'belpochta') {
+            const index = document.getElementById('belpochtaIndex').value.trim();
+            const city = document.getElementById('belpochtaCity').value.trim();
+            const address = document.getElementById('belpochtaAddress').value.trim();
+            orderText += `Белпочта\n📍 ${index}, ${city}, ${address}\n`;
+        }
     }
+    
+    const comment = document.getElementById('comment').value.trim();
+    if (comment) {
+        orderText += `\n💬 *Комментарий:* ${comment}`;
+    }
+    
+    // Encode for URL
+    const encodedText = encodeURIComponent(orderText);
+    const adminUrl = `https://t.me/${ADMIN_USERNAME}?text=${encodedText}`;
+    
+    // Clear cart
+    state.cart = [];
+    saveCart();
+    
+    // Close modal
+    elements.checkoutModal.classList.remove('active');
+    
+    // Reset form
+    elements.checkoutForm.reset();
+    resetCheckoutForm();
     
     hapticFeedback('heavy');
+    
+    // Open admin chat
+    if (tg) {
+        tg.openTelegramLink(adminUrl);
+    } else {
+        window.open(adminUrl, '_blank');
+    }
 }
+
 // ==================== SUPPORT ====================
 function openSupport() {
     const supportUrl = `https://t.me/${SUPPORT_USERNAME}`;
@@ -907,12 +895,43 @@ function openSupport() {
 
 // ==================== INIT EVENT LISTENERS ====================
 function initEventListeners() {
-    // Categories
-// Submit order - ИСПРАВЛЕННАЯ ВЕРСИЯ
-elements.submitOrder.addEventListener('click', (e) => {
-    e.preventDefault();
-    submitOrder();
-});
+    // Category dropdown
+    elements.categoryBtn.addEventListener('click', () => {
+        elements.categoryDropdown.classList.toggle('open');
+        elements.sizeDropdown.classList.remove('open');
+        hapticFeedback();
+    });
+    
+    elements.categoryMenu.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', () => {
+            elements.categoryMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
+            option.classList.add('active');
+            state.currentCategory = option.dataset.category;
+            elements.categoryText.textContent = option.textContent;
+            elements.categoryDropdown.classList.remove('open');
+            updateSizeFilter();
+            filterProducts();
+            hapticFeedback();
+        });
+    });
+    
+    // Size dropdown
+    elements.sizeBtn.addEventListener('click', () => {
+        elements.sizeDropdown.classList.toggle('open');
+        elements.categoryDropdown.classList.remove('open');
+        hapticFeedback();
+    });
+    
+    // Close dropdowns on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.filter-dropdown')) {
+            elements.categoryDropdown.classList.remove('open');
+            elements.sizeDropdown.classList.remove('open');
+        }
+        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyModal')) {
+            elements.currencyModal.classList.remove('active');
+        }
+    });
     
     // Search
     let searchTimeout;
@@ -943,15 +962,12 @@ elements.submitOrder.addEventListener('click', (e) => {
             
             filterProducts();
             renderCart();
+            if (state.selectedProduct) {
+                elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn);
+                updateAddToCartBtn();
+            }
             hapticFeedback();
         });
-    });
-    
-    // Close currency modal on outside click
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyModal')) {
-            elements.currencyModal.classList.remove('active');
-        }
     });
     
     // Product modal
@@ -1007,7 +1023,6 @@ elements.submitOrder.addEventListener('click', (e) => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
             state.deliveryType = btn.dataset.delivery;
             updateDeliveryFields();
             hapticFeedback();
@@ -1023,7 +1038,11 @@ elements.submitOrder.addEventListener('click', (e) => {
         });
     });
     
-    elements.submitOrder.addEventListener('click', submitOrder);
+    // Submit order button
+    elements.submitOrder.addEventListener('click', (e) => {
+        e.preventDefault();
+        submitOrder();
+    });
     
     // Favorites
     elements.navFavorites.addEventListener('click', () => {
@@ -1048,24 +1067,11 @@ elements.submitOrder.addEventListener('click', (e) => {
         hapticFeedback();
     });
     
-    // About button (можно добавить модалку с информацией)
-    elements.aboutBtn.addEventListener('click', () => {
-        showToast('MESTNIY — магазин одежды 🛍');
-        hapticFeedback();
-    });
-    
     // Navigation
     elements.navHome.addEventListener('click', () => {
         closeAllModals();
         setActiveNav('home');
         hapticFeedback();
-    });
-    
-    // Success modal
-    elements.successBtn.addEventListener('click', () => {
-        elements.successModal.classList.remove('active');
-        closeAllModals();
-        setActiveNav('home');
     });
 }
 
@@ -1080,14 +1086,15 @@ async function init() {
     // Load user data from Telegram
     loadUserData();
     
-    // Try to load from API, fallback to test data
-    await fetchProducts();
-    await fetchCategories();
-    await fetchRates();
+    // Load products
+    state.products = testProducts;
     
     // Load local data
     loadCart();
     loadFavorites();
+    
+    // Init size filter
+    updateSizeFilter();
     
     // Render
     renderProducts(state.products);
