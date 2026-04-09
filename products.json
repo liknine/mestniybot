@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "id": 1,
+    "category_id": 1,
+    "name": "Aslan",
+    "description": "eblan",
+    "price_byn": 55.0,
+    "sizes": [
+      "42"
+    ],
+    "stock": 3,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_0.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_3.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "category_id": 1,
+    "name": "als",
+    "description": "yebam",
+    "price_byn": 55.0,
+    "sizes": [
+      "42"
+    ],
+    "stock": 3,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_3.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_4.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "category_id": 1,
+    "name": "[eq",
+    "description": "пизда",
+    "price_byn": 44.0,
+    "sizes": [
+      "L"
+    ],
+    "stock": 3,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_4.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_3.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "category_id": 2,
+    "name": "проверка",
+    "description": "хуй",
+    "price_byn": 44.0,
+    "sizes": [
+      "L"
+    ],
+    "stock": 3,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_0.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_3.jpg"
+    ]
+  }
+]
