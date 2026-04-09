@@ -11,9 +11,6 @@ if (tg) {
 const ADMIN_USERNAME = 'liknine';
 const SUPPORT_USERNAME = 'liknine';
 
-// API URL - когда бот запущен локально
-const API_URL = 'http://localhost:8080';
-
 // ==================== STATE ====================
 const state = {
     products: [],
@@ -71,6 +68,27 @@ const CATEGORY_SIZE_TYPE = {
     6: 'onesize'     // Головные уборы
 };
 
+// ==================== LOAD PRODUCTS ====================
+async function loadProducts() {
+    console.log('📦 Загружаем товары...');
+    
+    try {
+        // Загружаем из products.json на GitHub Pages
+        const response = await fetch('products.json?' + Date.now()); // Date.now() чтобы избежать кэша
+        
+        if (response.ok) {
+            state.products = await response.json();
+            console.log(`✅ Загружено товаров: ${state.products.length}`);
+            return true;
+        } else {
+            console.log('❌ Файл products.json не найден');
+            return false;
+        }
+    } catch (e) {
+        console.log('❌ Ошибка загрузки:', e.message);
+        return false;
+    }
+}
 // ==================== API FUNCTIONS ====================
 async function loadProducts() {
     console.log('📦 Загружаем товары...');
@@ -1102,29 +1120,26 @@ async function init() {
     // Load user data from Telegram
     loadUserData();
     
-    // Load products from API
+    // Load products from JSON
     const productsLoaded = await loadProducts();
     
     if (!productsLoaded || state.products.length === 0) {
         elements.loading.classList.add('hidden');
         elements.emptyState.style.display = 'block';
         elements.emptyState.innerHTML = `
-            <i data-lucide="wifi-off"></i>
-            <p>Не удалось загрузить товары</p>
-            <span>Убедитесь что бот запущен</span>
+            <i data-lucide="package"></i>
+            <p>Товаров пока нет</p>
+            <span>Скоро здесь появятся новинки!</span>
         `;
         lucide.createIcons();
         
-        // Всё равно инициализируем остальное
+        // Инициализируем остальное
         loadCart();
         loadFavorites();
         initEventListeners();
         lucide.createIcons();
         return;
     }
-    
-    // Load exchange rates
-    await loadExchangeRates();
     
     // Load local data
     loadCart();
