@@ -44,5 +44,19 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_7.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_6.jpg"
     ]
+  },
+  {
+    "id": 4,
+    "category_id": 5,
+    "name": "GGGGGGG",
+    "description": "sfddfd",
+    "price_byn": 555.0,
+    "sizes": [
+      "M"
+    ],
+    "stock": 5,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_8.jpg"
+    ]
   }
 ]
