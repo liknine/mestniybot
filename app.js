@@ -815,6 +815,7 @@ function filterProducts() {
 }
 
 // ==================== CHECKOUT ====================
+// ==================== CHECKOUT ====================
 function submitOrder() {
     const lastName = document.getElementById('customerLastName').value.trim();
     const firstName = document.getElementById('customerFirstName').value.trim();
@@ -846,73 +847,78 @@ function submitOrder() {
         }
     }
     
-    // Build order text
-    let orderText = `🛒 *НОВЫЙ ЗАКАЗ*\n\n`;
-    orderText += `👤 *Клиент:*\n`;
-    orderText += `${lastName} ${firstName}`;
-    if (middleName) orderText += ` ${middleName}`;
-    orderText += `\n📞 ${phone}\n\n`;
-    
-    orderText += `📦 *Товары:*\n`;
-    let total = 0;
-    state.cart.forEach(item => {
-        const product = state.products.find(p => p.id === item.productId);
-        if (product) {
-            const itemTotal = product.price_byn * item.quantity;
-            total += itemTotal;
-            orderText += `• ${product.name}\n`;
-            orderText += `  Размер: ${item.size}, Кол-во: ${item.quantity}\n`;
-            orderText += `  ${formatPrice(itemTotal)}\n`;
+    // Build order data
+    const orderData = {
+        items: state.cart.map(item => {
+            const product = state.products.find(p => p.id === item.productId);
+            return {
+                productId: item.productId,
+                name: product?.name,
+                size: item.size,
+                quantity: item.quantity,
+                price: product?.price_byn,
+                image: product?.images[0] // Первое фото товара
+            };
+        }),
+        total: state.cart.reduce((sum, item) => {
+            const product = state.products.find(p => p.id === item.productId);
+            return sum + (product?.price_byn || 0) * item.quantity;
+        }, 0),
+        currency: state.currency,
+        deliveryType: state.deliveryType,
+        customer: {
+            lastName: lastName,
+            firstName: firstName,
+            middleName: middleName || null,
+            phone: phone
         }
-    });
+    };
     
-    orderText += `\n💰 *Итого: ${formatPrice(total)}*\n\n`;
-    
-    orderText += `🚚 *Доставка:* `;
-    if (state.deliveryType === 'pickup') {
-        orderText += `Самовывоз\n`;
-    } else {
+    // Add delivery info
+    if (state.deliveryType === 'mail') {
+        orderData.mailService = state.mailService;
+        
         if (state.mailService === 'europochta') {
-            const branch = document.getElementById('europochtaBranch').value.trim();
-            orderText += `Европочта\n📍 Отделение: ${branch}\n`;
+            orderData.delivery = {
+                branch: document.getElementById('europochtaBranch').value.trim()
+            };
         } else if (state.mailService === 'belpochta') {
-            const index = document.getElementById('belpochtaIndex').value.trim();
-            const city = document.getElementById('belpochtaCity').value.trim();
-            const address = document.getElementById('belpochtaAddress').value.trim();
-            orderText += `Белпочта\n📍 ${index}, ${city}, ${address}\n`;
+            orderData.delivery = {
+                index: document.getElementById('belpochtaIndex').value.trim(),
+                city: document.getElementById('belpochtaCity').value.trim(),
+                address: document.getElementById('belpochtaAddress').value.trim()
+            };
         }
     }
     
-    const comment = document.getElementById('comment').value.trim();
-    if (comment) {
-        orderText += `\n💬 *Комментарий:* ${comment}`;
-    }
+    orderData.comment = document.getElementById('comment').value.trim() || null;
     
-    // Encode for URL
-    const encodedText = encodeURIComponent(orderText);
-    const adminUrl = `https://t.me/${ADMIN_USERNAME}?text=${encodedText}`;
+    console.log('📦 Sending order to bot:', orderData);
     
-    // Clear cart
-    state.cart = [];
-    saveCart();
-    
-    // Close modal
-    elements.checkoutModal.classList.remove('active');
-    
-    // Reset form
-    elements.checkoutForm.reset();
-    resetCheckoutForm();
-    
-    hapticFeedback('heavy');
-    
-    // Open admin chat
-    if (tg) {
-        tg.openTelegramLink(adminUrl);
+    // Send to Telegram bot
+    if (tg && tg.sendData) {
+        // Clear cart
+        state.cart = [];
+        saveCart();
+        
+        // Close modal
+        elements.checkoutModal.classList.remove('active');
+        
+        // Reset form
+        elements.checkoutForm.reset();
+        resetCheckoutForm();
+        
+        hapticFeedback('heavy');
+        
+        // Send data - это закроет WebApp и отправит данные боту
+        tg.sendData(JSON.stringify(orderData));
+        
     } else {
-        window.open(adminUrl, '_blank');
+        // Fallback если не в Telegram
+        console.log('⚠️ Not in Telegram WebApp');
+        showToast('Ошибка: запустите через бота');
     }
 }
-
 // ==================== SUPPORT ====================
 function openSupport() {
     const supportUrl = `https://t.me/${SUPPORT_USERNAME}`;
