@@ -817,13 +817,18 @@ function filterProducts() {
 // ==================== CHECKOUT ====================
 // ==================== CHECKOUT ====================
 function submitOrder() {
+    console.log('🔵 submitOrder() вызван');
+    
     const lastName = document.getElementById('customerLastName').value.trim();
     const firstName = document.getElementById('customerFirstName').value.trim();
     const middleName = document.getElementById('customerMiddleName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
     
+    console.log('📝 Данные формы:', { lastName, firstName, phone });
+    
     // Validation
     if (!lastName || !firstName || !phone) {
+        console.log('❌ Валидация не пройдена');
         showToast('Заполните обязательные поля');
         return;
     }
@@ -847,6 +852,8 @@ function submitOrder() {
         }
     }
     
+    console.log('✅ Валидация пройдена');
+    
     // Build order data
     const orderData = {
         items: state.cart.map(item => {
@@ -857,7 +864,7 @@ function submitOrder() {
                 size: item.size,
                 quantity: item.quantity,
                 price: product?.price_byn,
-                image: product?.images[0] // Первое фото товара
+                image: product?.images[0]
             };
         }),
         total: state.cart.reduce((sum, item) => {
@@ -893,10 +900,17 @@ function submitOrder() {
     
     orderData.comment = document.getElementById('comment').value.trim() || null;
     
-    console.log('📦 Sending order to bot:', orderData);
+    console.log('📦 Order data:', orderData);
+    console.log('🔹 tg object:', tg);
+    console.log('🔹 tg.sendData:', tg?.sendData);
+    
+    // Показываем alert для отладки
+    alert('Проверка:\n\ntg = ' + (tg ? 'есть' : 'нет') + '\nsendData = ' + (tg?.sendData ? 'есть' : 'нет'));
     
     // Send to Telegram bot
     if (tg && tg.sendData) {
+        console.log('✅ Отправляем через sendData...');
+        
         // Clear cart
         state.cart = [];
         saveCart();
@@ -905,18 +919,27 @@ function submitOrder() {
         elements.checkoutModal.classList.remove('active');
         
         // Reset form
-        elements.checkoutForm.reset();
+        if (elements.checkoutForm) {
+            elements.checkoutForm.reset();
+        }
         resetCheckoutForm();
         
         hapticFeedback('heavy');
         
-        // Send data - это закроет WebApp и отправит данные боту
-        tg.sendData(JSON.stringify(orderData));
+        try {
+            // Send data
+            const dataString = JSON.stringify(orderData);
+            console.log('📤 Отправляем данные:', dataString.substring(0, 100) + '...');
+            tg.sendData(dataString);
+            console.log('✅ sendData вызван');
+        } catch (e) {
+            console.error('❌ Ошибка sendData:', e);
+            alert('Ошибка: ' + e.message);
+        }
         
     } else {
-        // Fallback если не в Telegram
-        console.log('⚠️ Not in Telegram WebApp');
-        showToast('Ошибка: запустите через бота');
+        console.log('⚠️ Telegram WebApp недоступен');
+        alert('Telegram WebApp недоступен!\n\nОткройте приложение через кнопку в боте.');
     }
 }
 // ==================== SUPPORT ====================
