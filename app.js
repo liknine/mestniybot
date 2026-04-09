@@ -8,8 +8,11 @@ if (tg) {
 }
 
 // ==================== CONFIG ====================
-const ADMIN_USERNAME = 'liknine'; // Юзернейм админа для заказов
+const ADMIN_USERNAME = 'liknine';
 const SUPPORT_USERNAME = 'liknine';
+
+// API URL - когда бот запущен локально
+const API_URL = 'http://localhost:8080';
 
 // ==================== STATE ====================
 const state = {
@@ -40,7 +43,6 @@ const state = {
 };
 
 // Размеры по категориям
-// Размеры по категориям
 const SIZES_BY_CATEGORY = {
     shoes: [
         '36', '36.5', 
@@ -69,77 +71,48 @@ const CATEGORY_SIZE_TYPE = {
     6: 'onesize'     // Головные уборы
 };
 
-// ==================== TEST DATA ====================
-const testProducts = [
-    {
-        id: 1,
-        category_id: 1,
-        name: "Nike Air Max 270",
-        description: "Классические кроссовки Nike с технологией Air. Отличная амортизация, стильный дизайн и комфорт на весь день.",
-        price_byn: 450.00,
-        sizes: ["38", "39", "40", "41", "42", "43", "44"],
-        stock: 15,
-        images: [
-            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/skwgyqrbfzhu6ez4n45d/air-max-270-shoes-V4DfZQ.png",
-            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/qzqgvvfhcgsro9xtpw37/air-max-270-shoes-V4DfZQ.png",
-            "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/ifd7zcxgwmjhgvmtxhqv/air-max-270-shoes-V4DfZQ.png"
-        ]
-    },
-    {
-        id: 2,
-        category_id: 2,
-        name: "Зимняя куртка Puma",
-        description: "Тёплая зимняя куртка с капюшоном. Водонепроницаемая ткань, утеплитель 300г.",
-        price_byn: 680.00,
-        sizes: ["S", "M", "L", "XL", "XXL"],
-        stock: 3,
-        images: ["https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/586752/01/fnd/EEA/w/1000/h/1000/fmt/png"]
-    },
-    {
-        id: 3,
-        category_id: 3,
-        name: "Джинсы Levi's 501",
-        description: "Легендарные прямые джинсы Levi's 501. 100% хлопок, классический крой.",
-        price_byn: 320.00,
-        sizes: ["S", "M", "L", "XL"],
-        stock: 20,
-        images: ["https://lsco.scene7.com/is/image/lsco/005010101-front-pdp?fmt=jpeg&qlt=70"]
-    },
-    {
-        id: 4,
-        category_id: 4,
-        name: "Рюкзак Adidas Classic",
-        description: "Вместительный городской рюкзак с отделением для ноутбука.",
-        price_byn: 180.00,
-        sizes: ["ONE SIZE"],
-        stock: 25,
-        images: [
-            "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/add1f9c0f83e4e2c8f5aaf0800a23b9b_9366/Classic_Badge_of_Sport_Backpack_Black_HG0349_01_standard.jpg",
-            "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/45688e3f8a534f88a67faf0800a254c8_9366/Classic_Badge_of_Sport_Backpack_Black_HG0349_02_standard.jpg"
-        ]
-    },
-    {
-        id: 5,
-        category_id: 5,
-        name: "Шорты Nike Sportswear",
-        description: "Легкие спортивные шорты из дышащей ткани.",
-        price_byn: 120.00,
-        sizes: ["S", "M", "L", "XL"],
-        stock: 30,
-        images: ["https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/c1f14b06-e034-428f-bbdc-cdc1d678bb4c/sportswear-sport-essentials-woven-lined-flow-shorts-0B3QZR.png"]
-    },
-    {
-        id: 6,
-        category_id: 6,
-        name: "Кепка New Era",
-        description: "Оригинальная бейсболка New Era с прямым козырьком.",
-        price_byn: 95.00,
-        sizes: ["ONE SIZE"],
-        stock: 0,
-        images: ["https://www.neweracap.eu/globalassets/products/b9266_282/12380782/new-era-league-essential-9fifty-snapback-12380782-1.jpg"]
+// ==================== API FUNCTIONS ====================
+async function loadProducts() {
+    console.log('📦 Загружаем товары...');
+    
+    try {
+        const response = await fetch(`${API_URL}/api/products`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+        
+        if (response.ok) {
+            state.products = await response.json();
+            console.log(`✅ Загружено товаров: ${state.products.length}`);
+            return true;
+        } else {
+            console.log('❌ Ошибка загрузки:', response.status);
+            return false;
+        }
+    } catch (e) {
+        console.log('❌ API недоступен:', e.message);
+        return false;
     }
-];
+}
 
+async function loadExchangeRates() {
+    try {
+        const response = await fetch(`${API_URL}/api/rates`);
+        if (response.ok) {
+            const rates = await response.json();
+            state.exchangeRates = {
+                BYN: 1,
+                RUB: rates.RUB?.rate || 28.5,
+                USD: rates.USD?.rate || 0.31
+            };
+            console.log('✅ Курсы загружены');
+        }
+    } catch (e) {
+        console.log('⚠️ Используем стандартные курсы');
+    }
+}
 // ==================== DOM ELEMENTS ====================
 const elements = {
     // Main
@@ -1120,11 +1093,38 @@ function setActiveNav(page) {
 
 // ==================== INITIALIZATION ====================
 async function init() {
+    console.log('🚀 Запуск приложения...');
+    
+    // Показываем загрузку
+    elements.loading.classList.remove('hidden');
+    elements.productsGrid.innerHTML = '';
+    
     // Load user data from Telegram
     loadUserData();
     
-    // Load products
-    state.products = testProducts;
+    // Load products from API
+    const productsLoaded = await loadProducts();
+    
+    if (!productsLoaded || state.products.length === 0) {
+        elements.loading.classList.add('hidden');
+        elements.emptyState.style.display = 'block';
+        elements.emptyState.innerHTML = `
+            <i data-lucide="wifi-off"></i>
+            <p>Не удалось загрузить товары</p>
+            <span>Убедитесь что бот запущен</span>
+        `;
+        lucide.createIcons();
+        
+        // Всё равно инициализируем остальное
+        loadCart();
+        loadFavorites();
+        initEventListeners();
+        lucide.createIcons();
+        return;
+    }
+    
+    // Load exchange rates
+    await loadExchangeRates();
     
     // Load local data
     loadCart();
@@ -1133,7 +1133,7 @@ async function init() {
     // Init size filter
     updateSizeFilter();
     
-    // Render
+    // Render products
     renderProducts(state.products);
     updateCartBadge();
     
@@ -1143,7 +1143,7 @@ async function init() {
     // Init Lucide icons
     lucide.createIcons();
     
-    console.log('✅ App initialized');
+    console.log('✅ Приложение готово!');
 }
 
 // Start
