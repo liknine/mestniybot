@@ -1,7 +1,6 @@
 // ==================== INITIALIZATION ====================
 const tg = window.Telegram?.WebApp;
 
-// Initialize Telegram WebApp
 if (tg) {
     tg.ready();
     tg.expand();
@@ -32,114 +31,44 @@ const state = {
         username: '',
         photoUrl: null
     },
-    exchangeRates: {
-        BYN: 1,
-        RUB: 28.5,
-        USD: 0.31
-    }
+    exchangeRates: { BYN: 1, RUB: 28.5, USD: 0.31 }
 };
 
-// Размеры по категориям
 const SIZES_BY_CATEGORY = {
-    shoes: [
-        '36', '36.5', 
-        '37', '37.5', 
-        '38', '38.5', 
-        '39', '39.5', 
-        '40', '40.5', 
-        '41', '41.5', 
-        '42', '42.5', 
-        '43', '43.5', 
-        '44', '44.5', 
-        '45', '45.5', 
-        '46', '46.5'
-    ],
+    shoes: ['36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44', '44.5', '45', '45.5', '46', '46.5'],
     clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     onesize: ['ONE SIZE']
 };
 
-// Категории с типами размеров
 const CATEGORY_SIZE_TYPE = {
-    1: 'shoes',      // Обувь
-    2: 'clothing',   // Верхняя одежда
-    3: 'clothing',   // Штаны
-    4: 'onesize',    // Аксессуары
-    5: 'clothing',   // Шорты
-    6: 'onesize'     // Головные уборы
+    1: 'shoes', 2: 'clothing', 3: 'clothing',
+    4: 'onesize', 5: 'clothing', 6: 'onesize'
 };
 
 // ==================== LOAD PRODUCTS ====================
 async function loadProducts() {
     console.log('📦 Загружаем товары...');
-    
     try {
-        // Загружаем из products.json на GitHub Pages
-        const response = await fetch('products.json?' + Date.now()); // Date.now() чтобы избежать кэша
-        
+        const response = await fetch('products.json?v=' + Date.now());
         if (response.ok) {
             state.products = await response.json();
-            console.log(`✅ Загружено товаров: ${state.products.length}`);
+            console.log('✅ Загружено товаров:', state.products.length);
             return true;
-        } else {
-            console.log('❌ Файл products.json не найден');
-            return false;
         }
-    } catch (e) {
-        console.log('❌ Ошибка загрузки:', e.message);
+        console.log('❌ products.json не найден');
         return false;
-    }
-}
-// ==================== API FUNCTIONS ====================
-async function loadProducts() {
-    console.log('📦 Загружаем товары...');
-    
-    try {
-        const response = await fetch(`${API_URL}/api/products`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            }
-        });
-        
-        if (response.ok) {
-            state.products = await response.json();
-            console.log(`✅ Загружено товаров: ${state.products.length}`);
-            return true;
-        } else {
-            console.log('❌ Ошибка загрузки:', response.status);
-            return false;
-        }
     } catch (e) {
-        console.log('❌ API недоступен:', e.message);
+        console.log('❌ Ошибка:', e.message);
         return false;
     }
 }
 
-async function loadExchangeRates() {
-    try {
-        const response = await fetch(`${API_URL}/api/rates`);
-        if (response.ok) {
-            const rates = await response.json();
-            state.exchangeRates = {
-                BYN: 1,
-                RUB: rates.RUB?.rate || 28.5,
-                USD: rates.USD?.rate || 0.31
-            };
-            console.log('✅ Курсы загружены');
-        }
-    } catch (e) {
-        console.log('⚠️ Используем стандартные курсы');
-    }
-}
 // ==================== DOM ELEMENTS ====================
 const elements = {
-    // Main
     productsGrid: document.getElementById('productsGrid'),
     loading: document.getElementById('loading'),
     emptyState: document.getElementById('emptyState'),
     searchInput: document.getElementById('searchInput'),
-    
-    // Filters
     categoryDropdown: document.getElementById('categoryDropdown'),
     categoryBtn: document.getElementById('categoryBtn'),
     categoryText: document.getElementById('categoryText'),
@@ -148,12 +77,8 @@ const elements = {
     sizeBtn: document.getElementById('sizeBtn'),
     sizeText: document.getElementById('sizeText'),
     sizeMenu: document.getElementById('sizeMenu'),
-    
-    // Currency
     currencyBtn: document.getElementById('currencyBtn'),
     currencyModal: document.getElementById('currencyModal'),
-    
-    // Product Modal
     productModal: document.getElementById('productModal'),
     modalBack: document.getElementById('modalBack'),
     modalFavorite: document.getElementById('modalFavorite'),
@@ -169,8 +94,6 @@ const elements = {
     productDescription: document.getElementById('productDescription'),
     addToCartBtn: document.getElementById('addToCartBtn'),
     btnPrice: document.getElementById('btnPrice'),
-    
-    // Cart
     cartModal: document.getElementById('cartModal'),
     cartBack: document.getElementById('cartBack'),
     cartItems: document.getElementById('cartItems'),
@@ -181,8 +104,6 @@ const elements = {
     checkoutBtn: document.getElementById('checkoutBtn'),
     clearCartBtn: document.getElementById('clearCartBtn'),
     cartBadge: document.getElementById('cartBadge'),
-    
-    // Checkout
     checkoutModal: document.getElementById('checkoutModal'),
     checkoutBack: document.getElementById('checkoutBack'),
     checkoutForm: document.getElementById('checkoutForm'),
@@ -191,15 +112,11 @@ const elements = {
     belpochtaFields: document.getElementById('belpochtaFields'),
     checkoutTotal: document.getElementById('checkoutTotal'),
     submitOrder: document.getElementById('submitOrder'),
-    
-    // Favorites
     favoritesModal: document.getElementById('favoritesModal'),
     favoritesBack: document.getElementById('favoritesBack'),
     favoritesGrid: document.getElementById('favoritesGrid'),
     favoritesEmpty: document.getElementById('favoritesEmpty'),
     favoritesHeaderBtn: document.getElementById('favoritesHeaderBtn'),
-    
-    // Profile
     profileModal: document.getElementById('profileModal'),
     profileBack: document.getElementById('profileBack'),
     profileAvatar: document.getElementById('profileAvatar'),
@@ -208,14 +125,10 @@ const elements = {
     profileCartCount: document.getElementById('profileCartCount'),
     profileFavCount: document.getElementById('profileFavCount'),
     supportBtn: document.getElementById('supportBtn'),
-    
-    // Navigation
     navHome: document.getElementById('navHome'),
     navFavorites: document.getElementById('navFavorites'),
     navCart: document.getElementById('navCart'),
     navProfile: document.getElementById('navProfile'),
-    
-    // Other
     toast: document.getElementById('toast'),
     toastText: document.getElementById('toastText')
 };
@@ -224,35 +137,23 @@ const elements = {
 function formatPrice(priceByn, currency = state.currency) {
     const rate = state.exchangeRates[currency];
     const converted = priceByn * rate;
-    
     const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
-    
-    if (currency === 'USD') {
-        return `${symbols[currency]}${converted.toFixed(2)}`;
-    }
+    if (currency === 'USD') return `${symbols[currency]}${converted.toFixed(2)}`;
     return `${converted.toFixed(2)} ${symbols[currency]}`;
 }
 
 function showToast(message) {
     elements.toastText.textContent = message;
     elements.toast.classList.add('show');
-    
-    if (tg?.HapticFeedback) {
-        tg.HapticFeedback.notificationOccurred('success');
-    }
-    
-    setTimeout(() => {
-        elements.toast.classList.remove('show');
-    }, 2000);
+    if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    setTimeout(() => elements.toast.classList.remove('show'), 2000);
 }
 
 function hapticFeedback(type = 'light') {
-    if (tg?.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred(type);
-    }
+    if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(type);
 }
 
-// ==================== USER DATA ====================
+// ==================== USER ====================
 function loadUserData() {
     if (tg?.initDataUnsafe?.user) {
         const user = tg.initDataUnsafe.user;
@@ -268,76 +169,39 @@ function loadUserData() {
 }
 
 function updateProfileUI() {
-    const fullName = state.user.lastName 
-        ? `${state.user.firstName} ${state.user.lastName}`
-        : state.user.firstName;
+    const fullName = state.user.lastName ? `${state.user.firstName} ${state.user.lastName}` : state.user.firstName;
     elements.profileName.textContent = fullName;
-    
-    elements.profileUsername.textContent = state.user.username 
-        ? `@${state.user.username}` 
-        : 'Telegram User';
-    
-    if (state.user.photoUrl) {
-        elements.profileAvatar.innerHTML = `<img src="${state.user.photoUrl}" alt="Avatar">`;
-    }
-    
+    elements.profileUsername.textContent = state.user.username ? `@${state.user.username}` : 'Telegram User';
+    if (state.user.photoUrl) elements.profileAvatar.innerHTML = `<img src="${state.user.photoUrl}" alt="Avatar">`;
     updateProfileStats();
 }
 
 function updateProfileStats() {
-    const cartCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-    const favCount = state.favorites.length;
-    
-    elements.profileCartCount.textContent = cartCount;
-    elements.profileFavCount.textContent = favCount;
+    elements.profileCartCount.textContent = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    elements.profileFavCount.textContent = state.favorites.length;
 }
 
 // ==================== SIZE FILTER ====================
-// ==================== SIZE FILTER ====================
 function updateSizeFilter() {
     const categoryId = state.currentCategory === 'all' ? null : parseInt(state.currentCategory);
-    let sizes = [];
+    let sizes = categoryId ? (SIZES_BY_CATEGORY[CATEGORY_SIZE_TYPE[categoryId]] || []) : [...SIZES_BY_CATEGORY.shoes, ...SIZES_BY_CATEGORY.clothing, ...SIZES_BY_CATEGORY.onesize];
     
-    if (categoryId) {
-        const sizeType = CATEGORY_SIZE_TYPE[categoryId];
-        sizes = SIZES_BY_CATEGORY[sizeType] || [];
-    } else {
-        // Все размеры
-        sizes = [...new Set([
-            ...SIZES_BY_CATEGORY.shoes,
-            ...SIZES_BY_CATEGORY.clothing,
-            ...SIZES_BY_CATEGORY.onesize
-        ])];
-    }
-    
-    // Обновляем меню размеров
     let menuHtml = `<button class="filter-option active" data-size="all">Все размеры</button>`;
-    
-    // Группируем размеры попарно для обуви
-    if (categoryId === 1) { // Обувь
+    if (categoryId === 1) {
         for (let i = 0; i < sizes.length; i += 2) {
-            const size1 = sizes[i];
-            const size2 = sizes[i + 1];
             menuHtml += `<div class="filter-option-row">`;
-            menuHtml += `<button class="filter-option-size" data-size="${size1}">${size1}</button>`;
-            if (size2) {
-                menuHtml += `<button class="filter-option-size" data-size="${size2}">${size2}</button>`;
-            }
+            menuHtml += `<button class="filter-option-size" data-size="${sizes[i]}">${sizes[i]}</button>`;
+            if (sizes[i + 1]) menuHtml += `<button class="filter-option-size" data-size="${sizes[i + 1]}">${sizes[i + 1]}</button>`;
             menuHtml += `</div>`;
         }
     } else {
-        sizes.forEach(size => {
-            menuHtml += `<button class="filter-option" data-size="${size}">${size}</button>`;
-        });
+        sizes.forEach(size => { menuHtml += `<button class="filter-option" data-size="${size}">${size}</button>`; });
     }
     
     elements.sizeMenu.innerHTML = menuHtml;
-    
-    // Сбрасываем выбранный размер
     state.currentSize = 'all';
     elements.sizeText.textContent = 'Все размеры';
     
-    // Привязываем события
     elements.sizeMenu.querySelectorAll('.filter-option, .filter-option-size').forEach(option => {
         option.addEventListener('click', () => {
             elements.sizeMenu.querySelectorAll('.filter-option, .filter-option-size').forEach(o => o.classList.remove('active'));
@@ -351,7 +215,7 @@ function updateSizeFilter() {
     });
 }
 
-// ==================== RENDER FUNCTIONS ====================
+// ==================== RENDER ====================
 function renderProducts(products) {
     elements.loading.classList.add('hidden');
     
@@ -363,11 +227,9 @@ function renderProducts(products) {
     }
     
     elements.emptyState.style.display = 'none';
-    
     elements.productsGrid.innerHTML = products.map(product => {
         const isFavorite = state.favorites.includes(product.id);
         const stockStatus = getStockStatus(product.stock);
-        
         return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
@@ -375,19 +237,14 @@ function renderProducts(products) {
                     <button class="product-favorite ${isFavorite ? 'active' : ''}" data-id="${product.id}">
                         <i data-lucide="heart"></i>
                     </button>
-                    ${product.images.length > 1 ? `
-                        <div class="image-indicators">
-                            ${product.images.map((_, i) => `<div class="image-indicator ${i === 0 ? 'active' : ''}"></div>`).join('')}
-                        </div>
-                    ` : ''}
+                    ${product.images.length > 1 ? `<div class="image-indicators">${product.images.map((_, i) => `<div class="image-indicator ${i === 0 ? 'active' : ''}"></div>`).join('')}</div>` : ''}
                 </div>
                 <div class="product-details">
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-price">${formatPrice(product.price_byn)}</p>
                     <span class="product-status ${stockStatus.class}">${stockStatus.text}</span>
                 </div>
-            </div>
-        `;
+            </div>`;
     }).join('');
     
     lucide.createIcons();
@@ -413,14 +270,11 @@ function renderCart() {
     elements.cartFooter.style.display = 'block';
     
     let total = 0;
-    
     elements.cartItems.innerHTML = state.cart.map(item => {
         const product = state.products.find(p => p.id === item.productId);
         if (!product) return '';
-        
         const itemTotal = product.price_byn * item.quantity;
         total += itemTotal;
-        
         return `
             <div class="cart-item" data-id="${item.productId}" data-size="${item.size}">
                 <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image">
@@ -439,14 +293,12 @@ function renderCart() {
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
+            </div>`;
     }).join('');
     
     elements.cartSubtotal.textContent = formatPrice(total);
     elements.cartTotal.textContent = formatPrice(total);
     elements.checkoutTotal.textContent = formatPrice(total);
-    
     lucide.createIcons();
     attachCartListeners();
     updateCartBadge();
@@ -454,36 +306,28 @@ function renderCart() {
 
 function renderFavorites() {
     const favoriteProducts = state.products.filter(p => state.favorites.includes(p.id));
-    
     if (favoriteProducts.length === 0) {
         elements.favoritesGrid.innerHTML = '';
         elements.favoritesEmpty.style.display = 'flex';
         lucide.createIcons();
         return;
     }
-    
     elements.favoritesEmpty.style.display = 'none';
-    
     elements.favoritesGrid.innerHTML = favoriteProducts.map(product => {
         const stockStatus = getStockStatus(product.stock);
-        
         return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
                     <img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy">
-                    <button class="product-favorite active" data-id="${product.id}">
-                        <i data-lucide="heart"></i>
-                    </button>
+                    <button class="product-favorite active" data-id="${product.id}"><i data-lucide="heart"></i></button>
                 </div>
                 <div class="product-details">
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-price">${formatPrice(product.price_byn)}</p>
                     <span class="product-status ${stockStatus.class}">${stockStatus.text}</span>
                 </div>
-            </div>
-        `;
+            </div>`;
     }).join('');
-    
     lucide.createIcons();
     attachProductListeners();
 }
@@ -495,47 +339,25 @@ function updateCartBadge() {
     updateProfileStats();
 }
 
-// ==================== MODAL FUNCTIONS ====================
+// ==================== MODALS ====================
 function openProductModal(product) {
     state.selectedProduct = product;
     state.selectedSize = null;
     state.quantity = 1;
     
-    // Gallery
-    elements.galleryTrack.innerHTML = product.images.map(img => 
-        `<img src="${img}" alt="${product.name}">`
-    ).join('');
-    
-    elements.galleryDots.innerHTML = product.images.map((_, i) => 
-        `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
-    ).join('');
-    
-    // Info - только выбранная валюта
+    elements.galleryTrack.innerHTML = product.images.map(img => `<img src="${img}" alt="${product.name}">`).join('');
+    elements.galleryDots.innerHTML = product.images.map((_, i) => `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`).join('');
     elements.productTitle.textContent = product.name;
     elements.productPriceMain.textContent = formatPrice(product.price_byn);
     
     const stockStatus = getStockStatus(product.stock);
     elements.productStock.textContent = stockStatus.text;
     elements.productStock.className = `product-stock ${stockStatus.class}`;
-    
-    // Sizes
-    elements.sizesGrid.innerHTML = product.sizes.map(size => 
-        `<button class="size-chip" data-size="${size}" ${product.stock === 0 ? 'disabled' : ''}>${size}</button>`
-    ).join('');
-    
-    // Quantity
+    elements.sizesGrid.innerHTML = product.sizes.map(size => `<button class="size-chip" data-size="${size}" ${product.stock === 0 ? 'disabled' : ''}>${size}</button>`).join('');
     elements.qtyValue.textContent = state.quantity;
-    
-    // Description
     elements.productDescription.textContent = product.description;
-    
-    // Favorite button
     elements.modalFavorite.classList.toggle('active', state.favorites.includes(product.id));
-    
-    // Button
     updateAddToCartBtn();
-    
-    // Show modal
     elements.productModal.classList.add('active');
     lucide.createIcons();
     attachProductModalListeners();
@@ -549,95 +371,52 @@ function closeProductModal() {
 }
 
 function updateAddToCartBtn() {
-    const product = state.selectedProduct;
-    if (!product) return;
-    
-    const disabled = !state.selectedSize || product.stock === 0;
-    elements.addToCartBtn.disabled = disabled;
-    
-    const total = product.price_byn * state.quantity;
-    elements.btnPrice.textContent = formatPrice(total);
+    if (!state.selectedProduct) return;
+    elements.addToCartBtn.disabled = !state.selectedSize || state.selectedProduct.stock === 0;
+    elements.btnPrice.textContent = formatPrice(state.selectedProduct.price_byn * state.quantity);
 }
 
-function openCartModal() {
-    renderCart();
-    elements.cartModal.classList.add('active');
-}
-
-function openCheckoutModal() {
-    elements.cartModal.classList.remove('active');
-    elements.checkoutModal.classList.add('active');
-    resetCheckoutForm();
-}
+function openCartModal() { renderCart(); elements.cartModal.classList.add('active'); }
+function openCheckoutModal() { elements.cartModal.classList.remove('active'); elements.checkoutModal.classList.add('active'); resetCheckoutForm(); }
+function openFavoritesModal() { renderFavorites(); elements.favoritesModal.classList.add('active'); }
+function openProfileModal() { updateProfileUI(); elements.profileModal.classList.add('active'); lucide.createIcons(); }
+function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
 
 function resetCheckoutForm() {
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.delivery === 'pickup');
-    });
+    document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.delivery === 'pickup'));
     state.deliveryType = 'pickup';
     state.mailService = 'europochta';
-    
     elements.mailOptions.classList.remove('active');
     elements.europochtaFields.classList.remove('active');
     elements.belpochtaFields.classList.remove('active');
-    
     document.querySelector('input[name="mailService"][value="europochta"]').checked = true;
 }
 
 function updateDeliveryFields() {
     elements.europochtaFields.classList.remove('active');
     elements.belpochtaFields.classList.remove('active');
-    
     if (state.deliveryType === 'mail') {
         elements.mailOptions.classList.add('active');
-        
-        if (state.mailService === 'europochta') {
-            elements.europochtaFields.classList.add('active');
-        } else if (state.mailService === 'belpochta') {
-            elements.belpochtaFields.classList.add('active');
-        }
+        if (state.mailService === 'europochta') elements.europochtaFields.classList.add('active');
+        else if (state.mailService === 'belpochta') elements.belpochtaFields.classList.add('active');
     } else {
         elements.mailOptions.classList.remove('active');
     }
 }
 
-function openFavoritesModal() {
-    renderFavorites();
-    elements.favoritesModal.classList.add('active');
-}
-
-function openProfileModal() {
-    updateProfileUI();
-    elements.profileModal.classList.add('active');
-    lucide.createIcons();
-}
-
-function closeAllModals() {
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.classList.remove('active');
-    });
-}
-
-// ==================== EVENT LISTENERS ====================
+// ==================== LISTENERS ====================
 function attachProductListeners() {
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (e.target.closest('.product-favorite')) return;
-            
-            const id = parseInt(card.dataset.id);
-            const product = state.products.find(p => p.id === id);
-            if (product) {
-                hapticFeedback();
-                openProductModal(product);
-            }
+            const product = state.products.find(p => p.id === parseInt(card.dataset.id));
+            if (product) { hapticFeedback(); openProductModal(product); }
         });
     });
-    
     document.querySelectorAll('.product-favorite').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const id = parseInt(btn.dataset.id);
-            toggleFavorite(id);
+            toggleFavorite(parseInt(btn.dataset.id));
             btn.classList.toggle('active');
             hapticFeedback('medium');
         });
@@ -646,15 +425,9 @@ function attachProductListeners() {
 
 function attachProductModalListeners() {
     elements.galleryTrack.addEventListener('scroll', () => {
-        const scrollLeft = elements.galleryTrack.scrollLeft;
-        const width = elements.galleryTrack.offsetWidth;
-        const index = Math.round(scrollLeft / width);
-        
-        document.querySelectorAll('.gallery-dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
+        const index = Math.round(elements.galleryTrack.scrollLeft / elements.galleryTrack.offsetWidth);
+        document.querySelectorAll('.gallery-dot').forEach((dot, i) => dot.classList.toggle('active', i === index));
     });
-    
     elements.sizesGrid.querySelectorAll('.size-chip').forEach(chip => {
         chip.addEventListener('click', () => {
             elements.sizesGrid.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
@@ -673,14 +446,12 @@ function attachCartListeners() {
             updateCartItemQty(parseInt(item.dataset.id), item.dataset.size, -1);
         });
     });
-    
     document.querySelectorAll('.cart-qty-plus').forEach(btn => {
         btn.addEventListener('click', () => {
             const item = btn.closest('.cart-item');
             updateCartItemQty(parseInt(item.dataset.id), item.dataset.size, 1);
         });
     });
-    
     document.querySelectorAll('.cart-item-delete').forEach(btn => {
         btn.addEventListener('click', () => {
             const item = btn.closest('.cart-item');
@@ -689,24 +460,12 @@ function attachCartListeners() {
     });
 }
 
-// ==================== CART FUNCTIONS ====================
+// ==================== CART ====================
 function addToCart() {
     if (!state.selectedProduct || !state.selectedSize) return;
-    
-    const existingItem = state.cart.find(
-        item => item.productId === state.selectedProduct.id && item.size === state.selectedSize
-    );
-    
-    if (existingItem) {
-        existingItem.quantity += state.quantity;
-    } else {
-        state.cart.push({
-            productId: state.selectedProduct.id,
-            size: state.selectedSize,
-            quantity: state.quantity
-        });
-    }
-    
+    const existingItem = state.cart.find(item => item.productId === state.selectedProduct.id && item.size === state.selectedSize);
+    if (existingItem) existingItem.quantity += state.quantity;
+    else state.cart.push({ productId: state.selectedProduct.id, size: state.selectedSize, quantity: state.quantity });
     saveCart();
     updateCartBadge();
     showToast('Добавлено в корзину');
@@ -716,16 +475,9 @@ function addToCart() {
 function updateCartItemQty(productId, size, delta) {
     const item = state.cart.find(i => i.productId === productId && i.size === size);
     if (!item) return;
-    
     item.quantity += delta;
-    
-    if (item.quantity <= 0) {
-        removeFromCart(productId, size);
-    } else {
-        saveCart();
-        renderCart();
-    }
-    
+    if (item.quantity <= 0) removeFromCart(productId, size);
+    else { saveCart(); renderCart(); }
     hapticFeedback();
 }
 
@@ -736,77 +488,34 @@ function removeFromCart(productId, size) {
     hapticFeedback('medium');
 }
 
-function clearCart() {
-    state.cart = [];
-    saveCart();
-    renderCart();
-    hapticFeedback('medium');
-}
+function clearCart() { state.cart = []; saveCart(); renderCart(); hapticFeedback('medium'); }
+function saveCart() { localStorage.setItem('cart', JSON.stringify(state.cart)); updateCartBadge(); }
+function loadCart() { const saved = localStorage.getItem('cart'); if (saved) { state.cart = JSON.parse(saved); updateCartBadge(); } }
 
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(state.cart));
-    updateCartBadge();
-}
-
-function loadCart() {
-    const saved = localStorage.getItem('cart');
-    if (saved) {
-        state.cart = JSON.parse(saved);
-        updateCartBadge();
-    }
-}
-
-// ==================== FAVORITES FUNCTIONS ====================
+// ==================== FAVORITES ====================
 function toggleFavorite(productId) {
     const index = state.favorites.indexOf(productId);
-    if (index === -1) {
-        state.favorites.push(productId);
-    } else {
-        state.favorites.splice(index, 1);
-    }
+    if (index === -1) state.favorites.push(productId);
+    else state.favorites.splice(index, 1);
     saveFavorites();
     updateProfileStats();
 }
 
-function saveFavorites() {
-    localStorage.setItem('favorites', JSON.stringify(state.favorites));
-}
+function saveFavorites() { localStorage.setItem('favorites', JSON.stringify(state.favorites)); }
+function loadFavorites() { const saved = localStorage.getItem('favorites'); if (saved) state.favorites = JSON.parse(saved); }
 
-function loadFavorites() {
-    const saved = localStorage.getItem('favorites');
-    if (saved) {
-        state.favorites = JSON.parse(saved);
-    }
-}
-
-// ==================== FILTER FUNCTIONS ====================
+// ==================== FILTER ====================
 function filterProducts() {
     let filtered = state.products;
-    
-    // Category filter
-    if (state.currentCategory !== 'all') {
-        filtered = filtered.filter(p => p.category_id === parseInt(state.currentCategory));
-    }
-    
-    // Size filter
-    if (state.currentSize !== 'all') {
-        filtered = filtered.filter(p => p.sizes.includes(state.currentSize));
-    }
-    
-    // Search filter
+    if (state.currentCategory !== 'all') filtered = filtered.filter(p => p.category_id === parseInt(state.currentCategory));
+    if (state.currentSize !== 'all') filtered = filtered.filter(p => p.sizes.includes(state.currentSize));
     if (state.searchQuery) {
         const query = state.searchQuery.toLowerCase();
-        filtered = filtered.filter(p => 
-            p.name.toLowerCase().includes(query) ||
-            p.description.toLowerCase().includes(query)
-        );
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
     }
-    
     renderProducts(filtered);
 }
 
-// ==================== CHECKOUT ====================
-// ==================== CHECKOUT ====================
 // ==================== CHECKOUT ====================
 function submitOrder() {
     const lastName = document.getElementById('customerLastName').value.trim();
@@ -814,39 +523,16 @@ function submitOrder() {
     const middleName = document.getElementById('customerMiddleName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
     
-    // Validation
-    if (!lastName || !firstName || !phone) {
-        showToast('Заполните обязательные поля');
-        return;
-    }
+    if (!lastName || !firstName || !phone) { showToast('Заполните обязательные поля'); return; }
     
-    // Additional validation for delivery
     if (state.deliveryType === 'mail') {
-        if (state.mailService === 'europochta') {
-            const branch = document.getElementById('europochtaBranch').value.trim();
-            if (!branch) {
-                showToast('Укажите номер отделения');
-                return;
-            }
-        } else if (state.mailService === 'belpochta') {
-            const index = document.getElementById('belpochtaIndex').value.trim();
-            const city = document.getElementById('belpochtaCity').value.trim();
-            const address = document.getElementById('belpochtaAddress').value.trim();
-            if (!index || !city || !address) {
-                showToast('Заполните адрес доставки');
-                return;
-            }
+        if (state.mailService === 'europochta' && !document.getElementById('europochtaBranch').value.trim()) { showToast('Укажите номер отделения'); return; }
+        if (state.mailService === 'belpochta') {
+            if (!document.getElementById('belpochtaIndex').value.trim() || !document.getElementById('belpochtaCity').value.trim() || !document.getElementById('belpochtaAddress').value.trim()) { showToast('Заполните адрес доставки'); return; }
         }
     }
     
-    // Build order text
-    let orderText = `🛒 НОВЫЙ ЗАКАЗ\n\n`;
-    orderText += `👤 Клиент:\n`;
-    orderText += `${lastName} ${firstName}`;
-    if (middleName) orderText += ` ${middleName}`;
-    orderText += `\n📞 ${phone}\n\n`;
-    
-    orderText += `📦 Товары:\n`;
+    let orderText = `🛒 НОВЫЙ ЗАКАЗ\n\n👤 Клиент:\n${lastName} ${firstName}${middleName ? ' ' + middleName : ''}\n📞 ${phone}\n\n📦 Товары:\n`;
     let total = 0;
     
     state.cart.forEach((item, index) => {
@@ -854,82 +540,41 @@ function submitOrder() {
         if (product) {
             const itemTotal = product.price_byn * item.quantity;
             total += itemTotal;
-            orderText += `\n${index + 1}. ${product.name}\n`;
-            orderText += `   Размер: ${item.size}\n`;
-            orderText += `   Кол-во: ${item.quantity}\n`;
-            orderText += `   Цена: ${formatPrice(itemTotal)}\n`;
-            orderText += `   Фото: ${product.images[0]}\n`;
+            orderText += `\n${index + 1}. ${product.name}\n   Размер: ${item.size}\n   Кол-во: ${item.quantity}\n   Цена: ${formatPrice(itemTotal)}\n   Фото: ${product.images[0]}\n`;
         }
     });
     
-    orderText += `\n💰 Итого: ${formatPrice(total)}\n\n`;
-    
-    orderText += `🚚 Доставка: `;
-    if (state.deliveryType === 'pickup') {
-        orderText += `Самовывоз\n`;
-    } else {
-        if (state.mailService === 'europochta') {
-            const branch = document.getElementById('europochtaBranch').value.trim();
-            orderText += `Европочта\n📍 Отделение: ${branch}\n`;
-        } else if (state.mailService === 'belpochta') {
-            const index = document.getElementById('belpochtaIndex').value.trim();
-            const city = document.getElementById('belpochtaCity').value.trim();
-            const address = document.getElementById('belpochtaAddress').value.trim();
-            orderText += `Белпочта\n📍 ${index}, ${city}, ${address}\n`;
-        }
+    orderText += `\n💰 Итого: ${formatPrice(total)}\n\n🚚 Доставка: `;
+    if (state.deliveryType === 'pickup') orderText += `Самовывоз\n`;
+    else {
+        if (state.mailService === 'europochta') orderText += `Европочта\n📍 Отделение: ${document.getElementById('europochtaBranch').value.trim()}\n`;
+        else if (state.mailService === 'belpochta') orderText += `Белпочта\n📍 ${document.getElementById('belpochtaIndex').value.trim()}, ${document.getElementById('belpochtaCity').value.trim()}, ${document.getElementById('belpochtaAddress').value.trim()}\n`;
     }
     
     const comment = document.getElementById('comment').value.trim();
-    if (comment) {
-        orderText += `\n💬 Комментарий: ${comment}`;
-    }
+    if (comment) orderText += `\n💬 Комментарий: ${comment}`;
     
-    // Encode for URL
-    const encodedText = encodeURIComponent(orderText);
-    const adminUrl = `https://t.me/${ADMIN_USERNAME}?text=${encodedText}`;
-    
-    // Clear cart
     state.cart = [];
     saveCart();
-    
-    // Close modal
     elements.checkoutModal.classList.remove('active');
-    
-    // Reset form
-    if (elements.checkoutForm) {
-        elements.checkoutForm.reset();
-    }
+    if (elements.checkoutForm) elements.checkoutForm.reset();
     resetCheckoutForm();
-    
     hapticFeedback('heavy');
     
-    // Open admin chat
-    if (tg) {
-        tg.openTelegramLink(adminUrl);
-    } else {
-        window.open(adminUrl, '_blank');
-    }
-}
-// ==================== SUPPORT ====================
-function openSupport() {
-    const supportUrl = `https://t.me/${SUPPORT_USERNAME}`;
-    
-    if (tg) {
-        tg.openTelegramLink(supportUrl);
-    } else {
-        window.open(supportUrl, '_blank');
-    }
+    const adminUrl = `https://t.me/${ADMIN_USERNAME}?text=${encodeURIComponent(orderText)}`;
+    if (tg) tg.openTelegramLink(adminUrl);
+    else window.open(adminUrl, '_blank');
 }
 
-// ==================== INIT EVENT LISTENERS ====================
+function openSupport() {
+    const url = `https://t.me/${SUPPORT_USERNAME}`;
+    if (tg) tg.openTelegramLink(url);
+    else window.open(url, '_blank');
+}
+
+// ==================== INIT LISTENERS ====================
 function initEventListeners() {
-    // Category dropdown
-    elements.categoryBtn.addEventListener('click', () => {
-        elements.categoryDropdown.classList.toggle('open');
-        elements.sizeDropdown.classList.remove('open');
-        hapticFeedback();
-    });
-    
+    elements.categoryBtn.addEventListener('click', () => { elements.categoryDropdown.classList.toggle('open'); elements.sizeDropdown.classList.remove('open'); hapticFeedback(); });
     elements.categoryMenu.querySelectorAll('.filter-option').forEach(option => {
         option.addEventListener('click', () => {
             elements.categoryMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
@@ -943,223 +588,93 @@ function initEventListeners() {
         });
     });
     
-    // Size dropdown
-    elements.sizeBtn.addEventListener('click', () => {
-        elements.sizeDropdown.classList.toggle('open');
-        elements.categoryDropdown.classList.remove('open');
-        hapticFeedback();
-    });
+    elements.sizeBtn.addEventListener('click', () => { elements.sizeDropdown.classList.toggle('open'); elements.categoryDropdown.classList.remove('open'); hapticFeedback(); });
     
-    // Close dropdowns on outside click
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.filter-dropdown')) {
-            elements.categoryDropdown.classList.remove('open');
-            elements.sizeDropdown.classList.remove('open');
-        }
-        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyModal')) {
-            elements.currencyModal.classList.remove('active');
-        }
+        if (!e.target.closest('.filter-dropdown')) { elements.categoryDropdown.classList.remove('open'); elements.sizeDropdown.classList.remove('open'); }
+        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyModal')) elements.currencyModal.classList.remove('active');
     });
     
-    // Search
     let searchTimeout;
-    elements.searchInput.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            state.searchQuery = e.target.value.trim();
-            filterProducts();
-        }, 300);
-    });
+    elements.searchInput.addEventListener('input', (e) => { clearTimeout(searchTimeout); searchTimeout = setTimeout(() => { state.searchQuery = e.target.value.trim(); filterProducts(); }, 300); });
     
-    // Currency
-    elements.currencyBtn.addEventListener('click', () => {
-        elements.currencyModal.classList.toggle('active');
-        hapticFeedback();
-    });
-    
+    elements.currencyBtn.addEventListener('click', () => { elements.currencyModal.classList.toggle('active'); hapticFeedback(); });
     document.querySelectorAll('.dropdown-item[data-currency]').forEach(item => {
         item.addEventListener('click', () => {
-            const currency = item.dataset.currency;
-            state.currency = currency;
-            
+            state.currency = item.dataset.currency;
             document.querySelectorAll('.dropdown-item[data-currency]').forEach(i => i.classList.remove('active'));
             item.classList.add('active');
-            
-            elements.currencyBtn.querySelector('.currency-text').textContent = currency;
+            elements.currencyBtn.querySelector('.currency-text').textContent = item.dataset.currency;
             elements.currencyModal.classList.remove('active');
-            
             filterProducts();
             renderCart();
-            if (state.selectedProduct) {
-                elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn);
-                updateAddToCartBtn();
-            }
+            if (state.selectedProduct) { elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn); updateAddToCartBtn(); }
             hapticFeedback();
         });
     });
     
-    // Product modal
     elements.modalBack.addEventListener('click', closeProductModal);
     elements.productModal.querySelector('.modal-overlay').addEventListener('click', closeProductModal);
-    
-    elements.modalFavorite.addEventListener('click', () => {
-        if (!state.selectedProduct) return;
-        toggleFavorite(state.selectedProduct.id);
-        elements.modalFavorite.classList.toggle('active');
-        hapticFeedback('medium');
-    });
-    
-    elements.qtyMinus.addEventListener('click', () => {
-        if (state.quantity > 1) {
-            state.quantity--;
-            elements.qtyValue.textContent = state.quantity;
-            updateAddToCartBtn();
-            hapticFeedback();
-        }
-    });
-    
-    elements.qtyPlus.addEventListener('click', () => {
-        if (state.quantity < 10) {
-            state.quantity++;
-            elements.qtyValue.textContent = state.quantity;
-            updateAddToCartBtn();
-            hapticFeedback();
-        }
-    });
-    
+    elements.modalFavorite.addEventListener('click', () => { if (!state.selectedProduct) return; toggleFavorite(state.selectedProduct.id); elements.modalFavorite.classList.toggle('active'); hapticFeedback('medium'); });
+    elements.qtyMinus.addEventListener('click', () => { if (state.quantity > 1) { state.quantity--; elements.qtyValue.textContent = state.quantity; updateAddToCartBtn(); hapticFeedback(); } });
+    elements.qtyPlus.addEventListener('click', () => { if (state.quantity < 10) { state.quantity++; elements.qtyValue.textContent = state.quantity; updateAddToCartBtn(); hapticFeedback(); } });
     elements.addToCartBtn.addEventListener('click', addToCart);
     
-    // Cart
-    elements.navCart.addEventListener('click', () => {
-        openCartModal();
-        setActiveNav('cart');
-    });
+    elements.navCart.addEventListener('click', () => { openCartModal(); setActiveNav('cart'); });
     elements.cartBack.addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.cartModal.querySelector('.modal-overlay').addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.clearCartBtn.addEventListener('click', clearCart);
     elements.checkoutBtn.addEventListener('click', openCheckoutModal);
     
-    // Checkout
-    elements.checkoutBack.addEventListener('click', () => {
-        elements.checkoutModal.classList.remove('active');
-        openCartModal();
-    });
+    elements.checkoutBack.addEventListener('click', () => { elements.checkoutModal.classList.remove('active'); openCartModal(); });
     elements.checkoutModal.querySelector('.modal-overlay').addEventListener('click', () => elements.checkoutModal.classList.remove('active'));
+    document.querySelectorAll('.toggle-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.deliveryType = btn.dataset.delivery; updateDeliveryFields(); hapticFeedback(); }); });
+    document.querySelectorAll('input[name="mailService"]').forEach(radio => { radio.addEventListener('change', (e) => { state.mailService = e.target.value; updateDeliveryFields(); hapticFeedback(); }); });
+    elements.submitOrder.addEventListener('click', (e) => { e.preventDefault(); submitOrder(); });
     
-    // Delivery type toggle
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            state.deliveryType = btn.dataset.delivery;
-            updateDeliveryFields();
-            hapticFeedback();
-        });
-    });
-    
-    // Mail service selection
-    document.querySelectorAll('input[name="mailService"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            state.mailService = e.target.value;
-            updateDeliveryFields();
-            hapticFeedback();
-        });
-    });
-    
-    // Submit order button
-    elements.submitOrder.addEventListener('click', (e) => {
-        e.preventDefault();
-        submitOrder();
-    });
-    
-    // Favorites
-    elements.navFavorites.addEventListener('click', () => {
-        openFavoritesModal();
-        setActiveNav('favorites');
-    });
+    elements.navFavorites.addEventListener('click', () => { openFavoritesModal(); setActiveNav('favorites'); });
     elements.favoritesHeaderBtn.addEventListener('click', openFavoritesModal);
     elements.favoritesBack.addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
     elements.favoritesModal.querySelector('.modal-overlay').addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
     
-    // Profile
-    elements.navProfile.addEventListener('click', () => {
-        openProfileModal();
-        setActiveNav('profile');
-    });
+    elements.navProfile.addEventListener('click', () => { openProfileModal(); setActiveNav('profile'); });
     elements.profileBack.addEventListener('click', () => elements.profileModal.classList.remove('active'));
     elements.profileModal.querySelector('.modal-overlay').addEventListener('click', () => elements.profileModal.classList.remove('active'));
+    elements.supportBtn.addEventListener('click', () => { openSupport(); hapticFeedback(); });
     
-    // Support button
-    elements.supportBtn.addEventListener('click', () => {
-        openSupport();
-        hapticFeedback();
-    });
-    
-    // Navigation
-    elements.navHome.addEventListener('click', () => {
-        closeAllModals();
-        setActiveNav('home');
-        hapticFeedback();
-    });
+    elements.navHome.addEventListener('click', () => { closeAllModals(); setActiveNav('home'); hapticFeedback(); });
 }
 
-function setActiveNav(page) {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.page === page);
-    });
-}
+function setActiveNav(page) { document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page)); }
 
-// ==================== INITIALIZATION ====================
+// ==================== INIT ====================
 async function init() {
-    console.log('🚀 Запуск приложения...');
-    
-    // Показываем загрузку
+    console.log('🚀 Запуск...');
     elements.loading.classList.remove('hidden');
     elements.productsGrid.innerHTML = '';
     
-    // Load user data from Telegram
     loadUserData();
+    const loaded = await loadProducts();
     
-    // Load products from JSON
-    const productsLoaded = await loadProducts();
-    
-    if (!productsLoaded || state.products.length === 0) {
+    if (!loaded || state.products.length === 0) {
         elements.loading.classList.add('hidden');
         elements.emptyState.style.display = 'block';
-        elements.emptyState.innerHTML = `
-            <i data-lucide="package"></i>
-            <p>Товаров пока нет</p>
-            <span>Скоро здесь появятся новинки!</span>
-        `;
+        elements.emptyState.innerHTML = '<i data-lucide="package"></i><p>Товаров пока нет</p><span>Скоро здесь появятся новинки!</span>';
         lucide.createIcons();
-        
-        // Инициализируем остальное
         loadCart();
         loadFavorites();
         initEventListeners();
-        lucide.createIcons();
         return;
     }
     
-    // Load local data
     loadCart();
     loadFavorites();
-    
-    // Init size filter
     updateSizeFilter();
-    
-    // Render products
     renderProducts(state.products);
     updateCartBadge();
-    
-    // Init listeners
     initEventListeners();
-    
-    // Init Lucide icons
     lucide.createIcons();
-    
-    console.log('✅ Приложение готово!');
+    console.log('✅ Готово!');
 }
 
-// Start
 document.addEventListener('DOMContentLoaded', init);
