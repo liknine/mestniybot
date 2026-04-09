@@ -31,12 +31,12 @@ const state = {
         username: '',
         photoUrl: null
     },
-    exchangeRates: { BYN: 1, RUB: 28.5, USD: 0.31 }
+    exchangeRates: { BYN: 1, RUB: 28.5, EUR: 0.29, USD: 0.31 }
 };
 
 const SIZES_BY_CATEGORY = {
-    shoes: ['36', '36.5', '37', '37.5', '38', '38.5', '39', '39.5', '40', '40.5', '41', '41.5', '42', '42.5', '43', '43.5', '44', '44.5', '45', '45.5', '46', '46.5'],
-    clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    shoes: ['36','36.5','37','37.5','38','38.5','39','39.5','40','40.5','41','41.5','42','42.5','43','43.5','44','44.5','45','45.5','46','46.5'],
+    clothing: ['XS','S','M','L','XL','XXL','XXXL'],
     onesize: ['ONE SIZE']
 };
 
@@ -55,7 +55,6 @@ async function loadProducts() {
             console.log('✅ Загружено товаров:', state.products.length);
             return true;
         }
-        console.log('❌ products.json не найден');
         return false;
     } catch (e) {
         console.log('❌ Ошибка:', e.message);
@@ -110,6 +109,7 @@ const elements = {
     mailOptions: document.getElementById('mailOptions'),
     europochtaFields: document.getElementById('europochtaFields'),
     belpochtaFields: document.getElementById('belpochtaFields'),
+    cdekFields: document.getElementById('cdekFields'),
     checkoutTotal: document.getElementById('checkoutTotal'),
     submitOrder: document.getElementById('submitOrder'),
     favoritesModal: document.getElementById('favoritesModal'),
@@ -134,12 +134,35 @@ const elements = {
 };
 
 // ==================== UTILITIES ====================
-function formatPrice(priceByn, currency = state.currency) {
-    const rate = state.exchangeRates[currency];
+function formatPrice(priceByn, currency = state.currency, product = null) {
+    const symbols = { BYN: 'BYN', RUB: '₽', EUR: '€', USD: '$' };
+    
+    // Если у товара есть свои цены — используем их
+    if (product && product.prices && product.prices[currency]) {
+        const price = product.prices[currency];
+        if (currency === 'USD' || currency === 'EUR') return `${symbols[currency]}${price.toFixed(2)}`;
+        return `${price.toFixed(2)} ${symbols[currency]}`;
+    }
+    
+    // Иначе конвертируем из BYN
+    const rate = state.exchangeRates[currency] || 1;
     const converted = priceByn * rate;
-    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
-    if (currency === 'USD') return `${symbols[currency]}${converted.toFixed(2)}`;
+    if (currency === 'USD' || currency === 'EUR') return `${symbols[currency]}${converted.toFixed(2)}`;
     return `${converted.toFixed(2)} ${symbols[currency]}`;
+}
+
+function getItemPrice(product, quantity = 1) {
+    if (product && product.prices && product.prices[state.currency]) {
+        return product.prices[state.currency] * quantity;
+    }
+    return product.price_byn * quantity * (state.exchangeRates[state.currency] || 1);
+}
+
+function formatItemPrice(totalInCurrency) {
+    const symbols = { BYN: 'BYN', RUB: '₽', EUR: '€', USD: '$' };
+    const currency = state.currency;
+    if (currency === 'USD' || currency === 'EUR') return `${symbols[currency]}${totalInCurrency.toFixed(2)}`;
+    return `${totalInCurrency.toFixed(2)} ${symbols[currency]}`;
 }
 
 function showToast(message) {
@@ -187,6 +210,7 @@ function updateSizeFilter() {
     let sizes = categoryId ? (SIZES_BY_CATEGORY[CATEGORY_SIZE_TYPE[categoryId]] || []) : [...SIZES_BY_CATEGORY.shoes, ...SIZES_BY_CATEGORY.clothing, ...SIZES_BY_CATEGORY.onesize];
     
     let menuHtml = `<button class="filter-option active" data-size="all">Все размеры</button>`;
+    
     if (categoryId === 1) {
         for (let i = 0; i < sizes.length; i += 2) {
             menuHtml += `<div class="filter-option-row">`;
@@ -233,7 +257,8 @@ function renderProducts(products) {
         return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
-                    <img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy">
+                    <img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy"
+                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2240%22>📷</text></svg>'">
                     <button class="product-favorite ${isFavorite ? 'active' : ''}" data-id="${product.id}">
                         <i data-lucide="heart"></i>
                     </button>
@@ -241,7 +266,7 @@ function renderProducts(products) {
                 </div>
                 <div class="product-details">
                     <h3 class="product-name">${product.name}</h3>
-                    <p class="product-price">${formatPrice(product.price_byn)}</p>
+                    <p class="product-price">${formatPrice(product.price_byn, state.currency, product)}</p>
                     <span class="product-status ${stockStatus.class}">${stockStatus.text}</span>
                 </div>
             </div>`;
@@ -273,16 +298,17 @@ function renderCart() {
     elements.cartItems.innerHTML = state.cart.map(item => {
         const product = state.products.find(p => p.id === item.productId);
         if (!product) return '';
-        const itemTotal = product.price_byn * item.quantity;
+        const itemTotal = getItemPrice(product, item.quantity);
         total += itemTotal;
         return `
             <div class="cart-item" data-id="${item.productId}" data-size="${item.size}">
-                <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image">
+                <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image"
+                     onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2240%22>📷</text></svg>'">
                 <div class="cart-item-info">
                     <h4 class="cart-item-name">${product.name}</h4>
                     <p class="cart-item-size">Размер: ${item.size}</p>
                     <div class="cart-item-bottom">
-                        <span class="cart-item-price">${formatPrice(itemTotal)}</span>
+                        <span class="cart-item-price">${formatItemPrice(itemTotal)}</span>
                         <div class="cart-item-actions">
                             <div class="cart-item-qty">
                                 <button class="cart-qty-minus"><i data-lucide="minus"></i></button>
@@ -296,9 +322,9 @@ function renderCart() {
             </div>`;
     }).join('');
     
-    elements.cartSubtotal.textContent = formatPrice(total);
-    elements.cartTotal.textContent = formatPrice(total);
-    elements.checkoutTotal.textContent = formatPrice(total);
+    elements.cartSubtotal.textContent = formatItemPrice(total);
+    elements.cartTotal.textContent = formatItemPrice(total);
+    elements.checkoutTotal.textContent = formatItemPrice(total);
     lucide.createIcons();
     attachCartListeners();
     updateCartBadge();
@@ -323,7 +349,7 @@ function renderFavorites() {
                 </div>
                 <div class="product-details">
                     <h3 class="product-name">${product.name}</h3>
-                    <p class="product-price">${formatPrice(product.price_byn)}</p>
+                    <p class="product-price">${formatPrice(product.price_byn, state.currency, product)}</p>
                     <span class="product-status ${stockStatus.class}">${stockStatus.text}</span>
                 </div>
             </div>`;
@@ -345,15 +371,22 @@ function openProductModal(product) {
     state.selectedSize = null;
     state.quantity = 1;
     
-    elements.galleryTrack.innerHTML = product.images.map(img => `<img src="${img}" alt="${product.name}">`).join('');
-    elements.galleryDots.innerHTML = product.images.map((_, i) => `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`).join('');
+    elements.galleryTrack.innerHTML = product.images.map(img =>
+        `<img src="${img}" alt="${product.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22><rect fill=%22%23f0f0f0%22 width=%22400%22 height=%22400%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2260%22>📷</text></svg>'">`
+    ).join('');
+    elements.galleryDots.innerHTML = product.images.map((_, i) => `<div class="gallery-dot ${i === 0 ? 'active' : ''}"></div>`).join('');
+    
     elements.productTitle.textContent = product.name;
-    elements.productPriceMain.textContent = formatPrice(product.price_byn);
+    elements.productPriceMain.textContent = formatPrice(product.price_byn, state.currency, product);
     
     const stockStatus = getStockStatus(product.stock);
     elements.productStock.textContent = stockStatus.text;
     elements.productStock.className = `product-stock ${stockStatus.class}`;
-    elements.sizesGrid.innerHTML = product.sizes.map(size => `<button class="size-chip" data-size="${size}" ${product.stock === 0 ? 'disabled' : ''}>${size}</button>`).join('');
+    
+    elements.sizesGrid.innerHTML = product.sizes.map(size =>
+        `<button class="size-chip" data-size="${size}" ${product.stock === 0 ? 'disabled' : ''}>${size}</button>`
+    ).join('');
+    
     elements.qtyValue.textContent = state.quantity;
     elements.productDescription.textContent = product.description;
     elements.modalFavorite.classList.toggle('active', state.favorites.includes(product.id));
@@ -373,14 +406,20 @@ function closeProductModal() {
 function updateAddToCartBtn() {
     if (!state.selectedProduct) return;
     elements.addToCartBtn.disabled = !state.selectedSize || state.selectedProduct.stock === 0;
-    elements.btnPrice.textContent = formatPrice(state.selectedProduct.price_byn * state.quantity);
+    const total = getItemPrice(state.selectedProduct, state.quantity);
+    elements.btnPrice.textContent = formatItemPrice(total);
 }
 
 function openCartModal() { renderCart(); elements.cartModal.classList.add('active'); }
-function openCheckoutModal() { elements.cartModal.classList.remove('active'); elements.checkoutModal.classList.add('active'); resetCheckoutForm(); }
 function openFavoritesModal() { renderFavorites(); elements.favoritesModal.classList.add('active'); }
 function openProfileModal() { updateProfileUI(); elements.profileModal.classList.add('active'); lucide.createIcons(); }
 function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
+
+function openCheckoutModal() {
+    elements.cartModal.classList.remove('active');
+    elements.checkoutModal.classList.add('active');
+    resetCheckoutForm();
+}
 
 function resetCheckoutForm() {
     document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.delivery === 'pickup'));
@@ -389,16 +428,21 @@ function resetCheckoutForm() {
     elements.mailOptions.classList.remove('active');
     elements.europochtaFields.classList.remove('active');
     elements.belpochtaFields.classList.remove('active');
-    document.querySelector('input[name="mailService"][value="europochta"]').checked = true;
+    elements.cdekFields.classList.remove('active');
+    const euroRadio = document.querySelector('input[name="mailService"][value="europochta"]');
+    if (euroRadio) euroRadio.checked = true;
 }
 
 function updateDeliveryFields() {
     elements.europochtaFields.classList.remove('active');
     elements.belpochtaFields.classList.remove('active');
+    elements.cdekFields.classList.remove('active');
+    
     if (state.deliveryType === 'mail') {
         elements.mailOptions.classList.add('active');
         if (state.mailService === 'europochta') elements.europochtaFields.classList.add('active');
         else if (state.mailService === 'belpochta') elements.belpochtaFields.classList.add('active');
+        else if (state.mailService === 'cdek') elements.cdekFields.classList.add('active');
     } else {
         elements.mailOptions.classList.remove('active');
     }
@@ -466,10 +510,7 @@ function addToCart() {
     const existingItem = state.cart.find(item => item.productId === state.selectedProduct.id && item.size === state.selectedSize);
     if (existingItem) existingItem.quantity += state.quantity;
     else state.cart.push({ productId: state.selectedProduct.id, size: state.selectedSize, quantity: state.quantity });
-    saveCart();
-    updateCartBadge();
-    showToast('Добавлено в корзину');
-    closeProductModal();
+    saveCart(); updateCartBadge(); showToast('Добавлено в корзину'); closeProductModal();
 }
 
 function updateCartItemQty(productId, size, delta) {
@@ -483,9 +524,7 @@ function updateCartItemQty(productId, size, delta) {
 
 function removeFromCart(productId, size) {
     state.cart = state.cart.filter(i => !(i.productId === productId && i.size === size));
-    saveCart();
-    renderCart();
-    hapticFeedback('medium');
+    saveCart(); renderCart(); hapticFeedback('medium');
 }
 
 function clearCart() { state.cart = []; saveCart(); renderCart(); hapticFeedback('medium'); }
@@ -497,8 +536,7 @@ function toggleFavorite(productId) {
     const index = state.favorites.indexOf(productId);
     if (index === -1) state.favorites.push(productId);
     else state.favorites.splice(index, 1);
-    saveFavorites();
-    updateProfileStats();
+    saveFavorites(); updateProfileStats();
 }
 
 function saveFavorites() { localStorage.setItem('favorites', JSON.stringify(state.favorites)); }
@@ -525,35 +563,62 @@ function submitOrder() {
     
     if (!lastName || !firstName || !phone) { showToast('Заполните обязательные поля'); return; }
     
+    // Delivery validation
     if (state.deliveryType === 'mail') {
-        if (state.mailService === 'europochta' && !document.getElementById('europochtaBranch').value.trim()) { showToast('Укажите номер отделения'); return; }
-        if (state.mailService === 'belpochta') {
+        if (state.mailService === 'europochta') {
+            if (!document.getElementById('europochtaBranch').value.trim()) { showToast('Укажите номер отделения'); return; }
+        } else if (state.mailService === 'belpochta') {
             if (!document.getElementById('belpochtaIndex').value.trim() || !document.getElementById('belpochtaCity').value.trim() || !document.getElementById('belpochtaAddress').value.trim()) { showToast('Заполните адрес доставки'); return; }
+        } else if (state.mailService === 'cdek') {
+            if (!document.getElementById('cdekCountry').value.trim() || !document.getElementById('cdekCity').value.trim() || !document.getElementById('cdekPvz').value.trim()) { showToast('Заполните данные для CDEK'); return; }
         }
     }
     
-    let orderText = `🛒 НОВЫЙ ЗАКАЗ\n\n👤 Клиент:\n${lastName} ${firstName}${middleName ? ' ' + middleName : ''}\n📞 ${phone}\n\n📦 Товары:\n`;
-    let total = 0;
+    // Build order text
+    let orderText = `🛒 НОВЫЙ ЗАКАЗ\n\n`;
+    orderText += `👤 Клиент:\n${lastName} ${firstName}${middleName ? ' ' + middleName : ''}\n📞 ${phone}\n\n`;
+    orderText += `💱 Валюта: ${state.currency}\n\n`;
+    orderText += `📦 Товары:\n`;
     
+    let total = 0;
     state.cart.forEach((item, index) => {
         const product = state.products.find(p => p.id === item.productId);
         if (product) {
-            const itemTotal = product.price_byn * item.quantity;
+            const itemTotal = getItemPrice(product, item.quantity);
             total += itemTotal;
-            orderText += `\n${index + 1}. ${product.name}\n   Размер: ${item.size}\n   Кол-во: ${item.quantity}\n   Цена: ${formatPrice(itemTotal)}\n   Фото: ${product.images[0]}\n`;
+            orderText += `\n${index + 1}. ${product.name}\n`;
+            orderText += `   Размер: ${item.size}\n`;
+            orderText += `   Кол-во: ${item.quantity}\n`;
+            orderText += `   Цена: ${formatItemPrice(itemTotal)}\n`;
+            orderText += `   Фото: ${product.images[0]}\n`;
         }
     });
     
-    orderText += `\n💰 Итого: ${formatPrice(total)}\n\n🚚 Доставка: `;
-    if (state.deliveryType === 'pickup') orderText += `Самовывоз\n`;
-    else {
-        if (state.mailService === 'europochta') orderText += `Европочта\n📍 Отделение: ${document.getElementById('europochtaBranch').value.trim()}\n`;
-        else if (state.mailService === 'belpochta') orderText += `Белпочта\n📍 ${document.getElementById('belpochtaIndex').value.trim()}, ${document.getElementById('belpochtaCity').value.trim()}, ${document.getElementById('belpochtaAddress').value.trim()}\n`;
+    orderText += `\n💰 Итого: ${formatItemPrice(total)}\n\n`;
+    orderText += `🚚 Доставка: `;
+    
+    if (state.deliveryType === 'pickup') {
+        orderText += `Самовывоз\n`;
+    } else {
+        if (state.mailService === 'europochta') {
+            orderText += `Европочта\n📍 Отделение: ${document.getElementById('europochtaBranch').value.trim()}\n`;
+        } else if (state.mailService === 'belpochta') {
+            orderText += `Белпочта\n`;
+            orderText += `📮 Индекс: ${document.getElementById('belpochtaIndex').value.trim()}\n`;
+            orderText += `🏙 Город: ${document.getElementById('belpochtaCity').value.trim()}\n`;
+            orderText += `📍 Адрес: ${document.getElementById('belpochtaAddress').value.trim()}\n`;
+        } else if (state.mailService === 'cdek') {
+            orderText += `CDEK\n`;
+            orderText += `🌍 Страна: ${document.getElementById('cdekCountry').value.trim()}\n`;
+            orderText += `🏙 Город: ${document.getElementById('cdekCity').value.trim()}\n`;
+            orderText += `📦 ПВЗ: ${document.getElementById('cdekPvz').value.trim()}\n`;
+        }
     }
     
     const comment = document.getElementById('comment').value.trim();
     if (comment) orderText += `\n💬 Комментарий: ${comment}`;
     
+    // Clear & close
     state.cart = [];
     saveCart();
     elements.checkoutModal.classList.remove('active');
@@ -561,6 +626,7 @@ function submitOrder() {
     resetCheckoutForm();
     hapticFeedback('heavy');
     
+    // Open admin chat
     const adminUrl = `https://t.me/${ADMIN_USERNAME}?text=${encodeURIComponent(orderText)}`;
     if (tg) tg.openTelegramLink(adminUrl);
     else window.open(adminUrl, '_blank');
@@ -574,6 +640,7 @@ function openSupport() {
 
 // ==================== INIT LISTENERS ====================
 function initEventListeners() {
+    // Filters
     elements.categoryBtn.addEventListener('click', () => { elements.categoryDropdown.classList.toggle('open'); elements.sizeDropdown.classList.remove('open'); hapticFeedback(); });
     elements.categoryMenu.querySelectorAll('.filter-option').forEach(option => {
         option.addEventListener('click', () => {
@@ -595,9 +662,11 @@ function initEventListeners() {
         if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyModal')) elements.currencyModal.classList.remove('active');
     });
     
+    // Search
     let searchTimeout;
     elements.searchInput.addEventListener('input', (e) => { clearTimeout(searchTimeout); searchTimeout = setTimeout(() => { state.searchQuery = e.target.value.trim(); filterProducts(); }, 300); });
     
+    // Currency
     elements.currencyBtn.addEventListener('click', () => { elements.currencyModal.classList.toggle('active'); hapticFeedback(); });
     document.querySelectorAll('.dropdown-item[data-currency]').forEach(item => {
         item.addEventListener('click', () => {
@@ -608,11 +677,15 @@ function initEventListeners() {
             elements.currencyModal.classList.remove('active');
             filterProducts();
             renderCart();
-            if (state.selectedProduct) { elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn); updateAddToCartBtn(); }
+            if (state.selectedProduct) {
+                elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn, state.currency, state.selectedProduct);
+                updateAddToCartBtn();
+            }
             hapticFeedback();
         });
     });
     
+    // Product modal
     elements.modalBack.addEventListener('click', closeProductModal);
     elements.productModal.querySelector('.modal-overlay').addEventListener('click', closeProductModal);
     elements.modalFavorite.addEventListener('click', () => { if (!state.selectedProduct) return; toggleFavorite(state.selectedProduct.id); elements.modalFavorite.classList.toggle('active'); hapticFeedback('medium'); });
@@ -620,28 +693,43 @@ function initEventListeners() {
     elements.qtyPlus.addEventListener('click', () => { if (state.quantity < 10) { state.quantity++; elements.qtyValue.textContent = state.quantity; updateAddToCartBtn(); hapticFeedback(); } });
     elements.addToCartBtn.addEventListener('click', addToCart);
     
+    // Cart
     elements.navCart.addEventListener('click', () => { openCartModal(); setActiveNav('cart'); });
     elements.cartBack.addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.cartModal.querySelector('.modal-overlay').addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.clearCartBtn.addEventListener('click', clearCart);
     elements.checkoutBtn.addEventListener('click', openCheckoutModal);
     
+    // Checkout
     elements.checkoutBack.addEventListener('click', () => { elements.checkoutModal.classList.remove('active'); openCartModal(); });
     elements.checkoutModal.querySelector('.modal-overlay').addEventListener('click', () => elements.checkoutModal.classList.remove('active'));
-    document.querySelectorAll('.toggle-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.deliveryType = btn.dataset.delivery; updateDeliveryFields(); hapticFeedback(); }); });
-    document.querySelectorAll('input[name="mailService"]').forEach(radio => { radio.addEventListener('change', (e) => { state.mailService = e.target.value; updateDeliveryFields(); hapticFeedback(); }); });
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.deliveryType = btn.dataset.delivery;
+            updateDeliveryFields();
+            hapticFeedback();
+        });
+    });
+    document.querySelectorAll('input[name="mailService"]').forEach(radio => {
+        radio.addEventListener('change', (e) => { state.mailService = e.target.value; updateDeliveryFields(); hapticFeedback(); });
+    });
     elements.submitOrder.addEventListener('click', (e) => { e.preventDefault(); submitOrder(); });
     
+    // Favorites
     elements.navFavorites.addEventListener('click', () => { openFavoritesModal(); setActiveNav('favorites'); });
     elements.favoritesHeaderBtn.addEventListener('click', openFavoritesModal);
     elements.favoritesBack.addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
     elements.favoritesModal.querySelector('.modal-overlay').addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
     
+    // Profile
     elements.navProfile.addEventListener('click', () => { openProfileModal(); setActiveNav('profile'); });
     elements.profileBack.addEventListener('click', () => elements.profileModal.classList.remove('active'));
     elements.profileModal.querySelector('.modal-overlay').addEventListener('click', () => elements.profileModal.classList.remove('active'));
     elements.supportBtn.addEventListener('click', () => { openSupport(); hapticFeedback(); });
     
+    // Navigation
     elements.navHome.addEventListener('click', () => { closeAllModals(); setActiveNav('home'); hapticFeedback(); });
 }
 
