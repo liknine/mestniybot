@@ -1635,3 +1635,207 @@ body {
     font-weight: 600;
     color: white;
 }
+
+
+/* ==================== CURRENCY TOGGLE - как на скриншоте ==================== */
+.currency-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card);
+    border-radius: var(--radius-md);
+    padding: 6px 8px;
+    margin-bottom: 12px;
+    border: 2px solid var(--primary);
+    gap: 0;
+}
+
+.currency-btn {
+    flex: 1;
+    height: 38px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    padding: 0 16px;
+}
+
+.currency-btn.active {
+    background: var(--gradient-premium);
+    color: white;
+    box-shadow: var(--shadow-green);
+}
+
+.currency-btn:not(.active):active {
+    background: var(--primary-bg);
+}
+
+.currency-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-strong);
+}
+
+/* ==================== FILTERS - горизонтальный скролл ==================== */
+.filters-wrapper {
+    position: sticky;
+    top: 170px;
+    z-index: 90;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+}
+
+.filters-scroll {
+    display: flex;
+    gap: 10px;
+    padding: 0 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filters-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* ==================== FILTER CHIPS ==================== */
+.filter-chip-dropdown {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 14px;
+    border: 2px solid var(--border-strong);
+    border-radius: 20px;
+    background: var(--card);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.filter-chip svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease;
+}
+
+.filter-chip:active {
+    transform: scale(0.96);
+}
+
+.filter-chip-dropdown.open .filter-chip {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+}
+
+.filter-chip-dropdown.open .filter-chip svg {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+.filter-chip.has-value {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+}
+
+/* ==================== DROPDOWN MENU ==================== */
+.filter-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 200px;
+    max-width: 280px;
+    max-height: 350px;
+    overflow-y: auto;
+    background: var(--card);
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.filter-chip-dropdown.open .filter-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.filter-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-dropdown-item:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+.filter-dropdown-item:active,
+.filter-dropdown-item.active {
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+}
+
+.filter-dropdown-item.active {
+    font-weight: 600;
+}
+
+/* Size Grid в dropdown для обуви */
+.filter-sizes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 12px;
+}
+
+.filter-size-chip {
+    height: 40px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-xs);
+    background: var(--card);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-size-chip:active {
+    transform: scale(0.95);
+}
+
+.filter-size-chip.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
