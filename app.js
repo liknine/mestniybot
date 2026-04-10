@@ -233,6 +233,64 @@ function updateProfileStats() {
 }
 
 // ==================== FILTERS ====================
+// ==================== SIZE FILTER ====================
+function updateSizeFilter() {
+    const sizeMenu = document.getElementById('sizeMenu');
+    const sizeBtn = document.getElementById('sizeBtn');
+    const sizeDropdown = document.getElementById('sizeDropdown');
+    
+    if (!sizeMenu) return;
+    
+    const categoryId = state.currentCategory === 'all' ? null : parseInt(state.currentCategory);
+    let sizes = [];
+    
+    if (categoryId && CATEGORIES[categoryId]) {
+        sizes = SIZES_BY_CATEGORY[CATEGORIES[categoryId].sizeType] || [];
+    } else {
+        // Показываем все размеры
+        sizes = [...new Set([...SIZES_BY_CATEGORY.clothing, ...SIZES_BY_CATEGORY.shoes])];
+    }
+    
+    let menuHtml = `<button class="filter-dropdown-item active" data-size="all">Все размеры</button>`;
+    
+    // Для обуви — сетка
+    if (categoryId === 1) {
+        menuHtml += `<div class="filter-sizes-grid">`;
+        sizes.forEach(size => {
+            menuHtml += `<button class="filter-size-chip" data-size="${size}">${size}</button>`;
+        });
+        menuHtml += `</div>`;
+    } else {
+        // Для одежды — список
+        sizes.forEach(size => { 
+            menuHtml += `<button class="filter-dropdown-item" data-size="${size}">${size}</button>`; 
+        });
+    }
+    
+    sizeMenu.innerHTML = menuHtml;
+    state.currentSize = 'all';
+    document.getElementById('sizeText').textContent = 'Размер';
+    if (sizeBtn) sizeBtn.classList.remove('has-value');
+    
+    // Attach listeners to new items
+    sizeMenu.querySelectorAll('.filter-dropdown-item, .filter-size-chip').forEach(item => {
+        item.addEventListener('click', () => {
+            sizeMenu.querySelectorAll('.filter-dropdown-item, .filter-size-chip').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            state.currentSize = item.dataset.size;
+            
+            const text = item.dataset.size === 'all' ? 'Размер' : item.dataset.size;
+            document.getElementById('sizeText').textContent = text;
+            
+            // Update chip style
+            if (sizeBtn) sizeBtn.classList.toggle('has-value', item.dataset.size !== 'all');
+            
+            if (sizeDropdown) sizeDropdown.classList.remove('open');
+            filterProducts();
+            hapticFeedback();
+        });
+    });
+}
 function filterProducts() {
     let filtered = [...state.products];
     
@@ -246,10 +304,6 @@ function filterProducts() {
         filtered = filtered.filter(p => p.brand === state.currentBrand);
     }
     
-    // Size filter
-    if (state.currentSize !== 'all') {
-        filtered = filtered.filter(p => p.sizes && p.sizes.includes(state.currentSize));
-    }
     
     // Search filter
     if (state.searchQuery) {
@@ -798,52 +852,87 @@ function initListeners() {
         filterProducts();
     });
     
-    // Category dropdown
-    elements.categoryBtn.addEventListener('click', () => {
-        closeAllDropdowns();
-        elements.categoryDropdown.classList.toggle('open');
-    });
+    // ===== FILTER DROPDOWNS =====
     
-    elements.categoryMenu.querySelectorAll('.filter-option').forEach(option => {
-        option.addEventListener('click', () => {
-            elements.categoryMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
-            option.classList.add('active');
-            state.currentCategory = option.dataset.category;
-            elements.categoryText.textContent = option.textContent;
-            elements.categoryDropdown.classList.remove('open');
-            updateSizeFilter();
-            filterProducts();
-            hapticFeedback();
+
+    
+    if (categoryBtn && categoryDropdown) {
+        categoryBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAllDropdowns();
+            categoryDropdown.classList.toggle('open');
         });
-    });
+    }
+    
+    if (categoryMenu) {
+        categoryMenu.querySelectorAll('.filter-dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                categoryMenu.querySelectorAll('.filter-dropdown-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                state.currentCategory = item.dataset.category;
+                
+                const text = item.dataset.category === 'all' ? 'Категория' : item.textContent.trim();
+                document.getElementById('categoryText').textContent = text;
+                
+                // Update chip style
+                categoryBtn.classList.toggle('has-value', item.dataset.category !== 'all');
+                
+                categoryDropdown.classList.remove('open');
+                updateSizeFilter();
+                filterProducts();
+                hapticFeedback();
+            });
+        });
+    }
     
     // Brand dropdown
-    elements.brandBtn.addEventListener('click', () => {
-        closeAllDropdowns();
-        elements.brandDropdown.classList.toggle('open');
-    });
+    const brandBtn = document.getElementById('brandBtn');
+    const brandDropdown = document.getElementById('brandDropdown');
+    const brandMenu = document.getElementById('brandMenu');
     
-    elements.brandMenu.querySelectorAll('.filter-option').forEach(option => {
-        option.addEventListener('click', () => {
-            elements.brandMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
-            option.classList.add('active');
-            state.currentBrand = option.dataset.brand;
-            elements.brandText.textContent = option.textContent;
-            elements.brandDropdown.classList.remove('open');
-            filterProducts();
-            hapticFeedback();
+    if (brandBtn && brandDropdown) {
+        brandBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAllDropdowns();
+            brandDropdown.classList.toggle('open');
         });
-    });
+    }
+    
+    if (brandMenu) {
+        brandMenu.querySelectorAll('.filter-dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                brandMenu.querySelectorAll('.filter-dropdown-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                state.currentBrand = item.dataset.brand;
+                
+                const text = item.dataset.brand === 'all' ? 'Бренд' : item.textContent.trim();
+                document.getElementById('brandText').textContent = text;
+                
+                // Update chip style
+                brandBtn.classList.toggle('has-value', item.dataset.brand !== 'all');
+                
+                brandDropdown.classList.remove('open');
+                filterProducts();
+                hapticFeedback();
+            });
+        });
+    }
     
     // Size dropdown
-    elements.sizeBtn.addEventListener('click', () => {
-        closeAllDropdowns();
-        elements.sizeDropdown.classList.toggle('open');
-    });
+    const sizeBtn = document.getElementById('sizeBtn');
+    const sizeDropdown = document.getElementById('sizeDropdown');
+    
+    if (sizeBtn && sizeDropdown) {
+        sizeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAllDropdowns();
+            sizeDropdown.classList.toggle('open');
+        });
+    }
     
     // Close dropdowns on outside click
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.filter-dropdown')) {
+        if (!e.target.closest('.filter-chip-dropdown')) {
             closeAllDropdowns();
         }
     });
@@ -934,15 +1023,8 @@ function initListeners() {
 }
 
 function closeAllDropdowns() {
-    document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.filter-chip-dropdown').forEach(d => d.classList.remove('open'));
 }
-
-function setActiveNav(page) {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.page === page);
-    });
-}
-
 // ==================== INIT ====================
 async function init() {
     console.log('🚀 Инициализация приложения...');
