@@ -21,5 +21,28 @@
     "images": [
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_15.jpg"
     ]
+  },
+  {
+    "id": 2,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Stone island off dye",
+    "description": "10/10",
+    "price_byn": 1000.0,
+    "prices": {
+      "BYN": 1000.0,
+      "RUB": 27500.0,
+      "USD": 340.0
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_16.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_17.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_18.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_19.jpg"
+    ]
   }
 ]
