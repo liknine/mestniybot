@@ -31,7 +31,7 @@ const state = {
         username: '',
         photoUrl: null
     },
-    exchangeRates: { BYN: 1, RUB: 28.5, EUR: 0.29, USD: 0.31 }
+    exchangeRates: { BYN: 1, RUB: 28.5, USD: 0.31 }
 };
 
 const SIZES_BY_CATEGORY = {
