@@ -14,89 +14,90 @@
 </head>
 <body>
     <div class="app">
-<!-- Header -->
-<header class="header">
-    <div class="header-top">
-        <h1 class="logo">MESTNIY | STORE</h1>
-        <button class="icon-btn" id="favoritesHeaderBtn">
-            <i data-lucide="heart"></i>
-        </button>
-    </div>
-    
-    <!-- Currency Toggle - как на скриншоте -->
-    <div class="currency-toggle">
-        <button class="currency-btn active" data-currency="BYN">BYN</button>
-        <div class="currency-divider"></div>
-        <button class="currency-btn" data-currency="RUB">RUB</button>
-        <div class="currency-divider"></div>
-        <button class="currency-btn" data-currency="USD">USD</button>
-    </div>
-    
-    <div class="search-container">
-        <i data-lucide="search" class="search-icon"></i>
-        <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
-    </div>
-</header>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <h1 class="logo">MESTNIY | STORE</h1>
+                <button class="icon-btn" id="favoritesHeaderBtn">
+                    <i data-lucide="heart"></i>
+                </button>
+            </div>
+            
+            <!-- Currency Toggle -->
+            <div class="currency-toggle">
+                <button class="currency-btn active" data-currency="BYN">BYN</button>
+                <div class="currency-divider"></div>
+                <button class="currency-btn" data-currency="RUB">RUB</button>
+                <div class="currency-divider"></div>
+                <button class="currency-btn" data-currency="USD">USD</button>
+            </div>
+            
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
+            </div>
+        </header>
 
-<!-- Filters - горизонтальный скролл как на скриншоте -->
-<div class="filters-wrapper">
-    <div class="filters-scroll">
-        <!-- Category Filter -->
-        <div class="filter-chip-dropdown" id="categoryDropdown">
-            <button class="filter-chip" id="categoryBtn">
-                <span id="categoryText">Категория</span>
-                <i data-lucide="chevron-down"></i>
-            </button>
-            <div class="filter-dropdown-menu" id="categoryMenu">
-                <button class="filter-dropdown-item active" data-category="all">Все категории</button>
-                <button class="filter-dropdown-item" data-category="1">👟 Обувь</button>
-                <button class="filter-dropdown-item" data-category="2">🧥 Куртки / Пуховики</button>
-                <button class="filter-dropdown-item" data-category="3">🦺 Жилетки</button>
-                <button class="filter-dropdown-item" data-category="4">👔 Рубашки</button>
-                <button class="filter-dropdown-item" data-category="5">👕 Футболки / Поло</button>
-                <button class="filter-dropdown-item" data-category="6">🧶 Кофты</button>
-                <button class="filter-dropdown-item" data-category="7">👖 Штаны</button>
-                <button class="filter-dropdown-item" data-category="8">🩳 Шорты</button>
-                <button class="filter-dropdown-item" data-category="9">🧢 Головные уборы</button>
-                <button class="filter-dropdown-item" data-category="10">🎒 Аксессуары</button>
+        <!-- Filters -->
+        <div class="filters-wrapper">
+            <div class="filters-scroll" id="filtersScroll">
+                <!-- Category -->
+                <div class="filter-chip-wrapper">
+                    <button class="filter-chip" id="categoryChip">
+                        <span>Категория</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown" id="categoryDropdown">
+                        <div class="filter-dropdown-item active" data-value="all">Все категории</div>
+                        <div class="filter-dropdown-item" data-value="1">👟 Обувь</div>
+                        <div class="filter-dropdown-item" data-value="2">🧥 Куртки / Пуховики</div>
+                        <div class="filter-dropdown-item" data-value="3">🦺 Жилетки</div>
+                        <div class="filter-dropdown-item" data-value="4">👔 Рубашки</div>
+                        <div class="filter-dropdown-item" data-value="5">👕 Футболки / Поло</div>
+                        <div class="filter-dropdown-item" data-value="6">🧶 Кофты</div>
+                        <div class="filter-dropdown-item" data-value="7">👖 Штаны</div>
+                        <div class="filter-dropdown-item" data-value="8">🩳 Шорты</div>
+                        <div class="filter-dropdown-item" data-value="9">🧢 Головные уборы</div>
+                        <div class="filter-dropdown-item" data-value="10">🎒 Аксессуары</div>
+                    </div>
+                </div>
+                
+                <!-- Brand -->
+                <div class="filter-chip-wrapper">
+                    <button class="filter-chip" id="brandChip">
+                        <span>Бренд</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown" id="brandDropdown">
+                        <div class="filter-dropdown-item active" data-value="all">Все бренды</div>
+                        <div class="filter-dropdown-item" data-value="stone_island">Stone Island</div>
+                        <div class="filter-dropdown-item" data-value="nike">Nike</div>
+                        <div class="filter-dropdown-item" data-value="adidas">Adidas</div>
+                        <div class="filter-dropdown-item" data-value="raf_simons">Raf Simons</div>
+                        <div class="filter-dropdown-item" data-value="cp_company">CP Company</div>
+                        <div class="filter-dropdown-item" data-value="gucci">Gucci</div>
+                        <div class="filter-dropdown-item" data-value="balenciaga">Balenciaga</div>
+                        <div class="filter-dropdown-item" data-value="number_nine">Number Nine</div>
+                        <div class="filter-dropdown-item" data-value="maison_margiela">Maison Margiela</div>
+                        <div class="filter-dropdown-item" data-value="rick_owens">Rick Owens</div>
+                        <div class="filter-dropdown-item" data-value="bape">Bape</div>
+                        <div class="filter-dropdown-item" data-value="gosha">Гоша Рубчинский</div>
+                    </div>
+                </div>
+                
+                <!-- Size -->
+                <div class="filter-chip-wrapper">
+                    <button class="filter-chip" id="sizeChip">
+                        <span>Размер</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown" id="sizeDropdown">
+                        <div class="filter-dropdown-item active" data-value="all">Все размеры</div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <!-- Brand Filter -->
-        <div class="filter-chip-dropdown" id="brandDropdown">
-            <button class="filter-chip" id="brandBtn">
-                <span id="brandText">Бренд</span>
-                <i data-lucide="chevron-down"></i>
-            </button>
-            <div class="filter-dropdown-menu" id="brandMenu">
-                <button class="filter-dropdown-item active" data-brand="all">Все бренды</button>
-                <button class="filter-dropdown-item" data-brand="stone_island">Stone Island</button>
-                <button class="filter-dropdown-item" data-brand="nike">Nike</button>
-                <button class="filter-dropdown-item" data-brand="adidas">Adidas</button>
-                <button class="filter-dropdown-item" data-brand="raf_simons">Raf Simons</button>
-                <button class="filter-dropdown-item" data-brand="cp_company">CP Company</button>
-                <button class="filter-dropdown-item" data-brand="gucci">Gucci</button>
-                <button class="filter-dropdown-item" data-brand="balenciaga">Balenciaga</button>
-                <button class="filter-dropdown-item" data-brand="number_nine">Number Nine</button>
-                <button class="filter-dropdown-item" data-brand="maison_margiela">Maison Margiela</button>
-                <button class="filter-dropdown-item" data-brand="rick_owens">Rick Owens</button>
-                <button class="filter-dropdown-item" data-brand="bape">Bape</button>
-                <button class="filter-dropdown-item" data-brand="gosha">Гоша Рубчинский</button>
-            </div>
-        </div>
-        
-        <!-- Size Filter -->
-        <div class="filter-chip-dropdown" id="sizeDropdown">
-            <button class="filter-chip" id="sizeBtn">
-                <span id="sizeText">Размер</span>
-                <i data-lucide="chevron-down"></i>
-            </button>
-            <div class="filter-dropdown-menu" id="sizeMenu">
-                <button class="filter-dropdown-item active" data-size="all">Все размеры</button>
-            </div>
-        </div>
-    </div>
-</div>
+
         <!-- Products Grid -->
         <main class="products-grid" id="productsGrid"></main>
 
@@ -115,7 +116,7 @@
     <!-- Product Modal -->
     <div class="modal" id="productModal">
         <div class="modal-overlay"></div>
-        <div class="modal-content modal-scroll">
+        <div class="modal-content">
             <div class="modal-header">
                 <button class="modal-back" id="modalBack">
                     <i data-lucide="chevron-left"></i>
@@ -213,7 +214,6 @@
             </div>
             
             <form class="checkout-form" id="checkoutForm">
-                <!-- Delivery Type -->
                 <div class="form-section">
                     <h3 class="form-section-title">Способ получения</h3>
                     <div class="toggle-group">
@@ -222,7 +222,6 @@
                     </div>
                 </div>
                 
-                <!-- Mail Service -->
                 <div class="form-section mail-options" id="mailOptions">
                     <h3 class="form-section-title">Служба доставки</h3>
                     <div class="radio-cards">
@@ -250,7 +249,6 @@
                     </div>
                 </div>
                 
-                <!-- Contact Info -->
                 <div class="form-section">
                     <h3 class="form-section-title">Контактные данные</h3>
                     <div class="input-group">
@@ -260,14 +258,13 @@
                         <input type="text" class="form-input" id="customerFirstName" placeholder="Имя *" required>
                     </div>
                     <div class="input-group">
-                        <input type="text" class="form-input" id="customerMiddleName" placeholder="Отчество (необязательно)">
+                        <input type="text" class="form-input" id="customerMiddleName" placeholder="Отчество">
                     </div>
                     <div class="input-group">
                         <input type="tel" class="form-input" id="customerPhone" placeholder="Телефон *" required>
                     </div>
                 </div>
                 
-                <!-- Europochta Fields -->
                 <div class="form-section europochta-fields" id="europochtaFields">
                     <h3 class="form-section-title">Данные для Европочты</h3>
                     <div class="input-group">
@@ -275,7 +272,6 @@
                     </div>
                 </div>
                 
-                <!-- Belpochta Fields -->
                 <div class="form-section belpochta-fields" id="belpochtaFields">
                     <h3 class="form-section-title">Адрес доставки</h3>
                     <div class="input-group">
@@ -289,7 +285,6 @@
                     </div>
                 </div>
                 
-                <!-- CDEK Fields -->
                 <div class="form-section cdek-fields" id="cdekFields">
                     <h3 class="form-section-title">Данные для CDEK</h3>
                     <div class="input-group">
@@ -303,7 +298,6 @@
                     </div>
                 </div>
                 
-                <!-- Comment -->
                 <div class="form-section">
                     <h3 class="form-section-title">Комментарий</h3>
                     <textarea class="form-input form-textarea" id="comment" placeholder="Пожелания к заказу"></textarea>
