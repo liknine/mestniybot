@@ -18,15 +18,18 @@
         <header class="header">
             <div class="header-top">
                 <h1 class="logo">MESTNIY | STORE</h1>
-                <div class="header-actions">
-                    <button class="icon-btn" id="currencyBtn">
-                        <span class="currency-text">BYN</span>
-                    </button>
-                    <button class="icon-btn" id="favoritesHeaderBtn">
-                        <i data-lucide="heart"></i>
-                    </button>
-                </div>
+                <button class="icon-btn" id="favoritesHeaderBtn">
+                    <i data-lucide="heart"></i>
+                </button>
             </div>
+            
+            <!-- Currency Toggle -->
+            <div class="currency-toggle" id="currencyToggle">
+                <button class="currency-btn active" data-currency="BYN">BYN</button>
+                <button class="currency-btn" data-currency="RUB">RUB</button>
+                <button class="currency-btn" data-currency="USD">USD</button>
+            </div>
+            
             <div class="search-container">
                 <i data-lucide="search" class="search-icon"></i>
                 <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
@@ -44,17 +47,43 @@
                     <div class="filter-menu" id="categoryMenu">
                         <button class="filter-option active" data-category="all">Все категории</button>
                         <button class="filter-option" data-category="1">👟 Обувь</button>
-                        <button class="filter-option" data-category="2">🧥 Верхняя одежда</button>
-                        <button class="filter-option" data-category="3">👖 Штаны</button>
-                        <button class="filter-option" data-category="4">🎒 Аксессуары</button>
-                        <button class="filter-option" data-category="5">🩳 Шорты</button>
-                        <button class="filter-option" data-category="6">🧢 Головные уборы</button>
+                        <button class="filter-option" data-category="2">🧥 Куртки / Пуховики</button>
+                        <button class="filter-option" data-category="3">🦺 Жилетки</button>
+                        <button class="filter-option" data-category="4">👔 Рубашки</button>
+                        <button class="filter-option" data-category="5">👕 Футболки / Поло</button>
+                        <button class="filter-option" data-category="6">🧶 Кофты</button>
+                        <button class="filter-option" data-category="7">👖 Штаны</button>
+                        <button class="filter-option" data-category="8">🩳 Шорты</button>
+                        <button class="filter-option" data-category="9">🧢 Головные уборы</button>
+                        <button class="filter-option" data-category="10">🎒 Аксессуары</button>
+                    </div>
+                </div>
+                
+                <div class="filter-dropdown" id="brandDropdown">
+                    <button class="filter-btn" id="brandBtn">
+                        <span id="brandText">Все бренды</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="filter-menu" id="brandMenu">
+                        <button class="filter-option active" data-brand="all">Все бренды</button>
+                        <button class="filter-option" data-brand="stone_island">Stone Island</button>
+                        <button class="filter-option" data-brand="nike">Nike</button>
+                        <button class="filter-option" data-brand="adidas">Adidas</button>
+                        <button class="filter-option" data-brand="raf_simons">Raf Simons</button>
+                        <button class="filter-option" data-brand="cp_company">CP Company</button>
+                        <button class="filter-option" data-brand="gucci">Gucci</button>
+                        <button class="filter-option" data-brand="balenciaga">Balenciaga</button>
+                        <button class="filter-option" data-brand="number_nine">Number Nine</button>
+                        <button class="filter-option" data-brand="maison_margiela">Maison Margiela</button>
+                        <button class="filter-option" data-brand="rick_owens">Rick Owens</button>
+                        <button class="filter-option" data-brand="bape">Bape</button>
+                        <button class="filter-option" data-brand="gosha">Гоша Рубчинский</button>
                     </div>
                 </div>
                 
                 <div class="filter-dropdown" id="sizeDropdown">
                     <button class="filter-btn" id="sizeBtn">
-                        <span id="sizeText">Все размеры</span>
+                        <span id="sizeText">Размер</span>
                         <i data-lucide="chevron-down"></i>
                     </button>
                     <div class="filter-menu" id="sizeMenu">
@@ -82,7 +111,7 @@
     <!-- Product Modal -->
     <div class="modal" id="productModal">
         <div class="modal-overlay"></div>
-        <div class="modal-content">
+        <div class="modal-content modal-scroll">
             <div class="modal-header">
                 <button class="modal-back" id="modalBack">
                     <i data-lucide="chevron-left"></i>
@@ -92,42 +121,32 @@
                 </button>
             </div>
             
-            <div class="gallery" id="gallery">
-                <div class="gallery-track" id="galleryTrack"></div>
-                <div class="gallery-dots" id="galleryDots"></div>
-            </div>
-            
-            <div class="product-info">
-                <div class="product-header">
-                    <h1 class="product-title" id="productTitle"></h1>
-                    <div class="product-price-main" id="productPriceMain"></div>
+            <div class="product-scroll-content">
+                <div class="gallery" id="gallery">
+                    <div class="gallery-track" id="galleryTrack"></div>
+                    <div class="gallery-dots" id="galleryDots"></div>
                 </div>
                 
-                <div class="product-meta">
-                    <span class="product-stock" id="productStock"></span>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Размер</h3>
-                    <div class="sizes-grid" id="sizesGrid"></div>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Количество</h3>
-                    <div class="quantity-controls">
-                        <button class="qty-btn" id="qtyMinus">
-                            <i data-lucide="minus"></i>
-                        </button>
-                        <span class="qty-value" id="qtyValue">1</span>
-                        <button class="qty-btn" id="qtyPlus">
-                            <i data-lucide="plus"></i>
-                        </button>
+                <div class="product-info">
+                    <div class="product-header">
+                        <h1 class="product-title" id="productTitle"></h1>
+                        <div class="product-brand" id="productBrand"></div>
+                        <div class="product-price-main" id="productPriceMain"></div>
                     </div>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Описание</h3>
-                    <p class="description-text" id="productDescription"></p>
+                    
+                    <div class="product-meta">
+                        <span class="product-stock" id="productStock"></span>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Размер <span class="size-hint">(можно выбрать несколько)</span></h3>
+                        <div class="sizes-grid" id="sizesGrid"></div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Описание</h3>
+                        <p class="description-text" id="productDescription"></p>
+                    </div>
                 </div>
             </div>
             
@@ -221,7 +240,7 @@
                             <input type="radio" name="mailService" value="cdek">
                             <div class="radio-card-content">
                                 <span class="radio-card-title">CDEK</span>
-                                <span class="radio-card-desc">3-5 дня • в пункт выдачи</span>
+                                <span class="radio-card-desc">1-3 дня • в пункт выдачи</span>
                             </div>
                         </label>
                     </div>
@@ -371,24 +390,6 @@
             </div>
         </div>
     </div>
-
-<!-- Currency Modal -->
-<div class="dropdown-modal" id="currencyModal">
-    <div class="dropdown-content">
-        <button class="dropdown-item active" data-currency="BYN">
-            <span>BYN</span>
-            <span class="dropdown-check"><i data-lucide="check"></i></span>
-        </button>
-        <button class="dropdown-item" data-currency="RUB">
-            <span>RUB</span>
-            <span class="dropdown-check"><i data-lucide="check"></i></span>
-        </button>
-        <button class="dropdown-item" data-currency="USD">
-            <span>USD</span>
-            <span class="dropdown-check"><i data-lucide="check"></i></span>
-        </button>
-    </div>
-</div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
