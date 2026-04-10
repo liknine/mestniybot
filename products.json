@@ -71,5 +71,31 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_26.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_27.jpg"
     ]
+  },
+  {
+    "id": 4,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Nike Air Force ACRONYM",
+    "description": "14 год, 8/10, полный комплект",
+    "price_byn": 1000.0,
+    "prices": {
+      "BYN": 1000.0,
+      "RUB": 250000.0,
+      "USD": 340.0
+    },
+    "sizes": [
+      "42",
+      "43",
+      "44",
+      "45"
+    ],
+    "stock": 10,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_28.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_29.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_30.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_31.jpg"
+    ]
   }
 ]
