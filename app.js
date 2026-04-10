@@ -725,16 +725,20 @@ function getDeliveryData() {
 }
 
 function submitOrder() {
+    // Собираем данные формы
     const lastName = document.getElementById('customerLastName').value.trim();
     const firstName = document.getElementById('customerFirstName').value.trim();
+    const middleName = document.getElementById('customerMiddleName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
+    const comment = document.getElementById('comment').value.trim();
     
+    // Проверка обязательных полей
     if (!lastName || !firstName || !phone) {
         showToast('Заполните обязательные поля');
         return;
     }
     
-    // Валидация доставки
+    // Проверка доставки
     if (state.deliveryType === 'mail') {
         if (state.mailService === 'europochta') {
             if (!document.getElementById('europochtaBranch').value.trim()) {
@@ -742,10 +746,10 @@ function submitOrder() {
                 return;
             }
         } else if (state.mailService === 'belpochta') {
-            const index = document.getElementById('belpochtaIndex').value.trim();
+            const idx = document.getElementById('belpochtaIndex').value.trim();
             const city = document.getElementById('belpochtaCity').value.trim();
-            const address = document.getElementById('belpochtaAddress').value.trim();
-            if (!index || !city || !address) {
+            const addr = document.getElementById('belpochtaAddress').value.trim();
+            if (!idx || !city || !addr) {
                 showToast('Заполните адрес доставки');
                 return;
             }
@@ -760,44 +764,86 @@ function submitOrder() {
         }
     }
     
-    // Собираем заказ
+    // Собираем товары
     let total = 0;
-    const items = state.cart.map(item => {
-        const p = state.products.find(x => x.id === item.productId);
-        if (!p) return null;
-        total += getItemPrice(p, item.sizes.length);
-        return {
-            productId: item.productId,
-            name: p.name,
-            sizes: item.sizes,
-            price: getItemPrice(p, 1)
-        };
-    }).filter(Boolean);
+    let itemsText = '';
+    let itemsImages = [];
     
-    const orderData = {
-        items: items,
-        total: total,
-        currency: state.currency,
-        deliveryType: state.deliveryType,
-        deliveryService: state.deliveryType === 'mail' ? state.mailService : null,
-        deliveryData: state.deliveryType === 'mail' ? getDeliveryData() : null,
-        customer: {
-            lastName: lastName,
-            firstName: firstName,
-            middleName: document.getElementById('customerMiddleName').value.trim(),
-            phone: phone
-        },
-        comment: document.getElementById('comment').value.trim()
-    };
-    
-    if (tg) {
-        tg.sendData(JSON.stringify(orderData));
-    } else {
-        console.log('Order:', orderData);
-        showToast('Заказ оформлен!');
-        clearCart();
-        closeAllModals();
+    for (let i = 0; i < state.cart.length; i++) {
+        const cartItem = state.cart[i];
+        const product = state.products.find(p => p.id === cartItem.productId);
+        if (product) {
+            const price = getItemPrice(product, cartItem.sizes.length);
+            total += price;
+            itemsText += '\n📦 ' + product.name;
+            itemsText += '\n   Размеры: ' + cartItem.sizes.join(', ');
+            itemsText += '\n   Цена: ' + formatTotal(price);
+            if (product.images && product.images[0]) {
+                itemsImages.push(product.images[0]);
+            }
+        }
     }
+    
+    // Формируем текст заказа
+    let orderText = '🛒 НОВЫЙ ЗАКАЗ\n';
+    orderText += '━━━━━━━━━━━━━━━\n';
+    orderText += '\n👤 Клиент: ' + lastName + ' ' + firstName;
+    if (middleName) orderText += ' ' + middleName;
+    orderText += '\n📞 Телефон: ' + phone;
+    orderText += '\n\n🚚 Доставка: ';
+    
+    if (state.deliveryType === 'pickup') {
+        orderText += 'Самовывоз';
+    } else {
+        if (state.mailService === 'europochta') {
+            orderText += 'Европочта, отделение ' + document.getElementById('europochtaBranch').value.trim();
+        } else if (state.mailService === 'belpochta') {
+            orderText += 'Белпочта\n';
+            orderText += '   Индекс: ' + document.getElementById('belpochtaIndex').value.trim() + '\n';
+            orderText += '   Город: ' + document.getElementById('belpochtaCity').value.trim() + '\n';
+            orderText += '   Адрес: ' + document.getElementById('belpochtaAddress').value.trim();
+        } else if (state.mailService === 'cdek') {
+            orderText += 'CDEK\n';
+            orderText += '   Страна: ' + document.getElementById('cdekCountry').value.trim() + '\n';
+            orderText += '   Город: ' + document.getElementById('cdekCity').value.trim() + '\n';
+            orderText += '   ПВЗ: ' + document.getElementById('cdekPvz').value.trim();
+        }
+    }
+    
+    orderText += '\n\n📋 ТОВАРЫ:';
+    orderText += itemsText;
+    orderText += '\n\n━━━━━━━━━━━━━━━';
+    orderText += '\n💰 ИТОГО: ' + formatTotal(total);
+    
+    if (comment) {
+        orderText += '\n\n💬 Комментарий: ' + comment;
+    }
+    
+    // Добавляем ссылки на фото
+    if (itemsImages.length > 0) {
+        orderText += '\n\n🖼 Фото товаров:';
+        for (let i = 0; i < itemsImages.length; i++) {
+            orderText += '\n' + itemsImages[i];
+        }
+    }
+    
+    // Кодируем текст для URL
+    const encodedText = encodeURIComponent(orderText);
+    
+    // Открываем чат с liknine
+    const tgLink = 'https://t.me/liknine?text=' + encodedText;
+    
+    // Открываем ссылку
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openTelegramLink(tgLink);
+    } else {
+        window.open(tgLink, '_blank');
+    }
+    
+    // Очищаем корзину
+    clearCart();
+    closeAllModals();
+    showToast('Переход к оформлению...');
 }
 // ==================== DROPDOWNS ====================
 function setupDropdowns() {
