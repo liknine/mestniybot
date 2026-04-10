@@ -705,17 +705,62 @@ function updateDeliveryFields() {
 }
 
 // ==================== ORDER ====================
+function getDeliveryData() {
+    if (state.mailService === 'europochta') {
+        return { branch: document.getElementById('europochtaBranch').value.trim() };
+    } else if (state.mailService === 'belpochta') {
+        return {
+            index: document.getElementById('belpochtaIndex').value.trim(),
+            city: document.getElementById('belpochtaCity').value.trim(),
+            address: document.getElementById('belpochtaAddress').value.trim()
+        };
+    } else if (state.mailService === 'cdek') {
+        return {
+            country: document.getElementById('cdekCountry').value.trim(),
+            city: document.getElementById('cdekCity').value.trim(),
+            pvz: document.getElementById('cdekPvz').value.trim()
+        };
+    }
+    return null;
+}
+
 function submitOrder() {
-    const lastName = document.getElementById('customerLastName');
-    const firstName = document.getElementById('customerFirstName');
-    const phone = document.getElementById('customerPhone');
+    const lastName = document.getElementById('customerLastName').value.trim();
+    const firstName = document.getElementById('customerFirstName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
     
-    if (!lastName || !firstName || !phone) return;
-    if (!lastName.value.trim() || !firstName.value.trim() || !phone.value.trim()) {
+    if (!lastName || !firstName || !phone) {
         showToast('Заполните обязательные поля');
         return;
     }
     
+    // Валидация доставки
+    if (state.deliveryType === 'mail') {
+        if (state.mailService === 'europochta') {
+            if (!document.getElementById('europochtaBranch').value.trim()) {
+                showToast('Укажите номер отделения');
+                return;
+            }
+        } else if (state.mailService === 'belpochta') {
+            const index = document.getElementById('belpochtaIndex').value.trim();
+            const city = document.getElementById('belpochtaCity').value.trim();
+            const address = document.getElementById('belpochtaAddress').value.trim();
+            if (!index || !city || !address) {
+                showToast('Заполните адрес доставки');
+                return;
+            }
+        } else if (state.mailService === 'cdek') {
+            const country = document.getElementById('cdekCountry').value.trim();
+            const city = document.getElementById('cdekCity').value.trim();
+            const pvz = document.getElementById('cdekPvz').value.trim();
+            if (!country || !city || !pvz) {
+                showToast('Заполните данные CDEK');
+                return;
+            }
+        }
+    }
+    
+    // Собираем заказ
     let total = 0;
     const items = state.cart.map(item => {
         const p = state.products.find(x => x.id === item.productId);
@@ -729,34 +774,31 @@ function submitOrder() {
         };
     }).filter(Boolean);
     
-    const middleName = document.getElementById('customerMiddleName');
-    const comment = document.getElementById('comment');
-    
-    const order = {
+    const orderData = {
         items: items,
         total: total,
         currency: state.currency,
         deliveryType: state.deliveryType,
         deliveryService: state.deliveryType === 'mail' ? state.mailService : null,
+        deliveryData: state.deliveryType === 'mail' ? getDeliveryData() : null,
         customer: {
-            lastName: lastName.value.trim(),
-            firstName: firstName.value.trim(),
-            middleName: middleName ? middleName.value.trim() : '',
-            phone: phone.value.trim()
+            lastName: lastName,
+            firstName: firstName,
+            middleName: document.getElementById('customerMiddleName').value.trim(),
+            phone: phone
         },
-        comment: comment ? comment.value.trim() : ''
+        comment: document.getElementById('comment').value.trim()
     };
     
     if (tg) {
-        tg.sendData(JSON.stringify(order));
+        tg.sendData(JSON.stringify(orderData));
     } else {
-        console.log('Order:', order);
+        console.log('Order:', orderData);
         showToast('Заказ оформлен!');
         clearCart();
         closeAllModals();
     }
 }
-
 // ==================== DROPDOWNS ====================
 function setupDropdowns() {
     // Category dropdown
