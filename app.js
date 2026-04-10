@@ -10,6 +10,36 @@ if (tg) {
 const ADMIN_USERNAME = 'liknine';
 const SUPPORT_USERNAME = 'liknine';
 
+// ==================== BRANDS ====================
+const BRANDS = {
+    'stone_island': 'Stone Island',
+    'nike': 'Nike',
+    'adidas': 'Adidas',
+    'raf_simons': 'Raf Simons',
+    'cp_company': 'CP Company',
+    'gucci': 'Gucci',
+    'balenciaga': 'Balenciaga',
+    'number_nine': 'Number Nine',
+    'maison_margiela': 'Maison Margiela',
+    'rick_owens': 'Rick Owens',
+    'bape': 'Bape',
+    'gosha': 'Гоша Рубчинский'
+};
+
+// ==================== CATEGORIES ====================
+const CATEGORIES = {
+    1: { name: 'Обувь', icon: '👟', sizeType: 'shoes' },
+    2: { name: 'Куртки / Пуховики', icon: '🧥', sizeType: 'clothing' },
+    3: { name: 'Жилетки', icon: '🦺', sizeType: 'clothing' },
+    4: { name: 'Рубашки', icon: '👔', sizeType: 'clothing' },
+    5: { name: 'Футболки / Поло', icon: '👕', sizeType: 'clothing' },
+    6: { name: 'Кофты', icon: '🧶', sizeType: 'clothing' },
+    7: { name: 'Штаны', icon: '👖', sizeType: 'clothing' },
+    8: { name: 'Шорты', icon: '🩳', sizeType: 'clothing' },
+    9: { name: 'Головные уборы', icon: '🧢', sizeType: 'onesize' },
+    10: { name: 'Аксессуары', icon: '🎒', sizeType: 'onesize' }
+};
+
 // ==================== STATE ====================
 const state = {
     products: [],
@@ -17,11 +47,11 @@ const state = {
     favorites: [],
     currency: 'BYN',
     currentCategory: 'all',
+    currentBrand: 'all',
     currentSize: 'all',
     searchQuery: '',
     selectedProduct: null,
-    selectedSize: null,
-    quantity: 1,
+    selectedSizes: [], // Multiple sizes selection
     deliveryType: 'pickup',
     mailService: 'europochta',
     user: {
@@ -38,11 +68,6 @@ const SIZES_BY_CATEGORY = {
     shoes: ['36','36.5','37','37.5','38','38.5','39','39.5','40','40.5','41','41.5','42','42.5','43','43.5','44','44.5','45','45.5','46','46.5'],
     clothing: ['XS','S','M','L','XL','XXL','XXXL'],
     onesize: ['ONE SIZE']
-};
-
-const CATEGORY_SIZE_TYPE = {
-    1: 'shoes', 2: 'clothing', 3: 'clothing',
-    4: 'onesize', 5: 'clothing', 6: 'onesize'
 };
 
 // ==================== LOAD PRODUCTS ====================
@@ -72,24 +97,25 @@ const elements = {
     categoryBtn: document.getElementById('categoryBtn'),
     categoryText: document.getElementById('categoryText'),
     categoryMenu: document.getElementById('categoryMenu'),
+    brandDropdown: document.getElementById('brandDropdown'),
+    brandBtn: document.getElementById('brandBtn'),
+    brandText: document.getElementById('brandText'),
+    brandMenu: document.getElementById('brandMenu'),
     sizeDropdown: document.getElementById('sizeDropdown'),
     sizeBtn: document.getElementById('sizeBtn'),
     sizeText: document.getElementById('sizeText'),
     sizeMenu: document.getElementById('sizeMenu'),
-    currencyBtn: document.getElementById('currencyBtn'),
-    currencyModal: document.getElementById('currencyModal'),
+    currencyToggle: document.getElementById('currencyToggle'),
     productModal: document.getElementById('productModal'),
     modalBack: document.getElementById('modalBack'),
     modalFavorite: document.getElementById('modalFavorite'),
     galleryTrack: document.getElementById('galleryTrack'),
     galleryDots: document.getElementById('galleryDots'),
     productTitle: document.getElementById('productTitle'),
+    productBrand: document.getElementById('productBrand'),
     productPriceMain: document.getElementById('productPriceMain'),
     productStock: document.getElementById('productStock'),
     sizesGrid: document.getElementById('sizesGrid'),
-    qtyMinus: document.getElementById('qtyMinus'),
-    qtyPlus: document.getElementById('qtyPlus'),
-    qtyValue: document.getElementById('qtyValue'),
     productDescription: document.getElementById('productDescription'),
     addToCartBtn: document.getElementById('addToCartBtn'),
     btnPrice: document.getElementById('btnPrice'),
@@ -135,19 +161,17 @@ const elements = {
 
 // ==================== UTILITIES ====================
 function formatPrice(priceByn, currency = state.currency, product = null) {
-    const symbols = { BYN: 'BYN', RUB: '₽', EUR: '€', USD: '$' };
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
     
-    // Если у товара есть свои цены — используем их
     if (product && product.prices && product.prices[currency]) {
         const price = product.prices[currency];
-        if (currency === 'USD' || currency === 'EUR') return `${symbols[currency]}${price.toFixed(2)}`;
+        if (currency === 'USD') return `$${price.toFixed(2)}`;
         return `${price.toFixed(2)} ${symbols[currency]}`;
     }
     
-    // Иначе конвертируем из BYN
     const rate = state.exchangeRates[currency] || 1;
     const converted = priceByn * rate;
-    if (currency === 'USD' || currency === 'EUR') return `${symbols[currency]}${converted.toFixed(2)}`;
+    if (currency === 'USD') return `$${converted.toFixed(2)}`;
     return `${converted.toFixed(2)} ${symbols[currency]}`;
 }
 
@@ -159,9 +183,9 @@ function getItemPrice(product, quantity = 1) {
 }
 
 function formatItemPrice(totalInCurrency) {
-    const symbols = { BYN: 'BYN', RUB: '₽', EUR: '€', USD: '$' };
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
     const currency = state.currency;
-    if (currency === 'USD' || currency === 'EUR') return `${symbols[currency]}${totalInCurrency.toFixed(2)}`;
+    if (currency === 'USD') return `$${totalInCurrency.toFixed(2)}`;
     return `${totalInCurrency.toFixed(2)} ${symbols[currency]}`;
 }
 
@@ -174,6 +198,10 @@ function showToast(message) {
 
 function hapticFeedback(type = 'light') {
     if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(type);
+}
+
+function getBrandName(brandKey) {
+    return BRANDS[brandKey] || brandKey || '';
 }
 
 // ==================== USER ====================
@@ -200,17 +228,55 @@ function updateProfileUI() {
 }
 
 function updateProfileStats() {
-    elements.profileCartCount.textContent = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    elements.profileCartCount.textContent = state.cart.reduce((sum, item) => sum + item.sizes.length, 0);
     elements.profileFavCount.textContent = state.favorites.length;
 }
 
-// ==================== SIZE FILTER ====================
+// ==================== FILTERS ====================
+function filterProducts() {
+    let filtered = [...state.products];
+    
+    // Category filter
+    if (state.currentCategory !== 'all') {
+        filtered = filtered.filter(p => p.category_id === parseInt(state.currentCategory));
+    }
+    
+    // Brand filter
+    if (state.currentBrand !== 'all') {
+        filtered = filtered.filter(p => p.brand === state.currentBrand);
+    }
+    
+    // Size filter
+    if (state.currentSize !== 'all') {
+        filtered = filtered.filter(p => p.sizes && p.sizes.includes(state.currentSize));
+    }
+    
+    // Search filter
+    if (state.searchQuery) {
+        const query = state.searchQuery.toLowerCase();
+        filtered = filtered.filter(p => 
+            p.name.toLowerCase().includes(query) || 
+            (p.description && p.description.toLowerCase().includes(query)) ||
+            (p.brand && getBrandName(p.brand).toLowerCase().includes(query))
+        );
+    }
+    
+    renderProducts(filtered);
+}
+
 function updateSizeFilter() {
     const categoryId = state.currentCategory === 'all' ? null : parseInt(state.currentCategory);
-    let sizes = categoryId ? (SIZES_BY_CATEGORY[CATEGORY_SIZE_TYPE[categoryId]] || []) : [...SIZES_BY_CATEGORY.shoes, ...SIZES_BY_CATEGORY.clothing, ...SIZES_BY_CATEGORY.onesize];
+    let sizes = [];
+    
+    if (categoryId && CATEGORIES[categoryId]) {
+        sizes = SIZES_BY_CATEGORY[CATEGORIES[categoryId].sizeType] || [];
+    } else {
+        sizes = [...SIZES_BY_CATEGORY.clothing, ...SIZES_BY_CATEGORY.shoes];
+    }
     
     let menuHtml = `<button class="filter-option active" data-size="all">Все размеры</button>`;
     
+    // For shoes - two columns
     if (categoryId === 1) {
         for (let i = 0; i < sizes.length; i += 2) {
             menuHtml += `<div class="filter-option-row">`;
@@ -219,19 +285,22 @@ function updateSizeFilter() {
             menuHtml += `</div>`;
         }
     } else {
-        sizes.forEach(size => { menuHtml += `<button class="filter-option" data-size="${size}">${size}</button>`; });
+        sizes.forEach(size => { 
+            menuHtml += `<button class="filter-option" data-size="${size}">${size}</button>`; 
+        });
     }
     
     elements.sizeMenu.innerHTML = menuHtml;
     state.currentSize = 'all';
-    elements.sizeText.textContent = 'Все размеры';
+    elements.sizeText.textContent = 'Размер';
     
+    // Attach listeners
     elements.sizeMenu.querySelectorAll('.filter-option, .filter-option-size').forEach(option => {
         option.addEventListener('click', () => {
             elements.sizeMenu.querySelectorAll('.filter-option, .filter-option-size').forEach(o => o.classList.remove('active'));
             option.classList.add('active');
             state.currentSize = option.dataset.size;
-            elements.sizeText.textContent = option.dataset.size === 'all' ? 'Все размеры' : option.dataset.size;
+            elements.sizeText.textContent = option.dataset.size === 'all' ? 'Размер' : option.dataset.size;
             elements.sizeDropdown.classList.remove('open');
             filterProducts();
             hapticFeedback();
@@ -298,24 +367,19 @@ function renderCart() {
     elements.cartItems.innerHTML = state.cart.map(item => {
         const product = state.products.find(p => p.id === item.productId);
         if (!product) return '';
-        const itemTotal = getItemPrice(product, item.quantity);
+        const itemTotal = getItemPrice(product, item.sizes.length);
         total += itemTotal;
         return `
-            <div class="cart-item" data-id="${item.productId}" data-size="${item.size}">
+            <div class="cart-item" data-id="${item.productId}">
                 <img src="${product.images[0]}" alt="${product.name}" class="cart-item-image"
                      onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2240%22>📷</text></svg>'">
                 <div class="cart-item-info">
                     <h4 class="cart-item-name">${product.name}</h4>
-                    <p class="cart-item-size">Размер: ${item.size}</p>
+                    <p class="cart-item-sizes">Размеры: ${item.sizes.join(', ')}</p>
                     <div class="cart-item-bottom">
                         <span class="cart-item-price">${formatItemPrice(itemTotal)}</span>
                         <div class="cart-item-actions">
-                            <div class="cart-item-qty">
-                                <button class="cart-qty-minus"><i data-lucide="minus"></i></button>
-                                <span>${item.quantity}</span>
-                                <button class="cart-qty-plus"><i data-lucide="plus"></i></button>
-                            </div>
-                            <button class="cart-item-delete"><i data-lucide="trash-2"></i></button>
+                            <button class="cart-item-delete" data-id="${item.productId}"><i data-lucide="trash-2"></i></button>
                         </div>
                     </div>
                 </div>
@@ -359,7 +423,7 @@ function renderFavorites() {
 }
 
 function updateCartBadge() {
-    const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    const count = state.cart.reduce((sum, item) => sum + item.sizes.length, 0);
     elements.cartBadge.textContent = count;
     elements.cartBadge.dataset.count = count;
     updateProfileStats();
@@ -368,28 +432,31 @@ function updateCartBadge() {
 // ==================== MODALS ====================
 function openProductModal(product) {
     state.selectedProduct = product;
-    state.selectedSize = null;
-    state.quantity = 1;
+    state.selectedSizes = [];
     
+    // Gallery
     elements.galleryTrack.innerHTML = product.images.map(img =>
         `<img src="${img}" alt="${product.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22><rect fill=%22%23f0f0f0%22 width=%22400%22 height=%22400%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2260%22>📷</text></svg>'">`
     ).join('');
     elements.galleryDots.innerHTML = product.images.map((_, i) => `<div class="gallery-dot ${i === 0 ? 'active' : ''}"></div>`).join('');
     
+    // Info
     elements.productTitle.textContent = product.name;
+    elements.productBrand.textContent = getBrandName(product.brand);
     elements.productPriceMain.textContent = formatPrice(product.price_byn, state.currency, product);
     
     const stockStatus = getStockStatus(product.stock);
     elements.productStock.textContent = stockStatus.text;
     elements.productStock.className = `product-stock ${stockStatus.class}`;
     
+    // Sizes - multiple selection
     elements.sizesGrid.innerHTML = product.sizes.map(size =>
         `<button class="size-chip" data-size="${size}" ${product.stock === 0 ? 'disabled' : ''}>${size}</button>`
     ).join('');
     
-    elements.qtyValue.textContent = state.quantity;
     elements.productDescription.textContent = product.description;
     elements.modalFavorite.classList.toggle('active', state.favorites.includes(product.id));
+    
     updateAddToCartBtn();
     elements.productModal.classList.add('active');
     lucide.createIcons();
@@ -399,14 +466,16 @@ function openProductModal(product) {
 function closeProductModal() {
     elements.productModal.classList.remove('active');
     state.selectedProduct = null;
-    state.selectedSize = null;
-    state.quantity = 1;
+    state.selectedSizes = [];
 }
 
 function updateAddToCartBtn() {
     if (!state.selectedProduct) return;
-    elements.addToCartBtn.disabled = !state.selectedSize || state.selectedProduct.stock === 0;
-    const total = getItemPrice(state.selectedProduct, state.quantity);
+    
+    const hasSelection = state.selectedSizes.length > 0;
+    elements.addToCartBtn.disabled = !hasSelection || state.selectedProduct.stock === 0;
+    
+    const total = getItemPrice(state.selectedProduct, state.selectedSizes.length || 1);
     elements.btnPrice.textContent = formatItemPrice(total);
 }
 
@@ -447,7 +516,6 @@ function updateDeliveryFields() {
         elements.mailOptions.classList.remove('active');
     }
 }
-
 // ==================== LISTENERS ====================
 function attachProductListeners() {
     document.querySelectorAll('.product-card').forEach(card => {
@@ -468,15 +536,26 @@ function attachProductListeners() {
 }
 
 function attachProductModalListeners() {
+    // Gallery scroll
     elements.galleryTrack.addEventListener('scroll', () => {
         const index = Math.round(elements.galleryTrack.scrollLeft / elements.galleryTrack.offsetWidth);
         document.querySelectorAll('.gallery-dot').forEach((dot, i) => dot.classList.toggle('active', i === index));
     });
+    
+    // Size chips - MULTIPLE SELECTION
     elements.sizesGrid.querySelectorAll('.size-chip').forEach(chip => {
         chip.addEventListener('click', () => {
-            elements.sizesGrid.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            state.selectedSize = chip.dataset.size;
+            const size = chip.dataset.size;
+            
+            // Toggle selection
+            if (state.selectedSizes.includes(size)) {
+                state.selectedSizes = state.selectedSizes.filter(s => s !== size);
+                chip.classList.remove('selected');
+            } else {
+                state.selectedSizes.push(size);
+                chip.classList.add('selected');
+            }
+            
             hapticFeedback();
             updateAddToCartBtn();
         });
@@ -484,164 +563,247 @@ function attachProductModalListeners() {
 }
 
 function attachCartListeners() {
-    document.querySelectorAll('.cart-qty-minus').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.cart-item');
-            updateCartItemQty(parseInt(item.dataset.id), item.dataset.size, -1);
-        });
-    });
-    document.querySelectorAll('.cart-qty-plus').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.closest('.cart-item');
-            updateCartItemQty(parseInt(item.dataset.id), item.dataset.size, 1);
-        });
-    });
     document.querySelectorAll('.cart-item-delete').forEach(btn => {
         btn.addEventListener('click', () => {
-            const item = btn.closest('.cart-item');
-            removeFromCart(parseInt(item.dataset.id), item.dataset.size);
+            const productId = parseInt(btn.dataset.id);
+            removeFromCart(productId);
         });
     });
 }
 
 // ==================== CART ====================
 function addToCart() {
-    if (!state.selectedProduct || !state.selectedSize) return;
-    const existingItem = state.cart.find(item => item.productId === state.selectedProduct.id && item.size === state.selectedSize);
-    if (existingItem) existingItem.quantity += state.quantity;
-    else state.cart.push({ productId: state.selectedProduct.id, size: state.selectedSize, quantity: state.quantity });
-    saveCart(); updateCartBadge(); showToast('Добавлено в корзину'); closeProductModal();
+    if (!state.selectedProduct || state.selectedSizes.length === 0) return;
+    
+    const existingItem = state.cart.find(item => item.productId === state.selectedProduct.id);
+    
+    if (existingItem) {
+        // Add new sizes to existing item
+        state.selectedSizes.forEach(size => {
+            if (!existingItem.sizes.includes(size)) {
+                existingItem.sizes.push(size);
+            }
+        });
+    } else {
+        state.cart.push({ 
+            productId: state.selectedProduct.id, 
+            sizes: [...state.selectedSizes]
+        });
+    }
+    
+    saveCart(); 
+    updateCartBadge(); 
+    showToast(`Добавлено ${state.selectedSizes.length} размер(а) в корзину`); 
+    closeProductModal();
 }
 
-function updateCartItemQty(productId, size, delta) {
-    const item = state.cart.find(i => i.productId === productId && i.size === size);
-    if (!item) return;
-    item.quantity += delta;
-    if (item.quantity <= 0) removeFromCart(productId, size);
-    else { saveCart(); renderCart(); }
-    hapticFeedback();
+function removeFromCart(productId) {
+    state.cart = state.cart.filter(i => i.productId !== productId);
+    saveCart(); 
+    renderCart(); 
+    hapticFeedback('medium');
 }
 
-function removeFromCart(productId, size) {
-    state.cart = state.cart.filter(i => !(i.productId === productId && i.size === size));
-    saveCart(); renderCart(); hapticFeedback('medium');
+function clearCart() { 
+    state.cart = []; 
+    saveCart(); 
+    renderCart(); 
+    hapticFeedback('medium'); 
 }
 
-function clearCart() { state.cart = []; saveCart(); renderCart(); hapticFeedback('medium'); }
-function saveCart() { localStorage.setItem('cart', JSON.stringify(state.cart)); updateCartBadge(); }
-function loadCart() { const saved = localStorage.getItem('cart'); if (saved) { state.cart = JSON.parse(saved); updateCartBadge(); } }
+function saveCart() { 
+    localStorage.setItem('cart', JSON.stringify(state.cart)); 
+    updateCartBadge(); 
+}
+
+function loadCart() { 
+    const saved = localStorage.getItem('cart'); 
+    if (saved) { 
+        state.cart = JSON.parse(saved); 
+        // Migration: convert old format to new
+        state.cart = state.cart.map(item => {
+            if (item.size && !item.sizes) {
+                return { productId: item.productId, sizes: [item.size] };
+            }
+            return item;
+        });
+        updateCartBadge(); 
+    } 
+}
 
 // ==================== FAVORITES ====================
 function toggleFavorite(productId) {
     const index = state.favorites.indexOf(productId);
     if (index === -1) state.favorites.push(productId);
     else state.favorites.splice(index, 1);
-    saveFavorites(); updateProfileStats();
+    saveFavorites(); 
+    updateProfileStats();
 }
 
-function saveFavorites() { localStorage.setItem('favorites', JSON.stringify(state.favorites)); }
-function loadFavorites() { const saved = localStorage.getItem('favorites'); if (saved) state.favorites = JSON.parse(saved); }
-
-// ==================== FILTER ====================
-function filterProducts() {
-    let filtered = state.products;
-    if (state.currentCategory !== 'all') filtered = filtered.filter(p => p.category_id === parseInt(state.currentCategory));
-    if (state.currentSize !== 'all') filtered = filtered.filter(p => p.sizes.includes(state.currentSize));
-    if (state.searchQuery) {
-        const query = state.searchQuery.toLowerCase();
-        filtered = filtered.filter(p => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
-    }
-    renderProducts(filtered);
+function saveFavorites() { 
+    localStorage.setItem('favorites', JSON.stringify(state.favorites)); 
 }
 
-// ==================== CHECKOUT ====================
-function submitOrder() {
-    const lastName = document.getElementById('customerLastName').value.trim();
-    const firstName = document.getElementById('customerFirstName').value.trim();
-    const middleName = document.getElementById('customerMiddleName').value.trim();
-    const phone = document.getElementById('customerPhone').value.trim();
+function loadFavorites() { 
+    const saved = localStorage.getItem('favorites'); 
+    if (saved) state.favorites = JSON.parse(saved); 
+}
+
+// ==================== CURRENCY ====================
+function setCurrency(currency) {
+    state.currency = currency;
+    localStorage.setItem('currency', currency);
     
-    if (!lastName || !firstName || !phone) { showToast('Заполните обязательные поля'); return; }
-    
-    // Delivery validation
-    if (state.deliveryType === 'mail') {
-        if (state.mailService === 'europochta') {
-            if (!document.getElementById('europochtaBranch').value.trim()) { showToast('Укажите номер отделения'); return; }
-        } else if (state.mailService === 'belpochta') {
-            if (!document.getElementById('belpochtaIndex').value.trim() || !document.getElementById('belpochtaCity').value.trim() || !document.getElementById('belpochtaAddress').value.trim()) { showToast('Заполните адрес доставки'); return; }
-        } else if (state.mailService === 'cdek') {
-            if (!document.getElementById('cdekCountry').value.trim() || !document.getElementById('cdekCity').value.trim() || !document.getElementById('cdekPvz').value.trim()) { showToast('Заполните данные для CDEK'); return; }
-        }
-    }
-    
-    // Build order text
-    let orderText = `🛒 НОВЫЙ ЗАКАЗ\n\n`;
-    orderText += `👤 Клиент:\n${lastName} ${firstName}${middleName ? ' ' + middleName : ''}\n📞 ${phone}\n\n`;
-    orderText += `💱 Валюта: ${state.currency}\n\n`;
-    orderText += `📦 Товары:\n`;
-    
-    let total = 0;
-    state.cart.forEach((item, index) => {
-        const product = state.products.find(p => p.id === item.productId);
-        if (product) {
-            const itemTotal = getItemPrice(product, item.quantity);
-            total += itemTotal;
-            orderText += `\n${index + 1}. ${product.name}\n`;
-            orderText += `   Размер: ${item.size}\n`;
-            orderText += `   Кол-во: ${item.quantity}\n`;
-            orderText += `   Цена: ${formatItemPrice(itemTotal)}\n`;
-            orderText += `   Фото: ${product.images[0]}\n`;
-        }
+    // Update toggle buttons
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.currency === currency);
     });
     
-    orderText += `\n💰 Итого: ${formatItemPrice(total)}\n\n`;
-    orderText += `🚚 Доставка: `;
+    // Re-render prices
+    filterProducts();
+    if (state.selectedProduct) {
+        elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
+        updateAddToCartBtn();
+    }
+    renderCart();
     
-    if (state.deliveryType === 'pickup') {
-        orderText += `Самовывоз\n`;
-    } else {
+    hapticFeedback();
+}
+
+function loadCurrency() {
+    const saved = localStorage.getItem('currency');
+    if (saved && ['BYN', 'RUB', 'USD'].includes(saved)) {
+        state.currency = saved;
+        document.querySelectorAll('.currency-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.currency === saved);
+        });
+    }
+}
+
+// ==================== ORDER ====================
+function submitOrder() {
+    // Validate form
+    const lastName = document.getElementById('customerLastName').value.trim();
+    const firstName = document.getElementById('customerFirstName').value.trim();
+    const phone = document.getElementById('customerPhone').value.trim();
+    
+    if (!lastName || !firstName || !phone) {
+        showToast('Заполните обязательные поля');
+        return;
+    }
+    
+    // Validate delivery fields
+    if (state.deliveryType === 'mail') {
         if (state.mailService === 'europochta') {
-            orderText += `Европочта\n📍 Отделение: ${document.getElementById('europochtaBranch').value.trim()}\n`;
+            const branch = document.getElementById('europochtaBranch').value.trim();
+            if (!branch) {
+                showToast('Укажите номер отделения');
+                return;
+            }
         } else if (state.mailService === 'belpochta') {
-            orderText += `Белпочта\n`;
-            orderText += `📮 Индекс: ${document.getElementById('belpochtaIndex').value.trim()}\n`;
-            orderText += `🏙 Город: ${document.getElementById('belpochtaCity').value.trim()}\n`;
-            orderText += `📍 Адрес: ${document.getElementById('belpochtaAddress').value.trim()}\n`;
+            const index = document.getElementById('belpochtaIndex').value.trim();
+            const city = document.getElementById('belpochtaCity').value.trim();
+            const address = document.getElementById('belpochtaAddress').value.trim();
+            if (!index || !city || !address) {
+                showToast('Заполните адрес доставки');
+                return;
+            }
         } else if (state.mailService === 'cdek') {
-            orderText += `CDEK\n`;
-            orderText += `🌍 Страна: ${document.getElementById('cdekCountry').value.trim()}\n`;
-            orderText += `🏙 Город: ${document.getElementById('cdekCity').value.trim()}\n`;
-            orderText += `📦 ПВЗ: ${document.getElementById('cdekPvz').value.trim()}\n`;
+            const country = document.getElementById('cdekCountry').value.trim();
+            const city = document.getElementById('cdekCity').value.trim();
+            const pvz = document.getElementById('cdekPvz').value.trim();
+            if (!country || !city || !pvz) {
+                showToast('Заполните данные для CDEK');
+                return;
+            }
         }
     }
     
-    const comment = document.getElementById('comment').value.trim();
-    if (comment) orderText += `\n💬 Комментарий: ${comment}`;
+    // Calculate total
+    let total = 0;
+    const items = state.cart.map(item => {
+        const product = state.products.find(p => p.id === item.productId);
+        if (product) {
+            total += getItemPrice(product, item.sizes.length);
+            return {
+                productId: item.productId,
+                name: product.name,
+                sizes: item.sizes,
+                price: getItemPrice(product, 1)
+            };
+        }
+        return null;
+    }).filter(Boolean);
     
-    // Clear & close
-    state.cart = [];
-    saveCart();
-    elements.checkoutModal.classList.remove('active');
-    if (elements.checkoutForm) elements.checkoutForm.reset();
-    resetCheckoutForm();
-    hapticFeedback('heavy');
+    // Build order data
+    const orderData = {
+        items: items,
+        total: total,
+        currency: state.currency,
+        deliveryType: state.deliveryType,
+        deliveryService: state.deliveryType === 'mail' ? state.mailService : null,
+        customer: {
+            lastName: lastName,
+            firstName: firstName,
+            middleName: document.getElementById('customerMiddleName').value.trim(),
+            phone: phone
+        },
+        comment: document.getElementById('comment').value.trim()
+    };
     
-    // Open admin chat
-    const adminUrl = `https://t.me/${ADMIN_USERNAME}?text=${encodeURIComponent(orderText)}`;
-    if (tg) tg.openTelegramLink(adminUrl);
-    else window.open(adminUrl, '_blank');
-}
-
-function openSupport() {
-    const url = `https://t.me/${SUPPORT_USERNAME}`;
-    if (tg) tg.openTelegramLink(url);
-    else window.open(url, '_blank');
+    // Add delivery data
+    if (state.deliveryType === 'mail') {
+        if (state.mailService === 'europochta') {
+            orderData.deliveryData = {
+                branch: document.getElementById('europochtaBranch').value.trim()
+            };
+        } else if (state.mailService === 'belpochta') {
+            orderData.deliveryData = {
+                index: document.getElementById('belpochtaIndex').value.trim(),
+                city: document.getElementById('belpochtaCity').value.trim(),
+                address: document.getElementById('belpochtaAddress').value.trim()
+            };
+        } else if (state.mailService === 'cdek') {
+            orderData.deliveryData = {
+                country: document.getElementById('cdekCountry').value.trim(),
+                city: document.getElementById('cdekCity').value.trim(),
+                pvz: document.getElementById('cdekPvz').value.trim()
+            };
+        }
+    }
+    
+    // Send to Telegram
+    if (tg) {
+        tg.sendData(JSON.stringify(orderData));
+    } else {
+        console.log('Order data:', orderData);
+        showToast('Заказ оформлен!');
+        clearCart();
+        closeAllModals();
+    }
 }
 
 // ==================== INIT LISTENERS ====================
-function initEventListeners() {
-    // Filters
-    elements.categoryBtn.addEventListener('click', () => { elements.categoryDropdown.classList.toggle('open'); elements.sizeDropdown.classList.remove('open'); hapticFeedback(); });
+function initListeners() {
+    // Currency toggle
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setCurrency(btn.dataset.currency);
+        });
+    });
+    
+    // Search
+    elements.searchInput.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        filterProducts();
+    });
+    
+    // Category dropdown
+    elements.categoryBtn.addEventListener('click', () => {
+        closeAllDropdowns();
+        elements.categoryDropdown.classList.toggle('open');
+    });
+    
     elements.categoryMenu.querySelectorAll('.filter-option').forEach(option => {
         option.addEventListener('click', () => {
             elements.categoryMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
@@ -655,54 +817,60 @@ function initEventListeners() {
         });
     });
     
-    elements.sizeBtn.addEventListener('click', () => { elements.sizeDropdown.classList.toggle('open'); elements.categoryDropdown.classList.remove('open'); hapticFeedback(); });
-    
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.filter-dropdown')) { elements.categoryDropdown.classList.remove('open'); elements.sizeDropdown.classList.remove('open'); }
-        if (!e.target.closest('#currencyBtn') && !e.target.closest('#currencyModal')) elements.currencyModal.classList.remove('active');
+    // Brand dropdown
+    elements.brandBtn.addEventListener('click', () => {
+        closeAllDropdowns();
+        elements.brandDropdown.classList.toggle('open');
     });
     
-    // Search
-    let searchTimeout;
-    elements.searchInput.addEventListener('input', (e) => { clearTimeout(searchTimeout); searchTimeout = setTimeout(() => { state.searchQuery = e.target.value.trim(); filterProducts(); }, 300); });
-    
-    // Currency
-    elements.currencyBtn.addEventListener('click', () => { elements.currencyModal.classList.toggle('active'); hapticFeedback(); });
-    document.querySelectorAll('.dropdown-item[data-currency]').forEach(item => {
-        item.addEventListener('click', () => {
-            state.currency = item.dataset.currency;
-            document.querySelectorAll('.dropdown-item[data-currency]').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            elements.currencyBtn.querySelector('.currency-text').textContent = item.dataset.currency;
-            elements.currencyModal.classList.remove('active');
+    elements.brandMenu.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', () => {
+            elements.brandMenu.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
+            option.classList.add('active');
+            state.currentBrand = option.dataset.brand;
+            elements.brandText.textContent = option.textContent;
+            elements.brandDropdown.classList.remove('open');
             filterProducts();
-            renderCart();
-            if (state.selectedProduct) {
-                elements.productPriceMain.textContent = formatPrice(state.selectedProduct.price_byn, state.currency, state.selectedProduct);
-                updateAddToCartBtn();
-            }
             hapticFeedback();
         });
     });
     
+    // Size dropdown
+    elements.sizeBtn.addEventListener('click', () => {
+        closeAllDropdowns();
+        elements.sizeDropdown.classList.toggle('open');
+    });
+    
+    // Close dropdowns on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.filter-dropdown')) {
+            closeAllDropdowns();
+        }
+    });
+    
     // Product modal
     elements.modalBack.addEventListener('click', closeProductModal);
-    elements.productModal.querySelector('.modal-overlay').addEventListener('click', closeProductModal);
-    elements.modalFavorite.addEventListener('click', () => { if (!state.selectedProduct) return; toggleFavorite(state.selectedProduct.id); elements.modalFavorite.classList.toggle('active'); hapticFeedback('medium'); });
-    elements.qtyMinus.addEventListener('click', () => { if (state.quantity > 1) { state.quantity--; elements.qtyValue.textContent = state.quantity; updateAddToCartBtn(); hapticFeedback(); } });
-    elements.qtyPlus.addEventListener('click', () => { if (state.quantity < 10) { state.quantity++; elements.qtyValue.textContent = state.quantity; updateAddToCartBtn(); hapticFeedback(); } });
+    elements.modalFavorite.addEventListener('click', () => {
+        if (state.selectedProduct) {
+            toggleFavorite(state.selectedProduct.id);
+            elements.modalFavorite.classList.toggle('active');
+            hapticFeedback('medium');
+        }
+    });
     elements.addToCartBtn.addEventListener('click', addToCart);
     
-    // Cart
-    elements.navCart.addEventListener('click', () => { openCartModal(); setActiveNav('cart'); });
+    // Cart modal
     elements.cartBack.addEventListener('click', () => elements.cartModal.classList.remove('active'));
-    elements.cartModal.querySelector('.modal-overlay').addEventListener('click', () => elements.cartModal.classList.remove('active'));
     elements.clearCartBtn.addEventListener('click', clearCart);
     elements.checkoutBtn.addEventListener('click', openCheckoutModal);
     
-    // Checkout
-    elements.checkoutBack.addEventListener('click', () => { elements.checkoutModal.classList.remove('active'); openCartModal(); });
-    elements.checkoutModal.querySelector('.modal-overlay').addEventListener('click', () => elements.checkoutModal.classList.remove('active'));
+    // Checkout modal
+    elements.checkoutBack.addEventListener('click', () => {
+        elements.checkoutModal.classList.remove('active');
+        elements.cartModal.classList.add('active');
+    });
+    
+    // Delivery type toggle
     document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
@@ -712,57 +880,98 @@ function initEventListeners() {
             hapticFeedback();
         });
     });
+    
+    // Mail service radio
     document.querySelectorAll('input[name="mailService"]').forEach(radio => {
-        radio.addEventListener('change', (e) => { state.mailService = e.target.value; updateDeliveryFields(); hapticFeedback(); });
+        radio.addEventListener('change', () => {
+            state.mailService = radio.value;
+            updateDeliveryFields();
+        });
     });
-    elements.submitOrder.addEventListener('click', (e) => { e.preventDefault(); submitOrder(); });
     
-    // Favorites
-    elements.navFavorites.addEventListener('click', () => { openFavoritesModal(); setActiveNav('favorites'); });
-    elements.favoritesHeaderBtn.addEventListener('click', openFavoritesModal);
+    // Submit order
+    elements.submitOrder.addEventListener('click', submitOrder);
+    
+    // Favorites modal
     elements.favoritesBack.addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
-    elements.favoritesModal.querySelector('.modal-overlay').addEventListener('click', () => elements.favoritesModal.classList.remove('active'));
+    elements.favoritesHeaderBtn.addEventListener('click', openFavoritesModal);
     
-    // Profile
-    elements.navProfile.addEventListener('click', () => { openProfileModal(); setActiveNav('profile'); });
+    // Profile modal
     elements.profileBack.addEventListener('click', () => elements.profileModal.classList.remove('active'));
-    elements.profileModal.querySelector('.modal-overlay').addEventListener('click', () => elements.profileModal.classList.remove('active'));
-    elements.supportBtn.addEventListener('click', () => { openSupport(); hapticFeedback(); });
+    elements.supportBtn.addEventListener('click', () => {
+        if (tg) {
+            tg.openTelegramLink(`https://t.me/${SUPPORT_USERNAME}`);
+        } else {
+            window.open(`https://t.me/${SUPPORT_USERNAME}`, '_blank');
+        }
+    });
     
-    // Navigation
-    elements.navHome.addEventListener('click', () => { closeAllModals(); setActiveNav('home'); hapticFeedback(); });
+    // Bottom navigation
+    elements.navHome.addEventListener('click', () => {
+        closeAllModals();
+        setActiveNav('home');
+    });
+    elements.navFavorites.addEventListener('click', () => {
+        openFavoritesModal();
+        setActiveNav('favorites');
+    });
+    elements.navCart.addEventListener('click', () => {
+        openCartModal();
+        setActiveNav('cart');
+    });
+    elements.navProfile.addEventListener('click', () => {
+        openProfileModal();
+        setActiveNav('profile');
+    });
+    
+    // Modal overlays
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', () => {
+            closeAllModals();
+            setActiveNav('home');
+        });
+    });
 }
 
-function setActiveNav(page) { document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page)); }
+function closeAllDropdowns() {
+    document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('open'));
+}
+
+function setActiveNav(page) {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === page);
+    });
+}
 
 // ==================== INIT ====================
 async function init() {
-    console.log('🚀 Запуск...');
-    elements.loading.classList.remove('hidden');
-    elements.productsGrid.innerHTML = '';
+    console.log('🚀 Инициализация приложения...');
     
-    loadUserData();
-    const loaded = await loadProducts();
-    
-    if (!loaded || state.products.length === 0) {
-        elements.loading.classList.add('hidden');
-        elements.emptyState.style.display = 'block';
-        elements.emptyState.innerHTML = '<i data-lucide="package"></i><p>Товаров пока нет</p><span>Скоро здесь появятся новинки!</span>';
-        lucide.createIcons();
-        loadCart();
-        loadFavorites();
-        initEventListeners();
-        return;
-    }
-    
+    // Load saved data
     loadCart();
     loadFavorites();
-    updateSizeFilter();
-    renderProducts(state.products);
-    updateCartBadge();
-    initEventListeners();
+    loadCurrency();
+    loadUserData();
+    
+    // Load products
+    const success = await loadProducts();
+    
+    if (success) {
+        updateSizeFilter();
+        filterProducts();
+    } else {
+        elements.loading.classList.add('hidden');
+        elements.emptyState.style.display = 'block';
+    }
+    
+    // Init listeners
+    initListeners();
+    
+    // Init icons
     lucide.createIcons();
-    console.log('✅ Готово!');
+    
+    console.log('✅ Приложение готово!');
 }
 
+// Start app
 document.addEventListener('DOMContentLoaded', init);
