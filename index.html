@@ -14,85 +14,89 @@
 </head>
 <body>
     <div class="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-top">
-                <h1 class="logo">MESTNIY | STORE</h1>
-                <button class="icon-btn" id="favoritesHeaderBtn">
-                    <i data-lucide="heart"></i>
-                </button>
-            </div>
-            
-            <!-- Currency Toggle -->
-            <div class="currency-toggle" id="currencyToggle">
-                <button class="currency-btn active" data-currency="BYN">BYN</button>
-                <button class="currency-btn" data-currency="RUB">RUB</button>
-                <button class="currency-btn" data-currency="USD">USD</button>
-            </div>
-            
-            <div class="search-container">
-                <i data-lucide="search" class="search-icon"></i>
-                <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
-            </div>
-        </header>
+<!-- Header -->
+<header class="header">
+    <div class="header-top">
+        <h1 class="logo">MESTNIY | STORE</h1>
+        <button class="icon-btn" id="favoritesHeaderBtn">
+            <i data-lucide="heart"></i>
+        </button>
+    </div>
+    
+    <!-- Currency Toggle - как на скриншоте -->
+    <div class="currency-toggle">
+        <button class="currency-btn active" data-currency="BYN">BYN</button>
+        <div class="currency-divider"></div>
+        <button class="currency-btn" data-currency="RUB">RUB</button>
+        <div class="currency-divider"></div>
+        <button class="currency-btn" data-currency="USD">USD</button>
+    </div>
+    
+    <div class="search-container">
+        <i data-lucide="search" class="search-icon"></i>
+        <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
+    </div>
+</header>
 
-        <!-- Filters -->
-        <div class="filters-wrapper">
-            <div class="filters">
-                <div class="filter-dropdown" id="categoryDropdown">
-                    <button class="filter-btn" id="categoryBtn">
-                        <span id="categoryText">Все категории</span>
-                        <i data-lucide="chevron-down"></i>
-                    </button>
-                    <div class="filter-menu" id="categoryMenu">
-                        <button class="filter-option active" data-category="all">Все категории</button>
-                        <button class="filter-option" data-category="1">👟 Обувь</button>
-                        <button class="filter-option" data-category="2">🧥 Куртки / Пуховики</button>
-                        <button class="filter-option" data-category="3">🦺 Жилетки</button>
-                        <button class="filter-option" data-category="4">👔 Рубашки</button>
-                        <button class="filter-option" data-category="5">👕 Футболки / Поло</button>
-                        <button class="filter-option" data-category="6">🧶 Кофты</button>
-                        <button class="filter-option" data-category="7">👖 Штаны</button>
-                        <button class="filter-option" data-category="8">🩳 Шорты</button>
-                        <button class="filter-option" data-category="9">🧢 Головные уборы</button>
-                        <button class="filter-option" data-category="10">🎒 Аксессуары</button>
-                    </div>
-                </div>
-                
-                <div class="filter-dropdown" id="brandDropdown">
-                    <button class="filter-btn" id="brandBtn">
-                        <span id="brandText">Все бренды</span>
-                        <i data-lucide="chevron-down"></i>
-                    </button>
-                    <div class="filter-menu" id="brandMenu">
-                        <button class="filter-option active" data-brand="all">Все бренды</button>
-                        <button class="filter-option" data-brand="stone_island">Stone Island</button>
-                        <button class="filter-option" data-brand="nike">Nike</button>
-                        <button class="filter-option" data-brand="adidas">Adidas</button>
-                        <button class="filter-option" data-brand="raf_simons">Raf Simons</button>
-                        <button class="filter-option" data-brand="cp_company">CP Company</button>
-                        <button class="filter-option" data-brand="gucci">Gucci</button>
-                        <button class="filter-option" data-brand="balenciaga">Balenciaga</button>
-                        <button class="filter-option" data-brand="number_nine">Number Nine</button>
-                        <button class="filter-option" data-brand="maison_margiela">Maison Margiela</button>
-                        <button class="filter-option" data-brand="rick_owens">Rick Owens</button>
-                        <button class="filter-option" data-brand="bape">Bape</button>
-                        <button class="filter-option" data-brand="gosha">Гоша Рубчинский</button>
-                    </div>
-                </div>
-                
-                <div class="filter-dropdown" id="sizeDropdown">
-                    <button class="filter-btn" id="sizeBtn">
-                        <span id="sizeText">Размер</span>
-                        <i data-lucide="chevron-down"></i>
-                    </button>
-                    <div class="filter-menu" id="sizeMenu">
-                        <button class="filter-option active" data-size="all">Все размеры</button>
-                    </div>
-                </div>
+<!-- Filters - горизонтальный скролл как на скриншоте -->
+<div class="filters-wrapper">
+    <div class="filters-scroll">
+        <!-- Category Filter -->
+        <div class="filter-chip-dropdown" id="categoryDropdown">
+            <button class="filter-chip" id="categoryBtn">
+                <span id="categoryText">Категория</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="filter-dropdown-menu" id="categoryMenu">
+                <button class="filter-dropdown-item active" data-category="all">Все категории</button>
+                <button class="filter-dropdown-item" data-category="1">👟 Обувь</button>
+                <button class="filter-dropdown-item" data-category="2">🧥 Куртки / Пуховики</button>
+                <button class="filter-dropdown-item" data-category="3">🦺 Жилетки</button>
+                <button class="filter-dropdown-item" data-category="4">👔 Рубашки</button>
+                <button class="filter-dropdown-item" data-category="5">👕 Футболки / Поло</button>
+                <button class="filter-dropdown-item" data-category="6">🧶 Кофты</button>
+                <button class="filter-dropdown-item" data-category="7">👖 Штаны</button>
+                <button class="filter-dropdown-item" data-category="8">🩳 Шорты</button>
+                <button class="filter-dropdown-item" data-category="9">🧢 Головные уборы</button>
+                <button class="filter-dropdown-item" data-category="10">🎒 Аксессуары</button>
             </div>
         </div>
-
+        
+        <!-- Brand Filter -->
+        <div class="filter-chip-dropdown" id="brandDropdown">
+            <button class="filter-chip" id="brandBtn">
+                <span id="brandText">Бренд</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="filter-dropdown-menu" id="brandMenu">
+                <button class="filter-dropdown-item active" data-brand="all">Все бренды</button>
+                <button class="filter-dropdown-item" data-brand="stone_island">Stone Island</button>
+                <button class="filter-dropdown-item" data-brand="nike">Nike</button>
+                <button class="filter-dropdown-item" data-brand="adidas">Adidas</button>
+                <button class="filter-dropdown-item" data-brand="raf_simons">Raf Simons</button>
+                <button class="filter-dropdown-item" data-brand="cp_company">CP Company</button>
+                <button class="filter-dropdown-item" data-brand="gucci">Gucci</button>
+                <button class="filter-dropdown-item" data-brand="balenciaga">Balenciaga</button>
+                <button class="filter-dropdown-item" data-brand="number_nine">Number Nine</button>
+                <button class="filter-dropdown-item" data-brand="maison_margiela">Maison Margiela</button>
+                <button class="filter-dropdown-item" data-brand="rick_owens">Rick Owens</button>
+                <button class="filter-dropdown-item" data-brand="bape">Bape</button>
+                <button class="filter-dropdown-item" data-brand="gosha">Гоша Рубчинский</button>
+            </div>
+        </div>
+        
+        <!-- Size Filter -->
+        <div class="filter-chip-dropdown" id="sizeDropdown">
+            <button class="filter-chip" id="sizeBtn">
+                <span id="sizeText">Размер</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="filter-dropdown-menu" id="sizeMenu">
+                <button class="filter-dropdown-item active" data-size="all">Все размеры</button>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- Products Grid -->
         <main class="products-grid" id="productsGrid"></main>
 
