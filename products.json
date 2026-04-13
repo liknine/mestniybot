@@ -18,5 +18,29 @@
     "images": [
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_42.jpg"
     ]
+  },
+  {
+    "id": 2,
+    "category_id": 5,
+    "brand": "jordan",
+    "name": "Пуховик Jordan Nylon",
+    "description": "Покашулущ",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 12500.0,
+      "USD": 4748.0
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_44.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_43.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_45.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_46.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_47.jpg"
+    ]
   }
 ]
