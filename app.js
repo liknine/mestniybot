@@ -960,7 +960,7 @@ function submitOrder() {
     }
 
     const encodedText = encodeURIComponent(orderText);
-    const tgLink = 'https://t.me/liknine?text=' + encodedText;
+    const tgLink = 'https://t.me/@manager_of_mestniy?text=' + encodedText;
 
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.openTelegramLink(tgLink);
