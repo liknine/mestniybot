@@ -80,6 +80,7 @@ const BRANDS = {
     'rick_owens': "Rick Owen's",
     'sergio_tacchini': 'Sergio Tacchini',
     'stone_island': 'Stone Island',
+    'stussy': 'Stussy',
     'supreme': 'Supreme',
     'thor_steinar': 'Thor Steinar',
     'timberland': 'Timberland',
