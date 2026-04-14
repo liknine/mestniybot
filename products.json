@@ -440,5 +440,38 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_178.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_179.jpg"
     ]
+  },
+  {
+    "id": 17,
+    "category_id": 10,
+    "brand": "stone",
+    "name": "Перчатки Stone Island Reflective",
+    "description": "Очень удобные, внутри утеплены, рефлективные! Есть следы носок, размер М. Оригинал.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4550.0,
+      "USD": 56.0
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_180.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_181.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_182.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_183.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_184.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_185.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_186.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_187.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_188.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_189.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_190.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_191.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_192.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_193.jpg"
+    ]
   }
 ]
