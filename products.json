@@ -830,5 +830,32 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_151.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_152.jpg"
     ]
+  },
+  {
+    "id": 38,
+    "category_id": 6,
+    "brand": "cp",
+    "name": "Свитшот C.P. Company",
+    "description": "Приятный цвет, логотип сзади прорезиненный, базовый! Отлично сидит на теле, плотный материал! Оригинал! Дата изготовления: 07/2021.",
+    "price_byn": 230.0,
+    "prices": {
+      "BYN": 230.0,
+      "RUB": 6800.0,
+      "USD": 86.0
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_153.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_154.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_156.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_155.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_158.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_157.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_159.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_160.jpg"
+    ]
   }
 ]
