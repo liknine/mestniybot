@@ -890,5 +890,33 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_366.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_367.jpg"
     ]
+  },
+  {
+    "id": 42,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Свитшот Stone Island Junior",
+    "description": "Красивый, нежный, свитшот от Stone Island! Коллекция 68! Spring / Summer 2018. Патч на рукаве, база, как мы и любим. Размер по бирке: 14/170. Фактический размер: S - M.",
+    "price_byn": 270.0,
+    "prices": {
+      "BYN": 270.0,
+      "RUB": 8000.0,
+      "USD": 101.0
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_273.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_274.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_276.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_275.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_277.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_278.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_279.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_284.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_368.jpg"
+    ]
   }
 ]
