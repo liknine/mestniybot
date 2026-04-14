@@ -170,34 +170,6 @@
     ]
   },
   {
-    "id": 12,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Очень классный, плотный, отличное состояние, присутствуют небольшие следы носок! Продажа со взрослым патчем! Размер 14/164",
-    "price_byn": 270.0,
-    "prices": {
-      "BYN": 270.0,
-      "RUB": 7850.0,
-      "USD": 101.0
-    },
-    "sizes": [
-      "S ( 14/164 )"
-    ],
-    "stock": 1,
-    "images": [
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_144.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_145.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_146.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_147.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_148.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_149.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_150.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_151.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_152.jpg"
-    ]
-  },
-  {
     "id": 13,
     "category_id": 6,
     "brand": "cp",
