@@ -56,35 +56,6 @@
     ]
   },
   {
-    "id": 4,
-    "category_id": 1,
-    "brand": "new",
-    "name": "Кроссовки New Balance Trail Running",
-    "description": "Очень классные, новые, лёгкие, на высокой подошве, удобные, нога будет дышать! Размер 44. Очень приятная расцветка, такую модель не часто встретишь.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7000.0,
-      "USD": 94.0
-    },
-    "sizes": [
-      "44"
-    ],
-    "stock": 1,
-    "images": [
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_69.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_70.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_71.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_72.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_73.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_74.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_75.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_76.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_77.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_78.jpg"
-    ]
-  },
-  {
     "id": 5,
     "category_id": 9,
     "brand": "cp",
