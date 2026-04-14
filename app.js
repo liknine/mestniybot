@@ -38,6 +38,7 @@ const BRANDS = {
     'diesel': 'Diesel',
     'dobermans': 'Dobermans Aggressive',
     'doctor_martens': 'Doctor Martens',
+    'eastpak': 'Eastpak',
     'ellesse': 'Ellesse',
     'fila': 'Fila',
     'fred_perry': 'Fred Perry',
