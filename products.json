@@ -1450,5 +1450,33 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_611.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_612.jpg"
     ]
+  },
+  {
+    "id": 67,
+    "category_id": 9,
+    "brand": "cp",
+    "name": "Шапка C.P. Company Knit Wool НОВАЯ",
+    "description": "Очень красивая, приятная, нежная. Абсолютно новая, в комплекте с навесными бирками, пакет! Линза в плёнке! Оригинал! Отлично сидит на голове! Коллекция 103. Размер: UNI",
+    "price_byn": 360.0,
+    "prices": {
+      "BYN": 360.0,
+      "RUB": 10400.0,
+      "USD": 135.0
+    },
+    "sizes": [
+      "UNI"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_613.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_614.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_615.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_616.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_617.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_618.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_619.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_620.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_621.jpg"
+    ]
   }
 ]
