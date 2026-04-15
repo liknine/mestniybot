@@ -1656,35 +1656,5 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_704.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_692.jpg"
     ]
-  },
-  {
-    "id": 76,
-    "category_id": 2,
-    "brand": "levis",
-    "name": "Куртка Levi’s Denim",
-    "description": "Очень классная, джинс. Идет как овершот. Внутри дизайн клетки. Все фурнитуры на замках есть!",
-    "price_byn": 140.0,
-    "prices": {
-      "BYN": 140.0,
-      "RUB": 4500.0,
-      "USD": 52.0
-    },
-    "sizes": [
-      "XL"
-    ],
-    "stock": 1,
-    "images": [
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_705.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_706.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_707.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_708.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_709.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_710.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_711.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_712.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_713.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_714.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_715.jpg"
-    ]
   }
 ]
