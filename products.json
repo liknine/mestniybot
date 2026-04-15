@@ -1,33 +1,5 @@
 [
   {
-    "id": 3,
-    "category_id": 5,
-    "brand": "weekend",
-    "name": "Футболка Weekend Offender",
-    "description": "Очень классная футболка от бренда Weekend Offender! Базовый принт, который не спутать ни с чем! Размер XL. По состоянию всё супер, но есть небольшие трещинки принта, которые видно только близи!",
-    "price_byn": 110.0,
-    "prices": {
-      "BYN": 110.0,
-      "RUB": 3250.0,
-      "USD": 41.0
-    },
-    "sizes": [
-      "XL"
-    ],
-    "stock": 1,
-    "images": [
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_60.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_61.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_62.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_63.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_64.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_65.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_66.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_67.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_68.jpg"
-    ]
-  },
-  {
     "id": 8,
     "category_id": 5,
     "brand": "stussy",
