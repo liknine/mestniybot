@@ -929,32 +929,6 @@
     ]
   },
   {
-    "id": 54,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Аккуратный и строгий свитшот. Красивый, отлично сидит на теле. Оригинал. Размер по бирке: S. Фактический размер: S - M. Коллекция: 74. Spring / Summer 2021. Made in Turkey.",
-    "price_byn": 340.0,
-    "prices": {
-      "BYN": 340.0,
-      "RUB": 9900.0,
-      "USD": 127.0
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_54_fd927043.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_c7c2d752.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_2c3f7153.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_da14dab8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_b8031e78.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_d193b466.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_856408f8.jpg"
-    ]
-  },
-  {
     "id": 55,
     "category_id": 6,
     "brand": "mastrum",
