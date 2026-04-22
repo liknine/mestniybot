@@ -53,32 +53,6 @@
     ]
   },
   {
-    "id": 11,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Зип - Худи C.P. Company Goggle Zip",
-    "description": "C.P. COMPANY Diagonal Raised Fleece Zipped Hoodie. Размер М. Отличное состояние, есть следы носки! Очень классная, плотный материал, приятный цвет, оригинал! Модель 02 месяца 2022 года!",
-    "price_byn": 430.0,
-    "prices": {
-      "BYN": 430.0,
-      "RUB": 11850.0,
-      "USD": 161.0
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_11_e04eb4e8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_1c8c47e8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_84211570.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_f5f945a1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_dd9d470f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_2fd57532.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_f1dc9e6a.jpg"
-    ]
-  },
-  {
     "id": 14,
     "category_id": 5,
     "brand": "jordan",
