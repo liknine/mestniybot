@@ -565,32 +565,6 @@
     ]
   },
   {
-    "id": 43,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Приятный свитшот. Оригинал. Размер по бирке: S. Фактический размер S - M. Коллекция: 70. Spring / Summer 2019. Made in Turkey.",
-    "price_byn": 340.0,
-    "prices": {
-      "BYN": 340.0,
-      "RUB": 9900.0,
-      "USD": 127.0
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_43_7d5406d9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_7c4effeb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_ec120867.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_39e607a4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_f6a1ffc3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_a5a6c267.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_2e0da952.jpg"
-    ]
-  },
-  {
     "id": 44,
     "category_id": 6,
     "brand": "stone",
