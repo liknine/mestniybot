@@ -282,32 +282,6 @@
     ]
   },
   {
-    "id": 26,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Плотный, приятный цвет, коллекция 69, есть следы носок!",
-    "price_byn": 340.0,
-    "prices": {
-      "BYN": 340.0,
-      "RUB": 10000.0,
-      "USD": 127.0
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_26_971f4689.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_0af84a15.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_68b00b9f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_edc58b1f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_89a85faf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_1448ff61.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_b251b4f3.jpg"
-    ]
-  },
-  {
     "id": 27,
     "category_id": 6,
     "brand": "stone",
