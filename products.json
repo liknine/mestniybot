@@ -695,32 +695,6 @@
     ]
   },
   {
-    "id": 49,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Плотный, в очень классном состоянии! Оригинал! Размер по бирке: 14/170. Фактический размер: S - M. База с патчем на рукаве, всё как мы любим! Коллекция: 73. Autumn / Winter 2020. Made in Romania.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8100.0,
-      "USD": 105.0
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_49_b854b72c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_dde24216.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_46295117.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_ee0c8e7e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_3b0d5944.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_668f6959.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_beace66f.jpg"
-    ]
-  },
-  {
     "id": 50,
     "category_id": 5,
     "brand": "nike",
