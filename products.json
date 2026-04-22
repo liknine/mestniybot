@@ -1007,32 +1007,6 @@
     ]
   },
   {
-    "id": 61,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Худи C.P. Company",
-    "description": "Абсолютный идеал! Вещь как новая, линза в плёнке! Бирки идеальнейшие! Очень приятный цвет и материал! Хлопок!",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 8900.0,
-      "USD": 112.0
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_61_83bde780.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_1d062a96.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_a453180e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_906d7bc1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_9a4c4324.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_d1ad9d26.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_aeb9932e.jpg"
-    ]
-  },
-  {
     "id": 62,
     "category_id": 10,
     "brand": "alyx",
