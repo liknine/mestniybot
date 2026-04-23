@@ -1033,32 +1033,6 @@
     ]
   },
   {
-    "id": 69,
-    "category_id": 1,
-    "brand": "adidas",
-    "name": "Кроссовки Adidas Flb Runner",
-    "description": "Отличное состояние, как новые, самое то для тренировок! Без каких - либо нюансов, минимальные следы носок! Длина по стельке 23.5 СМ.",
-    "price_byn": 85.0,
-    "prices": {
-      "BYN": 85.0,
-      "RUB": 2700.0,
-      "USD": 32.0
-    },
-    "sizes": [
-      "38"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_69_96537864.jpg",
-      "https://liknine.github.io/mestniybot/images/product_69_28ac2b53.jpg",
-      "https://liknine.github.io/mestniybot/images/product_69_f614da3c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_69_8184b32d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_69_fc8200f7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_69_63212fa6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_69_c48a28c5.jpg"
-    ]
-  },
-  {
     "id": 72,
     "category_id": 6,
     "brand": "stone",
