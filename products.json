@@ -437,32 +437,6 @@
     ]
   },
   {
-    "id": 38,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Свитшот C.P. Company",
-    "description": "Приятный цвет, логотип сзади прорезиненный, базовый! Отлично сидит на теле, плотный материал! Оригинал! Дата изготовления: 07/2021.",
-    "price_byn": 230.0,
-    "prices": {
-      "BYN": 230.0,
-      "RUB": 6800.0,
-      "USD": 86.0
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_38_fde5ae2a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_38_6f90f4db.jpg",
-      "https://liknine.github.io/mestniybot/images/product_38_9452f8ae.jpg",
-      "https://liknine.github.io/mestniybot/images/product_38_a72e0b7b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_38_55311f75.jpg",
-      "https://liknine.github.io/mestniybot/images/product_38_2af26148.jpg",
-      "https://liknine.github.io/mestniybot/images/product_38_8f958f47.jpg"
-    ]
-  },
-  {
     "id": 39,
     "category_id": 6,
     "brand": "cp",
