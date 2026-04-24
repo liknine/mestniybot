@@ -1213,5 +1213,31 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1079.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1080.jpg"
     ]
+  },
+  {
+    "id": 81,
+    "category_id": 9,
+    "brand": "weekend",
+    "name": "Панама Weekend Offender НОВАЯ",
+    "description": "Абсолютно новая! Очень классно сидит на голове! С навесной биркой! Легендарная клетка, все как мы любим!",
+    "price_byn": 135.0,
+    "prices": {
+      "BYN": 135.0,
+      "RUB": 4200.0,
+      "USD": 50.0
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "stock": 2,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1081.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1082.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1083.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1084.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1085.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1086.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1087.jpg"
+    ]
   }
 ]
