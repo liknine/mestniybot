@@ -981,32 +981,6 @@
     ]
   },
   {
-    "id": 72,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Худи Stone Island",
-    "description": "Отличное состояние. Черный цвет! База с патчем на рукаве, все как мы любим! Размер по бирке: S. Фактический размер: S - M. Коллекция: 69. Autumn / Winter 2018. Made in Romania.",
-    "price_byn": 390.0,
-    "prices": {
-      "BYN": 390.0,
-      "RUB": 11400.0,
-      "USD": 146.0
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_72_645b7049.jpg",
-      "https://liknine.github.io/mestniybot/images/product_72_15011113.jpg",
-      "https://liknine.github.io/mestniybot/images/product_72_f0c10559.jpg",
-      "https://liknine.github.io/mestniybot/images/product_72_a604c924.jpg",
-      "https://liknine.github.io/mestniybot/images/product_72_43d13595.jpg",
-      "https://liknine.github.io/mestniybot/images/product_72_c1dc1abf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_72_9a6a8edf.jpg"
-    ]
-  },
-  {
     "id": 73,
     "category_id": 6,
     "brand": "stone",
