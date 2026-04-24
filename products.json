@@ -721,32 +721,6 @@
     ]
   },
   {
-    "id": 52,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот 1 / 3 Zip Stone Island",
-    "description": "Очень классный, самое то на текущую пору года, необычный дизайн за счёт горла! Трикотаж. Коллекция: 66. Spring / Summer 2017. Made in Italy.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_52_aacd2161.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_895a2939.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_8782d547.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_e3be0999.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_2deb0051.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_7660f659.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_4704ba71.jpg"
-    ]
-  },
-  {
     "id": 53,
     "category_id": 6,
     "brand": "stone",
