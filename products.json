@@ -812,7 +812,8 @@
     "prices": {
       "BYN": 520.0,
       "RUB": 15000.0,
-      "USD": 195.0
+      "USD": 195.0,
+      "discount_percent": 30.0
     },
     "sizes": [
       "L"
@@ -827,7 +828,7 @@
       "https://liknine.github.io/mestniybot/images/product_56_51be8461.jpg",
       "https://liknine.github.io/mestniybot/images/product_56_7fd6cf40.jpg"
     ],
-    "discount_percent": 0
+    "discount_percent": 30.0
   },
   {
     "id": 58,
