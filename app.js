@@ -7,7 +7,7 @@ if (tg) {
 }
 
 // ==================== CONFIG ====================
-const SUPPORT_USERNAME = 'liknine';
+const SUPPORT_USERNAME = 'manager_of_mestniy';
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -47,6 +47,7 @@ const BRANDS = {
     'ggl': 'GGL',
     'gosha': 'Гоша Рубчинский',
     'gucci': 'Gucci',
+    'guess': 'Guess',
     'haglofs': 'Haglofs',
     'hardcore': 'Hardcore',
     'hermes': 'Hermes',
@@ -112,7 +113,7 @@ const CATEGORIES = {
 const SIZES = {
     shoes: ['37','37.5','38','38.5','39','39.5','40','40.5','41','41.5','42','42.5','43','43.5','44','44.5','45','45.5','46','46.5'],
     clothing: ['XS','S','M','L','XL','XXL','XXXL'],
-    onesize: ['ONE SIZE']
+    onesize: ['ONE SIZE','OS','UNI']
 };
 
 // ==================== STATE ====================
@@ -157,28 +158,32 @@ async function loadProducts() {
 }
 
 // ==================== UTILITIES ====================
+function money(value, currency) {
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
+    if (currency === 'USD') return '$' + value.toFixed(2);
+    return value.toFixed(2) + ' ' + symbols[currency];
+}
+function basePrice(product, currency) {
+    if (product && product.prices && product.prices[currency]) return product.prices[currency];
+    return (product.price_byn || 0) * (state.exchangeRates[currency] || 1);
+}
+function finalPrice(product, currency) {
+    const d = getDiscountPercent(product);
+    const base = basePrice(product, currency);
+    return d ? base * (100 - d) / 100 : base;
+}
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
-    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
-
-    if (product && product.prices && product.prices[currency]) {
-        const price = product.prices[currency];
-        if (currency === 'USD') return '$' + price.toFixed(2);
-        return price.toFixed(2) + ' ' + symbols[currency];
-    }
-
-    const rate = state.exchangeRates[currency] || 1;
-    const converted = priceByn * rate;
-    if (currency === 'USD') return '$' + converted.toFixed(2);
-    return converted.toFixed(2) + ' ' + symbols[currency];
+    product = product || { price_byn: priceByn };
+    const d = getDiscountPercent(product);
+    const base = basePrice(product, currency);
+    if (d) return '<span class="old-price">' + money(base, currency) + '</span> <span class="new-price">' + money(finalPrice(product, currency), currency) + '</span>';
+    return money(base, currency);
 }
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    if (product && product.prices && product.prices[state.currency]) {
-        return product.prices[state.currency] * qty;
-    }
-    return product.price_byn * qty * (state.exchangeRates[state.currency] || 1);
+    return finalPrice(product, state.currency) * qty;
 }
 
 function formatTotal(total) {
@@ -205,6 +210,25 @@ function haptic(type) {
 function getBrandName(key) {
     return BRANDS[key] || key || '';
 }
+
+const BRAND_ALIASES = { 'raf_simons': ['raf'], 'stone_island': ['stone'], 'a_bathing_ape': ['bape','a'], 'guess': ['guess'] };
+function brandMatches(productBrand, selectedBrand) {
+    if (selectedBrand === 'all') return true;
+    const p = String(productBrand || '').toLowerCase();
+    const b = String(selectedBrand || '').toLowerCase();
+    return p === b || (BRAND_ALIASES[b] || []).includes(p);
+}
+function normalizeSize(size) { return String(size || '').trim().toUpperCase().replace(/\s+/g, ' '); }
+function isOneSize(size) { return ['ONE SIZE','OS','UNI','UNISIZE'].includes(normalizeSize(size)); }
+function sizeMatches(productSize, selectedSize) {
+    const p = normalizeSize(productSize), s = normalizeSize(selectedSize);
+    if (p === s) return true;
+    if (isOneSize(p) && isOneSize(s)) return true;
+    return p.split(/\s*[-–—/]\s*/).map(normalizeSize).includes(s);
+}
+function productHasSize(product, selectedSize) { return product.sizes && product.sizes.some(function(size) { return sizeMatches(size, selectedSize); }); }
+function getDiscountPercent(product) { const d = parseFloat(product && (product.discount_percent || product.discount)); return isNaN(d) || d <= 0 ? 0 : Math.min(d, 99); }
+function getMeasureText(product) { return [1,9,10].includes(parseInt(product.category_id)) ? '' : 'Замеры: На последнем фото!'; }
 
 function getStockStatus(stock) {
     if (stock === 0) return { text: 'Нет в наличии', class: 'out-of-stock' };
@@ -294,11 +318,11 @@ function filterProducts() {
     }
 
     if (state.currentBrand !== 'all') {
-        filtered = filtered.filter(function(p) { return p.brand === state.currentBrand; });
+        filtered = filtered.filter(function(p) { return brandMatches(p.brand, state.currentBrand); });
     }
 
     if (state.currentSize !== 'all') {
-        filtered = filtered.filter(function(p) { return p.sizes && p.sizes.includes(state.currentSize); });
+        filtered = filtered.filter(function(p) { return productHasSize(p, state.currentSize); });
     }
 
     if (state.searchQuery) {
@@ -338,8 +362,8 @@ function renderProducts(products) {
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy" onerror="this.style.display=\'none\'">' +
-                    '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
+                    (getDiscountPercent(p) ? '<div class="discount-badge">-' + getDiscountPercent(p) + '%</div>' : '') + '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
                 '</div>' +
@@ -418,8 +442,8 @@ function renderRelatedProducts(product) {
 
         return '<div class="product-card related-card" data-id="' + p.id + '">' +
             '<div class="product-image-container">' +
-                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy" onerror="this.style.display=\'none\'">' +
-                '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
+                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
+                (getDiscountPercent(p) ? '<div class="discount-badge">-' + getDiscountPercent(p) + '%</div>' : '') + '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                     '<i data-lucide="heart"></i>' +
                 '</button>' +
             '</div>' +
@@ -493,7 +517,7 @@ function renderCart() {
                 '<img src="' + img + '" alt="' + p.name + '" class="cart-item-image">' +
                 '<div class="cart-item-info">' +
                     '<h4 class="cart-item-name">' + p.name + '</h4>' +
-                    '<p class="cart-item-sizes">Размеры: ' + item.sizes.join(', ') + '</p>' +
+                    '<div class="cart-item-sizes">' + Object.keys(item.sizes.reduce(function(a, z){ a[z]=(a[z]||0)+1; return a; }, {})).map(function(sz){ var n=item.sizes.filter(function(x){return x===sz;}).length; return '<button class="cart-size-remove" data-id="' + item.productId + '" data-size="' + sz + '">' + sz + ' ×' + n + ' <span>×</span></button>'; }).join('') + '</div>' +
                     '<div class="cart-item-bottom">' +
                         '<span class="cart-item-price">' + formatTotal(itemSum) + '</span>' +
                         '<button class="cart-item-delete" data-id="' + item.productId + '">' +
@@ -517,9 +541,10 @@ function renderCart() {
 
 function attachCartListeners() {
     document.querySelectorAll('.cart-item-delete').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            removeFromCart(parseInt(this.dataset.id));
-        });
+        btn.addEventListener('click', function() { removeFromCart(parseInt(this.dataset.id)); });
+    });
+    document.querySelectorAll('.cart-size-remove').forEach(function(btn) {
+        btn.addEventListener('click', function() { removeSizeFromCart(parseInt(this.dataset.id), this.dataset.size); });
     });
 }
 
@@ -594,6 +619,8 @@ function openProductModal(product) {
         track.innerHTML = product.images.map(function(img) {
             return '<img src="' + img + '" alt="' + product.name + '">';
         }).join('');
+        const gal = document.querySelector('.gallery');
+        if (gal) { const old = gal.querySelector('.modal-discount'); if (old) old.remove(); if (getDiscountPercent(product)) gal.insertAdjacentHTML('beforeend', '<div class="discount-badge modal-discount">-' + getDiscountPercent(product) + '%</div>'); }
 
         track.onscroll = function() {
             const index = Math.round(this.scrollLeft / this.offsetWidth);
@@ -611,7 +638,7 @@ function openProductModal(product) {
 
     if (title) title.textContent = product.name;
     if (brand) brand.textContent = getBrandName(product.brand);
-    if (price) price.textContent = formatPrice(product.price_byn, state.currency, product);
+    if (price) price.innerHTML = formatPrice(product.price_byn, state.currency, product);
 
     const stockStatus = getStockStatus(product.stock);
     if (stock) {
@@ -621,6 +648,7 @@ function openProductModal(product) {
 
     // Sizes
     if (grid && product.sizes) {
+        if (product.sizes.length === 1) state.selectedSizes = [product.sizes[0]];
         grid.innerHTML = product.sizes.map(function(size) {
             return '<button class="size-chip" data-size="' + size + '" ' +
                 (product.stock === 0 ? 'disabled' : '') + '>' + size + '</button>';
@@ -643,7 +671,7 @@ function openProductModal(product) {
         });
     }
 
-    if (desc) desc.textContent = product.description || '';
+    if (desc) { const m = getMeasureText(product); desc.textContent = (product.description || '') + (m ? '\n\n' + m : ''); }
     if (fav) fav.classList.toggle('active', state.favorites.includes(product.id));
 
     // Scroll to top
@@ -672,7 +700,9 @@ function updateAddToCartBtn() {
 
     if (!state.selectedProduct || !btn) return;
 
-    btn.disabled = !state.selectedSizes.length || state.selectedProduct.stock === 0;
+    const sizes = state.selectedProduct.sizes || [];
+    if (!state.selectedSizes.length && sizes.length === 1) state.selectedSizes = [sizes[0]];
+    btn.disabled = (sizes.length > 1 && !state.selectedSizes.length) || state.selectedProduct.stock === 0;
 
     const total = getItemPrice(state.selectedProduct, Math.max(state.selectedSizes.length, 1));
     if (price) price.textContent = formatTotal(total);
@@ -752,25 +782,26 @@ function updateDeliveryFields() {
 
 // ==================== CART ACTIONS ====================
 function addToCart() {
-    if (!state.selectedProduct || !state.selectedSizes.length) return;
-
+    if (!state.selectedProduct) return;
+    const productSizes = state.selectedProduct.sizes || [];
+    const sizesToAdd = state.selectedSizes.length ? state.selectedSizes.slice() : (productSizes.length === 1 ? [productSizes[0]] : []);
+    if (!sizesToAdd.length) { showToast('Выберите размер'); return; }
     const existing = state.cart.find(function(i) { return i.productId === state.selectedProduct.id; });
-
-    if (existing) {
-        state.selectedSizes.forEach(function(s) {
-            if (!existing.sizes.includes(s)) existing.sizes.push(s);
-        });
-    } else {
-        state.cart.push({
-            productId: state.selectedProduct.id,
-            sizes: state.selectedSizes.slice()
-        });
-    }
-
+    if (existing) sizesToAdd.forEach(function(s) { existing.sizes.push(s); });
+    else state.cart.push({ productId: state.selectedProduct.id, sizes: sizesToAdd });
     saveCart();
     updateCartBadge();
-    showToast('Добавлено: ' + state.selectedSizes.length + ' размер(а)');
+    showToast('Добавлено: ' + sizesToAdd.length + ' шт.');
     closeProductModal();
+}
+
+function removeSizeFromCart(productId, size) {
+    const item = state.cart.find(function(i) { return i.productId === productId; });
+    if (!item) return;
+    const idx = item.sizes.indexOf(size);
+    if (idx !== -1) item.sizes.splice(idx, 1);
+    if (!item.sizes.length) state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
+    saveCart(); renderCart(); haptic('medium');
 }
 
 function removeFromCart(productId) {
@@ -845,7 +876,7 @@ function setCurrency(currency) {
 
     if (state.selectedProduct) {
         const price = document.getElementById('productPriceMain');
-        if (price) price.textContent = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
+        if (price) price.innerHTML = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
         updateAddToCartBtn();
     }
 
@@ -962,7 +993,7 @@ function submitOrder() {
     }
 
     const encodedText = encodeURIComponent(orderText);
-    const tgLink = 'https://t.me/@manager_of_mestniy?text=' + encodedText;
+    const tgLink = 'https://t.me/manager_of_mestniy?text=' + encodedText;
 
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.openTelegramLink(tgLink);
