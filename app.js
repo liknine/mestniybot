@@ -44,10 +44,10 @@ const BRANDS = {
     'fred_perry': 'Fred Perry',
     'fucking_awesome': 'Fucking Awesome',
     'gap': 'Gap',
+    'guess': 'Guess',
     'ggl': 'GGL',
     'gosha': 'Гоша Рубчинский',
     'gucci': 'Gucci',
-    'guess': 'Guess',
     'haglofs': 'Haglofs',
     'hardcore': 'Hardcore',
     'hermes': 'Hermes',
@@ -157,48 +157,48 @@ async function loadProducts() {
     }
 }
 
-function preloadProductImages() {
-    state.products.forEach(function(product) {
-        if (product.images && product.images[0]) {
-            const img = new Image();
-            img.src = product.images[0];
-        }
-    });
-}
-
 // ==================== UTILITIES ====================
 function money(value, currency) {
     const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
+    value = Number(value || 0);
     if (currency === 'USD') return '$' + value.toFixed(2);
     return value.toFixed(2) + ' ' + symbols[currency];
 }
-function basePrice(product, currency) {
-    if (product && product.prices && product.prices[currency]) return product.prices[currency];
-    return (product.price_byn || 0) * (state.exchangeRates[currency] || 1);
+
+function getBasePrice(product, currency) {
+    currency = currency || state.currency;
+    if (product && product.prices && product.prices[currency]) return Number(product.prices[currency]);
+    return Number(product.price_byn || 0) * (state.exchangeRates[currency] || 1);
 }
-function finalPrice(product, currency) {
-    const d = getDiscountPercent(product);
-    const base = basePrice(product, currency);
-    return d ? base * (100 - d) / 100 : base;
+
+function getOldPrice(product, currency) {
+    currency = currency || state.currency;
+    if (!product) return 0;
+    const oldPrices = product.old_prices || product.old_price || (product.prices && (product.prices.old_prices || product.prices.old_price));
+    if (oldPrices && oldPrices[currency]) return Number(oldPrices[currency]);
+    return 0;
 }
+
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
     product = product || { price_byn: priceByn };
-    const d = getDiscountPercent(product);
-    const base = basePrice(product, currency);
-    if (d) return '<span class="old-price">' + money(base, currency) + '</span> <span class="new-price">' + money(finalPrice(product, currency), currency) + '</span>';
-    return money(base, currency);
+    const current = getBasePrice(product, currency);
+    const old = getOldPrice(product, currency);
+
+    if (old && old > current) {
+        return '<span class="old-price">' + money(old, currency) + '</span> <span class="new-price">' + money(current, currency) + '</span>';
+    }
+
+    return money(current, currency);
 }
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    return finalPrice(product, state.currency) * qty;
+    return getBasePrice(product, state.currency) * qty;
 }
 
 function formatTotal(total) {
-    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
-    if (state.currency === 'USD') return '$' + total.toFixed(2);
-    return total.toFixed(2) + ' ' + symbols[state.currency];
+    return money(total, state.currency);
 }
 
 function showToast(msg) {
@@ -216,33 +216,57 @@ function haptic(type) {
     if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred(type || 'light');
 }
 
-function getBrandName(key) {
+const BRAND_ALIASES = {
+    'stone_island': ['stone'],
+    'cp_company': ['cp'],
+    'raf_simons': ['raf'],
+    'armani_exchange': ['armani'],
+    'weekend_offender': ['weekend'],
+    'a_bathing_ape': ['bape', 'a']
+};
+
+function canonicalBrand(key) {
     const value = String(key || '').toLowerCase();
-    if (BRANDS[value]) return BRANDS[value];
-    for (const brandKey in BRAND_ALIASES) {
-        if ((BRAND_ALIASES[brandKey] || []).includes(value)) return BRANDS[brandKey] || key || '';
+    for (const canonical in BRAND_ALIASES) {
+        if (value === canonical || BRAND_ALIASES[canonical].includes(value)) return canonical;
     }
-    return key || '';
+    return value;
 }
 
-const BRAND_ALIASES = { 'raf_simons': ['raf'], 'stone_island': ['stone'], 'a_bathing_ape': ['bape','a'], 'cp_company': ['cp'], 'weekend_offender': ['weekend'], 'armani_exchange': ['armani'], 'off_white': ['off'], 'new_balance': ['new'], 'guess': ['guess'] };
+function getBrandName(key) {
+    const canonical = canonicalBrand(key);
+    return BRANDS[canonical] || BRANDS[key] || key || '';
+}
+
 function brandMatches(productBrand, selectedBrand) {
     if (selectedBrand === 'all') return true;
-    const p = String(productBrand || '').toLowerCase();
-    const b = String(selectedBrand || '').toLowerCase();
-    return p === b || (BRAND_ALIASES[b] || []).includes(p);
+    return canonicalBrand(productBrand) === canonicalBrand(selectedBrand);
 }
-function normalizeSize(size) { return String(size || '').trim().toUpperCase().replace(/\s+/g, ' '); }
-function isOneSize(size) { return ['ONE SIZE','OS','UNI','UNISIZE'].includes(normalizeSize(size)); }
+
+function normalizeSize(size) {
+    return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
+}
+
+function isOneSize(size) {
+    return ['ONE SIZE','OS','UNI','UNISIZE'].includes(normalizeSize(size));
+}
+
 function sizeMatches(productSize, selectedSize) {
-    const p = normalizeSize(productSize), s = normalizeSize(selectedSize);
+    const p = normalizeSize(productSize);
+    const s = normalizeSize(selectedSize);
     if (p === s) return true;
     if (isOneSize(p) && isOneSize(s)) return true;
     return p.split(/\s*[-–—/]\s*/).map(normalizeSize).includes(s);
 }
-function productHasSize(product, selectedSize) { return product.sizes && product.sizes.some(function(size) { return sizeMatches(size, selectedSize); }); }
-function getDiscountPercent(product) { const d = parseFloat(product && (product.discount_percent || product.discount)); return isNaN(d) || d <= 0 ? 0 : Math.min(d, 99); }
-function getMeasureText(product) { return [1,9,10].includes(parseInt(product.category_id)) ? '' : 'Замеры: На последнем фото!'; }
+
+function productHasSize(product, selectedSize) {
+    return product.sizes && product.sizes.some(function(size) { return sizeMatches(size, selectedSize); });
+}
+
+function hasDiscount(product) {
+    const old = getOldPrice(product, state.currency);
+    return old && old > getBasePrice(product, state.currency);
+}
 
 function getStockStatus(stock) {
     if (stock === 0) return { text: 'Нет в наличии', class: 'out-of-stock' };
@@ -377,7 +401,8 @@ function renderProducts(products) {
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
                     '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
-                    (getDiscountPercent(p) ? '<div class="discount-badge">-' + getDiscountPercent(p) + '%</div>' : '') + '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
+                    (hasDiscount(p) ? '<div class="discount-badge">СКИДКА</div>' : '') +
+                    '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
                 '</div>' +
@@ -457,7 +482,7 @@ function renderRelatedProducts(product) {
         return '<div class="product-card related-card" data-id="' + p.id + '">' +
             '<div class="product-image-container">' +
                 '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
-                (getDiscountPercent(p) ? '<div class="discount-badge">-' + getDiscountPercent(p) + '%</div>' : '') + '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
+                '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                     '<i data-lucide="heart"></i>' +
                 '</button>' +
             '</div>' +
@@ -531,7 +556,7 @@ function renderCart() {
                 '<img src="' + img + '" alt="' + p.name + '" class="cart-item-image">' +
                 '<div class="cart-item-info">' +
                     '<h4 class="cart-item-name">' + p.name + '</h4>' +
-                    '<div class="cart-item-sizes">' + Object.keys(item.sizes.reduce(function(a, z){ a[z]=(a[z]||0)+1; return a; }, {})).map(function(sz){ var n=item.sizes.filter(function(x){return x===sz;}).length; return '<div class="cart-size-control"><button class="cart-size-minus" data-id="' + item.productId + '" data-size="' + sz + '">−</button><span>' + sz + ' ×' + n + '</span><button class="cart-size-plus" data-id="' + item.productId + '" data-size="' + sz + '">+</button><button class="cart-size-remove" data-id="' + item.productId + '" data-size="' + sz + '">×</button></div>'; }).join('') + '</div>' +
+                    '<div class="cart-item-sizes">' + Object.keys(item.sizes.reduce(function(acc, size) { acc[size] = (acc[size] || 0) + 1; return acc; }, {})).map(function(size) { const count = item.sizes.filter(function(x) { return x === size; }).length; return '<button class="cart-size-remove" data-id="' + item.productId + '" data-size="' + size + '">' + size + ' ×' + count + ' <span>×</span></button>'; }).join('') + '</div>' +
                     '<div class="cart-item-bottom">' +
                         '<span class="cart-item-price">' + formatTotal(itemSum) + '</span>' +
                         '<button class="cart-item-delete" data-id="' + item.productId + '">' +
@@ -555,16 +580,14 @@ function renderCart() {
 
 function attachCartListeners() {
     document.querySelectorAll('.cart-item-delete').forEach(function(btn) {
-        btn.addEventListener('click', function() { removeFromCart(parseInt(this.dataset.id)); });
-    });
-    document.querySelectorAll('.cart-size-minus').forEach(function(btn) {
-        btn.addEventListener('click', function() { removeSizeFromCart(parseInt(this.dataset.id), this.dataset.size); });
-    });
-    document.querySelectorAll('.cart-size-plus').forEach(function(btn) {
-        btn.addEventListener('click', function() { addSizeToCart(parseInt(this.dataset.id), this.dataset.size); });
+        btn.addEventListener('click', function() {
+            removeFromCart(parseInt(this.dataset.id));
+        });
     });
     document.querySelectorAll('.cart-size-remove').forEach(function(btn) {
-        btn.addEventListener('click', function() { removeAllSizeFromCart(parseInt(this.dataset.id), this.dataset.size); });
+        btn.addEventListener('click', function() {
+            removeSizeFromCart(parseInt(this.dataset.id), this.dataset.size);
+        });
     });
 }
 
@@ -590,7 +613,7 @@ function renderFavorites() {
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy">' +
                     '<button class="product-favorite active" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -639,8 +662,6 @@ function openProductModal(product) {
         track.innerHTML = product.images.map(function(img) {
             return '<img src="' + img + '" alt="' + product.name + '">';
         }).join('');
-        const gal = document.querySelector('.gallery');
-        if (gal) { const old = gal.querySelector('.modal-discount'); if (old) old.remove(); if (getDiscountPercent(product)) gal.insertAdjacentHTML('beforeend', '<div class="discount-badge modal-discount">-' + getDiscountPercent(product) + '%</div>'); }
 
         track.onscroll = function() {
             const index = Math.round(this.scrollLeft / this.offsetWidth);
@@ -668,10 +689,8 @@ function openProductModal(product) {
 
     // Sizes
     if (grid && product.sizes) {
-        if (product.sizes.length === 1) state.selectedSizes = [product.sizes[0]];
         grid.innerHTML = product.sizes.map(function(size) {
-            const selectedClass = product.sizes.length === 1 ? ' selected' : '';
-            return '<button class="size-chip' + selectedClass + '" data-size="' + size + '" ' +
+            return '<button class="size-chip" data-size="' + size + '" ' +
                 (product.stock === 0 ? 'disabled' : '') + '>' + size + '</button>';
         }).join('');
 
@@ -690,9 +709,15 @@ function openProductModal(product) {
                 updateAddToCartBtn();
             });
         });
+
+        if (product.sizes.length === 1 && product.stock > 0) {
+            state.selectedSizes = [product.sizes[0]];
+            const onlyChip = grid.querySelector('.size-chip');
+            if (onlyChip) onlyChip.classList.add('selected');
+        }
     }
 
-    if (desc) { const m = getMeasureText(product); desc.textContent = (product.description || '') + (m ? '\n\n' + m : ''); }
+    if (desc) desc.textContent = product.description || '';
     if (fav) fav.classList.toggle('active', state.favorites.includes(product.id));
 
     // Scroll to top
@@ -721,9 +746,8 @@ function updateAddToCartBtn() {
 
     if (!state.selectedProduct || !btn) return;
 
-    const sizes = state.selectedProduct.sizes || [];
-    if (!state.selectedSizes.length && sizes.length === 1) state.selectedSizes = [sizes[0]];
-    btn.disabled = (sizes.length > 1 && !state.selectedSizes.length) || state.selectedProduct.stock === 0;
+    const availableSizes = state.selectedProduct.sizes || [];
+    btn.disabled = (availableSizes.length > 1 && !state.selectedSizes.length) || state.selectedProduct.stock === 0;
 
     const total = getItemPrice(state.selectedProduct, Math.max(state.selectedSizes.length, 1));
     if (price) price.textContent = formatTotal(total);
@@ -804,16 +828,35 @@ function updateDeliveryFields() {
 // ==================== CART ACTIONS ====================
 function addToCart() {
     if (!state.selectedProduct) return;
-    const productSizes = state.selectedProduct.sizes || [];
-    const sizesToAdd = state.selectedSizes.length ? state.selectedSizes.slice() : (productSizes.length === 1 ? [productSizes[0]] : []);
-    if (!sizesToAdd.length) { showToast('Выберите размер'); return; }
+    if (!state.selectedSizes.length && state.selectedProduct.sizes && state.selectedProduct.sizes.length === 1) {
+        state.selectedSizes = [state.selectedProduct.sizes[0]];
+    }
+    if (!state.selectedSizes.length) return;
+
     const existing = state.cart.find(function(i) { return i.productId === state.selectedProduct.id; });
-    if (existing) sizesToAdd.forEach(function(s) { existing.sizes.push(s); });
-    else state.cart.push({ productId: state.selectedProduct.id, sizes: sizesToAdd });
+
+    if (existing) {
+        state.selectedSizes.forEach(function(s) {
+            existing.sizes.push(s);
+        });
+    } else {
+        state.cart.push({
+            productId: state.selectedProduct.id,
+            sizes: state.selectedSizes.slice()
+        });
+    }
+
     saveCart();
     updateCartBadge();
-    showToast('Добавлено: ' + sizesToAdd.length + ' шт.');
+    showToast('Добавлено: ' + state.selectedSizes.length + ' размер(а)');
     closeProductModal();
+}
+
+function removeFromCart(productId) {
+    state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
+    saveCart();
+    renderCart();
+    haptic('medium');
 }
 
 function removeSizeFromCart(productId, size) {
@@ -821,27 +864,9 @@ function removeSizeFromCart(productId, size) {
     if (!item) return;
     const idx = item.sizes.indexOf(size);
     if (idx !== -1) item.sizes.splice(idx, 1);
-    if (!item.sizes.length) state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
-    saveCart(); renderCart(); haptic('medium');
-}
-
-function addSizeToCart(productId, size) {
-    const item = state.cart.find(function(i) { return i.productId === productId; });
-    if (!item) { state.cart.push({ productId: productId, sizes: [size] }); }
-    else item.sizes.push(size);
-    saveCart(); renderCart(); haptic('medium');
-}
-
-function removeAllSizeFromCart(productId, size) {
-    const item = state.cart.find(function(i) { return i.productId === productId; });
-    if (!item) return;
-    item.sizes = item.sizes.filter(function(s) { return s !== size; });
-    if (!item.sizes.length) state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
-    saveCart(); renderCart(); haptic('medium');
-}
-
-function removeFromCart(productId) {
-    state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
+    if (!item.sizes.length) {
+        state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
+    }
     saveCart();
     renderCart();
     haptic('medium');
@@ -1247,7 +1272,6 @@ async function init() {
     const success = await loadProducts();
 
     if (success) {
-        preloadProductImages();
         renderSizeFilters();
         filterProducts();
     } else {

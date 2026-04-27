@@ -1519,9 +1519,50 @@ body {
     color: white;
     white-space: nowrap;
 }
+/* ==================== DISCOUNT / CART SIZE CONTROLS ==================== */
+.old-price {
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    font-weight: 600;
+    margin-right: 6px;
+}
 
-/* ==================== DISCOUNTS & CART SIZE CONTROLS ==================== */
-.old-price{color:var(--text-tertiary);text-decoration:line-through;font-weight:700;margin-right:4px}.new-price{color:var(--primary-dark);font-weight:800}.discount-badge{position:absolute;top:6px;left:6px;z-index:2;padding:4px 7px;border-radius:999px;background:var(--danger);color:#fff;font-size:11px;font-weight:800;line-height:1;box-shadow:var(--shadow)}.modal-discount{top:16px;left:16px;font-size:14px;padding:7px 10px}.cart-item-sizes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:auto}.cart-size-remove{border:1px solid var(--primary);border-radius:999px;background:var(--primary-bg);color:var(--primary-dark);font-size:12px;font-weight:700;padding:5px 8px;cursor:pointer}.cart-size-remove span{color:var(--danger);margin-left:3px}
+.new-price {
+    color: var(--danger);
+    font-weight: 800;
+}
 
-.cart-size-control{display:flex;align-items:center;gap:6px;border:1px solid var(--primary);border-radius:999px;background:var(--primary-bg);color:var(--primary-dark);font-size:12px;font-weight:700;padding:4px 6px}.cart-size-control button{border:none;background:transparent;color:var(--primary-dark);font-size:14px;font-weight:800;line-height:1;cursor:pointer;padding:2px 4px}.cart-size-control .cart-size-remove{color:var(--danger)}
-.cart-size-control .cart-size-remove{border:none;background:transparent;padding:2px 4px;font-size:14px;box-shadow:none}
+.discount-badge {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    z-index: 2;
+    padding: 4px 7px;
+    border-radius: 8px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.cart-item-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: auto;
+}
+
+.cart-size-remove {
+    border: none;
+    border-radius: 8px;
+    padding: 5px 8px;
+    background: var(--primary-bg);
+    color: var(--primary-dark);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cart-size-remove span {
+    color: var(--danger);
+}
