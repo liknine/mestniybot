@@ -1471,5 +1471,26 @@
       "https://liknine.github.io/mestniybot/images/product_new_1639462053_4c0771f3.jpg"
     ],
     "discount_percent": 0
+  },
+  {
+    "id": 92,
+    "category_id": 6,
+    "brand": "stussy",
+    "name": "333",
+    "description": "56",
+    "price_byn": 3.0,
+    "prices": {
+      "BYN": 3.0,
+      "RUB": 433.0,
+      "USD": 12.0
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 4,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_new_1639462053_6ee080a5.jpg"
+    ],
+    "discount_percent": 0
   }
 ]
