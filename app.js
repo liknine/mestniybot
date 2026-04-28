@@ -146,7 +146,6 @@ async function loadProducts() {
         const response = await fetch('products.json?v=' + Date.now());
         if (response.ok) {
             state.products = await response.json();
-            preloadProductImages(state.products);
             console.log('✅ Загружено:', state.products.length);
             return true;
         }
@@ -165,53 +164,43 @@ function money(value, currency) {
     return value.toFixed(2) + ' ' + symbols[currency];
 }
 
-function basePrice(product, currency) {
-    if (product && product.prices && product.prices[currency] != null) return Number(product.prices[currency]);
-    return Number(product.price_byn || 0) * (state.exchangeRates[currency] || 1);
+function getCurrentPrice(product, currency) {
+    currency = currency || state.currency;
+    if (product && product.prices && product.prices[currency] !== undefined && product.prices[currency] !== null) {
+        return Number(product.prices[currency]);
+    }
+    return Number(product && product.price_byn ? product.price_byn : 0) * (state.exchangeRates[currency] || 1);
 }
 
-function oldPrice(product, currency) {
-    if (product && product.prices && product.prices.old_prices && product.prices.old_prices[currency] != null) {
+function getOldPrice(product, currency) {
+    currency = currency || state.currency;
+    if (product && product.prices && product.prices.old_prices && product.prices.old_prices[currency] !== undefined && product.prices.old_prices[currency] !== null) {
         return Number(product.prices.old_prices[currency]);
     }
     return null;
 }
 
+function hasPriceDiscount(product, currency) {
+    const oldPrice = getOldPrice(product, currency);
+    const currentPrice = getCurrentPrice(product, currency);
+    return oldPrice !== null && oldPrice !== currentPrice;
+}
+
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
-    product = product || { price_byn: priceByn };
-    const current = basePrice(product, currency);
-    const old = oldPrice(product, currency);
+    const currentPrice = getCurrentPrice(product || { price_byn: priceByn }, currency);
+    const oldPrice = getOldPrice(product, currency);
 
-    if (old !== null && old > current) {
-        return '<span class="old-price">' + money(old, currency) + '</span> <span class="price-arrow">→</span> <span class="new-price">' + money(current, currency) + '</span>';
+    if (oldPrice !== null && oldPrice !== currentPrice) {
+        return '<span class="old-price">' + money(oldPrice, currency) + '</span> <span class="price-arrow">→</span><br><span class="new-price">' + money(currentPrice, currency) + '</span>';
     }
 
-    return money(current, currency);
+    return money(currentPrice, currency);
 }
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    return basePrice(product, state.currency) * qty;
-}
-
-function retryImage(img) {
-    const tries = Number(img.dataset.tries || 0);
-    if (tries >= 3) return;
-    img.dataset.tries = String(tries + 1);
-    const cleanSrc = img.src.split('?')[0];
-    setTimeout(function() {
-        img.src = cleanSrc + '?reload=' + Date.now() + '_' + tries;
-    }, 250 + tries * 500);
-}
-
-function preloadProductImages(products) {
-    products.slice(0, 30).forEach(function(p) {
-        if (p.images && p.images[0]) {
-            const img = new Image();
-            img.src = p.images[0];
-        }
-    });
+    return getCurrentPrice(product, state.currency) * qty;
 }
 
 function formatTotal(total) {
@@ -371,7 +360,7 @@ function renderProducts(products) {
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="retryImage(this)">' +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy" onerror="this.style.display=\'none\'">' +
                     '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -451,7 +440,7 @@ function renderRelatedProducts(product) {
 
         return '<div class="product-card related-card" data-id="' + p.id + '">' +
             '<div class="product-image-container">' +
-                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="retryImage(this)">' +
+                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy" onerror="this.style.display=\'none\'">' +
                 '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                     '<i data-lucide="heart"></i>' +
                 '</button>' +
@@ -578,7 +567,7 @@ function renderFavorites() {
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async">' +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy">' +
                     '<button class="product-favorite active" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -625,7 +614,7 @@ function openProductModal(product) {
     // Gallery
     if (track && product.images) {
         track.innerHTML = product.images.map(function(img) {
-            return '<img src="' + img + '" alt="' + product.name + '" loading="eager" decoding="async" onerror="retryImage(this)">';
+            return '<img src="' + img + '" alt="' + product.name + '">';
         }).join('');
 
         track.onscroll = function() {

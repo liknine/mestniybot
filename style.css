@@ -1519,6 +1519,7 @@ body {
     color: white;
     white-space: nowrap;
 }
+
 /* ==================== PRICE DISCOUNT ==================== */
 .old-price {
     color: var(--text-tertiary);
@@ -1532,4 +1533,18 @@ body {
 .new-price {
     color: var(--danger);
     font-weight: 800;
+}
+.product-price .old-price,
+.product-price .price-arrow {
+    font-size: 13px;
+}
+.product-price .new-price {
+    font-size: 18px;
+}
+.product-price-main .old-price,
+.product-price-main .price-arrow {
+    font-size: 18px;
+}
+.product-price-main .new-price {
+    font-size: 26px;
 }
