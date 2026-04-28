@@ -7,7 +7,7 @@ if (tg) {
 }
 
 // ==================== CONFIG ====================
-const SUPPORT_USERNAME = 'manager_of_mestniy';
+const SUPPORT_USERNAME = 'liknine';
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -44,7 +44,6 @@ const BRANDS = {
     'fred_perry': 'Fred Perry',
     'fucking_awesome': 'Fucking Awesome',
     'gap': 'Gap',
-    'guess': 'Guess',
     'ggl': 'GGL',
     'gosha': 'Гоша Рубчинский',
     'gucci': 'Gucci',
@@ -113,7 +112,7 @@ const CATEGORIES = {
 const SIZES = {
     shoes: ['37','37.5','38','38.5','39','39.5','40','40.5','41','41.5','42','42.5','43','43.5','44','44.5','45','45.5','46','46.5'],
     clothing: ['XS','S','M','L','XL','XXL','XXXL'],
-    onesize: ['ONE SIZE','OS','UNI']
+    onesize: ['ONE SIZE']
 };
 
 // ==================== STATE ====================
@@ -147,6 +146,7 @@ async function loadProducts() {
         const response = await fetch('products.json?v=' + Date.now());
         if (response.ok) {
             state.products = await response.json();
+            preloadProductImages(state.products);
             console.log('✅ Загружено:', state.products.length);
             return true;
         }
@@ -165,28 +165,26 @@ function money(value, currency) {
     return value.toFixed(2) + ' ' + symbols[currency];
 }
 
-function getBasePrice(product, currency) {
-    currency = currency || state.currency;
-    if (product && product.prices && product.prices[currency]) return Number(product.prices[currency]);
+function basePrice(product, currency) {
+    if (product && product.prices && product.prices[currency] != null) return Number(product.prices[currency]);
     return Number(product.price_byn || 0) * (state.exchangeRates[currency] || 1);
 }
 
-function getOldPrice(product, currency) {
-    currency = currency || state.currency;
-    if (!product) return 0;
-    const oldPrices = product.old_prices || product.old_price || (product.prices && (product.prices.old_prices || product.prices.old_price));
-    if (oldPrices && oldPrices[currency]) return Number(oldPrices[currency]);
-    return 0;
+function oldPrice(product, currency) {
+    if (product && product.prices && product.prices.old_prices && product.prices.old_prices[currency] != null) {
+        return Number(product.prices.old_prices[currency]);
+    }
+    return null;
 }
 
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
     product = product || { price_byn: priceByn };
-    const current = getBasePrice(product, currency);
-    const old = getOldPrice(product, currency);
+    const current = basePrice(product, currency);
+    const old = oldPrice(product, currency);
 
-    if (old && old > current) {
-        return '<span class="old-price">' + money(old, currency) + '</span> <span class="new-price">' + money(current, currency) + '</span>';
+    if (old !== null && old > current) {
+        return '<span class="old-price">' + money(old, currency) + '</span> <span class="price-arrow">→</span> <span class="new-price">' + money(current, currency) + '</span>';
     }
 
     return money(current, currency);
@@ -194,11 +192,32 @@ function formatPrice(priceByn, currency, product) {
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    return getBasePrice(product, state.currency) * qty;
+    return basePrice(product, state.currency) * qty;
+}
+
+function retryImage(img) {
+    const tries = Number(img.dataset.tries || 0);
+    if (tries >= 3) return;
+    img.dataset.tries = String(tries + 1);
+    const cleanSrc = img.src.split('?')[0];
+    setTimeout(function() {
+        img.src = cleanSrc + '?reload=' + Date.now() + '_' + tries;
+    }, 250 + tries * 500);
+}
+
+function preloadProductImages(products) {
+    products.slice(0, 30).forEach(function(p) {
+        if (p.images && p.images[0]) {
+            const img = new Image();
+            img.src = p.images[0];
+        }
+    });
 }
 
 function formatTotal(total) {
-    return money(total, state.currency);
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
+    if (state.currency === 'USD') return '$' + total.toFixed(2);
+    return total.toFixed(2) + ' ' + symbols[state.currency];
 }
 
 function showToast(msg) {
@@ -216,56 +235,8 @@ function haptic(type) {
     if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred(type || 'light');
 }
 
-const BRAND_ALIASES = {
-    'stone_island': ['stone'],
-    'cp_company': ['cp'],
-    'raf_simons': ['raf'],
-    'armani_exchange': ['armani'],
-    'weekend_offender': ['weekend'],
-    'a_bathing_ape': ['bape', 'a']
-};
-
-function canonicalBrand(key) {
-    const value = String(key || '').toLowerCase();
-    for (const canonical in BRAND_ALIASES) {
-        if (value === canonical || BRAND_ALIASES[canonical].includes(value)) return canonical;
-    }
-    return value;
-}
-
 function getBrandName(key) {
-    const canonical = canonicalBrand(key);
-    return BRANDS[canonical] || BRANDS[key] || key || '';
-}
-
-function brandMatches(productBrand, selectedBrand) {
-    if (selectedBrand === 'all') return true;
-    return canonicalBrand(productBrand) === canonicalBrand(selectedBrand);
-}
-
-function normalizeSize(size) {
-    return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
-}
-
-function isOneSize(size) {
-    return ['ONE SIZE','OS','UNI','UNISIZE'].includes(normalizeSize(size));
-}
-
-function sizeMatches(productSize, selectedSize) {
-    const p = normalizeSize(productSize);
-    const s = normalizeSize(selectedSize);
-    if (p === s) return true;
-    if (isOneSize(p) && isOneSize(s)) return true;
-    return p.split(/\s*[-–—/]\s*/).map(normalizeSize).includes(s);
-}
-
-function productHasSize(product, selectedSize) {
-    return product.sizes && product.sizes.some(function(size) { return sizeMatches(size, selectedSize); });
-}
-
-function hasDiscount(product) {
-    const old = getOldPrice(product, state.currency);
-    return old && old > getBasePrice(product, state.currency);
+    return BRANDS[key] || key || '';
 }
 
 function getStockStatus(stock) {
@@ -356,11 +327,11 @@ function filterProducts() {
     }
 
     if (state.currentBrand !== 'all') {
-        filtered = filtered.filter(function(p) { return brandMatches(p.brand, state.currentBrand); });
+        filtered = filtered.filter(function(p) { return p.brand === state.currentBrand; });
     }
 
     if (state.currentSize !== 'all') {
-        filtered = filtered.filter(function(p) { return productHasSize(p, state.currentSize); });
+        filtered = filtered.filter(function(p) { return p.sizes && p.sizes.includes(state.currentSize); });
     }
 
     if (state.searchQuery) {
@@ -400,8 +371,7 @@ function renderProducts(products) {
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
-                    (hasDiscount(p) ? '<div class="discount-badge">СКИДКА</div>' : '') +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="retryImage(this)">' +
                     '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -481,7 +451,7 @@ function renderRelatedProducts(product) {
 
         return '<div class="product-card related-card" data-id="' + p.id + '">' +
             '<div class="product-image-container">' +
-                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="this.style.display=\'none\'">' +
+                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async" onerror="retryImage(this)">' +
                 '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                     '<i data-lucide="heart"></i>' +
                 '</button>' +
@@ -556,7 +526,7 @@ function renderCart() {
                 '<img src="' + img + '" alt="' + p.name + '" class="cart-item-image">' +
                 '<div class="cart-item-info">' +
                     '<h4 class="cart-item-name">' + p.name + '</h4>' +
-                    '<div class="cart-item-sizes">' + Object.keys(item.sizes.reduce(function(acc, size) { acc[size] = (acc[size] || 0) + 1; return acc; }, {})).map(function(size) { const count = item.sizes.filter(function(x) { return x === size; }).length; return '<button class="cart-size-remove" data-id="' + item.productId + '" data-size="' + size + '">' + size + ' ×' + count + ' <span>×</span></button>'; }).join('') + '</div>' +
+                    '<p class="cart-item-sizes">Размеры: ' + item.sizes.join(', ') + '</p>' +
                     '<div class="cart-item-bottom">' +
                         '<span class="cart-item-price">' + formatTotal(itemSum) + '</span>' +
                         '<button class="cart-item-delete" data-id="' + item.productId + '">' +
@@ -584,11 +554,6 @@ function attachCartListeners() {
             removeFromCart(parseInt(this.dataset.id));
         });
     });
-    document.querySelectorAll('.cart-size-remove').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            removeSizeFromCart(parseInt(this.dataset.id), this.dataset.size);
-        });
-    });
 }
 
 function renderFavorites() {
@@ -613,7 +578,7 @@ function renderFavorites() {
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy">' +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="eager" decoding="async">' +
                     '<button class="product-favorite active" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -660,7 +625,7 @@ function openProductModal(product) {
     // Gallery
     if (track && product.images) {
         track.innerHTML = product.images.map(function(img) {
-            return '<img src="' + img + '" alt="' + product.name + '">';
+            return '<img src="' + img + '" alt="' + product.name + '" loading="eager" decoding="async" onerror="retryImage(this)">';
         }).join('');
 
         track.onscroll = function() {
@@ -709,12 +674,6 @@ function openProductModal(product) {
                 updateAddToCartBtn();
             });
         });
-
-        if (product.sizes.length === 1 && product.stock > 0) {
-            state.selectedSizes = [product.sizes[0]];
-            const onlyChip = grid.querySelector('.size-chip');
-            if (onlyChip) onlyChip.classList.add('selected');
-        }
     }
 
     if (desc) desc.textContent = product.description || '';
@@ -746,8 +705,7 @@ function updateAddToCartBtn() {
 
     if (!state.selectedProduct || !btn) return;
 
-    const availableSizes = state.selectedProduct.sizes || [];
-    btn.disabled = (availableSizes.length > 1 && !state.selectedSizes.length) || state.selectedProduct.stock === 0;
+    btn.disabled = !state.selectedSizes.length || state.selectedProduct.stock === 0;
 
     const total = getItemPrice(state.selectedProduct, Math.max(state.selectedSizes.length, 1));
     if (price) price.textContent = formatTotal(total);
@@ -827,17 +785,13 @@ function updateDeliveryFields() {
 
 // ==================== CART ACTIONS ====================
 function addToCart() {
-    if (!state.selectedProduct) return;
-    if (!state.selectedSizes.length && state.selectedProduct.sizes && state.selectedProduct.sizes.length === 1) {
-        state.selectedSizes = [state.selectedProduct.sizes[0]];
-    }
-    if (!state.selectedSizes.length) return;
+    if (!state.selectedProduct || !state.selectedSizes.length) return;
 
     const existing = state.cart.find(function(i) { return i.productId === state.selectedProduct.id; });
 
     if (existing) {
         state.selectedSizes.forEach(function(s) {
-            existing.sizes.push(s);
+            if (!existing.sizes.includes(s)) existing.sizes.push(s);
         });
     } else {
         state.cart.push({
@@ -854,19 +808,6 @@ function addToCart() {
 
 function removeFromCart(productId) {
     state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
-    saveCart();
-    renderCart();
-    haptic('medium');
-}
-
-function removeSizeFromCart(productId, size) {
-    const item = state.cart.find(function(i) { return i.productId === productId; });
-    if (!item) return;
-    const idx = item.sizes.indexOf(size);
-    if (idx !== -1) item.sizes.splice(idx, 1);
-    if (!item.sizes.length) {
-        state.cart = state.cart.filter(function(i) { return i.productId !== productId; });
-    }
     saveCart();
     renderCart();
     haptic('medium');
@@ -1054,7 +995,7 @@ function submitOrder() {
     }
 
     const encodedText = encodeURIComponent(orderText);
-    const tgLink = 'https://t.me/manager_of_mestniy?text=' + encodedText;
+    const tgLink = 'https://t.me/@manager_of_mestniy?text=' + encodedText;
 
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.openTelegramLink(tgLink);
