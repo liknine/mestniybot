@@ -1520,31 +1520,31 @@ body {
     white-space: nowrap;
 }
 
-/* ==================== PRICE DISCOUNT ==================== */
+/* ==================== DISCOUNT PRICE ==================== */
 .old-price {
-    color: var(--text-tertiary);
+    color: #999999;
     text-decoration: line-through;
     font-weight: 700;
 }
+
 .price-arrow {
-    color: var(--text-tertiary);
-    font-weight: 700;
+    color: #999999;
+    font-weight: 800;
 }
+
 .new-price {
     color: var(--danger);
     font-weight: 800;
 }
-.product-price .old-price,
-.product-price .price-arrow {
-    font-size: 13px;
+
+.product-price .new-price,
+.product-price-main .new-price {
+    color: var(--danger);
+    -webkit-text-fill-color: var(--danger);
 }
-.product-price .new-price {
-    font-size: 18px;
-}
+
 .product-price-main .old-price,
 .product-price-main .price-arrow {
     font-size: 18px;
-}
-.product-price-main .new-price {
-    font-size: 26px;
+    -webkit-text-fill-color: #999999;
 }

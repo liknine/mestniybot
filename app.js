@@ -157,28 +157,45 @@ async function loadProducts() {
 }
 
 // ==================== UTILITIES ====================
+function money(value, currency) {
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
+    value = Number(value || 0);
+    if (currency === 'USD') return '$' + value.toFixed(2);
+    return value.toFixed(2) + ' ' + symbols[currency];
+}
+
+function getCurrentPrice(product, currency) {
+    if (product && product.prices && product.prices[currency] !== undefined && product.prices[currency] !== null) {
+        return Number(product.prices[currency]);
+    }
+    const rate = state.exchangeRates[currency] || 1;
+    return Number((product && product.price_byn) || 0) * rate;
+}
+
+function getOldPrices(product) {
+    if (!product || !product.prices) return null;
+    return product.prices.old_prices || product.prices.old_price || null;
+}
+
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
-    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
 
-    if (product && product.prices && product.prices[currency]) {
-        const price = product.prices[currency];
-        if (currency === 'USD') return '$' + price.toFixed(2);
-        return price.toFixed(2) + ' ' + symbols[currency];
+    const current = getCurrentPrice(product || { price_byn: priceByn }, currency);
+    const oldPrices = getOldPrices(product);
+    const old = oldPrices && oldPrices[currency] !== undefined && oldPrices[currency] !== null
+        ? Number(oldPrices[currency])
+        : null;
+
+    if (old !== null && old !== current) {
+        return '<span class="old-price">' + money(old, currency) + '</span> <span class="price-arrow">→</span><br><span class="new-price">' + money(current, currency) + '</span>';
     }
 
-    const rate = state.exchangeRates[currency] || 1;
-    const converted = priceByn * rate;
-    if (currency === 'USD') return '$' + converted.toFixed(2);
-    return converted.toFixed(2) + ' ' + symbols[currency];
+    return money(current, currency);
 }
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    if (product && product.prices && product.prices[state.currency]) {
-        return product.prices[state.currency] * qty;
-    }
-    return product.price_byn * qty * (state.exchangeRates[state.currency] || 1);
+    return getCurrentPrice(product, state.currency) * qty;
 }
 
 function formatTotal(total) {
@@ -647,7 +664,7 @@ function openProductModal(product) {
 
     if (title) title.textContent = product.name;
     if (brand) brand.textContent = getBrandName(product.brand);
-    if (price) price.textContent = formatPrice(product.price_byn, state.currency, product);
+    if (price) price.innerHTML = formatPrice(product.price_byn, state.currency, product);
 
     const stockStatus = getStockStatus(product.stock);
     if (stock) {
@@ -881,7 +898,7 @@ function setCurrency(currency) {
 
     if (state.selectedProduct) {
         const price = document.getElementById('productPriceMain');
-        if (price) price.textContent = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
+        if (price) price.innerHTML = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
         updateAddToCartBtn();
     }
 
