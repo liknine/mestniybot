@@ -157,50 +157,28 @@ async function loadProducts() {
 }
 
 // ==================== UTILITIES ====================
-function money(value, currency) {
-    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
-    value = Number(value || 0);
-    if (currency === 'USD') return '$' + value.toFixed(2);
-    return value.toFixed(2) + ' ' + symbols[currency];
-}
-
-function getCurrentPrice(product, currency) {
-    currency = currency || state.currency;
-    if (product && product.prices && product.prices[currency] !== undefined && product.prices[currency] !== null) {
-        return Number(product.prices[currency]);
-    }
-    return Number(product && product.price_byn ? product.price_byn : 0) * (state.exchangeRates[currency] || 1);
-}
-
-function getOldPrice(product, currency) {
-    currency = currency || state.currency;
-    if (product && product.prices && product.prices.old_prices && product.prices.old_prices[currency] !== undefined && product.prices.old_prices[currency] !== null) {
-        return Number(product.prices.old_prices[currency]);
-    }
-    return null;
-}
-
-function hasPriceDiscount(product, currency) {
-    const oldPrice = getOldPrice(product, currency);
-    const currentPrice = getCurrentPrice(product, currency);
-    return oldPrice !== null && oldPrice !== currentPrice;
-}
-
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
-    const currentPrice = getCurrentPrice(product || { price_byn: priceByn }, currency);
-    const oldPrice = getOldPrice(product, currency);
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
 
-    if (oldPrice !== null && oldPrice !== currentPrice) {
-        return '<span class="old-price">' + money(oldPrice, currency) + '</span> <span class="price-arrow">→</span><br><span class="new-price">' + money(currentPrice, currency) + '</span>';
+    if (product && product.prices && product.prices[currency]) {
+        const price = product.prices[currency];
+        if (currency === 'USD') return '$' + price.toFixed(2);
+        return price.toFixed(2) + ' ' + symbols[currency];
     }
 
-    return money(currentPrice, currency);
+    const rate = state.exchangeRates[currency] || 1;
+    const converted = priceByn * rate;
+    if (currency === 'USD') return '$' + converted.toFixed(2);
+    return converted.toFixed(2) + ' ' + symbols[currency];
 }
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    return getCurrentPrice(product, state.currency) * qty;
+    if (product && product.prices && product.prices[state.currency]) {
+        return product.prices[state.currency] * qty;
+    }
+    return product.price_byn * qty * (state.exchangeRates[state.currency] || 1);
 }
 
 function formatTotal(total) {
@@ -273,6 +251,42 @@ function updateProfileStats() {
     if (favCount) favCount.textContent = state.favorites.length;
 }
 
+
+// ==================== SIZE MATCHING ====================
+function normalizeSize(size) {
+    return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
+}
+
+function isOneSize(size) {
+    return ['ONE SIZE', 'OS', 'UNI', 'UNISIZE'].includes(normalizeSize(size));
+}
+
+function splitSizeParts(size) {
+    return normalizeSize(size)
+        .split(/\s*[-–—/]\s*/)
+        .map(normalizeSize)
+        .filter(Boolean);
+}
+
+function sizeMatches(productSize, selectedSize) {
+    const productValue = normalizeSize(productSize);
+    const selectedValue = normalizeSize(selectedSize);
+
+    if (!productValue || !selectedValue) return false;
+    if (productValue === selectedValue) return true;
+    if (isOneSize(productValue) && isOneSize(selectedValue)) return true;
+
+    // Например: S-M должен показываться и при S, и при M.
+    return splitSizeParts(productValue).includes(selectedValue);
+}
+
+function productHasSize(product, selectedSize) {
+    if (!product || !Array.isArray(product.sizes)) return false;
+    return product.sizes.some(function(size) {
+        return sizeMatches(size, selectedSize);
+    });
+}
+
 // ==================== SIZE FILTER CHIPS ====================
 function renderSizeFilters() {
     const wrapper = document.getElementById('sizesFilterScroll');
@@ -320,7 +334,7 @@ function filterProducts() {
     }
 
     if (state.currentSize !== 'all') {
-        filtered = filtered.filter(function(p) { return p.sizes && p.sizes.includes(state.currentSize); });
+        filtered = filtered.filter(function(p) { return productHasSize(p, state.currentSize); });
     }
 
     if (state.searchQuery) {
@@ -411,7 +425,7 @@ function renderRelatedProducts(product) {
     let related = state.products.filter(function(p) {
         if (p.id === product.id) return false;
         if (!p.sizes || !product.sizes) return false;
-        return p.sizes.some(function(s) { return product.sizes.includes(s); });
+        return p.sizes.some(function(s) { return productHasSize(product, s) || productHasSize(p, s); });
     });
 
     // Если нет — берём той же категории
@@ -633,7 +647,7 @@ function openProductModal(product) {
 
     if (title) title.textContent = product.name;
     if (brand) brand.textContent = getBrandName(product.brand);
-    if (price) price.innerHTML = formatPrice(product.price_byn, state.currency, product);
+    if (price) price.textContent = formatPrice(product.price_byn, state.currency, product);
 
     const stockStatus = getStockStatus(product.stock);
     if (stock) {
@@ -867,7 +881,7 @@ function setCurrency(currency) {
 
     if (state.selectedProduct) {
         const price = document.getElementById('productPriceMain');
-        if (price) price.innerHTML = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
+        if (price) price.textContent = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
         updateAddToCartBtn();
     }
 
