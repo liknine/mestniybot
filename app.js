@@ -8,7 +8,7 @@ if (tg) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: fix_loading_scroll_cards_12');
+console.log('MESTNIY build: fix_cart_checkout_manager_13');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -807,7 +807,11 @@ function openManagerForCart() {
 
 function addToCart() {
     if (!state.selectedProduct) return;
-    if (state.selectedProduct.sizes && state.selectedProduct.sizes.length === 1 && !state.selectedSizes.length) state.selectedSizes = [state.selectedProduct.sizes[0]];
+
+    if (state.selectedProduct.sizes && state.selectedProduct.sizes.length === 1 && !state.selectedSizes.length) {
+        state.selectedSizes = [state.selectedProduct.sizes[0]];
+    }
+
     if (!state.selectedSizes.length) {
         const warning = document.getElementById('sizeWarning');
         if (warning) {
@@ -817,7 +821,26 @@ function addToCart() {
         showToast('Выберите размер');
         return;
     }
-    openManagerForProduct(state.selectedProduct, state.selectedSizes.slice());
+
+    const productId = Number(state.selectedProduct.id);
+    let existing = state.cart.find(function(item) {
+        return Number(item.productId) === productId;
+    });
+
+    if (!existing) {
+        existing = { productId: productId, sizes: [] };
+        state.cart.push(existing);
+    }
+
+    state.selectedSizes.forEach(function(size) {
+        existing.sizes.push(size);
+    });
+
+    saveCart();
+    renderCart();
+    updateProfileStats();
+    showToast('Добавлено в корзину');
+    haptic('medium');
     closeProductModal();
 }
 
