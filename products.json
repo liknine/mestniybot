@@ -721,32 +721,6 @@
     ]
   },
   {
-    "id": 53,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Лонгслив Stone Island",
-    "description": "Красивый лонгслив. Черный цвет, базовый, патч на рукаве. Оригинал. Коллекция: 64. Spring / Summer 2016. Made in Tunisia.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_53_4e01c4dc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_53_10693491.jpg",
-      "https://liknine.github.io/mestniybot/images/product_53_2f8596f3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_53_27a3405b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_53_73099181.jpg",
-      "https://liknine.github.io/mestniybot/images/product_53_9fc2b91f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_53_a2d9c845.jpg"
-    ]
-  },
-  {
     "id": 55,
     "category_id": 6,
     "brand": "mastrum",
