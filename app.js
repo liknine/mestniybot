@@ -251,6 +251,12 @@ function retryImage(img) {
     }, 500 + retries * 700);
 }
 
+function refreshIcons() {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        try { window.lucide.createIcons(); } catch (e) { console.log('Lucide icons error:', e); }
+    }
+}
+
 function preloadProductImages(products) {
     (products || []).forEach(function(product) {
         (product.images || []).slice(0, 2).forEach(function(src) {
@@ -457,7 +463,7 @@ function renderProducts(products) {
     if (!products.length) {
         if (grid) grid.innerHTML = '';
         if (empty) empty.style.display = 'block';
-        lucide.createIcons();
+        refreshIcons();
         return;
     }
 
@@ -469,7 +475,7 @@ function renderProducts(products) {
             const status = getStockStatus(p.stock, p);
             const img = p.images && p.images[0] ? p.images[0] : '';
 
-            return '<div class="product-card" data-id="' + p.id + '">' +
+            return '<div class="product-card" data-id="' + p.id + '" role="button" tabindex="0" onclick="openProductByCardId(this.dataset.id)">' +
                 '<div class="product-image-container">' +
                     imageTag(img, p.name, 'product-image') +
                     (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
@@ -485,8 +491,8 @@ function renderProducts(products) {
             '</div>';
         }).join('');
 
-        lucide.createIcons();
         attachProductListeners();
+        refreshIcons();
     }
 }
 
@@ -567,6 +573,25 @@ function setupProductCardDelegation() {
     }, true);
 }
 
+function setupProductCardHardOpenFallback() {
+    if (window.__mestniyHardCardOpenReady) return;
+    window.__mestniyHardCardOpenReady = true;
+
+    function handleCardTap(e) {
+        if (!e || !e.target) return;
+        if (e.target.closest('.product-favorite')) return;
+        const card = e.target.closest('.product-card');
+        if (!card) return;
+        const modal = document.getElementById('productModal');
+        if (modal && modal.classList.contains('active')) return;
+        e.preventDefault();
+        openProductByCardId(card.dataset.id);
+    }
+
+    document.addEventListener('pointerup', handleCardTap, true);
+    document.addEventListener('touchend', handleCardTap, { capture: true, passive: false });
+}
+
 // ==================== RELATED PRODUCTS ====================
 function renderRelatedProducts(product) {
     const section = document.getElementById('relatedSection');
@@ -605,7 +630,7 @@ function renderRelatedProducts(product) {
         const status = getStockStatus(p.stock, p);
         const img = p.images && p.images[0] ? p.images[0] : '';
 
-        return '<div class="product-card related-card" data-id="' + p.id + '">' +
+        return '<div class="product-card related-card" data-id="' + p.id + '" role="button" tabindex="0" onclick="openProductByCardId(this.dataset.id)">' +
             '<div class="product-image-container">' +
                 imageTag(img, p.name, 'product-image') +
                 (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
@@ -621,7 +646,7 @@ function renderRelatedProducts(product) {
         '</div>';
     }).join('');
 
-    lucide.createIcons();
+    refreshIcons();
 
     // Listeners для related карточек
     grid.querySelectorAll('.related-card').forEach(function(card) {
@@ -662,7 +687,7 @@ function renderCart() {
         if (items) items.innerHTML = '';
         if (empty) empty.style.display = 'flex';
         if (footer) footer.style.display = 'none';
-        lucide.createIcons();
+        refreshIcons();
         return;
     }
 
@@ -695,7 +720,7 @@ function renderCart() {
             '</div>';
         }).join('');
 
-        lucide.createIcons();
+        refreshIcons();
         attachCartListeners();
     }
 
@@ -723,7 +748,7 @@ function renderFavorites() {
     if (!favProducts.length) {
         if (grid) grid.innerHTML = '';
         if (empty) empty.style.display = 'flex';
-        lucide.createIcons();
+        refreshIcons();
         return;
     }
 
@@ -734,7 +759,7 @@ function renderFavorites() {
             const status = getStockStatus(p.stock, p);
             const img = p.images && p.images[0] ? p.images[0] : '';
 
-            return '<div class="product-card" data-id="' + p.id + '">' +
+            return '<div class="product-card" data-id="' + p.id + '" role="button" tabindex="0" onclick="openProductByCardId(this.dataset.id)">' +
                 '<div class="product-image-container">' +
                     imageTag(img, p.name, 'product-image') +
                     (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
@@ -750,8 +775,8 @@ function renderFavorites() {
             '</div>';
         }).join('');
 
-        lucide.createIcons();
         attachProductListeners();
+        refreshIcons();
     }
 }
 
@@ -843,6 +868,7 @@ function openProductModal(product) {
     }
 
 
+    if (grid && product.sizes) {
         let warning = document.getElementById('sizeWarning');
         if (!warning && grid.parentNode) {
             warning = document.createElement('div');
@@ -858,6 +884,7 @@ function openProductModal(product) {
             const onlyChip = grid.querySelector('.size-chip');
             if (onlyChip) onlyChip.classList.add('selected');
         }
+    }
 
     if (desc) desc.textContent = [product.description || '', getMeasureText(product)].filter(Boolean).join('\n\n');
     if (fav) fav.classList.toggle('active', state.favorites.includes(product.id));
@@ -868,11 +895,12 @@ function openProductModal(product) {
 
     updateAddToCartBtn();
 
-    // Рендерим "Смотрите также"
-    renderRelatedProducts(product);
-
     if (modal) modal.classList.add('active');
-    lucide.createIcons();
+
+    // Рендерим "Смотрите также". Если там будет ошибка, карточка всё равно откроется.
+    try { renderRelatedProducts(product); } catch (e) { console.log('Related render error:', e); }
+
+    refreshIcons();
 }
 
 function closeProductModal() {
@@ -909,7 +937,7 @@ function openProfileModal() {
     updateProfileUI();
     const modal = document.getElementById('profileModal');
     if (modal) modal.classList.add('active');
-    lucide.createIcons();
+    refreshIcons();
 }
 
 function openCheckoutModal() {
@@ -1325,6 +1353,7 @@ function initListeners() {
 
     setupDropdowns();
     setupProductCardDelegation();
+    setupProductCardHardOpenFallback();
 
     // Modal backs
     var modalBack = document.getElementById('modalBack');
@@ -1434,6 +1463,8 @@ async function init() {
     loadCurrency();
     loadUserData();
     setupSectionTabs();
+    setupProductCardDelegation();
+    setupProductCardHardOpenFallback();
 
     const success = await loadProducts();
 
@@ -1448,7 +1479,7 @@ async function init() {
     }
 
     initListeners();
-    lucide.createIcons();
+    refreshIcons();
 
     console.log('✅ Готово!');
 }
