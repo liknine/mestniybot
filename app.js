@@ -47,6 +47,7 @@ const BRANDS = {
     'ggl': 'GGL',
     'gosha': 'Гоша Рубчинский',
     'gucci': 'Gucci',
+    'guess': 'Guess',
     'haglofs': 'Haglofs',
     'hardcore': 'Hardcore',
     'hermes': 'Hermes',
@@ -112,7 +113,7 @@ const CATEGORIES = {
 const SIZES = {
     shoes: ['37','37.5','38','38.5','39','39.5','40','40.5','41','41.5','42','42.5','43','43.5','44','44.5','45','45.5','46','46.5'],
     clothing: ['XS','S','M','L','XL','XXL','XXXL'],
-    onesize: ['ONE SIZE']
+    onesize: ['ONE SIZE','OS','UNI']
 };
 
 // ==================== STATE ====================
@@ -266,6 +267,51 @@ function haptic(type) {
 function getBrandName(key) {
     const aliases = { stone: 'Stone Island', cp: 'C.P. Company', raf: 'Raf Simons', bape: 'A Bathing Ape', a: 'A Bathing Ape', weekend: 'WEEKEND OFFENDER', off: 'Off-White', new: 'New Balance', armani: 'Armani Exchange' };
     return BRANDS[key] || aliases[key] || key || '';
+}
+
+
+const BRAND_ALIASES = {
+    'stone_island': ['stone'],
+    'cp_company': ['cp'],
+    'raf_simons': ['raf'],
+    'a_bathing_ape': ['bape', 'a'],
+    'weekend_offender': ['weekend'],
+    'off_white': ['off'],
+    'new_balance': ['new'],
+    'armani_exchange': ['armani'],
+    'guess': ['guess']
+};
+
+function brandMatches(productBrand, selectedBrand) {
+    if (selectedBrand === 'all') return true;
+    const p = String(productBrand || '').toLowerCase();
+    const b = String(selectedBrand || '').toLowerCase();
+    if (p === b) return true;
+    return (BRAND_ALIASES[b] || []).includes(p);
+}
+
+function normalizeSize(size) {
+    return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
+}
+
+function isOneSize(size) {
+    return ['ONE SIZE', 'OS', 'UNI', 'UNISIZE'].includes(normalizeSize(size));
+}
+
+function sizeMatches(productSize, selectedSize) {
+    const p = normalizeSize(productSize);
+    const s = normalizeSize(selectedSize);
+    if (!p || !s) return false;
+    if (p === s) return true;
+    if (isOneSize(p) && isOneSize(s)) return true;
+    return p.split(/\s*[-–—/]\s*/).map(normalizeSize).includes(s);
+}
+
+function productHasSize(product, selectedSize) {
+    if (selectedSize === 'all') return true;
+    return product && product.sizes && product.sizes.some(function(size) {
+        return sizeMatches(size, selectedSize);
+    });
 }
 
 function getStockStatus(stock, product) {
@@ -444,25 +490,50 @@ function renderProducts(products) {
 }
 
 function attachProductListeners() {
-    document.querySelectorAll('.product-card').forEach(function(card) {
-        card.addEventListener('click', function(e) {
-            if (e.target.closest('.product-favorite')) return;
-            const product = state.products.find(function(p) { return p.id === parseInt(card.dataset.id); });
-            if (product) {
-                haptic();
-                openProductModal(product);
-            }
-        });
-    });
+    // Клики по карточкам обрабатываются единым делегированным обработчиком.
+}
 
-    document.querySelectorAll('.product-favorite').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
+
+let productCardDelegationReady = false;
+let lastProductCardTap = 0;
+
+function setupProductCardDelegation() {
+    if (productCardDelegationReady) return;
+    productCardDelegationReady = true;
+
+    function handleProductCardAction(e) {
+        const favoriteBtn = e.target.closest('.product-favorite');
+        if (favoriteBtn) {
+            e.preventDefault();
             e.stopPropagation();
-            toggleFavorite(parseInt(this.dataset.id));
-            this.classList.toggle('active');
-            haptic('medium');
-        });
-    });
+
+            const id = parseInt(favoriteBtn.dataset.id);
+            if (!isNaN(id)) {
+                toggleFavorite(id);
+                favoriteBtn.classList.toggle('active');
+                haptic('medium');
+            }
+            return;
+        }
+
+        const card = e.target.closest('.product-card');
+        if (!card) return;
+
+        if (e.type === 'click' && Date.now() - lastProductCardTap < 350) return;
+        lastProductCardTap = Date.now();
+
+        if (e.cancelable) e.preventDefault();
+
+        const productId = parseInt(card.dataset.id);
+        const product = state.products.find(function(p) { return p.id === productId; });
+        if (!product) return;
+
+        haptic();
+        openProductModal(product);
+    }
+
+    document.addEventListener('click', handleProductCardAction);
+    document.addEventListener('touchend', handleProductCardAction, { passive: false });
 }
 
 // ==================== RELATED PRODUCTS ====================
@@ -524,6 +595,7 @@ function renderRelatedProducts(product) {
     // Listeners для related карточек
     grid.querySelectorAll('.related-card').forEach(function(card) {
         card.addEventListener('click', function(e) {
+            e.stopPropagation();
             if (e.target.closest('.product-favorite')) return;
             const p = state.products.find(function(x) { return x.id === parseInt(card.dataset.id); });
             if (p) {
@@ -1221,6 +1293,7 @@ function initListeners() {
     }
 
     setupDropdowns();
+    setupProductCardDelegation();
 
     // Modal backs
     var modalBack = document.getElementById('modalBack');
