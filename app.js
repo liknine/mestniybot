@@ -7,7 +7,7 @@ if (tg) {
 }
 
 // ==================== CONFIG ====================
-const SUPPORT_USERNAME = 'liknine';
+const SUPPORT_USERNAME = 'manager_of_mestniy';
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -121,6 +121,7 @@ const state = {
     cart: [],
     favorites: [],
     currency: 'BYN',
+    currentSection: 'stock',
     currentCategory: 'all',
     currentBrand: 'all',
     currentSize: 'all',
@@ -146,6 +147,7 @@ async function loadProducts() {
         const response = await fetch('products.json?v=' + Date.now());
         if (response.ok) {
             state.products = await response.json();
+            preloadProductImages(state.products);
             console.log('✅ Загружено:', state.products.length);
             return true;
         }
@@ -164,38 +166,46 @@ function money(value, currency) {
     return value.toFixed(2) + ' ' + symbols[currency];
 }
 
-function getCurrentPrice(product, currency) {
-    if (product && product.prices && product.prices[currency] !== undefined && product.prices[currency] !== null) {
-        return Number(product.prices[currency]);
-    }
-    const rate = state.exchangeRates[currency] || 1;
-    return Number((product && product.price_byn) || 0) * rate;
+function basePrice(product, currency) {
+    if (product && product.prices && product.prices[currency] !== undefined) return Number(product.prices[currency]);
+    return Number(product.price_byn || 0) * (state.exchangeRates[currency] || 1);
 }
 
-function getOldPrices(product) {
-    if (!product || !product.prices) return null;
-    return product.prices.old_prices || product.prices.old_price || null;
+function oldPrice(product, currency) {
+    if (!product) return null;
+    const oldPrices = product.old_prices || product.old_price || (product.prices && (product.prices.old_prices || product.prices.old_price));
+    if (oldPrices && oldPrices[currency] !== undefined && Number(oldPrices[currency]) > basePrice(product, currency)) {
+        return Number(oldPrices[currency]);
+    }
+    return null;
+}
+
+function hasDiscount(product, currency) {
+    return oldPrice(product, currency || state.currency) !== null;
 }
 
 function formatPrice(priceByn, currency, product) {
     currency = currency || state.currency;
-
-    const current = getCurrentPrice(product || { price_byn: priceByn }, currency);
-    const oldPrices = getOldPrices(product);
-    const old = oldPrices && oldPrices[currency] !== undefined && oldPrices[currency] !== null
-        ? Number(oldPrices[currency])
-        : null;
-
-    if (old !== null && old !== current) {
+    product = product || { price_byn: priceByn };
+    const current = basePrice(product, currency);
+    const old = oldPrice(product, currency);
+    if (old !== null) {
         return '<span class="old-price">' + money(old, currency) + '</span> <span class="price-arrow">→</span><br><span class="new-price">' + money(current, currency) + '</span>';
     }
-
     return money(current, currency);
+}
+
+function getProductType(product) {
+    return (product && (product.product_type || product.section || (product.prices && product.prices.product_type))) || 'stock';
+}
+
+function getProductTypeLabel(product) {
+    return getProductType(product) === 'order' ? 'На заказ' : 'Наличие';
 }
 
 function getItemPrice(product, qty) {
     qty = qty || 1;
-    return getCurrentPrice(product, state.currency) * qty;
+    return basePrice(product, state.currency) * qty;
 }
 
 function formatTotal(total) {
@@ -215,15 +225,51 @@ function showToast(msg) {
     }
 }
 
+
+function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, function(ch) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+    });
+}
+
+function imageTag(src, alt, cls) {
+    src = src || '';
+    alt = alt || '';
+    cls = cls || 'product-image';
+    return '<img src="' + src + '" alt="' + escapeHtml(alt) + '" class="' + cls + '" loading="eager" decoding="async" onerror="retryImage(this)">';
+}
+
+function retryImage(img) {
+    const retries = Number(img.dataset.retries || 0);
+    if (retries >= 3) return;
+    img.dataset.retries = String(retries + 1);
+    const cleanSrc = img.src.split('?retry=')[0];
+    setTimeout(function() {
+        img.src = cleanSrc + '?retry=' + Date.now();
+    }, 500 + retries * 700);
+}
+
+function preloadProductImages(products) {
+    (products || []).forEach(function(product) {
+        (product.images || []).slice(0, 2).forEach(function(src) {
+            if (!src) return;
+            const img = new Image();
+            img.src = src;
+        });
+    });
+}
+
 function haptic(type) {
     if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred(type || 'light');
 }
 
 function getBrandName(key) {
-    return BRANDS[key] || key || '';
+    const aliases = { stone: 'Stone Island', cp: 'C.P. Company', raf: 'Raf Simons', bape: 'A Bathing Ape', a: 'A Bathing Ape', weekend: 'WEEKEND OFFENDER', off: 'Off-White', new: 'New Balance', armani: 'Armani Exchange' };
+    return BRANDS[key] || aliases[key] || key || '';
 }
 
-function getStockStatus(stock) {
+function getStockStatus(stock, product) {
+    if (product && getProductType(product) === 'order') return { text: 'На заказ', class: 'order-stock' };
     if (stock === 0) return { text: 'Нет в наличии', class: 'out-of-stock' };
     if (stock <= 5) return { text: 'Осталось ' + stock + ' шт', class: 'low-stock' };
     return { text: 'В наличии', class: 'in-stock' };
@@ -269,38 +315,23 @@ function updateProfileStats() {
 }
 
 
-// ==================== SIZE MATCHING ====================
-function normalizeSize(size) {
-    return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
-}
-
-function isOneSize(size) {
-    return ['ONE SIZE', 'OS', 'UNI', 'UNISIZE'].includes(normalizeSize(size));
-}
-
-function splitSizeParts(size) {
-    return normalizeSize(size)
-        .split(/\s*[-–—/]\s*/)
-        .map(normalizeSize)
-        .filter(Boolean);
-}
-
-function sizeMatches(productSize, selectedSize) {
-    const productValue = normalizeSize(productSize);
-    const selectedValue = normalizeSize(selectedSize);
-
-    if (!productValue || !selectedValue) return false;
-    if (productValue === selectedValue) return true;
-    if (isOneSize(productValue) && isOneSize(selectedValue)) return true;
-
-    // Например: S-M должен показываться и при S, и при M.
-    return splitSizeParts(productValue).includes(selectedValue);
-}
-
-function productHasSize(product, selectedSize) {
-    if (!product || !Array.isArray(product.sizes)) return false;
-    return product.sizes.some(function(size) {
-        return sizeMatches(size, selectedSize);
+function setupSectionTabs() {
+    if (document.getElementById('sectionTabs')) return;
+    const filters = document.querySelector('.filters-wrapper');
+    if (!filters) return;
+    const tabs = document.createElement('div');
+    tabs.className = 'section-tabs';
+    tabs.id = 'sectionTabs';
+    tabs.innerHTML = '<button class="section-tab active" data-section="stock">Наличие</button><button class="section-tab" data-section="order">На заказ</button>';
+    filters.parentNode.insertBefore(tabs, filters);
+    tabs.querySelectorAll('.section-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            tabs.querySelectorAll('.section-tab').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            state.currentSection = this.dataset.section;
+            filterProducts();
+            haptic('medium');
+        });
     });
 }
 
@@ -342,12 +373,14 @@ function renderSizeFilters() {
 function filterProducts() {
     let filtered = state.products.slice();
 
+    filtered = filtered.filter(function(p) { return getProductType(p) === state.currentSection; });
+
     if (state.currentCategory !== 'all') {
         filtered = filtered.filter(function(p) { return p.category_id === parseInt(state.currentCategory); });
     }
 
     if (state.currentBrand !== 'all') {
-        filtered = filtered.filter(function(p) { return p.brand === state.currentBrand; });
+        filtered = filtered.filter(function(p) { return brandMatches(p.brand, state.currentBrand); });
     }
 
     if (state.currentSize !== 'all') {
@@ -386,12 +419,13 @@ function renderProducts(products) {
     if (grid) {
         grid.innerHTML = products.map(function(p) {
             const isFav = state.favorites.includes(p.id);
-            const status = getStockStatus(p.stock);
+            const status = getStockStatus(p.stock, p);
             const img = p.images && p.images[0] ? p.images[0] : '';
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy" onerror="this.style.display=\'none\'">' +
+                    imageTag(img, p.name, 'product-image') +
+                    (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
                     '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -442,7 +476,7 @@ function renderRelatedProducts(product) {
     let related = state.products.filter(function(p) {
         if (p.id === product.id) return false;
         if (!p.sizes || !product.sizes) return false;
-        return p.sizes.some(function(s) { return productHasSize(product, s) || productHasSize(p, s); });
+        return p.sizes.some(function(s) { return product.sizes.includes(s); });
     });
 
     // Если нет — берём той же категории
@@ -466,12 +500,13 @@ function renderRelatedProducts(product) {
 
     grid.innerHTML = related.map(function(p) {
         const isFav = state.favorites.includes(p.id);
-        const status = getStockStatus(p.stock);
+        const status = getStockStatus(p.stock, p);
         const img = p.images && p.images[0] ? p.images[0] : '';
 
         return '<div class="product-card related-card" data-id="' + p.id + '">' +
             '<div class="product-image-container">' +
-                '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy" onerror="this.style.display=\'none\'">' +
+                imageTag(img, p.name, 'product-image') +
+                (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
                 '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '">' +
                     '<i data-lucide="heart"></i>' +
                 '</button>' +
@@ -543,7 +578,7 @@ function renderCart() {
             const img = p.images && p.images[0] ? p.images[0] : '';
 
             return '<div class="cart-item" data-id="' + item.productId + '">' +
-                '<img src="' + img + '" alt="' + p.name + '" class="cart-item-image">' +
+                imageTag(img, p.name, 'cart-item-image') +
                 '<div class="cart-item-info">' +
                     '<h4 class="cart-item-name">' + p.name + '</h4>' +
                     '<p class="cart-item-sizes">Размеры: ' + item.sizes.join(', ') + '</p>' +
@@ -593,12 +628,13 @@ function renderFavorites() {
 
     if (grid) {
         grid.innerHTML = favProducts.map(function(p) {
-            const status = getStockStatus(p.stock);
+            const status = getStockStatus(p.stock, p);
             const img = p.images && p.images[0] ? p.images[0] : '';
 
             return '<div class="product-card" data-id="' + p.id + '">' +
                 '<div class="product-image-container">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-image" loading="lazy">' +
+                    imageTag(img, p.name, 'product-image') +
+                    (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
                     '<button class="product-favorite active" data-id="' + p.id + '">' +
                         '<i data-lucide="heart"></i>' +
                     '</button>' +
@@ -645,8 +681,15 @@ function openProductModal(product) {
     // Gallery
     if (track && product.images) {
         track.innerHTML = product.images.map(function(img) {
-            return '<img src="' + img + '" alt="' + product.name + '">';
+            return imageTag(img, product.name, 'gallery-image');
         }).join('');
+
+        const gallery = document.querySelector('.gallery');
+        if (gallery) {
+            const old = gallery.querySelector('.modal-discount');
+            if (old) old.remove();
+            if (hasDiscount(product, state.currency)) gallery.insertAdjacentHTML('beforeend', '<div class="discount-badge modal-discount">SALE</div>');
+        }
 
         track.onscroll = function() {
             const index = Math.round(this.scrollLeft / this.offsetWidth);
@@ -666,7 +709,7 @@ function openProductModal(product) {
     if (brand) brand.textContent = getBrandName(product.brand);
     if (price) price.innerHTML = formatPrice(product.price_byn, state.currency, product);
 
-    const stockStatus = getStockStatus(product.stock);
+    const stockStatus = getStockStatus(product.stock, product);
     if (stock) {
         stock.textContent = stockStatus.text;
         stock.className = 'product-stock ' + stockStatus.class;
@@ -696,7 +739,24 @@ function openProductModal(product) {
         });
     }
 
-    if (desc) desc.textContent = product.description || '';
+
+        let warning = document.getElementById('sizeWarning');
+        if (!warning && grid.parentNode) {
+            warning = document.createElement('div');
+            warning.id = 'sizeWarning';
+            warning.className = 'size-warning';
+            warning.textContent = '* выберите размер';
+            grid.parentNode.insertBefore(warning, grid);
+        }
+        if (warning) warning.classList.remove('active', 'blink');
+
+        if (product.sizes.length === 1 && product.stock !== 0) {
+            state.selectedSizes = [product.sizes[0]];
+            const onlyChip = grid.querySelector('.size-chip');
+            if (onlyChip) onlyChip.classList.add('selected');
+        }
+
+    if (desc) desc.textContent = [product.description || '', getMeasureText(product)].filter(Boolean).join('\n\n');
     if (fav) fav.classList.toggle('active', state.favorites.includes(product.id));
 
     // Scroll to top
@@ -722,11 +782,10 @@ function closeProductModal() {
 function updateAddToCartBtn() {
     const btn = document.getElementById('addToCartBtn');
     const price = document.getElementById('btnPrice');
-
     if (!state.selectedProduct || !btn) return;
-
-    btn.disabled = !state.selectedSizes.length || state.selectedProduct.stock === 0;
-
+    btn.disabled = state.selectedProduct.stock === 0;
+    const warning = document.getElementById('sizeWarning');
+    if (warning) warning.classList.toggle('active', state.selectedProduct.sizes && state.selectedProduct.sizes.length > 1 && !state.selectedSizes.length);
     const total = getItemPrice(state.selectedProduct, Math.max(state.selectedSizes.length, 1));
     if (price) price.textContent = formatTotal(total);
 }
@@ -803,26 +862,67 @@ function updateDeliveryFields() {
     }
 }
 
+
+function openManagerWithText(text) {
+    const encodedText = encodeURIComponent(text);
+    const tgLink = 'https://t.me/' + SUPPORT_USERNAME + '?text=' + encodedText;
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openTelegramLink(tgLink);
+    } else {
+        window.open(tgLink, '_blank');
+    }
+}
+
+function openManagerForProduct(product, sizes) {
+    sizes = sizes || [];
+    let text = 'Привет! Хочу оформить заказ, вот эта позиция меня заинтересовала!🛒';
+    text += '\n\n📦 ' + product.name;
+    text += '\n🏷 Бренд: ' + getBrandName(product.brand);
+    if (sizes.length) text += '\n📏 Размер: ' + sizes.join(', ');
+    text += '\n💰 Цена: ' + money(basePrice(product, state.currency), state.currency);
+    text += '\n\nФотографии товара:';
+    (product.images || []).forEach(function(img) { text += '\n' + img; });
+    openManagerWithText(text);
+}
+
+function openManagerForCart() {
+    if (!state.cart.length) {
+        showToast('Корзина пуста');
+        return;
+    }
+    let total = 0;
+    let text = 'Привет! Хочу оформить заказ, вот эти позиции меня заинтересовали!🛒\n';
+    state.cart.forEach(function(cartItem) {
+        const product = state.products.find(function(p) { return p.id === cartItem.productId; });
+        if (!product) return;
+        const itemTotal = getItemPrice(product, cartItem.sizes.length);
+        total += itemTotal;
+        text += '\n📦 ' + product.name;
+        text += '\n📏 Размеры: ' + cartItem.sizes.join(', ');
+        text += '\n💰 Цена: ' + formatTotal(itemTotal);
+        if (product.images && product.images[0]) text += '\nФото: ' + product.images[0];
+        text += '\n';
+    });
+    text += '\nИтого: ' + formatTotal(total);
+    openManagerWithText(text);
+}
+
 // ==================== CART ACTIONS ====================
 function addToCart() {
-    if (!state.selectedProduct || !state.selectedSizes.length) return;
-
-    const existing = state.cart.find(function(i) { return i.productId === state.selectedProduct.id; });
-
-    if (existing) {
-        state.selectedSizes.forEach(function(s) {
-            if (!existing.sizes.includes(s)) existing.sizes.push(s);
-        });
-    } else {
-        state.cart.push({
-            productId: state.selectedProduct.id,
-            sizes: state.selectedSizes.slice()
-        });
+    if (!state.selectedProduct) return;
+    if (state.selectedProduct.sizes && state.selectedProduct.sizes.length === 1 && !state.selectedSizes.length) {
+        state.selectedSizes = [state.selectedProduct.sizes[0]];
     }
-
-    saveCart();
-    updateCartBadge();
-    showToast('Добавлено: ' + state.selectedSizes.length + ' размер(а)');
+    if (!state.selectedSizes.length) {
+        const warning = document.getElementById('sizeWarning');
+        if (warning) {
+            warning.classList.add('active', 'blink');
+            setTimeout(function() { warning.classList.remove('blink'); }, 1600);
+        }
+        showToast('Выберите размер');
+        return;
+    }
+    openManagerForProduct(state.selectedProduct, state.selectedSizes.slice());
     closeProductModal();
 }
 
@@ -1015,7 +1115,7 @@ function submitOrder() {
     }
 
     const encodedText = encodeURIComponent(orderText);
-    const tgLink = 'https://t.me/@manager_of_mestniy?text=' + encodedText;
+    const tgLink = 'https://t.me/' + SUPPORT_USERNAME + '?text=' + encodedText;
 
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.openTelegramLink(tgLink);
@@ -1164,7 +1264,7 @@ function initListeners() {
 
     if (addToCartBtn) addToCartBtn.addEventListener('click', addToCart);
     if (clearCartBtn) clearCartBtn.addEventListener('click', clearCart);
-    if (checkoutBtn) checkoutBtn.addEventListener('click', openCheckoutModal);
+    if (checkoutBtn) checkoutBtn.addEventListener('click', openManagerForCart);
     if (submitOrderBtn) submitOrderBtn.addEventListener('click', submitOrder);
 
     // Header favorites
@@ -1229,6 +1329,7 @@ async function init() {
     loadFavorites();
     loadCurrency();
     loadUserData();
+    setupSectionTabs();
 
     const success = await loadProducts();
 
