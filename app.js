@@ -549,12 +549,7 @@ function attachProductListeners() {
             openProductByCardId(card.dataset.id);
         });
 
-        card.addEventListener('touchend', function(e) {
-            if (e.target.closest('.product-favorite')) return;
-            e.preventDefault();
-            e.stopPropagation();
-            openProductByCardId(card.dataset.id);
-        }, { passive: false });
+   
     });
 
     document.querySelectorAll('.product-favorite').forEach(function(btn) {
@@ -587,10 +582,6 @@ function setupProductCardDelegation() {
 }
 
 
-
-    document.addEventListener('pointerup', handleCardTap, true);
-    document.addEventListener('touchend', handleCardTap, { capture: true, passive: false });
-}
 
 // ==================== RELATED PRODUCTS ====================
 function renderRelatedProducts(product) {
