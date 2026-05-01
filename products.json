@@ -1494,5 +1494,26 @@
     "images": [
       "https://liknine.github.io/mestniybot/images/product_new_8465820993_fede5fb1.jpg"
     ]
+  },
+  {
+    "id": 95,
+    "category_id": 6,
+    "brand": "timberland",
+    "name": "test",
+    "description": "test",
+    "price_byn": 333.0,
+    "prices": {
+      "BYN": 333.0,
+      "RUB": 2222.0,
+      "USD": 333.0,
+      "product_type": "order"
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 3,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_new_1639462053_4a1f0554.jpg"
+    ]
   }
 ]
