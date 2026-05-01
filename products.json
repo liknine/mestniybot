@@ -596,11 +596,16 @@
     "brand": "raf",
     "name": "Кроссовки Raf Simons Ultrasceptre",
     "description": "Очень хорошее состояние! Очень близки к полному идеалу! Размер по бирке 40, но данная модель всегда большемерит. Фактический размер: 41.5 ( 26.5 СМ по стельке )",
-    "price_byn": 630.0,
+    "price_byn": 20.0,
     "prices": {
-      "BYN": 630.0,
-      "RUB": 17900.0,
-      "USD": 236.0
+      "BYN": 20.0,
+      "RUB": 900.0,
+      "USD": 8.0,
+      "old_prices": {
+        "BYN": 630.0,
+        "RUB": 17900.0,
+        "USD": 236.0
+      }
     },
     "sizes": [
       "41.5"
@@ -721,6 +726,32 @@
     ]
   },
   {
+    "id": 53,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Лонгслив Stone Island",
+    "description": "Красивый лонгслив. Черный цвет, базовый, патч на рукаве. Оригинал. Коллекция: 64. Spring / Summer 2016. Made in Tunisia.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_53_4e01c4dc.jpg",
+      "https://liknine.github.io/mestniybot/images/product_53_10693491.jpg",
+      "https://liknine.github.io/mestniybot/images/product_53_2f8596f3.jpg",
+      "https://liknine.github.io/mestniybot/images/product_53_27a3405b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_53_73099181.jpg",
+      "https://liknine.github.io/mestniybot/images/product_53_9fc2b91f.jpg",
+      "https://liknine.github.io/mestniybot/images/product_53_a2d9c845.jpg"
+    ]
+  },
+  {
     "id": 55,
     "category_id": 6,
     "brand": "mastrum",
@@ -735,7 +766,7 @@
     "sizes": [
       "M"
     ],
-    "stock": 1,
+    "stock": 2,
     "images": [
       "https://liknine.github.io/mestniybot/images/product_55_00015c9c.jpg",
       "https://liknine.github.io/mestniybot/images/product_55_d1d9fbaa.jpg",
@@ -756,7 +787,8 @@
     "prices": {
       "BYN": 520.0,
       "RUB": 15000.0,
-      "USD": 195.0
+      "USD": 195.0,
+      "discount_percent": 30.0
     },
     "sizes": [
       "L"
@@ -882,16 +914,21 @@
     "brand": "weekend",
     "name": "Футболка Weekend Offender Graphic",
     "description": "Очень крутое состояние, как новая, необычный принт, это не база, как мы привыкли видеть. Размер XL! Принт отличный, без трещин, плотный материл футболки. 100% Cotton!",
-    "price_byn": 110.0,
+    "price_byn": 60.0,
     "prices": {
-      "BYN": 110.0,
-      "RUB": 3250.0,
-      "USD": 41.0
+      "BYN": 60.0,
+      "RUB": 33.0,
+      "USD": 222.0,
+      "old_prices": {
+        "BYN": 110.0,
+        "RUB": 3250.0,
+        "USD": 41.0
+      }
     },
     "sizes": [
       "XL"
     ],
-    "stock": 1,
+    "stock": 99,
     "images": [
       "https://liknine.github.io/mestniybot/images/product_65_a460c96a.jpg",
       "https://liknine.github.io/mestniybot/images/product_65_f6ae1fec.jpg",
@@ -908,16 +945,21 @@
     "brand": "cp",
     "name": "Шапка C.P. Company Knit Wool НОВАЯ",
     "description": "Очень красивая, приятная, нежная. Абсолютно новая, в комплекте с навесными бирками, пакет! Линза в плёнке! Оригинал! Отлично сидит на голове! Коллекция 103. Размер: UNI",
-    "price_byn": 360.0,
+    "price_byn": 228.0,
     "prices": {
-      "BYN": 360.0,
-      "RUB": 10400.0,
-      "USD": 135.0
+      "BYN": 228.0,
+      "RUB": 777.0,
+      "USD": 566.0,
+      "old_prices": {
+        "BYN": 360.0,
+        "RUB": 10400.0,
+        "USD": 135.0
+      }
     },
     "sizes": [
       "UNI"
     ],
-    "stock": 1,
+    "stock": 2,
     "images": [
       "https://liknine.github.io/mestniybot/images/product_67_4fe22553.jpg",
       "https://liknine.github.io/mestniybot/images/product_67_34a71fd8.jpg",
@@ -1033,6 +1075,32 @@
     ]
   },
   {
+    "id": 77,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Худи Stone Island Junior",
+    "description": "Очень классное Худи. Крутой фит. Плотный материал. Патч на рукаве, база, как мы любим. Размер по бирке: 14/170. Фактический размер: S - M. Коллекция: 73. Autumn / Winter 2020. Made in Romania.",
+    "price_byn": 280.0,
+    "prices": {
+      "BYN": 280.0,
+      "RUB": 8300.0,
+      "USD": 105.0
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_77_1d0a2080.jpg",
+      "https://liknine.github.io/mestniybot/images/product_77_a79089c7.jpg",
+      "https://liknine.github.io/mestniybot/images/product_77_0fa60fc2.jpg",
+      "https://liknine.github.io/mestniybot/images/product_77_55cf5b57.jpg",
+      "https://liknine.github.io/mestniybot/images/product_77_9c667a45.jpg",
+      "https://liknine.github.io/mestniybot/images/product_77_03400940.jpg",
+      "https://liknine.github.io/mestniybot/images/product_77_04cb4743.jpg"
+    ]
+  },
+  {
     "id": 78,
     "category_id": 1,
     "brand": "new",
@@ -1049,13 +1117,13 @@
     ],
     "stock": 1,
     "images": [
-      "https://liknine.github.io/mestniybot/images/product_78_90883a81.jpg",
-      "https://liknine.github.io/mestniybot/images/product_78_efb43ad7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_78_006e83e5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_78_992064fc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_78_10061349.jpg",
-      "https://liknine.github.io/mestniybot/images/product_78_834fc514.jpg",
-      "https://liknine.github.io/mestniybot/images/product_78_634b785c.jpg"
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1004.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1005.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1006.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1008.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1007.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1009.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1010.jpg"
     ]
   },
   {
@@ -1134,6 +1202,32 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1085.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1086.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1087.jpg"
+    ]
+  },
+  {
+    "id": 82,
+    "category_id": 8,
+    "brand": "bershka",
+    "name": "Шорты Bershka",
+    "description": "Очень классные, джинса! Классный фит, отличное состояние. Размер: EUR 42. Фактический размер: ~ L. Замеры на последнем фото!",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600.0,
+      "USD": 28.0
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1088.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1089.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1090.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1091.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1092.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1093.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1094.jpg"
     ]
   },
   {
@@ -1316,6 +1410,68 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1148.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1149.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1150.jpg"
+    ]
+  },
+  {
+    "id": 91,
+    "category_id": 5,
+    "brand": "raf",
+    "name": "n",
+    "description": "jj",
+    "price_byn": 6.0,
+    "prices": {
+      "BYN": 6.0,
+      "RUB": 8.0,
+      "USD": 8.0
+    },
+    "sizes": [
+      "S-M",
+      "M-L"
+    ],
+    "stock": 1,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_new_1639462053_4c0771f3.jpg"
+    ]
+  },
+  {
+    "id": 92,
+    "category_id": 6,
+    "brand": "stussy",
+    "name": "333",
+    "description": "56",
+    "price_byn": 3.0,
+    "prices": {
+      "BYN": 3.0,
+      "RUB": 433.0,
+      "USD": 12.0
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 4,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_new_1639462053_6ee080a5.jpg"
+    ]
+  },
+  {
+    "id": 93,
+    "category_id": 1,
+    "brand": "vetements",
+    "name": "12",
+    "description": "234",
+    "price_byn": 12.0,
+    "prices": {
+      "BYN": 12.0,
+      "RUB": 333.0,
+      "USD": 333.0,
+      "product_type": "order"
+    },
+    "sizes": [
+      "44"
+    ],
+    "stock": 23,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_new_1639462053_39cb656b.jpg"
     ]
   }
 ]
