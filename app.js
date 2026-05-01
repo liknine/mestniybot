@@ -586,20 +586,7 @@ function setupProductCardDelegation() {
     }, true);
 }
 
-function setupProductCardHardOpenFallback() {
-    if (window.__mestniyHardCardOpenReady) return;
-    window.__mestniyHardCardOpenReady = true;
 
-    function handleCardTap(e) {
-        if (!e || !e.target) return;
-        if (e.target.closest('.product-favorite')) return;
-        const card = e.target.closest('.product-card');
-        if (!card) return;
-        const modal = document.getElementById('productModal');
-        if (modal && modal.classList.contains('active')) return;
-        e.preventDefault();
-        openProductByCardId(card.dataset.id);
-    }
 
     document.addEventListener('pointerup', handleCardTap, true);
     document.addEventListener('touchend', handleCardTap, { capture: true, passive: false });
