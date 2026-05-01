@@ -596,16 +596,11 @@
     "brand": "raf",
     "name": "Кроссовки Raf Simons Ultrasceptre",
     "description": "Очень хорошее состояние! Очень близки к полному идеалу! Размер по бирке 40, но данная модель всегда большемерит. Фактический размер: 41.5 ( 26.5 СМ по стельке )",
-    "price_byn": 20.0,
+    "price_byn": 630.0,
     "prices": {
-      "BYN": 20.0,
-      "RUB": 900.0,
-      "USD": 8.0,
-      "old_prices": {
-        "BYN": 630.0,
-        "RUB": 17900.0,
-        "USD": 236.0
-      }
+      "BYN": 630.0,
+      "RUB": 17900.0,
+      "USD": 236.0
     },
     "sizes": [
       "41.5"
@@ -766,7 +761,7 @@
     "sizes": [
       "M"
     ],
-    "stock": 2,
+    "stock": 1,
     "images": [
       "https://liknine.github.io/mestniybot/images/product_55_00015c9c.jpg",
       "https://liknine.github.io/mestniybot/images/product_55_d1d9fbaa.jpg",
@@ -787,8 +782,7 @@
     "prices": {
       "BYN": 520.0,
       "RUB": 15000.0,
-      "USD": 195.0,
-      "discount_percent": 30.0
+      "USD": 195.0
     },
     "sizes": [
       "L"
@@ -914,21 +908,16 @@
     "brand": "weekend",
     "name": "Футболка Weekend Offender Graphic",
     "description": "Очень крутое состояние, как новая, необычный принт, это не база, как мы привыкли видеть. Размер XL! Принт отличный, без трещин, плотный материл футболки. 100% Cotton!",
-    "price_byn": 60.0,
+    "price_byn": 110.0,
     "prices": {
-      "BYN": 60.0,
-      "RUB": 33.0,
-      "USD": 222.0,
-      "old_prices": {
-        "BYN": 110.0,
-        "RUB": 3250.0,
-        "USD": 41.0
-      }
+      "BYN": 110.0,
+      "RUB": 3250.0,
+      "USD": 41.0
     },
     "sizes": [
       "XL"
     ],
-    "stock": 99,
+    "stock": 1,
     "images": [
       "https://liknine.github.io/mestniybot/images/product_65_a460c96a.jpg",
       "https://liknine.github.io/mestniybot/images/product_65_f6ae1fec.jpg",
@@ -945,21 +934,16 @@
     "brand": "cp",
     "name": "Шапка C.P. Company Knit Wool НОВАЯ",
     "description": "Очень красивая, приятная, нежная. Абсолютно новая, в комплекте с навесными бирками, пакет! Линза в плёнке! Оригинал! Отлично сидит на голове! Коллекция 103. Размер: UNI",
-    "price_byn": 228.0,
+    "price_byn": 360.0,
     "prices": {
-      "BYN": 228.0,
-      "RUB": 777.0,
-      "USD": 566.0,
-      "old_prices": {
-        "BYN": 360.0,
-        "RUB": 10400.0,
-        "USD": 135.0
-      }
+      "BYN": 360.0,
+      "RUB": 10400.0,
+      "USD": 135.0
     },
     "sizes": [
       "UNI"
     ],
-    "stock": 2,
+    "stock": 1,
     "images": [
       "https://liknine.github.io/mestniybot/images/product_67_4fe22553.jpg",
       "https://liknine.github.io/mestniybot/images/product_67_34a71fd8.jpg",
@@ -1205,32 +1189,6 @@
     ]
   },
   {
-    "id": 82,
-    "category_id": 8,
-    "brand": "bershka",
-    "name": "Шорты Bershka",
-    "description": "Очень классные, джинса! Классный фит, отличное состояние. Размер: EUR 42. Фактический размер: ~ L. Замеры на последнем фото!",
-    "price_byn": 75.0,
-    "prices": {
-      "BYN": 75.0,
-      "RUB": 2600.0,
-      "USD": 28.0
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "images": [
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1088.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1089.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1090.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1091.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1092.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1093.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1094.jpg"
-    ]
-  },
-  {
     "id": 83,
     "category_id": 8,
     "brand": "nike",
@@ -1410,47 +1368,6 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1148.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1149.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1150.jpg"
-    ]
-  },
-  {
-    "id": 91,
-    "category_id": 5,
-    "brand": "raf",
-    "name": "n",
-    "description": "jj",
-    "price_byn": 6.0,
-    "prices": {
-      "BYN": 6.0,
-      "RUB": 8.0,
-      "USD": 8.0
-    },
-    "sizes": [
-      "S-M",
-      "M-L"
-    ],
-    "stock": 1,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_new_1639462053_4c0771f3.jpg"
-    ]
-  },
-  {
-    "id": 92,
-    "category_id": 6,
-    "brand": "stussy",
-    "name": "333",
-    "description": "56",
-    "price_byn": 3.0,
-    "prices": {
-      "BYN": 3.0,
-      "RUB": 433.0,
-      "USD": 12.0
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 4,
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_new_1639462053_6ee080a5.jpg"
     ]
   }
 ]
