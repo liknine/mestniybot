@@ -8,6 +8,7 @@ if (tg) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
+console.log('MESTNIY build: 20260501_cards_css_v2');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -489,51 +490,81 @@ function renderProducts(products) {
     }
 }
 
-function attachProductListeners() {
-    // Клики по карточкам обрабатываются единым делегированным обработчиком.
+function openProductByCardId(productId) {
+    productId = parseInt(productId);
+    if (isNaN(productId)) return;
+
+    const now = Date.now();
+    if (state.lastOpenedProductId === productId && state.lastOpenedAt && now - state.lastOpenedAt < 350) return;
+    state.lastOpenedProductId = productId;
+    state.lastOpenedAt = now;
+
+    const product = state.products.find(function(p) { return parseInt(p.id) === productId; });
+    if (!product) return;
+
+    haptic();
+    openProductModal(product);
 }
 
+function handleFavoriteClick(btn, e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    const id = parseInt(btn.dataset.id);
+    if (isNaN(id)) return;
+    toggleFavorite(id);
+    btn.classList.toggle('active');
+    haptic('medium');
+}
 
-let productCardDelegationReady = false;
-let lastProductCardTap = 0;
+function attachProductListeners() {
+    document.querySelectorAll('.product-card').forEach(function(card) {
+        if (card.dataset.cardClickReady === '1') return;
+        card.dataset.cardClickReady = '1';
 
-function setupProductCardDelegation() {
-    if (productCardDelegationReady) return;
-    productCardDelegationReady = true;
-
-    function handleProductCardAction(e) {
-        const favoriteBtn = e.target.closest('.product-favorite');
-        if (favoriteBtn) {
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('.product-favorite')) return;
             e.preventDefault();
             e.stopPropagation();
+            openProductByCardId(card.dataset.id);
+        });
 
-            const id = parseInt(favoriteBtn.dataset.id);
-            if (!isNaN(id)) {
-                toggleFavorite(id);
-                favoriteBtn.classList.toggle('active');
-                haptic('medium');
-            }
+        card.addEventListener('touchend', function(e) {
+            if (e.target.closest('.product-favorite')) return;
+            e.preventDefault();
+            e.stopPropagation();
+            openProductByCardId(card.dataset.id);
+        }, { passive: false });
+    });
+
+    document.querySelectorAll('.product-favorite').forEach(function(btn) {
+        if (btn.dataset.favoriteClickReady === '1') return;
+        btn.dataset.favoriteClickReady = '1';
+        btn.addEventListener('click', function(e) { handleFavoriteClick(btn, e); });
+        btn.addEventListener('touchend', function(e) { handleFavoriteClick(btn, e); }, { passive: false });
+    });
+}
+
+function setupProductCardDelegation() {
+    if (window.__mestniyProductCardDelegationReady) return;
+    window.__mestniyProductCardDelegationReady = true;
+
+    document.addEventListener('click', function(e) {
+        const fav = e.target.closest('.product-favorite');
+        if (fav) {
+            if (fav.dataset.favoriteClickReady !== '1') handleFavoriteClick(fav, e);
             return;
         }
 
         const card = e.target.closest('.product-card');
         if (!card) return;
 
-        if (e.type === 'click' && Date.now() - lastProductCardTap < 350) return;
-        lastProductCardTap = Date.now();
-
-        if (e.cancelable) e.preventDefault();
-
-        const productId = parseInt(card.dataset.id);
-        const product = state.products.find(function(p) { return p.id === productId; });
-        if (!product) return;
-
-        haptic();
-        openProductModal(product);
-    }
-
-    document.addEventListener('click', handleProductCardAction);
-    document.addEventListener('touchend', handleProductCardAction, { passive: false });
+        if (card.dataset.cardClickReady !== '1') {
+            e.preventDefault();
+            openProductByCardId(card.dataset.id);
+        }
+    }, true);
 }
 
 // ==================== RELATED PRODUCTS ====================
