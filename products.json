@@ -1473,5 +1473,26 @@
     "images": [
       "https://liknine.github.io/mestniybot/images/product_new_1639462053_39cb656b.jpg"
     ]
+  },
+  {
+    "id": 94,
+    "category_id": 8,
+    "brand": "supreme",
+    "name": "Guys",
+    "description": "Durian’s",
+    "price_byn": 373.0,
+    "prices": {
+      "BYN": 373.0,
+      "RUB": 8383.0,
+      "USD": 848383.0,
+      "product_type": "order"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_new_8465820993_fede5fb1.jpg"
+    ]
   }
 ]
