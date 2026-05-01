@@ -328,6 +328,17 @@ function getStockStatus(stock, product) {
     return { text: 'В наличии', class: 'in-stock' };
 }
 
+function getMeasureText(product) {
+    const categoryId = parseInt(product.category_id);
+
+    // обувь, головные уборы, аксессуары
+    if ([1, 9, 10].includes(categoryId)) {
+        return 'Замеры: Не прилагаются!';
+    }
+
+    return 'Замеры: На последнем фото!';
+}
+
 // ==================== USER ====================
 function loadUserData() {
     if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
@@ -511,6 +522,8 @@ function openProductByCardId(productId) {
     haptic();
     openProductModal(product);
 }
+
+window.openProductByCardId = openProductByCardId;
 
 function handleFavoriteClick(btn, e) {
     if (e) {
