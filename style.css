@@ -1520,76 +1520,19 @@ body {
     white-space: nowrap;
 }
 
-/* ==================== SECTION TABS ==================== */
-.section-tabs {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 12px 16px 0;
-    background: var(--bg);
-}
-.section-tab {
-    height: 48px;
-    border: 2px solid var(--border-strong);
-    border-radius: var(--radius-md);
-    background: var(--card);
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: var(--transition);
-}
-.section-tab.active {
-    border-color: var(--primary);
-    background: var(--gradient-premium);
-    color: #fff;
-    box-shadow: var(--shadow-green);
-}
-.old-price {
-    color: var(--text-tertiary);
-    text-decoration: line-through;
-    font-weight: 800;
-}
-.price-arrow {
-    color: var(--text-tertiary);
-    font-weight: 800;
-}
-.new-price {
-    color: var(--danger);
-    font-weight: 900;
-}
-.discount-badge {
-    position: absolute;
-    left: 8px;
-    top: 8px;
-    z-index: 2;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: var(--danger);
-    color: white;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 0.4px;
-}
-.modal-discount {
-    left: 16px;
-    top: 16px;
-    font-size: 13px;
-}
-.product-status.order-stock {
-    background: rgba(0, 122, 255, 0.1);
-    color: #007AFF;
-}
-.size-warning {
+/* ==================== ORDER SECTION NOTE / STOCK HIDE ==================== */
+.order-section-note {
     display: none;
-    margin: -4px 0 10px;
-    color: var(--danger);
-    font-size: 13px;
-    font-weight: 800;
+    margin: 12px 16px 0;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: #f3fff7;
+    border: 1px solid #b9f3cb;
+    color: #0a8f3c;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
 }
-.size-warning.active { display: block; }
-.size-warning.blink { animation: sizeWarnBlink 0.35s ease-in-out 0s 4 alternate; }
-@keyframes sizeWarnBlink {
-    from { opacity: 0.25; transform: translateX(0); }
-    to { opacity: 1; transform: translateX(4px); }
+.hidden-stock {
+    display: none !important;
 }
