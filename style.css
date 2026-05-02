@@ -1536,38 +1536,47 @@ body {
 .hidden-stock {
     display: none !important;
 }
+
+
+/* recovery_full_files_16 */
+
+/* Recovery styles for section tabs and order note */
 .section-tabs {
     display: flex;
     gap: 12px;
-    padding: 12px 24px 18px;
-    background: #fff;
+    padding: 12px 20px 16px;
 }
 
 .section-tab {
     flex: 1;
     border: 2px solid #08c752;
-    background: #fff;
+    background: #ffffff;
     color: #08c752;
     border-radius: 24px;
-    padding: 14px 18px;
-    font-size: 18px;
-    font-weight: 700;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 800;
     cursor: pointer;
 }
 
 .section-tab.active {
     background: #08c752;
-    color: #fff;
+    color: #ffffff;
     box-shadow: 0 8px 18px rgba(8, 199, 82, 0.25);
 }
 
-.order-note {
-    margin: 0 24px 18px;
-    padding: 14px 16px;
-    border-radius: 18px;
-    background: #f2fff6;
+.order-section-note {
+    display: none;
+    margin: 0 20px 16px;
+    padding: 16px;
+    border-radius: 16px;
+    background: #f3fff7;
     color: #08a947;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.35;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.hidden-stock {
+    display: none !important;
 }
