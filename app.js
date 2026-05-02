@@ -21,7 +21,7 @@ window.addEventListener('error', function(event) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: recovery_full_files_17');
+console.log('MESTNIY build: recovery_full_files_18');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -274,6 +274,47 @@ function updateProfileStats() {
     const cartCount = document.getElementById('profileCartCount');
     const favCount = document.getElementById('profileFavCount');
     if (cartCount) cartCount.textContent = state.cart.reduce((s, i) => s + i.sizes.length, 0);
+    if (favCount) favCount.textContent = state.favorites.length;
+}
+
+
+function loadUserData() {
+    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const u = tg.initDataUnsafe.user;
+        state.user = {
+            id: u.id,
+            firstName: u.first_name || 'Пользователь',
+            lastName: u.last_name || '',
+            username: u.username || '',
+            photoUrl: u.photo_url || null
+        };
+    }
+    updateProfileUI();
+}
+
+function updateProfileUI() {
+    const name = state.user.lastName
+        ? state.user.firstName + ' ' + state.user.lastName
+        : state.user.firstName;
+
+    const profileName = document.getElementById('profileName');
+    const profileUsername = document.getElementById('profileUsername');
+    const profileAvatar = document.getElementById('profileAvatar');
+
+    if (profileName) profileName.textContent = name;
+    if (profileUsername) profileUsername.textContent = state.user.username ? '@' + state.user.username : 'Telegram User';
+    if (profileAvatar && state.user.photoUrl) {
+        profileAvatar.innerHTML = '<img src="' + state.user.photoUrl + '" alt="Avatar">';
+    }
+
+    updateProfileStats();
+}
+
+function updateProfileStats() {
+    const cartCount = document.getElementById('profileCartCount');
+    const favCount = document.getElementById('profileFavCount');
+
+    if (cartCount) cartCount.textContent = state.cart.reduce(function(s, i) { return s + i.sizes.length; }, 0);
     if (favCount) favCount.textContent = state.favorites.length;
 }
 
