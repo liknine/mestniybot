@@ -8,7 +8,7 @@ if (tg) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: fix_order_note_full_15');
+console.log('MESTNIY build: recovery_full_files_16');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -280,6 +280,26 @@ function setupSectionTabs() {
         filterProducts();
         haptic('medium');
     }));
+}
+
+function setupOrderSectionNote() {
+    if (document.getElementById('orderSectionNote')) return;
+
+    const filters = document.querySelector('.filters-wrapper');
+    if (!filters || !filters.parentNode) return;
+
+    const note = document.createElement('div');
+    note.id = 'orderSectionNote';
+    note.className = 'order-section-note';
+    note.textContent = 'Помимо предложенных вещей под заказ, мы можем вам привезти абсолютно любой предмет с различных площадок! Отправляй фото нам, и мы тебя проконсультируем, подскажем цену, условия доставки, и оформим заказ! В своем профиле, в приложении, нажимай «Обратиться в поддержку» — и там мы тебе подскажем!';
+
+    filters.parentNode.insertBefore(note, filters.nextSibling);
+}
+
+function updateOrderSectionNote() {
+    const note = document.getElementById('orderSectionNote');
+    if (!note) return;
+    note.style.display = state.currentSection === 'order' ? 'block' : 'none';
 }
 
 function renderSizeFilters() {
@@ -656,4 +676,3 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
