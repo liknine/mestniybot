@@ -21,7 +21,7 @@ window.addEventListener('error', function(event) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: recovery_full_files_18');
+console.log('MESTNIY build: ready_short_order_text_19');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -345,7 +345,12 @@ function setupOrderSectionNote() {
     const note = document.createElement('div');
     note.id = 'orderSectionNote';
     note.className = 'order-section-note';
-    note.textContent = 'Помимо предложенных вещей под заказ, мы можем вам привезти абсолютно любой предмет с различных площадок! Отправляй фото нам, и мы тебя проконсультируем, подскажем цену, условия доставки, и оформим заказ! В своем профиле, в приложении, нажимай «Обратиться в поддержку» — и там мы тебе подскажем!';
+
+    note.innerHTML = `
+        Можем привезти любой товар с разных площадок.<br><br>
+        Отправь фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
+        В профиле нажми <b>«Обратиться в поддержку»</b>.
+    `;
 
     filters.parentNode.insertBefore(note, filters.nextSibling);
 }
