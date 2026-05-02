@@ -1107,3 +1107,13 @@ async function init() {
 
 document.addEventListener('DOMContentLoaded', init);
 
+.order-note {
+    margin: 0 20px 16px;
+    padding: 16px;
+    border-radius: 16px;
+    background: #f3fff7;
+    color: #08a947;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+}
