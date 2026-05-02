@@ -6,9 +6,22 @@ if (tg) {
     tg.expand();
 }
 
+window.addEventListener('error', function(event) {
+    console.log('MESTNIY JS ERROR:', event.message, event.filename, event.lineno);
+    try {
+        const loading = document.getElementById('loading');
+        const empty = document.getElementById('emptyState');
+        if (loading) loading.classList.add('hidden');
+        if (empty) {
+            empty.style.display = 'block';
+            empty.innerHTML = '<div style="padding:20px;text-align:center;color:#e53935;font-weight:700;">Ошибка загрузки каталога<br><small>' + String(event.message || '') + '</small></div>';
+        }
+    } catch (e) {}
+});
+
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: recovery_full_files_16');
+console.log('MESTNIY build: recovery_full_files_17');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -676,4 +689,3 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
