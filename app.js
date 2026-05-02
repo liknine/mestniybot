@@ -8,7 +8,7 @@ if (tg) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: fix_cart_checkout_manager_13');
+console.log('MESTNIY build: fix_order_note_no_stock_14');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -319,9 +319,7 @@ function getStockStatus(stock, product) {
 }
 
 function getMeasureText(product) {
-    const categoryId = parseInt(product.category_id);
-    if ([1, 9, 10].includes(categoryId)) return 'Замеры: Не прилагаются!';
-    return 'Замеры: На последнем фото!';
+    return 'Примечание: Стоимость доставки, сроки доставки и тому подобное - обсуждается лично при оформлении заказа!';
 }
 
 function loadUserData() {
@@ -370,10 +368,28 @@ function setupSectionTabs() {
             tabs.querySelectorAll('.section-tab').forEach(function(b) { b.classList.remove('active'); });
             this.classList.add('active');
             state.currentSection = this.dataset.section;
+            updateOrderSectionNote();
             filterProducts();
             haptic('medium');
         });
     });
+}
+
+function setupOrderSectionNote() {
+    if (document.getElementById('orderSectionNote')) return;
+    const filters = document.querySelector('.filters-wrapper');
+    if (!filters || !filters.parentNode) return;
+    const note = document.createElement('div');
+    note.id = 'orderSectionNote';
+    note.className = 'order-section-note';
+    note.textContent = 'Также доступен заказ с сайтов: gofish, vinted, mercari';
+    filters.parentNode.insertBefore(note, filters.nextSibling);
+}
+
+function updateOrderSectionNote() {
+    const note = document.getElementById('orderSectionNote');
+    if (!note) return;
+    note.style.display = state.currentSection === 'order' ? 'block' : 'none';
 }
 
 function renderSizeFilters() {
@@ -449,7 +465,7 @@ function renderProducts(products) {
             '<div class="product-details">' +
                 '<h3 class="product-name">' + escapeHtml(p.name) + '</h3>' +
                 '<p class="product-price">' + formatPrice(p.price_byn, state.currency, p) + '</p>' +
-                '<span class="product-status ' + status.class + '">' + status.text + '</span>' +
+                (getProductType(p) === 'order' ? '' : '<span class="product-status ' + status.class + '">' + status.text + '</span>') +
             '</div>' +
         '</div>';
     }).join('');
@@ -541,7 +557,7 @@ function renderRelatedProducts(product) {
             '<div class="product-details">' +
                 '<h3 class="product-name">' + escapeHtml(p.name) + '</h3>' +
                 '<p class="product-price">' + formatPrice(p.price_byn, state.currency, p) + '</p>' +
-                '<span class="product-status ' + status.class + '">' + status.text + '</span>' +
+                (getProductType(p) === 'order' ? '' : '<span class="product-status ' + status.class + '">' + status.text + '</span>') +
             '</div>' +
         '</div>';
     }).join('');
@@ -624,7 +640,7 @@ function renderFavorites() {
                 '<div class="product-details">' +
                     '<h3 class="product-name">' + escapeHtml(p.name) + '</h3>' +
                     '<p class="product-price">' + formatPrice(p.price_byn, state.currency, p) + '</p>' +
-                    '<span class="product-status ' + status.class + '">' + status.text + '</span>' +
+                    (getProductType(p) === 'order' ? '' : '<span class="product-status ' + status.class + '">' + status.text + '</span>') +
                 '</div>' +
             '</div>';
         }).join('');
@@ -676,8 +692,13 @@ function openProductModal(product) {
     if (price) price.innerHTML = formatPrice(product.price_byn, state.currency, product);
     const stockStatus = getStockStatus(product.stock, product);
     if (stock) {
-        stock.textContent = stockStatus.text;
-        stock.className = 'product-stock ' + stockStatus.class;
+        if (getProductType(product) === 'order') {
+            stock.textContent = '';
+            stock.className = 'product-stock hidden-stock';
+        } else {
+            stock.textContent = stockStatus.text;
+            stock.className = 'product-stock ' + stockStatus.class;
+        }
     }
     if (grid && product.sizes) {
         grid.innerHTML = product.sizes.map(function(size) {
@@ -1066,6 +1087,8 @@ async function init() {
     loadCurrency();
     loadUserData();
     setupSectionTabs();
+    setupOrderSectionNote();
+    updateOrderSectionNote();
     setupProductCardDelegation();
     const success = await loadProducts();
     if (success) {
