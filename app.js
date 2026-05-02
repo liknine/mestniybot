@@ -21,7 +21,7 @@ window.addEventListener('error', function(event) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: ready_short_order_text_19');
+console.log('MESTNIY build: order_note_visible_20');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -337,28 +337,38 @@ function setupSectionTabs() {
 }
 
 function setupOrderSectionNote() {
-    if (document.getElementById('orderSectionNote')) return;
+    let note = document.getElementById('orderSectionNote');
 
+    if (!note) {
+        note = document.createElement('div');
+        note.id = 'orderSectionNote';
+        note.className = 'order-section-note';
+        note.innerHTML = `
+            Можем привезти любой товар с разных площадок.<br><br>
+            Отправь фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
+            В профиле нажми <b>«Обратиться в поддержку»</b>.
+        `;
+    }
+
+    const tabs = document.getElementById('sectionTabs');
     const filters = document.querySelector('.filters-wrapper');
-    if (!filters || !filters.parentNode) return;
 
-    const note = document.createElement('div');
-    note.id = 'orderSectionNote';
-    note.className = 'order-section-note';
+    if (tabs && tabs.parentNode && note.parentNode !== tabs.parentNode) {
+        tabs.parentNode.insertBefore(note, tabs.nextSibling);
+    } else if (!tabs && filters && filters.parentNode && note.parentNode !== filters.parentNode) {
+        filters.parentNode.insertBefore(note, filters);
+    }
 
-    note.innerHTML = `
-        Можем привезти любой товар с разных площадок.<br><br>
-        Отправь фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
-        В профиле нажми <b>«Обратиться в поддержку»</b>.
-    `;
-
-    filters.parentNode.insertBefore(note, filters.nextSibling);
+    updateOrderSectionNote();
 }
 
 function updateOrderSectionNote() {
     const note = document.getElementById('orderSectionNote');
     if (!note) return;
-    note.style.display = state.currentSection === 'order' ? 'block' : 'none';
+
+    const isOrder = state.currentSection === 'order';
+    note.style.display = isOrder ? 'block' : 'none';
+    note.classList.toggle('active', isOrder);
 }
 
 function renderSizeFilters() {
@@ -394,6 +404,7 @@ function filterProducts() {
         filtered = filtered.filter(p => String(p.name || '').toLowerCase().includes(q) || String(p.description || '').toLowerCase().includes(q) || getBrandName(p.brand).toLowerCase().includes(q));
     }
     renderProducts(filtered);
+    updateOrderSectionNote();
 }
 
 function renderProducts(products) {

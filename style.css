@@ -1637,3 +1637,22 @@ body {
     line-height: 1.5;
     font-weight: 500;
 }
+
+
+/* order_note_visible_20 */
+.order-section-note {
+    display: none;
+    margin: 0 20px 16px;
+    padding: 16px;
+    border-radius: 18px;
+    background: #f3fff7;
+    color: #08a947;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+    border: 1px solid rgba(8, 199, 82, 0.18);
+}
+
+.order-section-note.active {
+    display: block;
+}
