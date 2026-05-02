@@ -1536,3 +1536,38 @@ body {
 .hidden-stock {
     display: none !important;
 }
+.section-tabs {
+    display: flex;
+    gap: 12px;
+    padding: 12px 24px 18px;
+    background: #fff;
+}
+
+.section-tab {
+    flex: 1;
+    border: 2px solid #08c752;
+    background: #fff;
+    color: #08c752;
+    border-radius: 24px;
+    padding: 14px 18px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.section-tab.active {
+    background: #08c752;
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(8, 199, 82, 0.25);
+}
+
+.order-note {
+    margin: 0 24px 18px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: #f2fff6;
+    color: #08a947;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+}
