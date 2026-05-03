@@ -345,10 +345,9 @@ function setupOrderSectionNote() {
         note.className = 'order-section-note';
         note.innerHTML = `
     Если из списка наших позиций вам ничего не понравилось, то мы можем привезти любой товар с разных площадок.<br><br>
-    Отправь фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
+    Отправь нам фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
     В профиле нажми <b>«Обратиться в поддержку»</b>
 `;
-    }
 
     const tabs = document.getElementById('sectionTabs');
     const filters = document.querySelector('.filters-wrapper');
