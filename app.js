@@ -348,6 +348,7 @@ function setupOrderSectionNote() {
     Отправь нам фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
     В профиле нажми <b>«Обратиться в поддержку»</b>
 `;
+    }
 
     const tabs = document.getElementById('sectionTabs');
     const filters = document.querySelector('.filters-wrapper');
