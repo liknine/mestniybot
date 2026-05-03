@@ -21,7 +21,7 @@ window.addEventListener('error', function(event) {
 
 // ==================== CONFIG ====================
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: order_note_visible_20');
+console.log('MESTNIY build: order_note_exact_text_22');
 
 const BRANDS = {
     'a_bathing_ape': 'A Bathing Ape',
@@ -343,12 +343,13 @@ function setupOrderSectionNote() {
         note = document.createElement('div');
         note.id = 'orderSectionNote';
         note.className = 'order-section-note';
-        note.innerHTML = `
-            Можем привезти любой товар с разных площадок.<br><br>
-            Отправь фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
-            В профиле нажми <b>«Обратиться в поддержку»</b>.
-        `;
     }
+
+    note.innerHTML = `
+        Если из списка наших позиций вам ничего не понравилось, то мы можем привезти любой товар с разных площадок.<br><br>
+        Отправь нам фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
+        В профиле нажми <b>«Обратиться в поддержку»</b>
+    `;
 
     const tabs = document.getElementById('sectionTabs');
     const filters = document.querySelector('.filters-wrapper');
