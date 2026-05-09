@@ -8,643 +8,1141 @@ if (tg) {
 
 window.addEventListener('error', function(event) {
     console.log('MESTNIY JS ERROR:', event.message, event.filename, event.lineno);
-    try {
-        const loading = document.getElementById('loading');
-        const empty = document.getElementById('emptyState');
-        if (loading) loading.classList.add('hidden');
-        if (empty) {
-            empty.style.display = 'block';
-            empty.innerHTML = '<div style="padding:20px;text-align:center;color:#e53935;font-weight:700;">Ошибка загрузки каталога<br><small>' + String(event.message || '') + '</small></div>';
-        }
-    } catch (e) {}
+    showAppError('Ошибка загрузки каталога: ' + String(event.message || 'неизвестная ошибка'));
 });
 
 // ==================== CONFIG ====================
+const BUILD_VERSION = 'webapp_redesign_v1';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
-console.log('MESTNIY build: order_note_exact_text_22');
+const SUPPORT_TEXT = 'Добрый! У меня возник вопрос по каталогу';
+const PREORDER_TEXT = 'Привет! Хочу заказать у вас такую позицию под заказ! Какие условия?\n\nВот моя позиция:\nФотография:\nРазмер:';
+const ORDER_EXTRA_DESCRIPTION = 'Данная вещь, покупается лично под вас! Доставку стараемся делать максимально быстрой для вас! Все подробности вам расскажет наш менеджер!';
+
+console.log('MESTNIY build:', BUILD_VERSION);
 
 const BRANDS = {
-    'a_bathing_ape': 'A Bathing Ape',
-    'aape': 'Aape',
-    'acne_studios': 'Acne Studios',
-    'acronym': 'Acronym',
-    'adidas': 'Adidas',
-    'alpha_industries': 'Alpha Industries',
-    'alyx': 'ALYX',
-    'amiri': 'Amiri',
-    'aquascutum': 'Aquascutum',
-    'arcteryx': 'Arcteryx',
-    'armani_exchange': 'Armani Exchange',
-    'asics': 'ASICS',
-    'balenciaga': 'Balenciaga',
-    'barbour': 'Barbour',
-    'berghaus': 'Berghaus',
-    'bershka': 'Bershka',
-    'billabong': 'Billabong',
-    'burberry': 'Burberry',
-    'calvin_klein': 'Calvin Klein',
-    'carhartt': 'Carhartt',
-    'champion': 'Champion',
-    'columbia': 'Columbia',
-    'comme_des_fuckdown': 'Comme des Fuckdown',
-    'comme_des_garcons': 'Comme des Garçons',
-    'cp_company': 'C.P. Company',
-    'diesel': 'Diesel',
-    'dobermans': 'Dobermans Aggressive',
-    'doctor_martens': 'Doctor Martens',
-    'eastpak': 'Eastpak',
-    'ellesse': 'Ellesse',
-    'fila': 'Fila',
-    'fred_perry': 'Fred Perry',
-    'fucking_awesome': 'Fucking Awesome',
-    'gap': 'Gap',
-    'ggl': 'GGL',
-    'gosha': 'Гоша Рубчинский',
-    'gucci': 'Gucci',
-    'guess': 'Guess',
-    'haglofs': 'Haglofs',
-    'hardcore': 'Hardcore',
-    'hermes': 'Hermes',
-    'jordan': 'Jordan',
-    'lacoste': 'Lacoste',
-    'levis': "Levi's",
-    'lonsdale': 'Lonsdale',
-    'louis_vuitton': 'Louis Vuitton',
-    'lyle_scott': 'Lyle & Scott',
-    'maison_margiela': 'Maison Margiela',
-    'mastrum': 'Ma.Strum',
-    'mcm': 'MCM',
-    'merrell': 'Merrell',
-    'moncler': 'Moncler',
-    'mowalola': 'Mowalola',
-    'napapijri': 'NAPAPIJRI',
-    'new_balance': 'New Balance',
-    'nike': 'Nike',
-    'no_name': 'No Name',
-    'north_face': 'The North Face',
-    'number_nine': 'Number Nine',
-    'off_white': 'Off-White',
-    'palace': 'Palace',
-    'peaceful_hooligan': 'Peaceful Hooligan',
-    'pitbull': 'Pitbull Germany',
-    'polar': 'Polar',
-    'polo_ralph_lauren': 'Polo Ralph Lauren',
-    'prada': 'Prada',
-    'puma': 'Puma',
-    'raf_simons': 'Raf Simons',
-    'reebok': 'Reebok',
-    'rick_owens': "Rick Owen's",
-    'sergio_tacchini': 'Sergio Tacchini',
-    'stone_island': 'Stone Island',
-    'stussy': 'Stussy',
-    'supreme': 'Supreme',
-    'thor_steinar': 'Thor Steinar',
-    'timberland': 'Timberland',
-    'tommy_hilfiger': 'Tommy Hilfiger',
-    'trapstar': 'Trapstar',
-    'true_religion': 'True Religion',
-    'tupac': 'Tupac',
-    'vetements': 'Vetements',
-    'vivienne_westwood': 'Vivienne Westwood',
-    'weekend_offender': 'WEEKEND OFFENDER',
-    'yeezy': 'Yeezy',
-    'zara': 'Zara'
+    a_bathing_ape: 'A Bathing Ape',
+    aape: 'Aape',
+    acne_studios: 'Acne Studios',
+    acronym: 'Acronym',
+    adidas: 'Adidas',
+    alpha_industries: 'Alpha Industries',
+    alyx: 'ALYX',
+    amiri: 'Amiri',
+    aquascutum: 'Aquascutum',
+    arcteryx: 'Arcteryx',
+    armani_exchange: 'Armani Exchange',
+    asics: 'ASICS',
+    balenciaga: 'Balenciaga',
+    barbour: 'Barbour',
+    berghaus: 'Berghaus',
+    bershka: 'Bershka',
+    billabong: 'Billabong',
+    burberry: 'Burberry',
+    calvin_klein: 'Calvin Klein',
+    carhartt: 'Carhartt',
+    champion: 'Champion',
+    columbia: 'Columbia',
+    comme_des_fuckdown: 'Comme des Fuckdown',
+    comme_des_garcons: 'Comme des Garçons',
+    cp_company: 'C.P. Company',
+    diesel: 'Diesel',
+    dobermans: 'Dobermans Aggressive',
+    doctor_martens: 'Doctor Martens',
+    eastpak: 'Eastpak',
+    ellesse: 'Ellesse',
+    fila: 'Fila',
+    fred_perry: 'Fred Perry',
+    fucking_awesome: 'Fucking Awesome',
+    gap: 'Gap',
+    ggl: 'GGL',
+    gosha: 'Гоша Рубчинский',
+    gucci: 'Gucci',
+    guess: 'Guess',
+    haglofs: 'Haglofs',
+    hardcore: 'Hardcore',
+    hermes: 'Hermes',
+    jordan: 'Jordan',
+    lacoste: 'Lacoste',
+    levis: "Levi's",
+    lonsdale: 'Lonsdale',
+    louis_vuitton: 'Louis Vuitton',
+    lyle_scott: 'Lyle & Scott',
+    maison_margiela: 'Maison Margiela',
+    mastrum: 'Ma.Strum',
+    mcm: 'MCM',
+    merrell: 'Merrell',
+    moncler: 'Moncler',
+    mowalola: 'Mowalola',
+    napapijri: 'NAPAPIJRI',
+    new_balance: 'New Balance',
+    nike: 'Nike',
+    no_name: 'No Name',
+    north_face: 'The North Face',
+    number_nine: 'Number Nine',
+    off_white: 'Off-White',
+    palace: 'Palace',
+    peaceful_hooligan: 'Peaceful Hooligan',
+    pitbull: 'Pitbull Germany',
+    polar: 'Polar',
+    polo_ralph_lauren: 'Polo Ralph Lauren',
+    prada: 'Prada',
+    puma: 'Puma',
+    raf_simons: 'Raf Simons',
+    reebok: 'Reebok',
+    rick_owens: "Rick Owen's",
+    sergio_tacchini: 'Sergio Tacchini',
+    stone_island: 'Stone Island',
+    stussy: 'Stussy',
+    supreme: 'Supreme',
+    thor_steinar: 'Thor Steinar',
+    timberland: 'Timberland',
+    tommy_hilfiger: 'Tommy Hilfiger',
+    trapstar: 'Trapstar',
+    true_religion: 'True Religion',
+    tupac: 'Tupac',
+    vetements: 'Vetements',
+    vivienne_westwood: 'Vivienne Westwood',
+    weekend_offender: 'WEEKEND OFFENDER',
+    yeezy: 'Yeezy',
+    zara: 'Zara'
 };
 
 const BRAND_ALIASES = {
-    'stone_island': ['stone'],
-    'cp_company': ['cp'],
-    'raf_simons': ['raf'],
-    'a_bathing_ape': ['bape', 'a'],
-    'weekend_offender': ['weekend'],
-    'off_white': ['off'],
-    'new_balance': ['new'],
-    'armani_exchange': ['armani'],
-    'guess': ['guess']
+    stone: 'Stone Island',
+    cp: 'C.P. Company',
+    raf: 'Raf Simons',
+    bape: 'A Bathing Ape',
+    a: 'A Bathing Ape',
+    weekend: 'WEEKEND OFFENDER',
+    off: 'Off-White',
+    new: 'New Balance',
+    armani: 'Armani Exchange',
+    guess: 'Guess'
 };
 
-const CATEGORIES = {
-    1: { name: 'Обувь', icon: '👟', sizeType: 'shoes' },
-    2: { name: 'Куртки / Пуховики', icon: '🧥', sizeType: 'clothing' },
-    3: { name: 'Жилетки', icon: '🦺', sizeType: 'clothing' },
-    4: { name: 'Рубашки', icon: '👔', sizeType: 'clothing' },
-    5: { name: 'Футболки / Поло', icon: '👕', sizeType: 'clothing' },
-    6: { name: 'Кофты', icon: '🧶', sizeType: 'clothing' },
-    7: { name: 'Штаны', icon: '👖', sizeType: 'clothing' },
-    8: { name: 'Шорты', icon: '🩳', sizeType: 'clothing' },
-    9: { name: 'Головные уборы', icon: '🧢', sizeType: 'onesize' },
-    10: { name: 'Аксессуары', icon: '🎒', sizeType: 'onesize' }
-};
+const DISPLAY_CATEGORIES = [
+    { id: 'outerwear', name: 'Верхняя одежда', modalName: 'Верхняя одежда', legacy: [2, 3], sizeType: 'clothing' },
+    { id: 'sweaters', name: 'Кофты / Свитера', modalName: 'Кофты / Свитера 🥼', legacy: [6], sizeType: 'clothing' },
+    { id: 'tshirts', name: 'Футболки / Поло', modalName: 'Футболки / Поло 👕', legacy: [5], sizeType: 'clothing' },
+    { id: 'shirts', name: 'Рубашки', modalName: 'Рубашки', legacy: [4], sizeType: 'clothing' },
+    { id: 'shorts', name: 'Шорты', modalName: 'Шорты 🩳', legacy: [8], sizeType: 'clothing' },
+    { id: 'pants', name: 'Штаны', modalName: 'Штаны 👖', legacy: [7], sizeType: 'clothing' },
+    { id: 'shoes', name: 'Обувь', modalName: 'Обувь 👟', legacy: [1], sizeType: 'shoes' },
+    { id: 'accessories', name: 'Аксессуары', modalName: 'Аксессуары 🧢', legacy: [9, 10], sizeType: 'onesize' }
+];
+
+const LEGACY_CATEGORY_TO_DISPLAY = DISPLAY_CATEGORIES.reduce(function(map, category) {
+    category.legacy.forEach(function(id) {
+        map[id] = category.id;
+    });
+    return map;
+}, {});
 
 const SIZES = {
-    shoes: ['37','37.5','38','38.5','39','39.5','40','40.5','41','41.5','42','42.5','43','43.5','44','44.5','45','45.5','46','46.5'],
-    clothing: ['XS','S','M','L','XL','XXL','XXXL'],
-    onesize: ['ONE SIZE','OS','UNI']
+    clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    shoes: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'],
+    onesize: ['UNI', 'OS', 'ONE SIZE']
 };
 
 const state = {
-    products: [], cart: [], favorites: [], currency: 'BYN', currentSection: 'stock',
-    currentCategory: 'all', currentBrand: 'all', currentSize: 'all', searchQuery: '',
-    selectedProduct: null, selectedSizes: [], deliveryType: 'pickup', mailService: 'europochta',
+    products: [],
+    cart: [],
+    favorites: [],
+    currency: 'BYN',
+    activePage: 'home',
+    homeSearch: '',
+    homeSize: 'all',
+    homeCategory: 'all',
+    catalogScreen: 'start',
+    catalogReturnScreen: 'start',
+    catalogCategory: null,
+    catalogBrand: null,
+    selectedProduct: null,
+    selectedSizes: [],
     user: { id: null, firstName: 'Пользователь', lastName: '', username: '', photoUrl: null },
+    updatesLoaded: false,
+    updates: [],
     exchangeRates: { BYN: 1, RUB: 28.5, USD: 0.31 }
 };
 
-async function loadProducts() {
-    console.log('📦 Загрузка товаров...');
-    try {
-        const response = await fetch('products.json?v=' + Date.now());
-        if (!response.ok) return false;
-        state.products = await response.json();
-        preloadProductImages(state.products);
-        console.log('✅ Загружено:', state.products.length);
-        return true;
-    } catch (e) {
-        console.log('❌ Ошибка загрузки products.json:', e.message);
-        return false;
+function byId(id) {
+    return document.getElementById(id);
+}
+
+function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, function(ch) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+    });
+}
+
+function refreshIcons() {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        try {
+            window.lucide.createIcons();
+        } catch (e) {
+            console.log('Lucide icons error:', e);
+        }
     }
 }
 
-function money(value, currency) {
-    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
-    value = Number(value || 0);
-    if (currency === 'USD') return '$' + value.toFixed(2);
-    return value.toFixed(2) + ' ' + symbols[currency];
+function haptic(type) {
+    if (tg && tg.HapticFeedback) {
+        try {
+            tg.HapticFeedback.impactOccurred(type || 'light');
+        } catch (e) {}
+    }
 }
 
-function basePrice(product, currency) {
-    if (product && product.prices && product.prices[currency] !== undefined) return Number(product.prices[currency]);
-    return Number(product?.price_byn || 0) * (state.exchangeRates[currency] || 1);
+function showAppError(message) {
+    const loading = byId('loading');
+    const appError = byId('appError');
+    if (loading) loading.hidden = true;
+    if (appError) {
+        appError.hidden = false;
+        appError.textContent = message;
+    }
 }
 
-function oldPrice(product, currency) {
-    if (!product) return null;
-    const oldPrices = product.old_prices || product.old_price || (product.prices && (product.prices.old_prices || product.prices.old_price));
-    if (oldPrices && oldPrices[currency] !== undefined && Number(oldPrices[currency]) > basePrice(product, currency)) return Number(oldPrices[currency]);
-    return null;
+function showToast(message) {
+    const toast = byId('toast');
+    const text = byId('toastText');
+    if (!toast || !text) return;
+    text.textContent = message;
+    toast.classList.add('show');
+    setTimeout(function() {
+        toast.classList.remove('show');
+    }, 1800);
+    if (tg && tg.HapticFeedback) {
+        try {
+            tg.HapticFeedback.notificationOccurred('success');
+        } catch (e) {}
+    }
 }
 
-function hasDiscount(product, currency) { return oldPrice(product, currency || state.currency) !== null; }
-
-function formatPrice(priceByn, currency, product) {
-    currency = currency || state.currency;
-    product = product || { price_byn: priceByn };
-    const current = basePrice(product, currency);
-    const old = oldPrice(product, currency);
-    if (old !== null) return '<span class="old-price">' + money(old, currency) + '</span> <span class="price-arrow">→</span><br><span class="new-price">' + money(current, currency) + '</span>';
-    return money(current, currency);
+async function loadProducts() {
+    console.log('Загрузка products.json...');
+    const loading = byId('loading');
+    try {
+        const response = await fetch('products.json?v=' + Date.now());
+        if (!response.ok) throw new Error('products.json: HTTP ' + response.status);
+        const data = await response.json();
+        state.products = Array.isArray(data) ? data : [];
+        preloadProductImages(state.products);
+        console.log('Товаров загружено:', state.products.length);
+        return true;
+    } catch (e) {
+        console.log('Ошибка загрузки products.json:', e);
+        showAppError('Не удалось загрузить товары. Попробуйте открыть каталог ещё раз.');
+        return false;
+    } finally {
+        if (loading) loading.hidden = true;
+    }
 }
 
-function getProductType(product) { return (product && (product.product_type || product.section || (product.prices && product.prices.product_type))) || 'stock'; }
-function getItemPrice(product, qty) { return basePrice(product, state.currency) * (qty || 1); }
-function formatTotal(total) { return money(total, state.currency); }
-
-function escapeHtml(value) {
-    return String(value || '').replace(/[&<>"']/g, function(ch) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]; });
-}
-
-function showToast(msg) {
-    const toast = document.getElementById('toast');
-    const text = document.getElementById('toastText');
-    if (toast && text) { text.textContent = msg; toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 2000); }
-    else console.log('TOAST:', msg);
-    if (tg && tg.HapticFeedback) { try { tg.HapticFeedback.notificationOccurred('success'); } catch (e) {} }
-}
-
-function imageTag(src, alt, cls) {
-    return '<img src="' + (src || '') + '" alt="' + escapeHtml(alt) + '" class="' + (cls || 'product-image') + '" loading="eager" decoding="async" onerror="retryImage(this)">';
+function preloadProductImages(products) {
+    (products || []).forEach(function(product) {
+        (product.images || []).slice(0, 2).forEach(function(src) {
+            if (!src) return;
+            const img = new Image();
+            img.src = src;
+        });
+    });
 }
 
 function retryImage(img) {
     const retries = Number(img.dataset.retries || 0);
-    if (retries >= 3) return;
+    if (retries >= 3) {
+        img.classList.add('image-failed');
+        return;
+    }
     img.dataset.retries = String(retries + 1);
     const cleanSrc = img.src.split('?retry=')[0];
-    setTimeout(function(){ img.src = cleanSrc + '?retry=' + Date.now(); }, 500 + retries * 700);
+    setTimeout(function() {
+        img.src = cleanSrc + '?retry=' + Date.now();
+    }, 450 + retries * 700);
 }
 
-function refreshIcons() { if (window.lucide && typeof window.lucide.createIcons === 'function') { try { window.lucide.createIcons(); } catch(e) { console.log('Lucide icons error:', e); } } }
-function preloadProductImages(products) { (products || []).forEach(p => (p.images || []).slice(0, 2).forEach(src => { if (src) { const img = new Image(); img.src = src; } })); }
-function haptic(type) { if (tg && tg.HapticFeedback) { try { tg.HapticFeedback.impactOccurred(type || 'light'); } catch (e) {} } }
+window.retryImage = retryImage;
 
-function getBrandName(key) {
-    const aliases = { stone: 'Stone Island', cp: 'C.P. Company', raf: 'Raf Simons', bape: 'A Bathing Ape', a: 'A Bathing Ape', weekend: 'WEEKEND OFFENDER', off: 'Off-White', new: 'New Balance', armani: 'Armani Exchange' };
-    return BRANDS[key] || aliases[key] || key || '';
+function imageTag(src, alt, className) {
+    if (!src) {
+        return '<div class="image-placeholder ' + (className || '') + '">MESTNIY</div>';
+    }
+    return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" class="' + (className || 'product-image') + '" loading="eager" decoding="async" onerror="retryImage(this)">';
 }
 
-function brandMatches(productBrand, selectedBrand) {
-    if (selectedBrand === 'all') return true;
-    const p = String(productBrand || '').toLowerCase();
-    const b = String(selectedBrand || '').toLowerCase();
-    return p === b || (BRAND_ALIASES[b] || []).includes(p);
+function normalizeSize(size) {
+    return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
 }
 
-function normalizeSize(size) { return String(size || '').trim().toUpperCase().replace(/\s+/g, ' '); }
-function isOneSize(size) { return ['ONE SIZE', 'OS', 'UNI', 'UNISIZE'].includes(normalizeSize(size)); }
+function isOneSize(size) {
+    return ['ONE SIZE', 'OS', 'UNI', 'UNISIZE', 'ONE'].includes(normalizeSize(size));
+}
+
 function sizeMatches(productSize, selectedSize) {
-    const p = normalizeSize(productSize), s = normalizeSize(selectedSize);
+    const p = normalizeSize(productSize);
+    const s = normalizeSize(selectedSize);
     if (!p || !s) return false;
     if (p === s) return true;
     if (isOneSize(p) && isOneSize(s)) return true;
     return p.split(/\s*[-–—/]\s*/).map(normalizeSize).includes(s);
 }
-function productHasSize(product, selectedSize) { return selectedSize === 'all' || (product && product.sizes && product.sizes.some(size => sizeMatches(size, selectedSize))); }
 
-function getStockStatus(stock, product) {
-    if (product && getProductType(product) === 'order') return { text: 'На заказ', class: 'order-stock' };
-    if (Number(stock) === 0) return { text: 'Нет в наличии', class: 'out-of-stock' };
-    if (Number(stock) <= 5) return { text: 'Осталось ' + stock + ' шт', class: 'low-stock' };
-    return { text: 'В наличии', class: 'in-stock' };
+function productHasSize(product, selectedSize) {
+    if (selectedSize === 'all') return true;
+    return getProductSizes(product).some(function(size) {
+        return sizeMatches(size, selectedSize);
+    });
 }
 
-function getMeasureText(product) {
-    return 'Примечание: Стоимость доставки, сроки доставки и тому подобное - обсуждается лично при оформлении заказа!';
+function getProductSizes(product) {
+    return Array.isArray(product?.sizes) ? product.sizes.filter(Boolean) : [];
 }
+
+function getRawProductType(product) {
+    const candidates = [
+        product?.product_type,
+        product?.section,
+        product?.prices?.product_type,
+        product?.prices?.section
+    ];
+    return String(candidates.find(Boolean) || 'stock').trim().toLowerCase();
+}
+
+function getProductType(product) {
+    return getRawProductType(product) === 'order' ? 'order' : 'stock';
+}
+
+function isOrderProduct(product) {
+    return getProductType(product) === 'order';
+}
+
+function getCategoryKey(product) {
+    return LEGACY_CATEGORY_TO_DISPLAY[Number(product?.category_id)] || 'accessories';
+}
+
+function getCategoryById(categoryId) {
+    return DISPLAY_CATEGORIES.find(function(category) {
+        return category.id === categoryId;
+    }) || null;
+}
+
+function getCategoryName(product) {
+    const category = getCategoryById(getCategoryKey(product));
+    return category ? category.name : 'Категория';
+}
+
+function getBrandName(key) {
+    const value = String(key || '').trim();
+    return BRANDS[value] || BRAND_ALIASES[value] || value || 'Бренд';
+}
+
+function brandMatches(productBrand, selectedBrand) {
+    if (!selectedBrand || selectedBrand === 'all') return true;
+    return String(productBrand || '').toLowerCase() === String(selectedBrand || '').toLowerCase();
+}
+
+function money(value, currency) {
+    const symbols = { BYN: 'BYN', RUB: '₽', USD: '$' };
+    const amount = Number(value || 0);
+    if (currency === 'USD') return '$' + amount.toFixed(2);
+    return amount.toFixed(2) + ' ' + symbols[currency];
+}
+
+function convertFromByn(value, currency) {
+    return Number(value || 0) * (state.exchangeRates[currency] || 1);
+}
+
+function basePrice(product, currency) {
+    const currentCurrency = currency || state.currency;
+    if (product?.prices && product.prices[currentCurrency] !== undefined) {
+        return Number(product.prices[currentCurrency]);
+    }
+    return convertFromByn(product?.price_byn || 0, currentCurrency);
+}
+
+function normalizePriceValue(value, currency) {
+    if (value === undefined || value === null || value === '') return null;
+    if (typeof value === 'object') {
+        if (value[currency] !== undefined) return Number(value[currency]);
+        if (value.BYN !== undefined) return convertFromByn(value.BYN, currency);
+        return null;
+    }
+    return currency === 'BYN' ? Number(value) : convertFromByn(value, currency);
+}
+
+function oldPrice(product, currency) {
+    if (!product) return null;
+    const currentCurrency = currency || state.currency;
+    const candidates = [
+        product.old_prices,
+        product.old_price,
+        product.prices?.old_prices,
+        product.prices?.old_price
+    ];
+    for (const candidate of candidates) {
+        const value = normalizePriceValue(candidate, currentCurrency);
+        if (value !== null && value > basePrice(product, currentCurrency)) return value;
+    }
+    return null;
+}
+
+function hasDiscount(product, currency) {
+    return oldPrice(product, currency || state.currency) !== null;
+}
+
+function formatPrice(priceByn, currency, product) {
+    const currentCurrency = currency || state.currency;
+    const safeProduct = product || { price_byn: priceByn };
+    const current = basePrice(safeProduct, currentCurrency);
+    const old = oldPrice(safeProduct, currentCurrency);
+    if (old !== null) {
+        return '<span class="old-price">' + money(old, currentCurrency) + '</span><span class="price-arrow">→</span><span class="new-price">' + money(current, currentCurrency) + '</span>';
+    }
+    return money(current, currentCurrency);
+}
+
+function getItemPrice(product, quantity) {
+    return basePrice(product, state.currency) * (quantity || 1);
+}
+
+function formatTotal(value) {
+    return money(value, state.currency);
+}
+
+function getStockStatus(product) {
+    if (isOrderProduct(product)) return { text: 'Позиция под заказ!', className: 'order-stock' };
+    const stock = Number(product?.stock || 0);
+    if (stock === 0) return { text: 'Нет в наличии', className: 'out-of-stock' };
+    if (stock <= 5) return { text: 'Осталось ' + stock + ' шт', className: 'low-stock' };
+    return { text: 'В наличии', className: 'in-stock' };
+}
+
+function productCard(product) {
+    const isFav = state.favorites.includes(Number(product.id));
+    const status = getStockStatus(product);
+    const order = isOrderProduct(product);
+    const image = product.images && product.images[0] ? product.images[0] : '';
+    const sizes = getProductSizes(product).join(', ');
+    return '' +
+        '<article class="product-card" data-id="' + escapeHtml(product.id) + '" role="button" tabindex="0">' +
+            '<div class="product-image-wrap">' +
+                imageTag(image, product.name, 'product-image') +
+                (hasDiscount(product, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
+                '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + escapeHtml(product.id) + '" type="button" aria-label="Избранное"><i data-lucide="heart"></i></button>' +
+            '</div>' +
+            '<div class="product-card-body">' +
+                '<h3>' + escapeHtml(product.name) + '</h3>' +
+                '<div class="product-card-brand">' + escapeHtml(getBrandName(product.brand)) + '</div>' +
+                '<div class="product-card-price">' + formatPrice(product.price_byn, state.currency, product) + '</div>' +
+                '<div class="product-status ' + status.className + '">' + status.text + '</div>' +
+                (order && sizes ? '<div class="order-sizes">Доступные размеры: ' + escapeHtml(sizes) + '</div>' : '') +
+            '</div>' +
+        '</article>';
+}
+
+function renderProductsInto(container, products, emptyElement) {
+    if (!container) return;
+    container.innerHTML = products.map(productCard).join('');
+    if (emptyElement) emptyElement.hidden = products.length > 0;
+    refreshIcons();
+}
+
+function getStockProducts() {
+    return state.products.filter(function(product) {
+        return getProductType(product) === 'stock';
+    });
+}
+
+function getOrderProducts() {
+    return state.products.filter(function(product) {
+        return getProductType(product) === 'order';
+    });
+}
+
+function filterHomeProducts() {
+    let products = getStockProducts();
+    if (state.homeCategory !== 'all') {
+        products = products.filter(function(product) {
+            return getCategoryKey(product) === state.homeCategory;
+        });
+    }
+    if (state.homeSize !== 'all') {
+        products = products.filter(function(product) {
+            return productHasSize(product, state.homeSize);
+        });
+    }
+    if (state.homeSearch.trim()) {
+        const query = state.homeSearch.trim().toLowerCase();
+        products = products.filter(function(product) {
+            return String(product.name || '').toLowerCase().includes(query) ||
+                String(product.description || '').toLowerCase().includes(query) ||
+                getBrandName(product.brand).toLowerCase().includes(query);
+        });
+    }
+    return products;
+}
+
+function renderHome() {
+    const search = byId('homeSearchInput');
+    const sizeLabel = byId('homeSizeLabel');
+    const typeLabel = byId('homeTypeLabel');
+    if (search && search.value !== state.homeSearch) search.value = state.homeSearch;
+    if (sizeLabel) sizeLabel.textContent = state.homeSize === 'all' ? 'Все' : state.homeSize;
+    const category = getCategoryById(state.homeCategory);
+    if (typeLabel) typeLabel.textContent = category ? category.name : 'Все';
+    renderProductsInto(byId('homeProductsGrid'), filterHomeProducts(), byId('homeEmpty'));
+}
+
+function getHomeSizeOptions() {
+    const category = getCategoryById(state.homeCategory);
+    const sizeType = category ? category.sizeType : 'clothing';
+    const sizes = SIZES[sizeType] || SIZES.clothing;
+    return [{ value: 'all', label: 'Все размеры' }].concat(sizes.map(function(size) {
+        return { value: size, label: size };
+    }));
+}
+
+function openChoiceModal(title, options, selectedValue, onSelect) {
+    const modal = byId('choiceModal');
+    const modalTitle = byId('choiceTitle');
+    const grid = byId('choiceGrid');
+    if (!modal || !modalTitle || !grid) return;
+    modalTitle.textContent = title;
+    grid.innerHTML = options.map(function(option) {
+        const active = String(option.value) === String(selectedValue) ? 'active' : '';
+        return '<button class="choice-item ' + active + '" data-value="' + escapeHtml(option.value) + '" type="button">' +
+            '<span>' + escapeHtml(option.label) + '</span>' +
+        '</button>';
+    }).join('');
+    grid.querySelectorAll('.choice-item').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const option = options.find(function(item) {
+                return String(item.value) === String(button.dataset.value);
+            });
+            if (option) onSelect(option.value);
+            closeChoiceModal();
+            haptic();
+        });
+    });
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    refreshIcons();
+}
+
+function closeChoiceModal() {
+    const modal = byId('choiceModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+function openHomeSizeModal() {
+    openChoiceModal('Выбрать размер', getHomeSizeOptions(), state.homeSize, function(value) {
+        state.homeSize = value;
+        renderHome();
+    });
+}
+
+function openHomeTypeModal() {
+    const options = [{ value: 'all', label: 'Все типы' }].concat(DISPLAY_CATEGORIES.map(function(category) {
+        return { value: category.id, label: category.modalName };
+    }));
+    openChoiceModal('Выбрать тип товара', options, state.homeCategory, function(value) {
+        state.homeCategory = value;
+        state.homeSize = 'all';
+        renderHome();
+    });
+}
+
+function showCatalogScreen(screen) {
+    state.catalogScreen = screen;
+    ['catalogStartScreen', 'catalogCategoriesScreen', 'catalogBrandsScreen', 'catalogProductsScreen'].forEach(function(id) {
+        const el = byId(id);
+        if (el) el.hidden = true;
+    });
+    const active = byId(
+        screen === 'categories' ? 'catalogCategoriesScreen' :
+        screen === 'brands' ? 'catalogBrandsScreen' :
+        screen === 'products' ? 'catalogProductsScreen' :
+        'catalogStartScreen'
+    );
+    if (active) active.hidden = false;
+    renderCatalog();
+}
+
+function renderCatalog() {
+    if (state.catalogScreen === 'categories') renderCatalogCategories();
+    if (state.catalogScreen === 'brands') renderCatalogBrands();
+    if (state.catalogScreen === 'products') renderCatalogProducts();
+    refreshIcons();
+}
+
+function lastProduct(products) {
+    return products.length ? products[products.length - 1] : null;
+}
+
+function renderCatalogCategories() {
+    const orderProducts = getOrderProducts();
+    const allProducts = state.products;
+    const cards = DISPLAY_CATEGORIES.map(function(category) {
+        const categoryOrderProducts = orderProducts.filter(function(product) {
+            return getCategoryKey(product) === category.id;
+        });
+        const fallbackProducts = allProducts.filter(function(product) {
+            return getCategoryKey(product) === category.id;
+        });
+        const photoProduct = lastProduct(categoryOrderProducts) || lastProduct(fallbackProducts);
+        return {
+            id: category.id,
+            title: category.name,
+            count: categoryOrderProducts.length,
+            image: photoProduct?.images?.[0] || ''
+        };
+    });
+    const grid = byId('catalogCategoriesGrid');
+    if (!grid) return;
+    grid.innerHTML = cards.map(function(card) {
+        return '<button class="browse-card" data-category="' + escapeHtml(card.id) + '" type="button">' +
+            '<div class="browse-image">' + imageTag(card.image, card.title, 'browse-img') + '</div>' +
+            '<div class="browse-count">' + card.count + '</div>' +
+            '<div class="browse-title">' + escapeHtml(card.title) + '</div>' +
+        '</button>';
+    }).join('');
+    grid.querySelectorAll('.browse-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            state.catalogCategory = card.dataset.category;
+            state.catalogBrand = null;
+            state.catalogReturnScreen = 'categories';
+            showCatalogScreen('products');
+            haptic();
+        });
+    });
+}
+
+function renderCatalogBrands() {
+    const orderProducts = getOrderProducts();
+    const groups = new Map();
+    orderProducts.forEach(function(product) {
+        const brand = String(product.brand || 'no_name');
+        if (!groups.has(brand)) groups.set(brand, []);
+        groups.get(brand).push(product);
+    });
+    const cards = Array.from(groups.entries()).map(function(entry) {
+        const products = entry[1];
+        const product = lastProduct(products);
+        return {
+            id: entry[0],
+            title: getBrandName(entry[0]),
+            count: products.length,
+            image: product?.images?.[0] || ''
+        };
+    }).sort(function(a, b) {
+        return a.title.localeCompare(b.title, 'ru');
+    });
+    const grid = byId('catalogBrandsGrid');
+    const empty = byId('catalogBrandsEmpty');
+    if (!grid) return;
+    grid.innerHTML = cards.map(function(card) {
+        return '<button class="browse-card" data-brand="' + escapeHtml(card.id) + '" type="button">' +
+            '<div class="browse-image">' + imageTag(card.image, card.title, 'browse-img') + '</div>' +
+            '<div class="browse-count">' + card.count + '</div>' +
+            '<div class="browse-title">' + escapeHtml(card.title) + '</div>' +
+        '</button>';
+    }).join('');
+    if (empty) empty.hidden = cards.length > 0;
+    grid.querySelectorAll('.browse-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            state.catalogBrand = card.dataset.brand;
+            state.catalogCategory = null;
+            state.catalogReturnScreen = 'brands';
+            showCatalogScreen('products');
+            haptic();
+        });
+    });
+}
+
+function renderCatalogProducts() {
+    let products = getOrderProducts();
+    let crumb = 'Каталог';
+    if (state.catalogCategory) {
+        const category = getCategoryById(state.catalogCategory);
+        products = products.filter(function(product) {
+            return getCategoryKey(product) === state.catalogCategory;
+        });
+        crumb += ' / ' + (category ? category.name : 'Тип товара');
+    }
+    if (state.catalogBrand) {
+        products = products.filter(function(product) {
+            return brandMatches(product.brand, state.catalogBrand);
+        });
+        crumb += ' / ' + getBrandName(state.catalogBrand);
+    }
+    const breadcrumb = byId('catalogBreadcrumb');
+    if (breadcrumb) breadcrumb.textContent = crumb;
+    renderProductsInto(byId('catalogProductsGrid'), products, byId('catalogProductsEmpty'));
+}
+
+function renderCart() {
+    const items = byId('cartItems');
+    const empty = byId('cartEmpty');
+    const footer = byId('cartFooter');
+    const subtotal = byId('cartSubtotal');
+    const total = byId('cartTotal');
+    let sum = 0;
+    if (!items) return;
+    if (!state.cart.length) {
+        items.innerHTML = '';
+        if (empty) empty.hidden = false;
+        if (footer) footer.hidden = true;
+        updateCartBadge();
+        refreshIcons();
+        return;
+    }
+    if (empty) empty.hidden = true;
+    if (footer) footer.hidden = false;
+    items.innerHTML = state.cart.map(function(item) {
+        const product = state.products.find(function(candidate) {
+            return Number(candidate.id) === Number(item.productId);
+        });
+        if (!product) return '';
+        const quantity = item.sizes.length || 1;
+        const itemSum = getItemPrice(product, quantity);
+        sum += itemSum;
+        const image = product.images?.[0] || '';
+        return '<div class="cart-item" data-id="' + escapeHtml(item.productId) + '">' +
+            imageTag(image, product.name, 'cart-item-image') +
+            '<div class="cart-item-info">' +
+                '<h3>' + escapeHtml(product.name) + '</h3>' +
+                '<p>Размеры: ' + escapeHtml(item.sizes.join(', ')) + '</p>' +
+                '<div class="cart-item-bottom">' +
+                    '<strong>' + formatTotal(itemSum) + '</strong>' +
+                    '<button class="cart-item-delete" data-id="' + escapeHtml(item.productId) + '" type="button" aria-label="Удалить"><i data-lucide="trash-2"></i></button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+    if (subtotal) subtotal.textContent = formatTotal(sum);
+    if (total) total.textContent = formatTotal(sum);
+    updateCartBadge();
+    refreshIcons();
+}
+
+function renderFavorites() {
+    const products = state.products.filter(function(product) {
+        return state.favorites.includes(Number(product.id));
+    });
+    renderProductsInto(byId('favoritesGrid'), products, byId('favoritesEmpty'));
+}
+
 function updateProfileUI() {
     const name = state.user.lastName ? state.user.firstName + ' ' + state.user.lastName : state.user.firstName;
-    const profileName = document.getElementById('profileName');
-    const profileUsername = document.getElementById('profileUsername');
-    const profileAvatar = document.getElementById('profileAvatar');
-    if (profileName) profileName.textContent = name;
+    const profileName = byId('profileName');
+    const profileUsername = byId('profileUsername');
+    const profileAvatar = byId('profileAvatar');
+    if (profileName) profileName.textContent = name || 'Пользователь';
     if (profileUsername) profileUsername.textContent = state.user.username ? '@' + state.user.username : 'Telegram User';
-    if (profileAvatar && state.user.photoUrl) profileAvatar.innerHTML = '<img src="' + state.user.photoUrl + '" alt="Avatar">';
-    updateProfileStats();
+    if (profileAvatar) {
+        profileAvatar.innerHTML = state.user.photoUrl
+            ? '<img src="' + escapeHtml(state.user.photoUrl) + '" alt="Avatar">'
+            : '<i data-lucide="user"></i>';
+    }
+    refreshIcons();
 }
-function updateProfileStats() {
-    const cartCount = document.getElementById('profileCartCount');
-    const favCount = document.getElementById('profileFavCount');
-    if (cartCount) cartCount.textContent = state.cart.reduce((s, i) => s + i.sizes.length, 0);
-    if (favCount) favCount.textContent = state.favorites.length;
-}
-
 
 function loadUserData() {
     if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        const u = tg.initDataUnsafe.user;
+        const user = tg.initDataUnsafe.user;
         state.user = {
-            id: u.id,
-            firstName: u.first_name || 'Пользователь',
-            lastName: u.last_name || '',
-            username: u.username || '',
-            photoUrl: u.photo_url || null
+            id: user.id,
+            firstName: user.first_name || 'Пользователь',
+            lastName: user.last_name || '',
+            username: user.username || '',
+            photoUrl: user.photo_url || null
         };
     }
     updateProfileUI();
 }
 
-function updateProfileUI() {
-    const name = state.user.lastName
-        ? state.user.firstName + ' ' + state.user.lastName
-        : state.user.firstName;
-
-    const profileName = document.getElementById('profileName');
-    const profileUsername = document.getElementById('profileUsername');
-    const profileAvatar = document.getElementById('profileAvatar');
-
-    if (profileName) profileName.textContent = name;
-    if (profileUsername) profileUsername.textContent = state.user.username ? '@' + state.user.username : 'Telegram User';
-    if (profileAvatar && state.user.photoUrl) {
-        profileAvatar.innerHTML = '<img src="' + state.user.photoUrl + '" alt="Avatar">';
+async function loadUpdates() {
+    if (state.updatesLoaded) return state.updates;
+    state.updatesLoaded = true;
+    try {
+        const response = await fetch('updates.json?v=' + Date.now());
+        if (!response.ok) throw new Error('updates.json: HTTP ' + response.status);
+        const data = await response.json();
+        state.updates = Array.isArray(data) ? data : (Array.isArray(data?.updates) ? data.updates : []);
+    } catch (e) {
+        console.log('updates.json empty or unavailable:', e.message);
+        state.updates = [];
     }
-
-    updateProfileStats();
+    return state.updates;
 }
 
-function updateProfileStats() {
-    const cartCount = document.getElementById('profileCartCount');
-    const favCount = document.getElementById('profileFavCount');
-
-    if (cartCount) cartCount.textContent = state.cart.reduce(function(s, i) { return s + i.sizes.length; }, 0);
-    if (favCount) favCount.textContent = state.favorites.length;
-}
-
-function setupSectionTabs() {
-    if (document.getElementById('sectionTabs')) return;
-    const filters = document.querySelector('.filters-wrapper');
-    if (!filters) return;
-    const tabs = document.createElement('div');
-    tabs.className = 'section-tabs';
-    tabs.id = 'sectionTabs';
-    tabs.innerHTML = '<button class="section-tab active" data-section="stock">Наличие</button><button class="section-tab" data-section="order">На заказ</button>';
-    filters.parentNode.insertBefore(tabs, filters);
-    tabs.querySelectorAll('.section-tab').forEach(btn => btn.addEventListener('click', function(){
-        tabs.querySelectorAll('.section-tab').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        state.currentSection = this.dataset.section;
-        filterProducts();
-        haptic('medium');
-    }));
-}
-
-function setupOrderSectionNote() {
-    let note = document.getElementById('orderSectionNote');
-
-    if (!note) {
-        note = document.createElement('div');
-        note.id = 'orderSectionNote';
-        note.className = 'order-section-note';
+async function showInfoScreen(screen) {
+    ['infoMainScreen', 'updatesScreen', 'socialScreen'].forEach(function(id) {
+        const el = byId(id);
+        if (el) el.hidden = true;
+    });
+    if (screen === 'updates') {
+        const updatesScreen = byId('updatesScreen');
+        if (updatesScreen) updatesScreen.hidden = false;
+        await renderUpdates();
+    } else if (screen === 'social') {
+        const socialScreen = byId('socialScreen');
+        if (socialScreen) socialScreen.hidden = false;
+    } else {
+        const mainScreen = byId('infoMainScreen');
+        if (mainScreen) mainScreen.hidden = false;
+        updateProfileUI();
     }
-
-    note.innerHTML = `
-        Если из списка наших позиций вам ничего не понравилось, то мы можем привезти любой товар с разных площадок.<br><br>
-        Отправь нам фото — проконсультируем, рассчитаем цену и оформим заказ.<br><br>
-        В профиле нажми <b>«Обратиться в поддержку»</b>
-    `;
-
-    const tabs = document.getElementById('sectionTabs');
-    const filters = document.querySelector('.filters-wrapper');
-
-    if (tabs && tabs.parentNode && note.parentNode !== tabs.parentNode) {
-        tabs.parentNode.insertBefore(note, tabs.nextSibling);
-    } else if (!tabs && filters && filters.parentNode && note.parentNode !== filters.parentNode) {
-        filters.parentNode.insertBefore(note, filters);
-    }
-
-    updateOrderSectionNote();
-}
-
-function updateOrderSectionNote() {
-    const note = document.getElementById('orderSectionNote');
-    if (!note) return;
-
-    const isOrder = state.currentSection === 'order';
-    note.style.display = isOrder ? 'block' : 'none';
-    note.classList.toggle('active', isOrder);
-}
-
-function renderSizeFilters() {
-    const wrapper = document.getElementById('sizesFilterScroll');
-    if (!wrapper) return;
-    let sizes = [];
-    if (state.currentCategory === 'all') sizes = ['Все'].concat(SIZES.clothing);
-    else {
-        const cat = CATEGORIES[parseInt(state.currentCategory)];
-        if (cat) sizes = ['Все'].concat(SIZES[cat.sizeType]);
-    }
-    wrapper.innerHTML = sizes.map(function(size, i){
-        const value = i === 0 ? 'all' : size;
-        return '<button class="size-filter-chip ' + (state.currentSize === value ? 'active' : '') + '" data-size="' + value + '">' + size + '</button>';
-    }).join('');
-    wrapper.querySelectorAll('.size-filter-chip').forEach(chip => chip.addEventListener('click', function(){
-        wrapper.querySelectorAll('.size-filter-chip').forEach(c => c.classList.remove('active'));
-        this.classList.add('active');
-        state.currentSize = this.dataset.size;
-        filterProducts();
-        haptic();
-    }));
-}
-
-function filterProducts() {
-    let filtered = state.products.slice();
-    filtered = filtered.filter(p => getProductType(p) === state.currentSection);
-    if (state.currentCategory !== 'all') filtered = filtered.filter(p => Number(p.category_id) === parseInt(state.currentCategory));
-    if (state.currentBrand !== 'all') filtered = filtered.filter(p => brandMatches(p.brand, state.currentBrand));
-    if (state.currentSize !== 'all') filtered = filtered.filter(p => productHasSize(p, state.currentSize));
-    if (state.searchQuery) {
-        const q = state.searchQuery.toLowerCase();
-        filtered = filtered.filter(p => String(p.name || '').toLowerCase().includes(q) || String(p.description || '').toLowerCase().includes(q) || getBrandName(p.brand).toLowerCase().includes(q));
-    }
-    renderProducts(filtered);
-    updateOrderSectionNote();
-}
-
-function renderProducts(products) {
-    const grid = document.getElementById('productsGrid');
-    const loading = document.getElementById('loading');
-    const empty = document.getElementById('emptyState');
-    if (loading) loading.classList.add('hidden');
-    if (!products.length) {
-        if (grid) grid.innerHTML = '';
-        if (empty) empty.style.display = 'block';
-        refreshIcons();
-        return;
-    }
-    if (empty) empty.style.display = 'none';
-    if (!grid) return;
-    grid.innerHTML = products.map(function(p){
-        const isFav = state.favorites.includes(Number(p.id));
-        const status = getStockStatus(p.stock, p);
-        const img = p.images && p.images[0] ? p.images[0] : '';
-        return '<div class="product-card" data-id="' + p.id + '" role="button" tabindex="0">' +
-            '<div class="product-image-container">' + imageTag(img, p.name, 'product-image') +
-            (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
-            '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '"><i data-lucide="heart"></i></button></div>' +
-            '<div class="product-details"><h3 class="product-name">' + escapeHtml(p.name) + '</h3><p class="product-price">' + formatPrice(p.price_byn, state.currency, p) + '</p><span class="product-status ' + status.class + '">' + status.text + '</span></div></div>';
-    }).join('');
-    attachProductListeners();
     refreshIcons();
 }
 
-function openProductByCardId(productId) {
-    productId = parseInt(productId);
-    if (isNaN(productId)) return;
-    const product = state.products.find(p => parseInt(p.id) === productId);
+async function renderUpdates() {
+    const list = byId('updatesList');
+    const empty = byId('updatesEmpty');
+    const updates = await loadUpdates();
+    if (!list) return;
+    if (!updates.length) {
+        list.innerHTML = '';
+        if (empty) empty.hidden = false;
+        return;
+    }
+    if (empty) empty.hidden = true;
+    list.innerHTML = updates.map(function(update, index) {
+        return '<button class="update-card" data-index="' + index + '" type="button">' +
+            imageTag(update.image || '', update.title || 'Обновление', 'update-image') +
+            '<span>' + escapeHtml(update.title || 'Обновление') + '</span>' +
+        '</button>';
+    }).join('');
+}
+
+function setActivePage(page) {
+    state.activePage = page;
+    document.querySelectorAll('.page').forEach(function(pageEl) {
+        pageEl.classList.toggle('page-active', pageEl.dataset.page === page);
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(button) {
+        button.classList.toggle('active', button.dataset.page === page);
+    });
+    closeSidePanel();
+    closeChoiceModal();
+    if (page === 'home') renderHome();
+    if (page === 'catalog') renderCatalog();
+    if (page === 'cart') renderCart();
+    if (page === 'favorites') renderFavorites();
+    if (page === 'info') showInfoScreen('main');
+    refreshIcons();
+}
+
+function rerenderCurrentPage() {
+    if (state.activePage === 'home') renderHome();
+    if (state.activePage === 'catalog') renderCatalog();
+    if (state.activePage === 'cart') renderCart();
+    if (state.activePage === 'favorites') renderFavorites();
+}
+
+function openProductById(productId) {
+    const product = state.products.find(function(candidate) {
+        return Number(candidate.id) === Number(productId);
+    });
     if (!product) return;
-    haptic();
     openProductModal(product);
-}
-window.openProductByCardId = openProductByCardId;
-
-function handleFavoriteClick(btn, e) {
-    if (e) { e.preventDefault(); e.stopPropagation(); }
-    const id = parseInt(btn.dataset.id);
-    if (isNaN(id)) return;
-    toggleFavorite(id);
-    btn.classList.toggle('active');
-    haptic('medium');
-}
-
-function attachProductListeners() {
-    document.querySelectorAll('.product-card').forEach(function(card){
-        if (card.dataset.cardClickReady === '1') return;
-        card.dataset.cardClickReady = '1';
-        card.addEventListener('click', function(e){
-            if (e.target.closest('.product-favorite')) return;
-            openProductByCardId(card.dataset.id);
-        });
-    });
-    document.querySelectorAll('.product-favorite').forEach(function(btn){
-        if (btn.dataset.favoriteClickReady === '1') return;
-        btn.dataset.favoriteClickReady = '1';
-        btn.addEventListener('click', e => handleFavoriteClick(btn, e));
-    });
-}
-
-function setupProductCardDelegation() {
-    if (window.__mestniyProductCardDelegationReady) return;
-    window.__mestniyProductCardDelegationReady = true;
-    document.addEventListener('click', function(e){
-        const fav = e.target.closest('.product-favorite');
-        if (fav) { if (fav.dataset.favoriteClickReady !== '1') handleFavoriteClick(fav, e); return; }
-        const card = e.target.closest('.product-card');
-        if (!card) return;
-        if (card.dataset.cardClickReady !== '1') openProductByCardId(card.dataset.id);
-    }, true);
-}
-
-function renderRelatedProducts(product) {
-    const section = document.getElementById('relatedSection');
-    const grid = document.getElementById('relatedGrid');
-    if (!section || !grid) return;
-    let related = state.products.filter(p => Number(p.id) !== Number(product.id) && p.sizes && product.sizes && p.sizes.some(s => product.sizes.some(ps => sizeMatches(s, ps))));
-    if (!related.length) related = state.products.filter(p => Number(p.id) !== Number(product.id) && Number(p.category_id) === Number(product.category_id));
-    related = related.slice(0, 4);
-    if (!related.length) { section.style.display = 'none'; return; }
-    section.style.display = 'block';
-    grid.innerHTML = related.map(function(p){
-        const isFav = state.favorites.includes(Number(p.id));
-        const status = getStockStatus(p.stock, p);
-        const img = p.images && p.images[0] ? p.images[0] : '';
-        return '<div class="product-card related-card" data-id="' + p.id + '" role="button" tabindex="0"><div class="product-image-container">' + imageTag(img, p.name, 'product-image') + (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') + '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + p.id + '"><i data-lucide="heart"></i></button></div><div class="product-details"><h3 class="product-name">' + escapeHtml(p.name) + '</h3><p class="product-price">' + formatPrice(p.price_byn, state.currency, p) + '</p><span class="product-status ' + status.class + '">' + status.text + '</span></div></div>';
-    }).join('');
-    attachProductListeners();
-    refreshIcons();
-}
-
-function renderCart() {
-    const items = document.getElementById('cartItems');
-    const empty = document.getElementById('cartEmpty');
-    const footer = document.getElementById('cartFooter');
-    const subtotal = document.getElementById('cartSubtotal');
-    const total = document.getElementById('cartTotal');
-    const checkout = document.getElementById('checkoutTotal');
-    if (!state.cart.length) {
-        if (items) items.innerHTML = '';
-        if (empty) empty.style.display = 'flex';
-        if (footer) footer.style.display = 'none';
-        refreshIcons();
-        return;
-    }
-    if (empty) empty.style.display = 'none';
-    if (footer) footer.style.display = 'block';
-    let sum = 0;
-    if (items) {
-        items.innerHTML = state.cart.map(function(item){
-            const p = state.products.find(x => Number(x.id) === Number(item.productId));
-            if (!p) return '';
-            const itemSum = getItemPrice(p, item.sizes.length);
-            sum += itemSum;
-            const img = p.images && p.images[0] ? p.images[0] : '';
-            return '<div class="cart-item" data-id="' + item.productId + '">' + imageTag(img, p.name, 'cart-item-image') + '<div class="cart-item-info"><h4 class="cart-item-name">' + escapeHtml(p.name) + '</h4><p class="cart-item-sizes">Размеры: ' + item.sizes.join(', ') + '</p><div class="cart-item-bottom"><span class="cart-item-price">' + formatTotal(itemSum) + '</span><button class="cart-item-delete" data-id="' + item.productId + '"><i data-lucide="trash-2"></i></button></div></div></div>';
-        }).join('');
-        refreshIcons();
-        attachCartListeners();
-    }
-    if (subtotal) subtotal.textContent = formatTotal(sum);
-    if (total) total.textContent = formatTotal(sum);
-    if (checkout) checkout.textContent = formatTotal(sum);
-    updateCartBadge();
-}
-function attachCartListeners() { document.querySelectorAll('.cart-item-delete').forEach(btn => btn.addEventListener('click', function(){ removeFromCart(parseInt(this.dataset.id)); })); }
-
-function renderFavorites() {
-    const grid = document.getElementById('favoritesGrid');
-    const empty = document.getElementById('favoritesEmpty');
-    const favProducts = state.products.filter(p => state.favorites.includes(Number(p.id)));
-    if (!favProducts.length) { if (grid) grid.innerHTML = ''; if (empty) empty.style.display = 'flex'; refreshIcons(); return; }
-    if (empty) empty.style.display = 'none';
-    if (grid) { renderProductsInto(grid, favProducts); attachProductListeners(); refreshIcons(); }
-}
-function renderProductsInto(grid, products) {
-    grid.innerHTML = products.map(function(p){
-        const status = getStockStatus(p.stock, p);
-        const img = p.images && p.images[0] ? p.images[0] : '';
-        return '<div class="product-card" data-id="' + p.id + '" role="button" tabindex="0"><div class="product-image-container">' + imageTag(img, p.name, 'product-image') + (hasDiscount(p, state.currency) ? '<div class="discount-badge">SALE</div>' : '') + '<button class="product-favorite active" data-id="' + p.id + '"><i data-lucide="heart"></i></button></div><div class="product-details"><h3 class="product-name">' + escapeHtml(p.name) + '</h3><p class="product-price">' + formatPrice(p.price_byn, state.currency, p) + '</p><span class="product-status ' + status.class + '">' + status.text + '</span></div></div>';
-    }).join('');
-}
-function updateCartBadge() {
-    const badge = document.getElementById('cartBadge');
-    const count = state.cart.reduce((s, i) => s + i.sizes.length, 0);
-    if (badge) { badge.textContent = count; badge.dataset.count = count; }
-    updateProfileStats();
 }
 
 function openProductModal(product) {
     state.selectedProduct = product;
     state.selectedSizes = [];
-    const modal = document.getElementById('productModal');
-    const track = document.getElementById('galleryTrack');
-    const dots = document.getElementById('galleryDots');
-    const title = document.getElementById('productTitle');
-    const brand = document.getElementById('productBrand');
-    const price = document.getElementById('productPriceMain');
-    const stock = document.getElementById('productStock');
-    const grid = document.getElementById('sizesGrid');
-    const desc = document.getElementById('productDescription');
-    const fav = document.getElementById('modalFavorite');
-    if (track && product.images) {
-        track.innerHTML = product.images.map(img => imageTag(img, product.name, 'gallery-image')).join('');
-        const gallery = document.querySelector('.gallery');
-        if (gallery) { const old = gallery.querySelector('.modal-discount'); if (old) old.remove(); if (hasDiscount(product, state.currency)) gallery.insertAdjacentHTML('beforeend', '<div class="discount-badge modal-discount">SALE</div>'); }
-        track.onscroll = function(){ const index = Math.round(this.scrollLeft / this.offsetWidth); document.querySelectorAll('.gallery-dot').forEach((dot, i) => dot.classList.toggle('active', i === index)); };
+    const modal = byId('productModal');
+    const track = byId('galleryTrack');
+    const dots = byId('galleryDots');
+    const title = byId('productTitle');
+    const brand = byId('productBrand');
+    const price = byId('productPriceMain');
+    const stock = byId('productStock');
+    const orderBadge = byId('productOrderBadge');
+    const availableSizes = byId('availableSizes');
+    const sizesGrid = byId('sizesGrid');
+    const description = byId('productDescription');
+    const favorite = byId('modalFavorite');
+    const warning = byId('sizeWarning');
+    const isOrder = isOrderProduct(product);
+    const sizes = getProductSizes(product);
+
+    if (track) {
+        const images = product.images?.length ? product.images : [''];
+        track.innerHTML = images.map(function(src) {
+            return imageTag(src, product.name, 'gallery-image');
+        }).join('');
+        track.scrollLeft = 0;
+        track.onscroll = function() {
+            const index = Math.round(track.scrollLeft / Math.max(track.offsetWidth, 1));
+            document.querySelectorAll('.gallery-dot').forEach(function(dot, dotIndex) {
+                dot.classList.toggle('active', dotIndex === index);
+            });
+        };
     }
-    if (dots && product.images) dots.innerHTML = product.images.map((_, i) => '<div class="gallery-dot ' + (i === 0 ? 'active' : '') + '"></div>').join('');
-    if (title) title.textContent = product.name;
+    if (dots) {
+        const count = Math.max(product.images?.length || 1, 1);
+        dots.innerHTML = Array.from({ length: count }).map(function(_, index) {
+            return '<div class="gallery-dot ' + (index === 0 ? 'active' : '') + '"></div>';
+        }).join('');
+    }
+    if (title) title.textContent = product.name || '';
     if (brand) brand.textContent = getBrandName(product.brand);
     if (price) price.innerHTML = formatPrice(product.price_byn, state.currency, product);
-    const stockStatus = getStockStatus(product.stock, product);
-    if (stock) { stock.textContent = stockStatus.text; stock.className = 'product-stock ' + stockStatus.class; }
-    if (grid && product.sizes) {
-        grid.innerHTML = product.sizes.map(size => '<button class="size-chip" data-size="' + escapeHtml(size) + '" ' + (Number(product.stock) === 0 ? 'disabled' : '') + '>' + escapeHtml(size) + '</button>').join('');
-        grid.querySelectorAll('.size-chip').forEach(chip => chip.addEventListener('click', function(){
-            const size = this.dataset.size;
-            const idx = state.selectedSizes.indexOf(size);
-            if (idx === -1) { state.selectedSizes.push(size); this.classList.add('selected'); }
-            else { state.selectedSizes.splice(idx, 1); this.classList.remove('selected'); }
-            haptic(); updateAddToCartBtn();
-        }));
-        let warning = document.getElementById('sizeWarning');
-        if (!warning && grid.parentNode) { warning = document.createElement('div'); warning.id = 'sizeWarning'; warning.className = 'size-warning'; warning.textContent = '* выберите размер'; grid.parentNode.insertBefore(warning, grid); }
-        if (warning) warning.classList.remove('active', 'blink');
-        if (product.sizes.length === 1 && Number(product.stock) !== 0) { state.selectedSizes = [product.sizes[0]]; const onlyChip = grid.querySelector('.size-chip'); if (onlyChip) onlyChip.classList.add('selected'); }
+    if (stock) {
+        const status = getStockStatus(product);
+        stock.hidden = isOrder;
+        stock.textContent = status.text;
+        stock.className = 'product-stock ' + status.className;
     }
-    if (desc) desc.textContent = [product.description || '', getMeasureText(product)].filter(Boolean).join('\n\n');
-    if (fav) fav.classList.toggle('active', state.favorites.includes(Number(product.id)));
-    const scrollContent = document.querySelector('.product-scroll-content');
-    if (scrollContent) scrollContent.scrollTop = 0;
-    updateAddToCartBtn();
-    if (modal) modal.classList.add('active');
-    try { renderRelatedProducts(product); } catch (e) { console.log('Related render error:', e); }
+    if (orderBadge) orderBadge.hidden = !isOrder;
+    if (availableSizes) {
+        availableSizes.textContent = sizes.length ? 'Доступные размеры: ' + sizes.join(', ') : 'Доступные размеры уточняйте у менеджера';
+    }
+    if (sizesGrid) {
+        const modalSizes = sizes.length ? sizes : ['ONE SIZE'];
+        sizesGrid.innerHTML = modalSizes.map(function(size) {
+            const disabled = !isOrder && Number(product.stock || 0) === 0;
+            return '<button class="size-chip" data-size="' + escapeHtml(size) + '" type="button" ' + (disabled ? 'disabled' : '') + '>' + escapeHtml(size) + '</button>';
+        }).join('');
+        sizesGrid.querySelectorAll('.size-chip').forEach(function(chip) {
+            chip.addEventListener('click', function() {
+                const size = chip.dataset.size;
+                const index = state.selectedSizes.indexOf(size);
+                if (index === -1) {
+                    state.selectedSizes.push(size);
+                    chip.classList.add('selected');
+                } else {
+                    state.selectedSizes.splice(index, 1);
+                    chip.classList.remove('selected');
+                }
+                if (warning) warning.classList.remove('active', 'blink');
+                updateAddToCartButton();
+                haptic();
+            });
+        });
+        if (modalSizes.length === 1 && (isOrder || Number(product.stock || 0) !== 0)) {
+            state.selectedSizes = [modalSizes[0]];
+            const onlyChip = sizesGrid.querySelector('.size-chip');
+            if (onlyChip) onlyChip.classList.add('selected');
+        }
+    }
+    if (warning) warning.classList.remove('active', 'blink');
+    if (description) {
+        const parts = [product.description || ''];
+        if (isOrder) parts.push(ORDER_EXTRA_DESCRIPTION);
+        description.textContent = parts.filter(Boolean).join('\n\n');
+    }
+    if (favorite) favorite.classList.toggle('active', state.favorites.includes(Number(product.id)));
+    renderRelatedProducts(product);
+    updateAddToCartButton();
+    if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+    const scroll = document.querySelector('.product-scroll');
+    if (scroll) scroll.scrollTop = 0;
     refreshIcons();
 }
-function closeProductModal() { const modal = document.getElementById('productModal'); if (modal) modal.classList.remove('active'); state.selectedProduct = null; state.selectedSizes = []; }
-function updateAddToCartBtn() {
-    const btn = document.getElementById('addToCartBtn');
-    const price = document.getElementById('btnPrice');
-    if (!state.selectedProduct || !btn) return;
-    btn.disabled = Number(state.selectedProduct.stock) === 0;
-    const warning = document.getElementById('sizeWarning');
-    if (warning) warning.classList.toggle('active', state.selectedProduct.sizes && state.selectedProduct.sizes.length > 1 && !state.selectedSizes.length);
-    if (price) price.textContent = formatTotal(getItemPrice(state.selectedProduct, Math.max(state.selectedSizes.length, 1)));
+
+function closeProductModal() {
+    const modal = byId('productModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+    state.selectedProduct = null;
+    state.selectedSizes = [];
 }
-function openCartModal() { renderCart(); const modal = document.getElementById('cartModal'); if (modal) modal.classList.add('active'); }
-function openFavoritesModal() { renderFavorites(); const modal = document.getElementById('favoritesModal'); if (modal) modal.classList.add('active'); }
-function openProfileModal() { updateProfileUI(); const modal = document.getElementById('profileModal'); if (modal) modal.classList.add('active'); refreshIcons(); }
-function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
+
+function updateAddToCartButton() {
+    const button = byId('addToCartBtn');
+    const price = byId('btnPrice');
+    if (!button || !state.selectedProduct) return;
+    const disabled = !isOrderProduct(state.selectedProduct) && Number(state.selectedProduct.stock || 0) === 0;
+    button.disabled = disabled;
+    if (price) {
+        price.textContent = formatTotal(getItemPrice(state.selectedProduct, Math.max(state.selectedSizes.length, 1)));
+    }
+}
+
+function renderRelatedProducts(product) {
+    const section = byId('relatedSection');
+    const grid = byId('relatedGrid');
+    if (!section || !grid) return;
+    let related = state.products.filter(function(candidate) {
+        return Number(candidate.id) !== Number(product.id) &&
+            getProductType(candidate) === getProductType(product) &&
+            getCategoryKey(candidate) === getCategoryKey(product);
+    });
+    related = related.slice(0, 4);
+    section.hidden = related.length === 0;
+    grid.innerHTML = related.map(productCard).join('');
+}
+
+function addToCart() {
+    const product = state.selectedProduct;
+    if (!product) return;
+    const sizes = getProductSizes(product);
+    if (!sizes.length && !state.selectedSizes.length) state.selectedSizes = ['ONE SIZE'];
+    if (sizes.length === 1 && !state.selectedSizes.length) state.selectedSizes = [sizes[0]];
+    if (!state.selectedSizes.length) {
+        const warning = byId('sizeWarning');
+        if (warning) {
+            warning.classList.add('active', 'blink');
+            setTimeout(function() {
+                warning.classList.remove('blink');
+            }, 1400);
+        }
+        showToast('Выберите размер');
+        return;
+    }
+    const productId = Number(product.id);
+    let item = state.cart.find(function(cartItem) {
+        return Number(cartItem.productId) === productId;
+    });
+    if (!item) {
+        item = { productId: productId, sizes: [] };
+        state.cart.push(item);
+    }
+    state.selectedSizes.forEach(function(size) {
+        if (!item.sizes.includes(size)) item.sizes.push(size);
+    });
+    saveCart();
+    closeProductModal();
+    rerenderCurrentPage();
+    showToast('Добавлено в корзину');
+}
+
+function removeFromCart(productId) {
+    state.cart = state.cart.filter(function(item) {
+        return Number(item.productId) !== Number(productId);
+    });
+    saveCart();
+    renderCart();
+    haptic('medium');
+}
+
+function clearCart() {
+    state.cart = [];
+    saveCart();
+    renderCart();
+    haptic('medium');
+}
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+    updateCartBadge();
+}
+
+function loadCart() {
+    try {
+        const saved = localStorage.getItem('cart');
+        if (!saved) return;
+        state.cart = JSON.parse(saved).map(function(item) {
+            if (item.size && !item.sizes) return { productId: item.productId, sizes: [item.size] };
+            return { productId: item.productId, sizes: Array.isArray(item.sizes) ? item.sizes : [] };
+        });
+    } catch (e) {
+        console.log('Cart load error:', e);
+        state.cart = [];
+    }
+    updateCartBadge();
+}
+
+function updateCartBadge() {
+    const badge = byId('cartBadge');
+    const count = state.cart.reduce(function(sum, item) {
+        return sum + (item.sizes?.length || 0);
+    }, 0);
+    if (badge) {
+        badge.textContent = count;
+        badge.dataset.count = String(count);
+    }
+}
+
+function toggleFavorite(productId) {
+    const id = Number(productId);
+    const index = state.favorites.indexOf(id);
+    if (index === -1) state.favorites.push(id);
+    else state.favorites.splice(index, 1);
+    saveFavorites();
+    rerenderCurrentPage();
+}
+
+function saveFavorites() {
+    localStorage.setItem('favorites', JSON.stringify(state.favorites));
+}
+
+function loadFavorites() {
+    try {
+        const saved = localStorage.getItem('favorites');
+        state.favorites = saved ? JSON.parse(saved).map(Number) : [];
+    } catch (e) {
+        console.log('Favorites load error:', e);
+        state.favorites = [];
+    }
+}
+
+function setCurrency(currency) {
+    if (!['BYN', 'RUB', 'USD'].includes(currency)) return;
+    state.currency = currency;
+    localStorage.setItem('currency', currency);
+    document.querySelectorAll('.currency-option').forEach(function(button) {
+        button.classList.toggle('active', button.dataset.currency === currency);
+    });
+    if (state.selectedProduct) {
+        const price = byId('productPriceMain');
+        if (price) price.innerHTML = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct);
+        updateAddToCartButton();
+    }
+    rerenderCurrentPage();
+    haptic();
+}
+
+function loadCurrency() {
+    const saved = localStorage.getItem('currency');
+    if (saved && ['BYN', 'RUB', 'USD'].includes(saved)) state.currency = saved;
+    document.querySelectorAll('.currency-option').forEach(function(button) {
+        button.classList.toggle('active', button.dataset.currency === state.currency);
+    });
+}
 
 function openManagerWithText(text) {
-    const tgLink = 'https://t.me/' + SUPPORT_USERNAME + '?text=' + encodeURIComponent(text);
-    if (window.Telegram && window.Telegram.WebApp) window.Telegram.WebApp.openTelegramLink(tgLink);
-    else window.open(tgLink, '_blank');
+    const link = 'https://t.me/' + SUPPORT_USERNAME + '?text=' + encodeURIComponent(text);
+    if (tg && typeof tg.openTelegramLink === 'function') tg.openTelegramLink(link);
+    else window.open(link, '_blank');
 }
-function openManagerForProduct(product, sizes) {
-    sizes = sizes || [];
-    let text = 'Привет! Хочу оформить заказ, вот эта позиция меня заинтересовала!🛒';
-    text += '\n\n📦 ' + product.name + '\n🏷 Бренд: ' + getBrandName(product.brand);
-    if (sizes.length) text += '\n📏 Размер: ' + sizes.join(', ');
-    text += '\n💰 Цена: ' + money(basePrice(product, state.currency), state.currency) + '\n\nФотографии товара:';
-    (product.images || []).forEach(img => text += '\n' + img);
-    openManagerWithText(text);
+
+function openExternalLink(link) {
+    if (!link) return;
+    if (tg && typeof tg.openLink === 'function') tg.openLink(link);
+    else window.open(link, '_blank');
 }
+
 function openManagerForCart() {
-    if (!state.cart.length) { showToast('Корзина пуста'); return; }
-    let total = 0, text = 'Привет! Хочу оформить заказ, вот эти позиции меня заинтересовали!🛒\n';
-    state.cart.forEach(function(cartItem){
-        const product = state.products.find(p => Number(p.id) === Number(cartItem.productId));
+    if (!state.cart.length) {
+        showToast('Корзина пуста');
+        return;
+    }
+    let total = 0;
+    let text = 'Привет! Хочу оформить заказ, вот эти позиции меня заинтересовали!🛒\n';
+    state.cart.forEach(function(cartItem) {
+        const product = state.products.find(function(candidate) {
+            return Number(candidate.id) === Number(cartItem.productId);
+        });
         if (!product) return;
-        const itemTotal = getItemPrice(product, cartItem.sizes.length);
+        const itemTotal = getItemPrice(product, cartItem.sizes.length || 1);
         total += itemTotal;
-        text += '\n📦 ' + product.name + '\n📏 Размеры: ' + cartItem.sizes.join(', ') + '\n💰 Цена: ' + formatTotal(itemTotal);
+        text += '\n📦 ' + product.name;
+        text += '\n🏷 Бренд: ' + getBrandName(product.brand);
+        text += '\n📏 Размеры: ' + cartItem.sizes.join(', ');
+        text += '\n💰 Цена: ' + formatTotal(itemTotal);
+        if (isOrderProduct(product)) text += '\nПозиция под заказ';
         if (product.images && product.images[0]) text += '\nФото: ' + product.images[0];
         text += '\n';
     });
@@ -652,98 +1150,158 @@ function openManagerForCart() {
     openManagerWithText(text);
 }
 
-function addToCart() {
-    if (!state.selectedProduct) return;
-    if (state.selectedProduct.sizes && state.selectedProduct.sizes.length === 1 && !state.selectedSizes.length) state.selectedSizes = [state.selectedProduct.sizes[0]];
-    if (!state.selectedSizes.length) {
-        const warning = document.getElementById('sizeWarning');
-        if (warning) { warning.classList.add('active', 'blink'); setTimeout(() => warning.classList.remove('blink'), 1600); }
-        showToast('Выберите размер');
-        return;
-    }
-    openManagerForProduct(state.selectedProduct, state.selectedSizes.slice());
-    closeProductModal();
+function openSidePanel() {
+    const panel = byId('sidePanel');
+    if (!panel) return;
+    panel.classList.add('active');
+    panel.setAttribute('aria-hidden', 'false');
 }
-function removeFromCart(productId) { state.cart = state.cart.filter(i => Number(i.productId) !== Number(productId)); saveCart(); renderCart(); haptic('medium'); }
-function clearCart() { state.cart = []; saveCart(); renderCart(); haptic('medium'); }
-function saveCart() { localStorage.setItem('cart', JSON.stringify(state.cart)); updateCartBadge(); }
-function loadCart() {
-    try { const saved = localStorage.getItem('cart'); if (saved) { state.cart = JSON.parse(saved).map(item => item.size && !item.sizes ? { productId: item.productId, sizes: [item.size] } : item); updateCartBadge(); } } catch(e) { console.log('Cart error:', e); }
-}
-function toggleFavorite(productId) { productId = Number(productId); const idx = state.favorites.indexOf(productId); if (idx === -1) state.favorites.push(productId); else state.favorites.splice(idx, 1); saveFavorites(); updateProfileStats(); }
-function saveFavorites() { localStorage.setItem('favorites', JSON.stringify(state.favorites)); }
-function loadFavorites() { try { const saved = localStorage.getItem('favorites'); if (saved) state.favorites = JSON.parse(saved).map(Number); } catch(e) { console.log('Favorites error:', e); } }
-function setCurrency(currency) {
-    state.currency = currency; localStorage.setItem('currency', currency);
-    document.querySelectorAll('.currency-btn-small').forEach(btn => btn.classList.toggle('active', btn.dataset.currency === currency));
-    filterProducts();
-    if (state.selectedProduct) { const price = document.getElementById('productPriceMain'); if (price) price.innerHTML = formatPrice(state.selectedProduct.price_byn, currency, state.selectedProduct); updateAddToCartBtn(); }
-    renderCart(); haptic();
-}
-function loadCurrency() { const saved = localStorage.getItem('currency'); if (saved && ['BYN','RUB','USD'].includes(saved)) { state.currency = saved; document.querySelectorAll('.currency-btn-small').forEach(btn => btn.classList.toggle('active', btn.dataset.currency === saved)); } }
-function submitOrder() { openManagerForCart(); }
 
-function setupDropdowns() {
-    const catWrapper = document.getElementById('categoryDropdownWrapper'), catTrigger = document.getElementById('categoryTrigger'), catMenu = document.getElementById('categoryMenu'), catLabel = document.getElementById('categoryLabel');
-    if (catTrigger && catWrapper && catMenu) {
-        catTrigger.addEventListener('click', function(e){ e.stopPropagation(); closeAllDropdowns(); catWrapper.classList.toggle('open'); });
-        catMenu.querySelectorAll('.dropdown-item').forEach(item => item.addEventListener('click', function(e){
-            e.stopPropagation(); catMenu.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active')); this.classList.add('active'); state.currentCategory = this.dataset.id;
-            if (catLabel) catLabel.textContent = this.dataset.id === 'all' ? 'Категория' : this.textContent.trim();
-            catTrigger.classList.toggle('has-value', this.dataset.id !== 'all'); catWrapper.classList.remove('open'); state.currentSize = 'all'; renderSizeFilters(); filterProducts(); haptic();
-        }));
-    }
-    const brandWrapper = document.getElementById('brandDropdownWrapper'), brandTrigger = document.getElementById('brandTrigger'), brandMenu = document.getElementById('brandMenu'), brandLabel = document.getElementById('brandLabel');
-    if (brandTrigger && brandWrapper && brandMenu) {
-        brandTrigger.addEventListener('click', function(e){ e.stopPropagation(); closeAllDropdowns(); brandWrapper.classList.toggle('open'); });
-        brandMenu.querySelectorAll('.dropdown-item').forEach(item => item.addEventListener('click', function(e){
-            e.stopPropagation(); brandMenu.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active')); this.classList.add('active'); state.currentBrand = this.dataset.id;
-            if (brandLabel) brandLabel.textContent = this.dataset.id === 'all' ? 'Бренд' : this.textContent.trim();
-            brandTrigger.classList.toggle('has-value', this.dataset.id !== 'all'); brandWrapper.classList.remove('open'); filterProducts(); haptic();
-        }));
-    }
-    document.addEventListener('click', closeAllDropdowns);
+function closeSidePanel() {
+    const panel = byId('sidePanel');
+    if (!panel) return;
+    panel.classList.remove('active');
+    panel.setAttribute('aria-hidden', 'true');
 }
-function closeAllDropdowns() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open')); }
-function setActiveNav(page) { document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page)); }
 
 function initListeners() {
-    document.querySelectorAll('.currency-btn-small').forEach(btn => btn.addEventListener('click', function(){ setCurrency(this.dataset.currency); }));
-    const search = document.getElementById('searchInput');
-    if (search) search.addEventListener('input', function(){ state.searchQuery = this.value; filterProducts(); });
-    setupDropdowns();
-    setupProductCardDelegation();
-    const modalBack = document.getElementById('modalBack'); if (modalBack) modalBack.addEventListener('click', closeProductModal);
-    const cartBack = document.getElementById('cartBack'); if (cartBack) cartBack.addEventListener('click', () => document.getElementById('cartModal')?.classList.remove('active'));
-    const checkoutBack = document.getElementById('checkoutBack'); if (checkoutBack) checkoutBack.addEventListener('click', function(){ document.getElementById('checkoutModal')?.classList.remove('active'); document.getElementById('cartModal')?.classList.add('active'); });
-    const favBack = document.getElementById('favoritesBack'); if (favBack) favBack.addEventListener('click', () => document.getElementById('favoritesModal')?.classList.remove('active'));
-    const profileBack = document.getElementById('profileBack'); if (profileBack) profileBack.addEventListener('click', () => document.getElementById('profileModal')?.classList.remove('active'));
-    const modalFav = document.getElementById('modalFavorite'); if (modalFav) modalFav.addEventListener('click', function(){ if (!state.selectedProduct) return; toggleFavorite(Number(state.selectedProduct.id)); this.classList.toggle('active'); haptic('medium'); });
-    const addToCartBtn = document.getElementById('addToCartBtn'); if (addToCartBtn) addToCartBtn.addEventListener('click', addToCart);
-    const clearCartBtn = document.getElementById('clearCartBtn'); if (clearCartBtn) clearCartBtn.addEventListener('click', clearCart);
-    const checkoutBtn = document.getElementById('checkoutBtn'); if (checkoutBtn) checkoutBtn.addEventListener('click', openManagerForCart);
-    const submitOrderBtn = document.getElementById('submitOrder'); if (submitOrderBtn) submitOrderBtn.addEventListener('click', submitOrder);
-    const favHeaderBtn = document.getElementById('favoritesHeaderBtn'); if (favHeaderBtn) favHeaderBtn.addEventListener('click', openFavoritesModal);
-    document.querySelectorAll('.toggle-btn').forEach(btn => btn.addEventListener('click', function(){ document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); state.deliveryType = this.dataset.delivery; haptic(); }));
-    document.querySelectorAll('input[name="mailService"]').forEach(radio => radio.addEventListener('change', function(){ state.mailService = this.value; }));
-    const supportBtn = document.getElementById('supportBtn'); if (supportBtn) supportBtn.addEventListener('click', function(){ if (tg) tg.openTelegramLink('https://t.me/' + SUPPORT_USERNAME); else window.open('https://t.me/' + SUPPORT_USERNAME, '_blank'); });
-    const navHome = document.getElementById('navHome'), navFav = document.getElementById('navFavorites'), navCart = document.getElementById('navCart'), navProfile = document.getElementById('navProfile');
-    if (navHome) navHome.addEventListener('click', () => { closeAllModals(); setActiveNav('home'); });
-    if (navFav) navFav.addEventListener('click', () => { openFavoritesModal(); setActiveNav('favorites'); });
-    if (navCart) navCart.addEventListener('click', () => { openCartModal(); setActiveNav('cart'); });
-    if (navProfile) navProfile.addEventListener('click', () => { openProfileModal(); setActiveNav('profile'); });
-    document.querySelectorAll('.modal-overlay').forEach(overlay => overlay.addEventListener('click', function(){ closeAllModals(); setActiveNav('home'); }));
+    document.querySelectorAll('.nav-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setActivePage(button.dataset.page);
+        });
+    });
+
+    document.querySelectorAll('.currency-option').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setCurrency(button.dataset.currency);
+        });
+    });
+
+    const search = byId('homeSearchInput');
+    if (search) {
+        search.addEventListener('input', function() {
+            state.homeSearch = search.value;
+            renderHome();
+        });
+    }
+
+    byId('homeSizeButton')?.addEventListener('click', openHomeSizeModal);
+    byId('homeTypeButton')?.addEventListener('click', openHomeTypeModal);
+    byId('menuButton')?.addEventListener('click', openSidePanel);
+    byId('sideOverlay')?.addEventListener('click', closeSidePanel);
+    byId('sideClose')?.addEventListener('click', closeSidePanel);
+    byId('sideSupport')?.addEventListener('click', function() {
+        openManagerWithText(SUPPORT_TEXT);
+    });
+
+    byId('choiceOverlay')?.addEventListener('click', closeChoiceModal);
+    byId('choiceClose')?.addEventListener('click', closeChoiceModal);
+
+    byId('catalogTypeButton')?.addEventListener('click', function() {
+        showCatalogScreen('categories');
+    });
+    byId('catalogBrandButton')?.addEventListener('click', function() {
+        showCatalogScreen('brands');
+    });
+    byId('preorderButton')?.addEventListener('click', function() {
+        openManagerWithText(PREORDER_TEXT);
+    });
+    byId('categoriesBack')?.addEventListener('click', function() {
+        showCatalogScreen('start');
+    });
+    byId('brandsBack')?.addEventListener('click', function() {
+        showCatalogScreen('start');
+    });
+    byId('catalogProductsBack')?.addEventListener('click', function() {
+        state.catalogCategory = null;
+        state.catalogBrand = null;
+        showCatalogScreen(state.catalogReturnScreen || 'start');
+    });
+    byId('catalogManagerButton')?.addEventListener('click', function() {
+        openManagerWithText(PREORDER_TEXT);
+    });
+
+    byId('clearCartBtn')?.addEventListener('click', clearCart);
+    byId('checkoutBtn')?.addEventListener('click', openManagerForCart);
+    byId('modalBack')?.addEventListener('click', closeProductModal);
+    byId('addToCartBtn')?.addEventListener('click', addToCart);
+    byId('modalFavorite')?.addEventListener('click', function() {
+        if (!state.selectedProduct) return;
+        toggleFavorite(state.selectedProduct.id);
+        this.classList.toggle('active', state.favorites.includes(Number(state.selectedProduct.id)));
+        haptic('medium');
+    });
+
+    byId('supportBtn')?.addEventListener('click', function() {
+        openManagerWithText(SUPPORT_TEXT);
+    });
+    byId('updatesBtn')?.addEventListener('click', function() {
+        showInfoScreen('updates');
+    });
+    byId('socialBtn')?.addEventListener('click', function() {
+        showInfoScreen('social');
+    });
+    byId('updatesBack')?.addEventListener('click', function() {
+        showInfoScreen('main');
+    });
+    byId('socialBack')?.addEventListener('click', function() {
+        showInfoScreen('main');
+    });
+
+    document.addEventListener('click', function(event) {
+        const favorite = event.target.closest('.product-favorite');
+        if (favorite) {
+            event.preventDefault();
+            event.stopPropagation();
+            toggleFavorite(favorite.dataset.id);
+            favorite.classList.toggle('active', state.favorites.includes(Number(favorite.dataset.id)));
+            haptic('medium');
+            return;
+        }
+
+        const productCardEl = event.target.closest('.product-card');
+        if (productCardEl) {
+            openProductById(productCardEl.dataset.id);
+            haptic();
+            return;
+        }
+
+        const cartDelete = event.target.closest('.cart-item-delete');
+        if (cartDelete) {
+            removeFromCart(cartDelete.dataset.id);
+            return;
+        }
+
+        const updateCard = event.target.closest('.update-card');
+        if (updateCard) {
+            const update = state.updates[Number(updateCard.dataset.index)];
+            if (update?.link) openExternalLink(update.link);
+            return;
+        }
+
+        const socialCard = event.target.closest('.social-card');
+        if (socialCard) {
+            openExternalLink(socialCard.dataset.link);
+        }
+    });
 }
 
 async function init() {
-    console.log('🚀 Запуск...');
-    loadCart(); loadFavorites(); loadCurrency(); loadUserData(); setupSectionTabs();
-    setupOrderSectionNote();
-    updateOrderSectionNote(); setupProductCardDelegation();
+    console.log('Запуск MESTNIY WebApp...');
+    loadCart();
+    loadFavorites();
+    loadUserData();
+    initListeners();
+    loadCurrency();
     const success = await loadProducts();
-    if (success) { renderSizeFilters(); filterProducts(); }
-    else { const loading = document.getElementById('loading'); const empty = document.getElementById('emptyState'); if (loading) loading.classList.add('hidden'); if (empty) empty.style.display = 'block'; }
-    initListeners(); refreshIcons(); console.log('✅ Готово!');
+    if (success) {
+        renderHome();
+        renderCatalog();
+        renderCart();
+        updateCartBadge();
+    }
+    refreshIcons();
+    console.log('MESTNIY WebApp готов');
 }
 
 document.addEventListener('DOMContentLoaded', init);

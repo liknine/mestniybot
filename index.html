@@ -4,465 +4,329 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MESTNIY | STORE</title>
-    
-    <script src="https://telegram.org/js/telegram-web-app.js?v=order_note_exact_text_22"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?v=webapp_redesign_v1"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
-    <link rel="stylesheet" href="style.css?v=order_note_exact_text_22">
+    <link rel="stylesheet" href="style.css?v=webapp_redesign_v1">
 </head>
 <body>
     <div class="app">
-        <header class="header">
-            <div class="header-top">
-                <h1 class="logo">MESTNIY | STORE</h1>
-                <div class="header-right">
-                    <div class="currency-toggle-small">
-                        <button class="currency-btn-small active" data-currency="BYN">BYN</button>
-                        <span class="currency-sep">|</span>
-                        <button class="currency-btn-small" data-currency="RUB">RUB</button>
-                        <span class="currency-sep">|</span>
-                        <button class="currency-btn-small" data-currency="USD">USD</button>
-                    </div>
-                    <button class="icon-btn" id="favoritesHeaderBtn">
-                        <i data-lucide="heart"></i>
+        <div class="app-error" id="appError" hidden></div>
+
+        <section class="page page-active" id="homePage" data-page="home">
+            <header class="home-header">
+                <div class="home-topbar">
+                    <h1 class="welcome-title">Добро пожаловать в MESTNIY | STORE</h1>
+                    <button class="icon-button menu-button" id="menuButton" type="button" aria-label="Меню">
+                        <i data-lucide="menu"></i>
                     </button>
                 </div>
-            </div>
-            <div class="search-container">
-                <i data-lucide="search" class="search-icon"></i>
-                <input type="text" class="search-input" placeholder="Поиск..." id="searchInput">
-            </div>
-        </header>
 
-        <div class="filters-wrapper">
-            <div class="filters-row">
-                <div class="dropdown" id="categoryDropdownWrapper">
-                    <button class="dropdown-trigger" id="categoryTrigger">
-                        <span id="categoryLabel">Категория</span>
-                        <i data-lucide="chevron-down"></i>
+                <label class="search-field">
+                    <i data-lucide="search"></i>
+                    <input id="homeSearchInput" type="search" placeholder="Введите название товара..." autocomplete="off">
+                </label>
+
+                <div class="home-controls">
+                    <button class="filter-button" id="homeSizeButton" type="button">
+                        <span>Выбрать размер</span>
+                        <strong id="homeSizeLabel">Все</strong>
                     </button>
-                    <div class="dropdown-menu" id="categoryMenu">
-                        <div class="dropdown-item active" data-id="all">Все категории</div>
-                        <div class="dropdown-item" data-id="1">👟 Обувь</div>
-                        <div class="dropdown-item" data-id="2">🧥 Куртки / Пуховики</div>
-                        <div class="dropdown-item" data-id="3">🦺 Жилетки</div>
-                        <div class="dropdown-item" data-id="4">👔 Рубашки</div>
-                        <div class="dropdown-item" data-id="5">👕 Футболки / Поло</div>
-                        <div class="dropdown-item" data-id="6">🧶 Кофты</div>
-                        <div class="dropdown-item" data-id="7">👖 Штаны</div>
-                        <div class="dropdown-item" data-id="8">🩳 Шорты</div>
-                        <div class="dropdown-item" data-id="9">🧢 Головные уборы</div>
-                        <div class="dropdown-item" data-id="10">🎒 Аксессуары</div>
-                    </div>
-                </div>
-                
-                <div class="dropdown" id="brandDropdownWrapper">
-                    <button class="dropdown-trigger" id="brandTrigger">
-                        <span id="brandLabel">Бренд</span>
-                        <i data-lucide="chevron-down"></i>
+                    <button class="filter-button" id="homeTypeButton" type="button">
+                        <span>Выбрать тип товара</span>
+                        <strong id="homeTypeLabel">Все</strong>
                     </button>
-                    <div class="dropdown-menu" id="brandMenu">
-                        <div class="dropdown-item active" data-id="all">Все бренды</div>
-                        <div class="dropdown-item" data-id="a_bathing_ape">A Bathing Ape</div>
-                        <div class="dropdown-item" data-id="aape">Aape</div>
-                        <div class="dropdown-item" data-id="acne_studios">Acne Studios</div>
-                        <div class="dropdown-item" data-id="acronym">Acronym</div>
-                        <div class="dropdown-item" data-id="adidas">Adidas</div>
-                        <div class="dropdown-item" data-id="alpha_industries">Alpha Industries</div>
-                        <div class="dropdown-item" data-id="alyx">ALYX</div>
-                        <div class="dropdown-item" data-id="amiri">Amiri</div>
-                        <div class="dropdown-item" data-id="aquascutum">Aquascutum</div>
-                        <div class="dropdown-item" data-id="arcteryx">Arcteryx</div>
-                        <div class="dropdown-item" data-id="armani_exchange">Armani Exchange</div>
-                        <div class="dropdown-item" data-id="asics">ASICS</div>
-                        <div class="dropdown-item" data-id="balenciaga">Balenciaga</div>
-                        <div class="dropdown-item" data-id="barbour">Barbour</div>
-                        <div class="dropdown-item" data-id="berghaus">Berghaus</div>
-                        <div class="dropdown-item" data-id="bershka">Bershka</div>
-                        <div class="dropdown-item" data-id="billabong">Billabong</div>
-                        <div class="dropdown-item" data-id="burberry">Burberry</div>
-                        <div class="dropdown-item" data-id="calvin_klein">Calvin Klein</div>
-                        <div class="dropdown-item" data-id="carhartt">Carhartt</div>
-                        <div class="dropdown-item" data-id="champion">Champion</div>
-                        <div class="dropdown-item" data-id="columbia">Columbia</div>
-                        <div class="dropdown-item" data-id="comme_des_fuckdown">Comme des Fuckdown</div>
-                        <div class="dropdown-item" data-id="comme_des_garcons">Comme des Garçons</div>
-                        <div class="dropdown-item" data-id="cp_company">C.P. Company</div>
-                        <div class="dropdown-item" data-id="diesel">Diesel</div>
-                        <div class="dropdown-item" data-id="dobermans">Dobermans Aggressive</div>
-                        <div class="dropdown-item" data-id="doctor_martens">Doctor Martens</div>
-                        <div class="dropdown-item" data-id="eastpak">Eastpak</div>
-                        <div class="dropdown-item" data-id="ellesse">Ellesse</div>
-                        <div class="dropdown-item" data-id="fila">Fila</div>
-                        <div class="dropdown-item" data-id="fred_perry">Fred Perry</div>
-                        <div class="dropdown-item" data-id="fucking_awesome">Fucking Awesome</div>
-                        <div class="dropdown-item" data-id="gap">Gap</div>
-                        <div class="dropdown-item" data-id="ggl">GGL</div>
-                        <div class="dropdown-item" data-id="gosha">Гоша Рубчинский</div>
-                        <div class="dropdown-item" data-id="gucci">Gucci</div>
-                        <div class="dropdown-item" data-id="haglofs">Haglofs</div>
-                        <div class="dropdown-item" data-id="hardcore">Hardcore</div>
-                        <div class="dropdown-item" data-id="hermes">Hermes</div>
-                        <div class="dropdown-item" data-id="jordan">Jordan</div>
-                        <div class="dropdown-item" data-id="lacoste">Lacoste</div>
-                        <div class="dropdown-item" data-id="levis">Levi's</div>
-                        <div class="dropdown-item" data-id="lonsdale">Lonsdale</div>
-                        <div class="dropdown-item" data-id="louis_vuitton">Louis Vuitton</div>
-                        <div class="dropdown-item" data-id="lyle_scott">Lyle & Scott</div>
-                        <div class="dropdown-item" data-id="maison_margiela">Maison Margiela</div>
-                        <div class="dropdown-item" data-id="mastrum">Ma.Strum</div>
-                        <div class="dropdown-item" data-id="mcm">MCM</div>
-                        <div class="dropdown-item" data-id="merrell">Merrell</div>
-                        <div class="dropdown-item" data-id="moncler">Moncler</div>
-                        <div class="dropdown-item" data-id="mowalola">Mowalola</div>
-                        <div class="dropdown-item" data-id="napapijri">NAPAPIJRI</div>
-                        <div class="dropdown-item" data-id="new_balance">New Balance</div>
-                        <div class="dropdown-item" data-id="nike">Nike</div>
-                        <div class="dropdown-item" data-id="no_name">No Name</div>
-                        <div class="dropdown-item" data-id="north_face">The North Face</div>
-                        <div class="dropdown-item" data-id="number_nine">Number Nine</div>
-                        <div class="dropdown-item" data-id="off_white">Off-White</div>
-                        <div class="dropdown-item" data-id="palace">Palace</div>
-                        <div class="dropdown-item" data-id="peaceful_hooligan">Peaceful Hooligan</div>
-                        <div class="dropdown-item" data-id="pitbull">Pitbull Germany</div>
-                        <div class="dropdown-item" data-id="polar">Polar</div>
-                        <div class="dropdown-item" data-id="polo_ralph_lauren">Polo Ralph Lauren</div>
-                        <div class="dropdown-item" data-id="prada">Prada</div>
-                        <div class="dropdown-item" data-id="puma">Puma</div>
-                        <div class="dropdown-item" data-id="raf_simons">Raf Simons</div>
-                        <div class="dropdown-item" data-id="reebok">Reebok</div>
-                        <div class="dropdown-item" data-id="rick_owens">Rick Owen's</div>
-                        <div class="dropdown-item" data-id="sergio_tacchini">Sergio Tacchini</div>
-                        <div class="dropdown-item" data-id="stone_island">Stone Island</div>
-                        <div class="dropdown-item" data-id="stussy">Stussy</div>
-                        <div class="dropdown-item" data-id="supreme">Supreme</div>
-                        <div class="dropdown-item" data-id="thor_steinar">Thor Steinar</div>
-                        <div class="dropdown-item" data-id="timberland">Timberland</div>
-                        <div class="dropdown-item" data-id="tommy_hilfiger">Tommy Hilfiger</div>
-                        <div class="dropdown-item" data-id="trapstar">Trapstar</div>
-                        <div class="dropdown-item" data-id="true_religion">True Religion</div>
-                        <div class="dropdown-item" data-id="tupac">Tupac</div>
-                        <div class="dropdown-item" data-id="vetements">Vetements</div>
-                        <div class="dropdown-item" data-id="vivienne_westwood">Vivienne Westwood</div>
-                        <div class="dropdown-item" data-id="weekend_offender">WEEKEND OFFENDER</div>
-                        <div class="dropdown-item" data-id="yeezy">Yeezy</div>
-                        <div class="dropdown-item" data-id="zara">Zara</div>
-                    </div>
                 </div>
+
+                <div class="currency-switch" aria-label="Валюта">
+                    <button class="currency-option active" data-currency="BYN" type="button">BYN</button>
+                    <button class="currency-option" data-currency="RUB" type="button">RUB</button>
+                    <button class="currency-option" data-currency="USD" type="button">USD</button>
+                </div>
+            </header>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
             </div>
-        </div>
-        
-        <div class="sizes-filter-wrapper" id="sizesFilterWrapper">
-            <div class="sizes-filter-scroll" id="sizesFilterScroll"></div>
-        </div>
+            <main class="products-grid" id="homeProductsGrid"></main>
+            <div class="empty-state" id="homeEmpty" hidden>
+                <i data-lucide="package-search"></i>
+                <p>Ничего не найдено</p>
+            </div>
+        </section>
 
-        <main class="products-grid" id="productsGrid"></main>
+        <section class="page" id="catalogPage" data-page="catalog">
+            <div class="page-head">
+                <h2>Каталог</h2>
+            </div>
 
-        <div class="loading" id="loading">
-            <div class="loading-spinner"></div>
-        </div>
+            <div class="catalog-screen" id="catalogStartScreen">
+                <button class="catalog-action-card" id="catalogTypeButton" type="button">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Выбрать тип товара</span>
+                </button>
+                <button class="catalog-action-card" id="catalogBrandButton" type="button">
+                    <i data-lucide="tag"></i>
+                    <span>Выбрать бренд товара</span>
+                </button>
+                <button class="catalog-action-card preorder-card" id="preorderButton" type="button">
+                    <i data-lucide="message-circle"></i>
+                    <span>Заказать товар по предзаказу</span>
+                </button>
+            </div>
 
-        <div class="empty-state" id="emptyState" style="display: none;">
-            <i data-lucide="package-x"></i>
-            <p>Ничего не найдено</p>
-        </div>
-    </div>
-
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-back" id="modalBack">
+            <div class="catalog-screen" id="catalogCategoriesScreen" hidden>
+                <button class="back-link" id="categoriesBack" type="button">
                     <i data-lucide="chevron-left"></i>
+                    <span>Назад</span>
                 </button>
-                <button class="modal-favorite" id="modalFavorite">
-                    <i data-lucide="heart"></i>
-                </button>
+                <div class="browse-grid" id="catalogCategoriesGrid"></div>
             </div>
-            
-            <div class="product-scroll-content">
-                <div class="gallery">
-                    <div class="gallery-track" id="galleryTrack"></div>
-                    <div class="gallery-dots" id="galleryDots"></div>
-                </div>
-                
-                <div class="product-info">
-                    <div class="product-header">
-                        <h1 class="product-title" id="productTitle"></h1>
-                        <div class="product-brand" id="productBrand"></div>
-                        <div class="product-price-main" id="productPriceMain"></div>
-                    </div>
-                    
-                    <div class="product-meta">
-                        <span class="product-stock" id="productStock"></span>
-                    </div>
-                    
-                    <div class="section">
-                        <h3 class="section-title">Размер <span class="size-hint">(можно выбрать несколько)</span></h3>
-                        <div class="sizes-grid" id="sizesGrid"></div>
-                    </div>
-                    
-                    <div class="section">
-                        <h3 class="section-title">Описание</h3>
-                        <p class="description-text" id="productDescription"></p>
-                    </div>
 
-                    <!-- ✅ НОВЫЙ БЛОК - Смотрите также -->
-                    <div class="related-section" id="relatedSection" style="display:none;">
-                        <div class="related-divider"></div>
-                        <h3 class="related-title">Смотрите также:</h3>
-                        <div class="related-grid" id="relatedGrid"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="add-to-cart-btn" id="addToCartBtn">
-                    <span class="btn-text">В корзину</span>
-                    <span class="btn-divider"></span>
-                    <span class="btn-price" id="btnPrice"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div class="modal" id="cartModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-back" id="cartBack">
+            <div class="catalog-screen" id="catalogBrandsScreen" hidden>
+                <button class="back-link" id="brandsBack" type="button">
                     <i data-lucide="chevron-left"></i>
+                    <span>Назад</span>
                 </button>
-                <h2 class="modal-title">Корзина</h2>
-                <button class="clear-cart-btn" id="clearCartBtn">Очистить</button>
+                <div class="browse-grid" id="catalogBrandsGrid"></div>
+                <div class="empty-state compact" id="catalogBrandsEmpty" hidden>
+                    <p>Брендов под заказ пока нет</p>
+                </div>
+            </div>
+
+            <div class="catalog-screen" id="catalogProductsScreen" hidden>
+                <button class="back-link" id="catalogProductsBack" type="button">
+                    <i data-lucide="chevron-left"></i>
+                    <span>Назад</span>
+                </button>
+                <div class="breadcrumb" id="catalogBreadcrumb">Каталог</div>
+                <div class="manager-note">
+                    <p>Если вы не нашли из предложенных нами товаров, нужный для вас, то обратитесь к нашему менеджеру, он вам поможет определиться с выбором!</p>
+                    <button class="manager-button" id="catalogManagerButton" type="button">
+                        <i data-lucide="message-circle"></i>
+                        <span>Написать нашему менеджеру</span>
+                    </button>
+                </div>
+                <main class="products-grid" id="catalogProductsGrid"></main>
+                <div class="empty-state compact" id="catalogProductsEmpty" hidden>
+                    <p>Товаров под заказ не найдено</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="cartPage" data-page="cart">
+            <div class="page-head with-action">
+                <h2>Корзина</h2>
+                <button class="ghost-action" id="clearCartBtn" type="button">Очистить</button>
             </div>
             <div class="cart-items" id="cartItems"></div>
-            <div class="cart-empty" id="cartEmpty">
+            <div class="empty-state page-empty" id="cartEmpty">
                 <i data-lucide="shopping-bag"></i>
                 <p>Корзина пуста</p>
                 <span>Добавьте товары для оформления заказа</span>
             </div>
-            <div class="cart-footer" id="cartFooter">
+            <div class="cart-footer" id="cartFooter" hidden>
                 <div class="cart-summary">
                     <div class="cart-row">
                         <span>Товары</span>
-                        <span id="cartSubtotal">0 BYN</span>
+                        <strong id="cartSubtotal">0 BYN</strong>
                     </div>
                     <div class="cart-row cart-total">
                         <span>Итого</span>
-                        <span id="cartTotal">0 BYN</span>
+                        <strong id="cartTotal">0 BYN</strong>
                     </div>
                 </div>
-                <button class="checkout-btn" id="checkoutBtn">Оформить заказ</button>
+                <button class="primary-button" id="checkoutBtn" type="button">Оформить заказ</button>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Checkout Modal -->
-    <div class="modal" id="checkoutModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-back" id="checkoutBack">
-                    <i data-lucide="chevron-left"></i>
-                </button>
-                <h2 class="modal-title">Оформление</h2>
-                <div></div>
+        <section class="page" id="favoritesPage" data-page="favorites">
+            <div class="page-head">
+                <h2>Избранное</h2>
             </div>
-            <form class="checkout-form" id="checkoutForm">
-                <div class="form-section">
-                    <h3 class="form-section-title">Способ получения</h3>
-                    <div class="toggle-group">
-                        <button type="button" class="toggle-btn active" data-delivery="pickup">Самовывоз</button>
-                        <button type="button" class="toggle-btn" data-delivery="mail">Доставка</button>
-                    </div>
-                </div>
-                <div class="form-section mail-options" id="mailOptions">
-                    <h3 class="form-section-title">Служба доставки</h3>
-                    <div class="radio-cards">
-                        <label class="radio-card">
-                            <input type="radio" name="mailService" value="europochta" checked>
-                            <div class="radio-card-content">
-                                <span class="radio-card-title">В отделение Европочты</span>
-                                <span class="radio-card-desc">2-3 дня • в отделение</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="mailService" value="belpochta">
-                            <div class="radio-card-content">
-                                <span class="radio-card-title">В отделение Белпочты</span>
-                                <span class="radio-card-desc">2-3 дней • в отделение</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="mailService" value="cdek">
-                            <div class="radio-card-content">
-                                <span class="radio-card-title">В пункт выдачи заказов CDEK</span>
-                                <span class="radio-card-desc">3-5 дня • в пункт выдачи</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <h3 class="form-section-title">Контактные данные</h3>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="customerLastName" placeholder="Фамилия *" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="customerFirstName" placeholder="Имя *" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="customerMiddleName" placeholder="Отчество">
-                    </div>
-                    <div class="input-group">
-                        <input type="tel" class="form-input" id="customerPhone" placeholder="Телефон *" required>
-                    </div>
-                </div>
-                <div class="form-section europochta-fields" id="europochtaFields">
-                    <h3 class="form-section-title">Данные для Европочты</h3>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="europochtaBranch" placeholder="Номер отделения *">
-                    </div>
-                </div>
-                <div class="form-section belpochta-fields" id="belpochtaFields">
-                    <h3 class="form-section-title">Адрес доставки</h3>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="belpochtaIndex" placeholder="Индекс *">
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="belpochtaCity" placeholder="Город *">
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="belpochtaAddress" placeholder="Улица, дом, квартира *">
-                    </div>
-                </div>
-                <div class="form-section cdek-fields" id="cdekFields">
-                    <h3 class="form-section-title">Данные для CDEK</h3>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="cdekCountry" placeholder="Страна *">
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="cdekCity" placeholder="Город *">
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-input" id="cdekPvz" placeholder="Адрес ПВЗ CDEK *">
-                    </div>
-                </div>
-                <div class="form-section">
-                    <h3 class="form-section-title">Комментарий</h3>
-                    <textarea class="form-input form-textarea" id="comment" placeholder="Пожелания к заказу"></textarea>
-                </div>
-            </form>
-            <div class="checkout-footer">
-                <div class="checkout-total">
-                    <span>К оплате</span>
-                    <span id="checkoutTotal">0 BYN</span>
-                </div>
-                <button type="button" class="submit-btn" id="submitOrder">Подтвердить заказ</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Favorites Modal -->
-    <div class="modal" id="favoritesModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-back" id="favoritesBack">
-                    <i data-lucide="chevron-left"></i>
-                </button>
-                <h2 class="modal-title">Избранное</h2>
-                <div></div>
-            </div>
-            <div class="favorites-grid" id="favoritesGrid"></div>
-            <div class="favorites-empty" id="favoritesEmpty">
+            <main class="products-grid" id="favoritesGrid"></main>
+            <div class="empty-state page-empty" id="favoritesEmpty">
                 <i data-lucide="heart"></i>
                 <p>Пока пусто</p>
                 <span>Добавляйте товары в избранное</span>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Profile Modal -->
-    <div class="modal" id="profileModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-back" id="profileBack">
-                    <i data-lucide="chevron-left"></i>
-                </button>
-                <h2 class="modal-title">Профиль</h2>
-                <div></div>
-            </div>
-            <div class="profile-content">
-                <div class="profile-header">
+        <section class="page" id="infoPage" data-page="info">
+            <div class="info-screen" id="infoMainScreen">
+                <div class="profile-card">
                     <div class="profile-avatar" id="profileAvatar">
                         <i data-lucide="user"></i>
                     </div>
-                    <h2 class="profile-name" id="profileName">Пользователь</h2>
-                    <p class="profile-username" id="profileUsername">@username</p>
-                    <div class="profile-stats">
-                        <div class="profile-stat">
-                            <div class="profile-stat-value" id="profileCartCount">0</div>
-                            <div class="profile-stat-label">В корзине</div>
-                        </div>
-                        <div class="profile-stat">
-                            <div class="profile-stat-value" id="profileFavCount">0</div>
-                            <div class="profile-stat-label">Избранное</div>
-                        </div>
+                    <div class="profile-copy">
+                        <h2 id="profileName">Пользователь</h2>
+                        <p id="profileUsername">Telegram User</p>
                     </div>
                 </div>
-                <div class="profile-section">
-                    <h3 class="profile-section-title">Помощь</h3>
-                    <div class="profile-menu">
-                        <button class="profile-menu-item" id="supportBtn">
-                            <div class="profile-menu-icon">
-                                <i data-lucide="message-circle"></i>
-                            </div>
-                            <div class="profile-menu-text">
-                                <div class="profile-menu-title">Написать в поддержку</div>
-                                <div class="profile-menu-desc">Ответим в течение часа</div>
-                            </div>
-                            <div class="profile-menu-arrow">
-                                <i data-lucide="chevron-right"></i>
-                            </div>
-                        </button>
-                    </div>
+
+                <div class="info-actions">
+                    <button class="info-action" id="supportBtn" type="button">
+                        <i data-lucide="message-circle"></i>
+                        <span>Служба поддержки</span>
+                    </button>
+                    <button class="info-action" id="updatesBtn" type="button">
+                        <i data-lucide="sparkles"></i>
+                        <span>Наши обновления</span>
+                    </button>
+                    <button class="info-action" id="socialBtn" type="button">
+                        <i data-lucide="share-2"></i>
+                        <span>Наши другие соц. сети</span>
+                    </button>
                 </div>
+            </div>
+
+            <div class="info-screen" id="updatesScreen" hidden>
+                <button class="back-link" id="updatesBack" type="button">
+                    <i data-lucide="chevron-left"></i>
+                    <span>Назад</span>
+                </button>
+                <div class="page-head inline">
+                    <h2>Наши обновления</h2>
+                </div>
+                <div class="updates-list" id="updatesList"></div>
+                <div class="empty-state compact" id="updatesEmpty">
+                    <p>Обновлений пока нет</p>
+                </div>
+            </div>
+
+            <div class="info-screen" id="socialScreen" hidden>
+                <button class="back-link" id="socialBack" type="button">
+                    <i data-lucide="chevron-left"></i>
+                    <span>Назад</span>
+                </button>
+                <div class="page-head inline">
+                    <h2>Соц. сети</h2>
+                </div>
+                <div class="social-grid" id="socialGrid">
+                    <button class="social-card youtube" data-link="https://youtube.com/@mestniy.baryga?si=aVwjhLuqbkTvMo4D" type="button">
+                        <span>YouTube</span>
+                    </button>
+                    <button class="social-card vk" data-link="https://vk.ru/mestniybarygastore" type="button">
+                        <span>VK</span>
+                    </button>
+                    <button class="social-card instagram" data-link="https://www.instagram.com/_mestniy.baryga_?igsh=MW43YTNrY3NmZjV5dA%3D%3D&amp;utm_source=qr" type="button">
+                        <span>Instagram</span>
+                    </button>
+                    <button class="social-card tiktok" data-link="https://www.tiktok.com/@_mestniy.baryga_?_r=1&amp;_t=ZS-96COytne6XF" type="button">
+                        <span>TikTok</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <aside class="side-panel" id="sidePanel" aria-hidden="true">
+        <button class="side-overlay" id="sideOverlay" type="button" aria-label="Закрыть меню"></button>
+        <div class="side-sheet">
+            <button class="side-close" id="sideClose" type="button" aria-label="Закрыть">
+                <i data-lucide="x"></i>
+            </button>
+            <button class="side-link" id="sideSupport" type="button">
+                <i data-lucide="message-circle"></i>
+                <span>Обратиться в поддержку</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="choice-modal" id="choiceModal" aria-hidden="true">
+        <button class="choice-overlay" id="choiceOverlay" type="button" aria-label="Закрыть"></button>
+        <div class="choice-sheet">
+            <div class="choice-head">
+                <h3 id="choiceTitle">Выбор</h3>
+                <button class="icon-button" id="choiceClose" type="button" aria-label="Закрыть">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="choice-grid" id="choiceGrid"></div>
+        </div>
+    </div>
+
+    <div class="product-modal" id="productModal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="icon-button" id="modalBack" type="button" aria-label="Назад">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="icon-button modal-favorite" id="modalFavorite" type="button" aria-label="В избранное">
+                    <i data-lucide="heart"></i>
+                </button>
+            </div>
+
+            <div class="product-scroll">
+                <div class="gallery">
+                    <div class="gallery-track" id="galleryTrack"></div>
+                    <div class="gallery-dots" id="galleryDots"></div>
+                </div>
+                <div class="product-info">
+                    <div class="order-badge-large" id="productOrderBadge" hidden>Позиция под заказ!</div>
+                    <h2 class="product-title" id="productTitle"></h2>
+                    <div class="product-brand" id="productBrand"></div>
+                    <div class="product-price-main" id="productPriceMain"></div>
+                    <div class="product-stock" id="productStock"></div>
+                    <div class="available-sizes" id="availableSizes"></div>
+
+                    <section class="detail-section">
+                        <h3>Размер</h3>
+                        <div class="size-warning" id="sizeWarning">* выберите размер</div>
+                        <div class="sizes-grid" id="sizesGrid"></div>
+                    </section>
+
+                    <section class="detail-section">
+                        <h3>Описание</h3>
+                        <p class="description-text" id="productDescription"></p>
+                    </section>
+
+                    <section class="related-section" id="relatedSection" hidden>
+                        <h3>Смотрите также</h3>
+                        <div class="related-grid" id="relatedGrid"></div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="add-to-cart-btn" id="addToCartBtn" type="button">
+                    <span>В корзину</span>
+                    <strong id="btnPrice">0 BYN</strong>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <button class="nav-btn active" data-page="home" id="navHome">
+        <button class="nav-btn active" data-page="home" id="navHome" type="button">
             <i data-lucide="home"></i>
             <span>Главная</span>
         </button>
-        <button class="nav-btn" data-page="favorites" id="navFavorites">
-            <i data-lucide="heart"></i>
-            <span>Избранное</span>
+        <button class="nav-btn" data-page="catalog" id="navCatalog" type="button">
+            <i data-lucide="grid-2x2"></i>
+            <span>Каталог</span>
         </button>
-        <button class="nav-btn" data-page="cart" id="navCart">
+        <button class="nav-btn" data-page="cart" id="navCart" type="button">
             <i data-lucide="shopping-bag"></i>
             <span class="nav-badge" id="cartBadge">0</span>
             <span>Корзина</span>
         </button>
-        <button class="nav-btn" data-page="profile" id="navProfile">
-            <i data-lucide="user"></i>
-            <span>Профиль</span>
+        <button class="nav-btn" data-page="favorites" id="navFavorites" type="button">
+            <i data-lucide="heart"></i>
+            <span>Избранное</span>
+        </button>
+        <button class="nav-btn" data-page="info" id="navInfo" type="button">
+            <i data-lucide="settings"></i>
+            <span>Информация</span>
         </button>
     </nav>
 
     <div class="toast" id="toast">
         <i data-lucide="check-circle"></i>
-        <span class="toast-text" id="toastText">Добавлено в корзину</span>
+        <span id="toastText">Готово</span>
     </div>
 
-    <script src="app.js?v=order_note_exact_text_22"></script>
+    <script src="app.js?v=webapp_redesign_v1"></script>
 </body>
 </html>
