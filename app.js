@@ -12,7 +12,7 @@ window.addEventListener('error', function(event) {
 });
 
 // ==================== CONFIG ====================
-const BUILD_VERSION = 'mestniy_fix_20260509_2';
+const BUILD_VERSION = 'delete_id_fix_1';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
 const BOT_USERNAME = 'testmestniybot';
 const ADMIN_IDS = [1639462053, 8465820993];
@@ -743,7 +743,7 @@ function renderCart() {
                 '<p>Размеры: ' + escapeHtml(item.sizes.join(', ')) + '</p>' +
                 '<div class="cart-item-bottom">' +
                     '<strong>' + formatTotal(itemSum) + '</strong>' +
-                    '<button class="admin-delete-product" data-id="' + product.id + '">Удалить товар #' + product.id + '</button>' +
+                    '<button class="cart-item-delete" data-id="' + escapeHtml(item.productId) + '" type="button" aria-label="Удалить из корзины"><i data-lucide="trash-2"></i></button>' +
                 '</div>' +
             '</div>' +
         '</div>';
@@ -979,6 +979,7 @@ function openProductModal(product) {
     if (deleteButton) {
         deleteButton.hidden = !isAdminUser();
         deleteButton.dataset.productId = String(product.id);
+        deleteButton.textContent = '🗑 Удалить товар #' + product.id;
     }
     renderRelatedProducts(product);
     updateAddToCartButton();
