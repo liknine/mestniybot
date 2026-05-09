@@ -31,7 +31,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 BOT_TOKEN = "8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js"
 ADMIN_IDS = [1639462053, 8465820993]
-WEBAPP_URL = "https://liknine.github.io/mestniybot/?v=webapp_redesign_v1"
+WEBAPP_URL = "https://liknine.github.io/mestniybot/?v=webapp_redesign_v2"
 DATABASE_URL = "sqlite+aiosqlite:///./shop.db"
 API_HOST = "0.0.0.0"
 API_PORT = 8080

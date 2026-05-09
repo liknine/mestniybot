@@ -12,7 +12,7 @@ window.addEventListener('error', function(event) {
 });
 
 // ==================== CONFIG ====================
-const BUILD_VERSION = 'webapp_redesign_v1';
+const BUILD_VERSION = 'webapp_redesign_v2';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
 const SUPPORT_TEXT = 'Добрый! У меня возник вопрос по каталогу';
 const PREORDER_TEXT = 'Привет! Хочу заказать у вас такую позицию под заказ! Какие условия?\n\nВот моя позиция:\nФотография:\nРазмер:';
