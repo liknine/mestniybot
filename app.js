@@ -12,8 +12,9 @@ window.addEventListener('error', function(event) {
 });
 
 // ==================== CONFIG ====================
-const BUILD_VERSION = 'webapp_redesign_v4';
+const BUILD_VERSION = 'mestniy_fix_20260509_2';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
+const BOT_USERNAME = 'testmestniybot';
 const ADMIN_IDS = [1639462053, 8465820993];
 const MAX_GALLERY_IMAGES = 5;
 const SUPPORT_TEXT = 'Добрый! У меня возник вопрос по каталогу';
@@ -449,7 +450,6 @@ function productCard(product) {
     const status = getStockStatus(product);
     const order = isOrderProduct(product);
     const image = product.images && product.images[0] ? product.images[0] : '';
-    const sizes = getProductSizes(product).join(', ');
     return '' +
         '<article class="product-card" data-id="' + escapeHtml(product.id) + '" role="button" tabindex="0">' +
             '<div class="product-image-wrap">' +
@@ -462,7 +462,6 @@ function productCard(product) {
                 '<div class="product-card-brand">' + escapeHtml(getBrandName(product.brand)) + '</div>' +
                 '<div class="product-card-price">' + formatPrice(product.price_byn, state.currency, product) + '</div>' +
                 '<div class="product-status ' + status.className + '">' + status.text + '</div>' +
-                (order && sizes ? '<div class="order-sizes">Доступные размеры: ' + escapeHtml(sizes) + '</div>' : '') +
             '</div>' +
         '</article>';
 }
@@ -615,6 +614,7 @@ function renderCatalogCategories() {
         const categoryOrderProducts = orderProducts.filter(function(product) {
             return getCategoryKey(product) === category.id;
         });
+        if (categoryOrderProducts.length < 1) return null;
         const fallbackProducts = allProducts.filter(function(product) {
             return getCategoryKey(product) === category.id;
         });
@@ -625,7 +625,7 @@ function renderCatalogCategories() {
             count: categoryOrderProducts.length,
             image: photoProduct?.images?.[0] || ''
         };
-    });
+    }).filter(Boolean);
     const grid = byId('catalogCategoriesGrid');
     if (!grid) return;
     grid.innerHTML = cards.map(function(card) {
@@ -934,7 +934,8 @@ function openProductModal(product) {
     }
     if (orderBadge) orderBadge.hidden = !isOrder;
     if (availableSizes) {
-        availableSizes.textContent = sizes.length ? 'Доступные размеры: ' + sizes.join(', ') : 'Доступные размеры уточняйте у менеджера';
+        availableSizes.hidden = true;
+        availableSizes.textContent = '';
     }
     if (condition) {
         condition.hidden = isOrder || !conditionText;
@@ -1175,7 +1176,13 @@ function openTelegramOrExternal(link) {
 }
 
 function openDeleteCommand(productId) {
-    openManagerWithText('/delete ' + productId);
+    const command = '/delete ' + productId;
+    const link = 'https://t.me/' + BOT_USERNAME + '?text=' + encodeURIComponent(command);
+    if (tg && typeof tg.openTelegramLink === 'function') {
+        tg.openTelegramLink(link);
+    } else {
+        window.open(link, '_blank');
+    }
 }
 
 function openManagerForCart() {

@@ -1687,3 +1687,24 @@ button {
         font-size: 9px;
     }
 }
+
+
+/* mestniy_fix_20260509_2: edge-to-edge home header and cleanup */
+.home-header {
+    width: calc(100% + 28px);
+    margin-left: -14px;
+    margin-right: -14px;
+    border-radius: 0;
+}
+
+.home-topbar,
+.search-field,
+.home-controls,
+.currency-switch {
+    max-width: none;
+}
+
+.order-sizes,
+#availableSizes {
+    display: none !important;
+}
