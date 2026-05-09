@@ -743,7 +743,7 @@ function renderCart() {
                 '<p>Размеры: ' + escapeHtml(item.sizes.join(', ')) + '</p>' +
                 '<div class="cart-item-bottom">' +
                     '<strong>' + formatTotal(itemSum) + '</strong>' +
-                    '<button class="cart-item-delete" data-id="' + escapeHtml(item.productId) + '" type="button" aria-label="Удалить"><i data-lucide="trash-2"></i></button>' +
+                    '<button class="admin-delete-product" data-id="' + product.id + '">Удалить товар #' + product.id + '</button>' +
                 '</div>' +
             '</div>' +
         '</div>';
