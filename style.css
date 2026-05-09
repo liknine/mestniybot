@@ -9,6 +9,7 @@
 :root {
     --green: #00c853;
     --green-dark: #079144;
+    --green-mid: #12b95f;
     --green-soft: #eafaf0;
     --bg: #f7f8f7;
     --card: #ffffff;
@@ -61,12 +62,12 @@ button {
 .app {
     min-height: 100vh;
     min-height: 100dvh;
-    padding-bottom: calc(82px + var(--safe-bottom));
+    padding-bottom: calc(86px + var(--safe-bottom));
 }
 
 .page {
     display: none;
-    padding: calc(14px + var(--safe-top)) 14px 24px;
+    padding: calc(10px + var(--safe-top)) 14px 24px;
 }
 
 .page-active {
@@ -94,46 +95,52 @@ button {
 }
 
 .home-header {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    margin: calc(-14px - var(--safe-top)) -14px 12px;
-    padding: calc(14px + var(--safe-top)) 14px 14px;
-    background: rgba(255, 255, 255, 0.96);
+    position: relative;
+    z-index: 2;
+    margin: calc(-10px - var(--safe-top)) -14px 18px;
+    padding: calc(12px + var(--safe-top)) 14px 16px;
+    background: rgba(255, 255, 255, 0.98);
     border-bottom: 1px solid var(--line);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 12px 32px rgba(18, 28, 22, 0.05);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .home-topbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 48px;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    min-height: 50px;
+    margin-bottom: 14px;
 }
 
 .welcome-title {
-    flex: 1;
-    font-size: 18px;
-    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 1.14;
     font-weight: 800;
+    letter-spacing: 0;
     color: var(--green-dark);
-    background: linear-gradient(90deg, var(--green), #ffffff, #8e9692, var(--green));
-    background-size: 250% 100%;
+    background: linear-gradient(100deg, #079144 0%, #18c96d 30%, #dff6e7 48%, #9aa39e 68%, #079144 100%);
+    background-size: 340% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: welcomeFlow 1s ease-in-out infinite;
+    animation: welcomeFlow 5.4s ease-in-out infinite;
+    text-wrap: balance;
 }
 
 @keyframes welcomeFlow {
     0% { background-position: 0% 50%; }
+    50% { background-position: 70% 50%; }
     100% { background-position: 100% 50%; }
 }
 
 .icon-button {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--card);
@@ -145,13 +152,17 @@ button {
 }
 
 .icon-button svg {
-    width: 21px;
-    height: 21px;
+    width: 22px;
+    height: 22px;
     color: var(--green-dark);
 }
 
 .menu-button {
-    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    justify-self: end;
+    border-color: rgba(7, 145, 68, 0.14);
+    box-shadow: 0 10px 22px rgba(18, 28, 22, 0.08);
 }
 
 .search-field {
@@ -162,25 +173,32 @@ button {
 
 .search-field svg {
     position: absolute;
-    left: 13px;
+    left: 16px;
     top: 50%;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     transform: translateY(-50%);
     color: var(--green-dark);
+    pointer-events: none;
 }
 
 .search-field input {
     width: 100%;
-    height: 44px;
-    padding: 0 14px 0 42px;
+    height: 50px;
+    padding: 0 16px 0 50px;
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
     background: #fff;
     color: var(--text);
     outline: none;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(18, 28, 22, 0.04);
+}
+
+.search-field input::placeholder {
+    color: #9ea6a1;
+    opacity: 1;
 }
 
 .search-field input:focus {
@@ -191,13 +209,14 @@ button {
 .home-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
 .filter-button {
-    min-height: 48px;
-    padding: 9px 10px;
+    height: 66px;
+    min-width: 0;
+    padding: 12px 14px;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--card);
@@ -208,39 +227,43 @@ button {
 
 .filter-button span {
     display: block;
-    margin-bottom: 3px;
+    margin-bottom: 6px;
     color: var(--muted);
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.1;
 }
 
 .filter-button strong {
     display: block;
     overflow: hidden;
     color: var(--green-dark);
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 800;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 1.1;
 }
 
 .currency-switch {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    padding: 4px;
-    border: 1px solid var(--line);
+    gap: 5px;
+    height: 54px;
+    padding: 5px;
+    border: 1px solid rgba(7, 145, 68, 0.12);
     border-radius: var(--radius);
-    background: #f0f3f1;
+    background: #f2f5f3;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72), 0 8px 20px rgba(18, 28, 22, 0.05);
 }
 
 .currency-option {
-    height: 34px;
+    height: 100%;
     border: 0;
     border-radius: 6px;
     background: transparent;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 800;
     cursor: pointer;
 }
@@ -248,7 +271,7 @@ button {
 .currency-option.active {
     background: var(--green);
     color: #fff;
-    box-shadow: 0 6px 16px rgba(0, 200, 83, 0.24);
+    box-shadow: 0 8px 18px rgba(0, 200, 83, 0.24);
 }
 
 .loading {
@@ -274,6 +297,7 @@ button {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+    scroll-margin-top: 12px;
 }
 
 .product-card {
@@ -1273,6 +1297,17 @@ button {
     line-height: 1.35;
 }
 
+.product-condition {
+    display: inline-flex;
+    margin-top: 10px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: var(--green-soft);
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 800;
+}
+
 .detail-section {
     margin-top: 22px;
 }
@@ -1339,6 +1374,43 @@ button {
     color: #3f4743;
     font-size: 15px;
     line-height: 1.6;
+}
+
+.admin-delete-button {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 20px;
+    border: 1px solid rgba(239, 68, 68, 0.24);
+    border-radius: var(--radius);
+    background: #fff1f1;
+    color: #b42323;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.extra-photos-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.extra-photos-button {
+    min-width: 132px;
+    height: 48px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--green);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(0, 200, 83, 0.22);
 }
 
 .related-section {
@@ -1594,11 +1666,21 @@ button {
 
 @media (max-width: 360px) {
     .welcome-title {
-        font-size: 16px;
+        font-size: 18px;
     }
 
-    .home-controls {
-        grid-template-columns: 1fr;
+    .home-topbar {
+        grid-template-columns: minmax(0, 1fr) 44px;
+        gap: 10px;
+    }
+
+    .menu-button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .filter-button {
+        padding: 11px 10px;
     }
 
     .nav-btn span:not(.nav-badge) {

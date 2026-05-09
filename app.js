@@ -12,8 +12,10 @@ window.addEventListener('error', function(event) {
 });
 
 // ==================== CONFIG ====================
-const BUILD_VERSION = 'webapp_redesign_v2';
+const BUILD_VERSION = 'webapp_redesign_v4';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
+const ADMIN_IDS = [1639462053, 8465820993];
+const MAX_GALLERY_IMAGES = 5;
 const SUPPORT_TEXT = 'Добрый! У меня возник вопрос по каталогу';
 const PREORDER_TEXT = 'Привет! Хочу заказать у вас такую позицию под заказ! Какие условия?\n\nВот моя позиция:\nФотография:\nРазмер:';
 const ORDER_EXTRA_DESCRIPTION = 'Данная вещь, покупается лично под вас! Доставку стараемся делать максимально быстрой для вас! Все подробности вам расскажет наш менеджер!';
@@ -272,6 +274,12 @@ function imageTag(src, alt, className) {
     return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" class="' + (className || 'product-image') + '" loading="eager" decoding="async" onerror="retryImage(this)">';
 }
 
+function extraPhotosSlide(url) {
+    return '<div class="extra-photos-slide">' +
+        '<button class="extra-photos-button" data-url="' + escapeHtml(url) + '" type="button">Доп фото</button>' +
+    '</div>';
+}
+
 function normalizeSize(size) {
     return String(size || '').trim().toUpperCase().replace(/\s+/g, ' ');
 }
@@ -316,6 +324,23 @@ function getProductType(product) {
 
 function isOrderProduct(product) {
     return getProductType(product) === 'order';
+}
+
+function getProductCondition(product) {
+    return String(product?.condition || product?.prices?.condition || '').trim();
+}
+
+function getExtraPhotosUrl(product) {
+    return String(product?.extra_photos_url || product?.prices?.extra_photos_url || '').trim();
+}
+
+function getProductGalleryImages(product) {
+    const images = Array.isArray(product?.images) ? product.images.filter(Boolean) : [];
+    return images.slice(0, MAX_GALLERY_IMAGES);
+}
+
+function isAdminUser() {
+    return ADMIN_IDS.includes(Number(state.user.id));
 }
 
 function getCategoryKey(product) {
@@ -864,18 +889,25 @@ function openProductModal(product) {
     const stock = byId('productStock');
     const orderBadge = byId('productOrderBadge');
     const availableSizes = byId('availableSizes');
+    const condition = byId('productCondition');
     const sizesGrid = byId('sizesGrid');
     const description = byId('productDescription');
     const favorite = byId('modalFavorite');
     const warning = byId('sizeWarning');
+    const deleteButton = byId('adminDeleteProductBtn');
     const isOrder = isOrderProduct(product);
     const sizes = getProductSizes(product);
+    const conditionText = getProductCondition(product);
+    const extraPhotosUrl = getExtraPhotosUrl(product);
 
     if (track) {
-        const images = product.images?.length ? product.images : [''];
-        track.innerHTML = images.map(function(src) {
+        const images = getProductGalleryImages(product);
+        const galleryImages = images.length ? images : [''];
+        const slides = galleryImages.map(function(src) {
             return imageTag(src, product.name, 'gallery-image');
-        }).join('');
+        });
+        if (extraPhotosUrl) slides.push(extraPhotosSlide(extraPhotosUrl));
+        track.innerHTML = slides.join('');
         track.scrollLeft = 0;
         track.onscroll = function() {
             const index = Math.round(track.scrollLeft / Math.max(track.offsetWidth, 1));
@@ -885,7 +917,8 @@ function openProductModal(product) {
         };
     }
     if (dots) {
-        const count = Math.max(product.images?.length || 1, 1);
+        const imagesCount = Math.max(getProductGalleryImages(product).length || 1, 1);
+        const count = imagesCount + (extraPhotosUrl ? 1 : 0);
         dots.innerHTML = Array.from({ length: count }).map(function(_, index) {
             return '<div class="gallery-dot ' + (index === 0 ? 'active' : '') + '"></div>';
         }).join('');
@@ -902,6 +935,10 @@ function openProductModal(product) {
     if (orderBadge) orderBadge.hidden = !isOrder;
     if (availableSizes) {
         availableSizes.textContent = sizes.length ? 'Доступные размеры: ' + sizes.join(', ') : 'Доступные размеры уточняйте у менеджера';
+    }
+    if (condition) {
+        condition.hidden = isOrder || !conditionText;
+        condition.textContent = conditionText ? 'Состояние: ' + conditionText : '';
     }
     if (sizesGrid) {
         const modalSizes = sizes.length ? sizes : ['ONE SIZE'];
@@ -938,6 +975,10 @@ function openProductModal(product) {
         description.textContent = parts.filter(Boolean).join('\n\n');
     }
     if (favorite) favorite.classList.toggle('active', state.favorites.includes(Number(product.id)));
+    if (deleteButton) {
+        deleteButton.hidden = !isAdminUser();
+        deleteButton.dataset.productId = String(product.id);
+    }
     renderRelatedProducts(product);
     updateAddToCartButton();
     if (modal) {
@@ -1124,6 +1165,19 @@ function openExternalLink(link) {
     else window.open(link, '_blank');
 }
 
+function openTelegramOrExternal(link) {
+    if (!link) return;
+    if (tg && typeof tg.openTelegramLink === 'function' && /^https:\/\/t\.me\//i.test(link)) {
+        tg.openTelegramLink(link);
+    } else {
+        window.open(link, '_blank');
+    }
+}
+
+function openDeleteCommand(productId) {
+    openManagerWithText('/delete ' + productId);
+}
+
 function openManagerForCart() {
     if (!state.cart.length) {
         showToast('Корзина пуста');
@@ -1225,6 +1279,10 @@ function initListeners() {
     byId('checkoutBtn')?.addEventListener('click', openManagerForCart);
     byId('modalBack')?.addEventListener('click', closeProductModal);
     byId('addToCartBtn')?.addEventListener('click', addToCart);
+    byId('adminDeleteProductBtn')?.addEventListener('click', function() {
+        if (!isAdminUser() || !state.selectedProduct) return;
+        openDeleteCommand(state.selectedProduct.id);
+    });
     byId('modalFavorite')?.addEventListener('click', function() {
         if (!state.selectedProduct) return;
         toggleFavorite(state.selectedProduct.id);
@@ -1249,6 +1307,14 @@ function initListeners() {
     });
 
     document.addEventListener('click', function(event) {
+        const extraPhotos = event.target.closest('.extra-photos-button');
+        if (extraPhotos) {
+            event.preventDefault();
+            event.stopPropagation();
+            openTelegramOrExternal(extraPhotos.dataset.url);
+            return;
+        }
+
         const favorite = event.target.closest('.product-favorite');
         if (favorite) {
             event.preventDefault();
