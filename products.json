@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": 1,
+    "category_id": 5,
+    "brand": "stussy",
+    "name": "Футболка Stussy НОВАЯ",
+    "description": "Абсолютно новая, несколько штук в наличии! Очень классный материал, плотные! Оригинал, в комплекте пакет, навесные бирки! Очень красивый цвет! \nРазмер: S-M ( по бирке S ) ; XL-XXL ( по бирке XL )",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3500.0,
+      "USD": 45.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniybaryga/8627"
+    },
+    "sizes": [
+      "S-M",
+      "XL-XXL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniybaryga/8627",
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1166.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1167.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1168.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1169.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1170.jpg"
+    ]
+  }
+]
