@@ -2,148 +2,29 @@
   {
     "id": 1,
     "category_id": 1,
-    "brand": "rick",
-    "name": "qqq",
-    "description": "qqq",
-    "price_byn": 222.0,
+    "brand": "raf",
+    "name": "нью",
+    "description": "обнова",
+    "price_byn": 22.0,
     "prices": {
-      "BYN": 222.0,
-      "RUB": 49493.0,
-      "USD": 100.0,
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9587"
-    },
-    "sizes": [
-      "43",
-      "44"
-    ],
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9587",
-    "images": [
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_5.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_6.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_7.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_8.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_9.jpg"
-    ]
-  },
-  {
-    "id": 2,
-    "category_id": 10,
-    "brand": "stone",
-    "name": "testt",
-    "description": "qq",
-    "price_byn": 1000.0,
-    "prices": {
-      "BYN": 1000.0,
-      "RUB": 2000.0,
-      "USD": 3000.0,
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9587"
-    },
-    "sizes": [
-      "ONE SIZE"
-    ],
-    "stock": 10,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9587",
-    "images": [
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_10.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_12.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_13.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_11.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_14.jpg"
-    ]
-  },
-  {
-    "id": 3,
-    "category_id": 1,
-    "brand": "balenciaga",
-    "name": "TESTING",
-    "description": "описание товара",
-    "price_byn": 1660.0,
-    "prices": {
-      "BYN": 1660.0,
-      "RUB": 27500.0,
-      "USD": 1000.0,
+      "BYN": 22.0,
+      "RUB": 222.0,
+      "USD": 333.0,
+      "product_type": "stock",
       "condition": "Новое",
       "extra_photos_url": "https://t.me/mestniybaryga/9587"
     },
     "sizes": [
-      "42",
-      "43",
-      "45"
+      "43"
     ],
-    "stock": 10,
+    "stock": 4,
     "product_type": "stock",
     "section": "stock",
     "condition": "Новое",
     "extra_photos_url": "https://t.me/mestniybaryga/9587",
     "images": [
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_10.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_12.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_14.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_11.jpg",
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_15.jpg"
-    ]
-  },
-  {
-    "id": 4,
-    "category_id": 1,
-    "brand": "nike",
-    "name": "Nike Air Force 1 White",
-    "description": "qqq",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 100.0,
-      "USD": 1000.0,
-      "product_type": "order"
-    },
-    "sizes": [
-      "41-42",
-      "43",
-      "44",
-      "45"
-    ],
-    "stock": 1,
-    "product_type": "order",
-    "section": "order",
-    "condition": null,
-    "extra_photos_url": null,
-    "images": [
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_16.jpg"
-    ]
-  },
-  {
-    "id": 5,
-    "category_id": 1,
-    "brand": "nike",
-    "name": "nike air force 1 white",
-    "description": "555",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 12000.0,
-      "USD": 100.0,
-      "product_type": "order"
-    },
-    "sizes": [
-      "42-43",
-      "44"
-    ],
-    "stock": 1,
-    "product_type": "order",
-    "section": "order",
-    "condition": null,
-    "extra_photos_url": null,
-    "images": [
-      "https://api.telegram.org/file/bot8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js/photos/file_17.jpg"
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1165.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1165.jpg"
     ]
   }
 ]
