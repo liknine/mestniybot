@@ -1708,3 +1708,57 @@ button {
 #availableSizes {
     display: none !important;
 }
+
+
+/* order catalog UI text/search patch */
+#catalogPage .page-head h2 {
+    line-height: 1.05;
+}
+
+#navCatalog span:not(.nav-badge) {
+    white-space: normal;
+    line-height: 1.05;
+    text-align: center;
+    max-width: 76px;
+}
+
+.catalog-search-field {
+    width: 100%;
+    min-height: 54px;
+    margin: 0 0 14px;
+    padding: 0 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-soft);
+}
+
+.catalog-search-field svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    color: var(--green-dark);
+}
+
+.catalog-search-field input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.catalog-search-field input::placeholder {
+    color: var(--faint);
+    font-weight: 700;
+}
+
+#catalogTypeButton span {
+    line-height: 1.15;
+}

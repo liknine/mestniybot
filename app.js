@@ -161,6 +161,7 @@ const state = {
     catalogReturnScreen: 'start',
     catalogCategory: null,
     catalogBrand: null,
+    catalogSearch: '',
     selectedProduct: null,
     selectedSizes: [],
     user: { id: null, firstName: 'Пользователь', lastName: '', username: '', photoUrl: null },
@@ -582,6 +583,7 @@ function openHomeTypeModal() {
 
 function showCatalogScreen(screen) {
     state.catalogScreen = screen;
+    if (screen !== 'products') state.catalogSearch = '';
     ['catalogStartScreen', 'catalogCategoriesScreen', 'catalogBrandsScreen', 'catalogProductsScreen'].forEach(function(id) {
         const el = byId(id);
         if (el) el.hidden = true;
@@ -639,6 +641,7 @@ function renderCatalogCategories() {
         card.addEventListener('click', function() {
             state.catalogCategory = card.dataset.category;
             state.catalogBrand = null;
+            state.catalogSearch = '';
             state.catalogReturnScreen = 'categories';
             showCatalogScreen('products');
             haptic();
@@ -690,7 +693,7 @@ function renderCatalogBrands() {
 
 function renderCatalogProducts() {
     let products = getOrderProducts();
-    let crumb = 'Каталог';
+    let crumb = 'Товары под заказ';
     if (state.catalogCategory) {
         const category = getCategoryById(state.catalogCategory);
         products = products.filter(function(product) {
@@ -703,6 +706,16 @@ function renderCatalogProducts() {
             return brandMatches(product.brand, state.catalogBrand);
         });
         crumb += ' / ' + getBrandName(state.catalogBrand);
+    }
+    const searchInput = byId('catalogProductsSearch');
+    if (searchInput && searchInput.value !== state.catalogSearch) searchInput.value = state.catalogSearch;
+    if (state.catalogSearch.trim()) {
+        const query = state.catalogSearch.trim().toLowerCase();
+        products = products.filter(function(product) {
+            return String(product.name || '').toLowerCase().includes(query) ||
+                String(product.description || '').toLowerCase().includes(query) ||
+                getBrandName(product.brand).toLowerCase().includes(query);
+        });
     }
     const breadcrumb = byId('catalogBreadcrumb');
     if (breadcrumb) breadcrumb.textContent = crumb;
@@ -1247,6 +1260,15 @@ function initListeners() {
         });
     }
 
+
+    const catalogProductsSearch = byId('catalogProductsSearch');
+    if (catalogProductsSearch) {
+        catalogProductsSearch.addEventListener('input', function() {
+            state.catalogSearch = catalogProductsSearch.value;
+            renderCatalogProducts();
+        });
+    }
+
     byId('homeSizeButton')?.addEventListener('click', openHomeSizeModal);
     byId('homeTypeButton')?.addEventListener('click', openHomeTypeModal);
     byId('menuButton')?.addEventListener('click', openSidePanel);
@@ -1262,9 +1284,6 @@ function initListeners() {
     byId('catalogTypeButton')?.addEventListener('click', function() {
         showCatalogScreen('categories');
     });
-    byId('catalogBrandButton')?.addEventListener('click', function() {
-        showCatalogScreen('brands');
-    });
     byId('preorderButton')?.addEventListener('click', function() {
         openManagerWithText(PREORDER_TEXT);
     });
@@ -1277,6 +1296,7 @@ function initListeners() {
     byId('catalogProductsBack')?.addEventListener('click', function() {
         state.catalogCategory = null;
         state.catalogBrand = null;
+        state.catalogSearch = '';
         showCatalogScreen(state.catalogReturnScreen || 'start');
     });
     byId('catalogManagerButton')?.addEventListener('click', function() {

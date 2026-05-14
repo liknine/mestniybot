@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="style.css?v=delete_id_fix_1">
+    <link rel="stylesheet" href="style.css?v=order_catalog_labels_search_1">
 </head>
 <body>
     <div class="app">
@@ -58,21 +58,17 @@
 
         <section class="page" id="catalogPage" data-page="catalog">
             <div class="page-head">
-                <h2>Каталог</h2>
+                <h2>Товары под<br>заказ</h2>
             </div>
 
             <div class="catalog-screen" id="catalogStartScreen">
                 <button class="catalog-action-card" id="catalogTypeButton" type="button">
                     <i data-lucide="layout-grid"></i>
-                    <span>Выбрать тип товара</span>
-                </button>
-                <button class="catalog-action-card" id="catalogBrandButton" type="button">
-                    <i data-lucide="tag"></i>
-                    <span>Выбрать бренд товара</span>
+                    <span>Список предложенных нами товаров под заказ</span>
                 </button>
                 <button class="catalog-action-card preorder-card" id="preorderButton" type="button">
                     <i data-lucide="message-circle"></i>
-                    <span>Заказать товар по предзаказу</span>
+                    <span>Связаться с менеджером</span>
                 </button>
             </div>
 
@@ -105,9 +101,13 @@
                     <p>Если вы не нашли из предложенных нами товаров, нужный для вас, то обратитесь к нашему менеджеру, он вам поможет определиться с выбором!</p>
                     <button class="manager-button" id="catalogManagerButton" type="button">
                         <i data-lucide="message-circle"></i>
-                        <span>Написать нашему менеджеру</span>
+                        <span>Связаться с менеджером</span>
                     </button>
                 </div>
+                <label class="catalog-search-field" id="catalogProductsSearchWrap">
+                    <i data-lucide="search"></i>
+                    <input id="catalogProductsSearch" type="search" placeholder="Поиск по товарам в категории..." autocomplete="off">
+                </label>
                 <main class="products-grid" id="catalogProductsGrid"></main>
                 <div class="empty-state compact" id="catalogProductsEmpty" hidden>
                     <p>Товаров под заказ не найдено</p>
@@ -306,7 +306,7 @@
         </button>
         <button class="nav-btn" data-page="catalog" id="navCatalog" type="button">
             <i data-lucide="grid-2x2"></i>
-            <span>Каталог</span>
+            <span>Товары под<br>заказ</span>
         </button>
         <button class="nav-btn" data-page="cart" id="navCart" type="button">
             <i data-lucide="shopping-bag"></i>
