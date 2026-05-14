@@ -216,5 +216,36 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1200.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1201.jpg"
     ]
+  },
+  {
+    "id": 8,
+    "category_id": 6,
+    "brand": "cp",
+    "name": "Зип - Худи C.P. Company Goggle",
+    "description": "C.P. COMPANY Diagonal Raised Fleece Zipped Hoodie. Размер М. Отличное состояние, есть следы носки! Очень классная, плотный материал, приятный цвет, оригинал! Модель 12 месяца 2022 года!",
+    "price_byn": 430.0,
+    "prices": {
+      "BYN": 430.0,
+      "RUB": 12500.0,
+      "USD": 161.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/8682"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/8682",
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1202.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1203.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1204.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1205.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1206.jpg"
+    ]
   }
 ]
