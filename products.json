@@ -712,5 +712,36 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1290.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1291.jpg"
     ]
+  },
+  {
+    "id": 25,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Худи Stone Island Junior",
+    "description": "Отличное состояние, плотный! База, с патчем, как мы и любим! Размер по бирке: 14/170. Фактический размер: S - M. Коллекция: 73. Autumn / Winter 2020. Made in Romania.",
+    "price_byn": 280.0,
+    "prices": {
+      "BYN": 280.0,
+      "RUB": 8300.0,
+      "USD": 105.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9043"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9043",
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1292.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1293.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1294.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1295.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1296.jpg"
+    ]
   }
 ]
