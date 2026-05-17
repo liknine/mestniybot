@@ -929,5 +929,36 @@
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1325.jpg",
       "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1326.jpg"
     ]
+  },
+  {
+    "id": 32,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Свитшот Stone Island",
+    "description": "Плотный, классный свитшот, в темно синем цвете! База, с патчем на рукаве, все бирки на месте! Оригинал! Коллекция: 65. Есть следы носок.",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500.0,
+      "USD": 119.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9168"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9168",
+    "images": [
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1327.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1328.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1329.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1330.jpg",
+      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1331.jpg"
+    ]
   }
 ]
