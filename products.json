@@ -1049,5 +1049,32 @@
       "https://liknine.github.io/mestniybot/images/product_41_3cf61129.jpg",
       "https://liknine.github.io/mestniybot/images/product_41_61cbdac2.jpg"
     ]
+  },
+  {
+    "id": 42,
+    "category_id": 6,
+    "brand": "cp",
+    "name": "Свитшот C.P. Company",
+    "description": "Классный свитшот от C.P. Company, в темно синем цвете. Размер: M. Дата изготовления: 02/2020. Есть следы носок.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7500.0,
+      "USD": 93.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9360"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9360",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_f6fa6ef8.jpg"
+    ]
   }
 ]
