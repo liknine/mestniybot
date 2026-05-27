@@ -900,37 +900,6 @@
     ]
   },
   {
-    "id": 36,
-    "category_id": 6,
-    "brand": "off",
-    "name": "Лонгслив Off - White",
-    "description": "Классный, куча принтов, по рукавам, спереди, и на спине. Размер по бирке: XS. Фактический размер: S - M. Есть минимальные трещинки по принту.",
-    "price_byn": 190.0,
-    "prices": {
-      "BYN": 190.0,
-      "RUB": 6000.0,
-      "USD": 71.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9224"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9224",
-    "images": [
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1349.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1350.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1351.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1352.jpg",
-      "https://api.telegram.org/file/bot8743073862:AAHnTvOczhO33zi5hMaoLrrlPWo_ezEeGsE/photos/file_1353.jpg"
-    ]
-  },
-  {
     "id": 37,
     "category_id": 1,
     "brand": "reebok",
