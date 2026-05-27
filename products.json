@@ -1173,5 +1173,32 @@
       "https://liknine.github.io/mestniybot/images/product_45_877be400.jpg",
       "https://liknine.github.io/mestniybot/images/product_45_662f0a6e.jpg"
     ]
+  },
+  {
+    "id": 46,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Свитшот Stone Island",
+    "description": "Классный. Необычный дизайн за счет вышитого логотипа спереди. Есть следы носок. Коллекция: 69. Размер по бирке: L. Фактический размер: M - L.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9430"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9430",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_6103a061.jpg"
+    ]
   }
 ]
