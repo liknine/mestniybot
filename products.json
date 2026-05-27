@@ -960,5 +960,32 @@
       "https://liknine.github.io/mestniybot/images/product_38_b72312bf.jpg",
       "https://liknine.github.io/mestniybot/images/product_38_7de75296.jpg"
     ]
+  },
+  {
+    "id": 39,
+    "category_id": 7,
+    "brand": "weekend",
+    "name": "Штаны Weekend Offender",
+    "description": "Очень классные, состояние новых. Оригинал. Размер по бирке: 14. Фактический размер: S. Приятный металлический логотип.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3800.0,
+      "USD": 44.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9278"
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9278",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_40a90130.jpg"
+    ]
   }
 ]
