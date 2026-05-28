@@ -1392,5 +1392,32 @@
       "https://liknine.github.io/mestniybot/images/product_52_1ba61504.jpg",
       "https://liknine.github.io/mestniybot/images/product_52_110c27b6.jpg"
     ]
+  },
+  {
+    "id": 53,
+    "category_id": 8,
+    "brand": "mcm",
+    "name": "Шорты Mid Error Карго",
+    "description": "Классный фит. Карго шорты, самое то на лето. Есть следы носок. Без нюансов. Размер по бирке: L. Фактический размер: M - L.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900.0,
+      "USD": 44.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9628"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9628",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_bea536a5.jpg"
+    ]
   }
 ]
