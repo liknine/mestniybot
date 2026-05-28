@@ -1235,5 +1235,32 @@
       "https://liknine.github.io/mestniybot/images/product_47_778e887e.jpg",
       "https://liknine.github.io/mestniybot/images/product_47_4e4915c0.jpg"
     ]
+  },
+  {
+    "id": 48,
+    "category_id": 6,
+    "brand": "lonsdale",
+    "name": "Свитшот Lonsdale",
+    "description": "Отличное состояние. Есть следы носок. Размер по бирке: S. Фактический размер: M - L.",
+    "price_byn": 140.0,
+    "prices": {
+      "BYN": 140.0,
+      "RUB": 4500.0,
+      "USD": 52.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9537"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9537",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_c095380b.jpg"
+    ]
   }
 ]
