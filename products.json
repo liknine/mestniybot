@@ -1361,5 +1361,32 @@
       "https://liknine.github.io/mestniybot/images/product_51_bb4f521a.jpg",
       "https://liknine.github.io/mestniybot/images/product_51_7185e2d1.jpg"
     ]
+  },
+  {
+    "id": 52,
+    "category_id": 2,
+    "brand": "weekend",
+    "name": "Овершот Weekend Offender НОВЫЙ",
+    "description": "Классный, очень необычный дизайн, за счет вышитого принта спереди, и сзади. Абсолютно новый, с этикетками. Привезен прямиком из магазина.",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6000.0,
+      "USD": 74.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniybaryga/9592"
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniybaryga/9592",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_aba7b7f7.jpg"
+    ]
   }
 ]
