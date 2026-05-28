@@ -1204,5 +1204,32 @@
       "https://liknine.github.io/mestniybot/images/product_46_e8eca98c.jpg",
       "https://liknine.github.io/mestniybot/images/product_46_37235ba9.jpg"
     ]
+  },
+  {
+    "id": 47,
+    "category_id": 10,
+    "brand": "lonsdale",
+    "name": "Сумка Lonsdale",
+    "description": "Очень классная. Вместительная, красивая. Помимо главного отсека, есть дополнительные карманы. Нету бирок, но позиция точно оригинал. Размер: 50х25 СМ.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4800.0,
+      "USD": 56.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9497"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9497",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_2a3a61cb.jpg"
+    ]
   }
 ]
