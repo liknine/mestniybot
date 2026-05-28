@@ -1516,5 +1516,32 @@
       "https://liknine.github.io/mestniybot/images/product_58_876b5740.jpg",
       "https://liknine.github.io/mestniybot/images/product_58_a801bc4b.jpg"
     ]
+  },
+  {
+    "id": 59,
+    "category_id": 6,
+    "brand": "prada",
+    "name": "Олимпийка Palm Angels",
+    "description": "Очень приятный, нежный цвет. Отлично сидит на теле. Отличное состояние! Оригинал, на CLG. Размер: М.",
+    "price_byn": 290.0,
+    "prices": {
+      "BYN": 290.0,
+      "RUB": 8700.0,
+      "USD": 108.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9704"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9704",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_2b2d981d.jpg"
+    ]
   }
 ]
