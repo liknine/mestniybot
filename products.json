@@ -1702,5 +1702,32 @@
       "https://liknine.github.io/mestniybot/images/product_64_eccae9d1.jpg",
       "https://liknine.github.io/mestniybot/images/product_64_350693af.jpg"
     ]
+  },
+  {
+    "id": 65,
+    "category_id": 6,
+    "brand": "mastrum",
+    "name": "Худи Ma.Strum",
+    "description": "Плотный материал. Черный цвет. Оригинал. Отличное состояние, есть следы носок. Размер по бирке: XS. Фактический размер: S - M.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7500.0,
+      "USD": 93.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9816"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9816",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5c5b9da7.jpg"
+    ]
   }
 ]
