@@ -1485,5 +1485,32 @@
       "https://liknine.github.io/mestniybot/images/product_57_44f65c02.jpg",
       "https://liknine.github.io/mestniybot/images/product_57_607ea301.jpg"
     ]
+  },
+  {
+    "id": 58,
+    "category_id": 5,
+    "brand": "stone",
+    "name": "Поло Stone Island Junior",
+    "description": "Очень красивая. Яркая. Приятный материал. Без нюансов, есть следы носок. Размер по бирке: 14/164. Фактический размер: XS - S. Коллекция: 60.",
+    "price_byn": 100.0,
+    "prices": {
+      "BYN": 100.0,
+      "RUB": 3300.0,
+      "USD": 37.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9698"
+    },
+    "sizes": [
+      "XS-S"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9698",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_e8e1e9ee.jpg"
+    ]
   }
 ]
