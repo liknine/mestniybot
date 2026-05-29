@@ -1611,37 +1611,6 @@
     ]
   },
   {
-    "id": 63,
-    "category_id": 6,
-    "brand": "supreme",
-    "name": "Зип - Худи Stone Island Junior",
-    "description": "Базовое Зип - Худи. На груди карман, что хорошо дополняет данную модель. Размер по бирке: 14/170. Фактический размер: S - M. Коллекция: 74.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8300.0,
-      "USD": 104.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9804"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9804",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_63_d4a39763.jpg",
-      "https://liknine.github.io/mestniybot/images/product_63_50120386.jpg",
-      "https://liknine.github.io/mestniybot/images/product_63_30734583.jpg",
-      "https://liknine.github.io/mestniybot/images/product_63_721a36a6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_63_c2e9d0da.jpg"
-    ]
-  },
-  {
     "id": 64,
     "category_id": 7,
     "brand": "tommy",
