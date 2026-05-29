@@ -2012,5 +2012,32 @@
       "https://liknine.github.io/mestniybot/images/product_76_aea4847e.jpg",
       "https://liknine.github.io/mestniybot/images/product_76_1c2ccd86.jpg"
     ]
+  },
+  {
+    "id": 77,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Худи Stone Island",
+    "description": "Очень классное, необычный дизайн за счет логотипа спереди, сзади, а также патч на рукаве. Состояние: Отличное! Есть следы носок, минимально утерян цвет. Размер по бирке: L. Фактический размер: M - L. Коллекция: 74.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11700.0,
+      "USD": 148.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9899"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9899",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_4abcff67.jpg"
+    ]
   }
 ]
