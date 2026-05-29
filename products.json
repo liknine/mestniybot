@@ -1950,5 +1950,32 @@
       "https://liknine.github.io/mestniybot/images/product_74_896a7438.jpg",
       "https://liknine.github.io/mestniybot/images/product_74_1464cfc1.jpg"
     ]
+  },
+  {
+    "id": 75,
+    "category_id": 6,
+    "brand": "cp",
+    "name": "Зип - Худи C.P. Company Goggle",
+    "description": "Очень классный цвет, приятный плотный материал, отличное состояние, есть следы носок. Размер: M. Дата изготовления: 02/2020.",
+    "price_byn": 380.0,
+    "prices": {
+      "BYN": 380.0,
+      "RUB": 11300.0,
+      "USD": 142.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9889"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9889",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_bbe6ea20.jpg"
+    ]
   }
 ]
