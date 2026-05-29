@@ -1888,5 +1888,32 @@
       "https://liknine.github.io/mestniybot/images/product_72_d5050743.jpg",
       "https://liknine.github.io/mestniybot/images/product_72_218ea748.jpg"
     ]
+  },
+  {
+    "id": 73,
+    "category_id": 6,
+    "brand": "cp",
+    "name": "Свитшот C.P. Company",
+    "description": "Классный, плотный свитшот от C.P. Company. Необычный дизайн, за счет прорезиненного логотипа на задней части горла. Отличное состояние, есть минимальные следы носок. Размер: S. Дата изготовления: 03/2021.",
+    "price_byn": 240.0,
+    "prices": {
+      "BYN": 240.0,
+      "RUB": 7200.0,
+      "USD": 89.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9874"
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9874",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_de75964b.jpg"
+    ]
   }
 ]
