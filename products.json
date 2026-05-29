@@ -1826,5 +1826,32 @@
       "https://liknine.github.io/mestniybot/images/product_70_ec389567.jpg",
       "https://liknine.github.io/mestniybot/images/product_70_114ff67d.jpg"
     ]
+  },
+  {
+    "id": 71,
+    "category_id": 7,
+    "brand": "nike",
+    "name": "Штаны Nike Tech Fleece",
+    "description": "Очень классные. Плотные. Отлично сидят на теле. Размер: М. На свежей, белой, верхней бирке! Модель 2020 года.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900.0,
+      "USD": 44.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9864"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9864",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_47de62a4.jpg"
+    ]
   }
 ]
