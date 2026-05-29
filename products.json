@@ -1733,5 +1733,32 @@
       "https://liknine.github.io/mestniybot/images/product_66_030ca55d.jpg",
       "https://liknine.github.io/mestniybot/images/product_66_a222a813.jpg"
     ]
+  },
+  {
+    "id": 67,
+    "category_id": 5,
+    "brand": "cp",
+    "name": "Футболка C.P. Company",
+    "description": "Классная, приятная на ощуп. Отлично сидит на теле. Отличное состояние, есть следы носок. Размер по бирке: XL. Фактический размер: L - XL. Дата изготовления: 03/2020.",
+    "price_byn": 160.0,
+    "prices": {
+      "BYN": 160.0,
+      "RUB": 5000.0,
+      "USD": 59.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/9837"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/9837",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_a4c7a2f9.jpg"
+    ]
   }
 ]
