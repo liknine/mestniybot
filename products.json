@@ -1764,5 +1764,32 @@
       "https://liknine.github.io/mestniybot/images/product_67_35950dd2.jpg",
       "https://liknine.github.io/mestniybot/images/product_67_e793707d.jpg"
     ]
+  },
+  {
+    "id": 68,
+    "category_id": 8,
+    "brand": "stone",
+    "name": "Шорты Stone Island Junior НОВЫЕ",
+    "description": "Необычные шорты, от Stone Island. Абсолютно новые, с навесной биркой. Интересный логотип, не в виде патча, а в виде вышивки! Размер по бирке: 14/170. Фактический размер: S. Коллекция: 78.",
+    "price_byn": 230.0,
+    "prices": {
+      "BYN": 230.0,
+      "RUB": 7000.0,
+      "USD": 86.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniybaryga/9844"
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniybaryga/9844",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_672d8a19.jpg"
+    ]
   }
 ]
