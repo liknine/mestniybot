@@ -1,36 +1,5 @@
 [
   {
-    "id": 3,
-    "category_id": 5,
-    "brand": "weekend",
-    "name": "Футболка Weekend Offender",
-    "description": "Очень крутое состояние, как новая, необычный принт, это не база, как мы привыкли видеть. Размер XL! Принт отличный, без трещин, плотный материл футболки. 100% Cotton!",
-    "price_byn": 110.0,
-    "prices": {
-      "BYN": 110.0,
-      "RUB": 3300.0,
-      "USD": 41.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8642"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8642",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_3_88d20dbf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_3_fa085574.jpg",
-      "https://liknine.github.io/mestniybot/images/product_3_d56bf294.jpg",
-      "https://liknine.github.io/mestniybot/images/product_3_6079bd54.jpg",
-      "https://liknine.github.io/mestniybot/images/product_3_555594dc.jpg"
-    ]
-  },
-  {
     "id": 4,
     "category_id": 9,
     "brand": "cp",
