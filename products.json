@@ -2043,5 +2043,32 @@
       "https://liknine.github.io/mestniybot/images/product_77_af4d46e3.jpg",
       "https://liknine.github.io/mestniybot/images/product_77_6849bfd2.jpg"
     ]
+  },
+  {
+    "id": 78,
+    "category_id": 6,
+    "brand": "weekend",
+    "name": "Лонгслив Weekend Offender НОВЫЙ",
+    "description": "Абсолютно новый, с навесной биркой ( этикеткой ). Оригинал. Размер: L. Оригинал, классный принт спереди.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4700.0,
+      "USD": 56.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniybaryga/9951"
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniybaryga/9951",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_b692b66d.jpg"
+    ]
   }
 ]
