@@ -806,37 +806,6 @@
     ]
   },
   {
-    "id": 37,
-    "category_id": 1,
-    "brand": "reebok",
-    "name": "Кроссовки Reebok НОВЫЕ",
-    "description": "Новые, оригинал, привезены с Poizon! В комплекте родная коробка, сертификат Poizon, навесная бирка! Длина по стельке 28 СМ",
-    "price_byn": 230.0,
-    "prices": {
-      "BYN": 230.0,
-      "RUB": 7000.0,
-      "USD": 86.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/9239"
-    },
-    "sizes": [
-      "44"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/9239",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_37_b3058d9a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_37_2300f41b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_37_2e48068e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_37_f3675128.jpg",
-      "https://liknine.github.io/mestniybot/images/product_37_8c88e4a9.jpg"
-    ]
-  },
-  {
     "id": 39,
     "category_id": 7,
     "brand": "weekend",
