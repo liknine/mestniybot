@@ -1269,37 +1269,6 @@
     ]
   },
   {
-    "id": 56,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Худи Stone Island Junior",
-    "description": "Классное худи, отличный фит. Размер по бирке: 14/170. Фактический размер: S - M. Без нюансов,  следы носок. Коллекция: 74.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8400.0,
-      "USD": 104.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9673"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9673",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_56_597e6d0c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_56_0db25ad8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_56_9be53286.jpg",
-      "https://liknine.github.io/mestniybot/images/product_56_ff9e3c73.jpg",
-      "https://liknine.github.io/mestniybot/images/product_56_5485b728.jpg"
-    ]
-  },
-  {
     "id": 57,
     "category_id": 6,
     "brand": "stone",
