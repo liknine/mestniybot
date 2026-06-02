@@ -1,37 +1,5 @@
 [
   {
-    "id": 1,
-    "category_id": 5,
-    "brand": "stussy",
-    "name": "Футболка Stussy НОВАЯ",
-    "description": "Абсолютно новая, несколько штук в наличии! Очень классный материал, плотные! Оригинал, в комплекте пакет, навесные бирки! Очень красивый цвет! \nРазмер: S-M ( по бирке S ) ; XL-XXL ( по бирке XL )",
-    "price_byn": 120.0,
-    "prices": {
-      "BYN": 120.0,
-      "RUB": 3500.0,
-      "USD": 45.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/8627"
-    },
-    "sizes": [
-      "S-M",
-      "XL-XXL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/8627",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_1_001248e1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_1_c36d26df.jpg",
-      "https://liknine.github.io/mestniybot/images/product_1_c81b6688.jpg",
-      "https://liknine.github.io/mestniybot/images/product_1_05b05974.jpg",
-      "https://liknine.github.io/mestniybot/images/product_1_a3a5a5f9.jpg"
-    ]
-  },
-  {
     "id": 3,
     "category_id": 5,
     "brand": "weekend",
