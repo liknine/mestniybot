@@ -895,37 +895,6 @@
     ]
   },
   {
-    "id": 42,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Свитшот C.P. Company",
-    "description": "Классный свитшот от C.P. Company, в темно синем цвете. Размер: M. Дата изготовления: 02/2020. Есть следы носок.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7500.0,
-      "USD": 93.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9360"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9360",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_42_fdffe33d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_42_002f1720.jpg",
-      "https://liknine.github.io/mestniybot/images/product_42_78b0a1fb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_42_d7a2d5a9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_42_55624bee.jpg"
-    ]
-  },
-  {
     "id": 43,
     "category_id": 6,
     "brand": "stone",
