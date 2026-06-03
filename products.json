@@ -2135,5 +2135,33 @@
       "https://liknine.github.io/mestniybot/images/product_85_25b109b5.jpg",
       "https://liknine.github.io/mestniybot/images/product_85_1317e72e.jpg"
     ]
+  },
+  {
+    "id": 86,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Nike Air Max 1 НОВЫЕ",
+    "description": "Абсолютно новая, классная, яркая пара. В комплекте идут с коробкой, отлично сидят на ноге. Самое то, на текущий сезон. Размеры:\n42 ( 26.5 СМ стелька )\n44 ( 28 СМ стелька )",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniybaryga/10022"
+    },
+    "sizes": [
+      "42",
+      "44"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniybaryga/10022",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_d56ada48.jpg"
+    ]
   }
 ]
