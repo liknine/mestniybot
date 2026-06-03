@@ -2104,5 +2104,32 @@
       "https://liknine.github.io/mestniybot/images/product_84_ba78afba.jpg",
       "https://liknine.github.io/mestniybot/images/product_84_82de448f.jpg"
     ]
+  },
+  {
+    "id": 85,
+    "category_id": 6,
+    "brand": "stone",
+    "name": "Свитшот Stone Island",
+    "description": "Классный, плотный, базовый свитшот от Stone Island. Коллекция: 77. Отличное состояние, есть следы носок.",
+    "price_byn": 330.0,
+    "prices": {
+      "BYN": 330.0,
+      "RUB": 9700.0,
+      "USD": 123.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniybaryga/10016"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniybaryga/10016",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_d35ce8ac.jpg"
+    ]
   }
 ]
