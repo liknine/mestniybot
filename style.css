@@ -411,6 +411,17 @@ button {
     -webkit-line-clamp: 2;
 }
 
+.product-card-sizes {
+    margin-top: 5px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .product-card-brand {
     margin-top: 5px;
     color: var(--muted);

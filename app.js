@@ -446,6 +446,12 @@ function getStockStatus(product) {
     return { text: 'В наличии', className: 'in-stock' };
 }
 
+function productCardSizes(product) {
+    const sizes = getProductSizes(product);
+    if (!sizes.length) return '';
+    return '<div class="product-card-sizes">' + escapeHtml(sizes.join(', ')) + '</div>';
+}
+
 function productCard(product) {
     const isFav = state.favorites.includes(Number(product.id));
     const status = getStockStatus(product);
@@ -460,6 +466,7 @@ function productCard(product) {
             '</div>' +
             '<div class="product-card-body">' +
                 '<h3>' + escapeHtml(product.name) + '</h3>' +
+                productCardSizes(product) +
                 '<div class="product-card-brand">' + escapeHtml(getBrandName(product.brand)) + '</div>' +
                 '<div class="product-card-price">' + formatPrice(product.price_byn, state.currency, product) + '</div>' +
                 '<div class="product-status ' + status.className + '">' + status.text + '</div>' +
