@@ -62,37 +62,6 @@
     ]
   },
   {
-    "id": 6,
-    "category_id": 1,
-    "brand": "adidas",
-    "name": "Ботинки Adidas x Yeezy Dsrt",
-    "description": "Очень классные, редкая пара, отличное состояние, недалеки от новых! В комплекте с коробкой, сертификат Poizon! Оригинал! Есть рефлективные элементы! Без нюансов! Длина по стельке: 27 CM.",
-    "price_byn": 430.0,
-    "prices": {
-      "BYN": 430.0,
-      "RUB": 12500.0,
-      "USD": 161.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8672"
-    },
-    "sizes": [
-      "42.5"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8672",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_6_04b41120.jpg",
-      "https://liknine.github.io/mestniybot/images/product_6_d16b7e1e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_6_ea35e7ad.jpg",
-      "https://liknine.github.io/mestniybot/images/product_6_555909d3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_6_04d3b36e.jpg"
-    ]
-  },
-  {
     "id": 8,
     "category_id": 6,
     "brand": "cp",
