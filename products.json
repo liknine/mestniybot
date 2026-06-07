@@ -155,37 +155,6 @@
     ]
   },
   {
-    "id": 11,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Свитшот C.P. Company",
-    "description": "Плотный, очень красивый, необычный дизайн за счёт принта спереди и сзади! На принте есть небольшие трещинки, но совсем не заметные! Дата изготовления: 10/2019",
-    "price_byn": 200.0,
-    "prices": {
-      "BYN": 200.0,
-      "RUB": 6000.0,
-      "USD": 75.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8745"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8745",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_11_03a6219d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_45c4d31e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_de66dd7f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_c9919193.jpg",
-      "https://liknine.github.io/mestniybot/images/product_11_52497005.jpg"
-    ]
-  },
-  {
     "id": 12,
     "category_id": 8,
     "brand": "weekend",
