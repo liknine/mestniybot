@@ -12,7 +12,7 @@ window.addEventListener('error', function(event) {
 });
 
 // ==================== CONFIG ====================
-const BUILD_VERSION = 'delete_id_fix_1';
+const BUILD_VERSION = 'sizes_on_photo_1';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
 const BOT_USERNAME = 'testmestniybot';
 const ADMIN_IDS = [1639462053, 8465820993];
@@ -446,27 +446,23 @@ function getStockStatus(product) {
     return { text: 'В наличии', className: 'in-stock' };
 }
 
-function productCardSizes(product) {
-    const sizes = getProductSizes(product);
-    if (!sizes.length) return '';
-    return '<div class="product-card-sizes">' + escapeHtml(sizes.join(', ')) + '</div>';
-}
-
 function productCard(product) {
     const isFav = state.favorites.includes(Number(product.id));
     const status = getStockStatus(product);
     const order = isOrderProduct(product);
     const image = product.images && product.images[0] ? product.images[0] : '';
+    const sizes = getProductSizes(product);
+    const sizeBadge = sizes.length ? '<div class="product-size-badge">' + escapeHtml(sizes.join(', ')) + '</div>' : '';
     return '' +
         '<article class="product-card" data-id="' + escapeHtml(product.id) + '" role="button" tabindex="0">' +
             '<div class="product-image-wrap">' +
                 imageTag(image, product.name, 'product-image') +
                 (hasDiscount(product, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
+                sizeBadge +
                 '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + escapeHtml(product.id) + '" type="button" aria-label="Избранное"><i data-lucide="heart"></i></button>' +
             '</div>' +
             '<div class="product-card-body">' +
                 '<h3>' + escapeHtml(product.name) + '</h3>' +
-                productCardSizes(product) +
                 '<div class="product-card-brand">' + escapeHtml(getBrandName(product.brand)) + '</div>' +
                 '<div class="product-card-price">' + formatPrice(product.price_byn, state.currency, product) + '</div>' +
                 '<div class="product-status ' + status.className + '">' + status.text + '</div>' +

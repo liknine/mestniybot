@@ -363,6 +363,27 @@ button {
     font-weight: 800;
 }
 
+
+.product-size-badge {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    max-width: calc(100% - 52px);
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(46, 204, 113, 0.92);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.15;
+    font-weight: 800;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .product-favorite {
     position: absolute;
     right: 7px;
@@ -409,17 +430,6 @@ button {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-}
-
-.product-card-sizes {
-    margin-top: 5px;
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.25;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .product-card-brand {
