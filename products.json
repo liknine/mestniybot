@@ -771,37 +771,6 @@
     ]
   },
   {
-    "id": 45,
-    "category_id": 2,
-    "brand": "cp",
-    "name": "Овершот C.P. Company НОВЫЙ",
-    "description": "Классный. Состояние новый, но нету навесных бирок ( этикеток ), пленки на линзе. Оригинал. Размер: XXL. Дата изготовления: 06/2022.",
-    "price_byn": 450.0,
-    "prices": {
-      "BYN": 450.0,
-      "RUB": 13200.0,
-      "USD": 168.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/9420"
-    },
-    "sizes": [
-      "XXL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/9420",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_45_0c577437.jpg",
-      "https://liknine.github.io/mestniybot/images/product_45_8e01b6f9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_45_948e0d17.jpg",
-      "https://liknine.github.io/mestniybot/images/product_45_877be400.jpg",
-      "https://liknine.github.io/mestniybot/images/product_45_662f0a6e.jpg"
-    ]
-  },
-  {
     "id": 46,
     "category_id": 6,
     "brand": "stone",
