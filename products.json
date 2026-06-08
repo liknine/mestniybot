@@ -771,37 +771,6 @@
     ]
   },
   {
-    "id": 46,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Классный. Необычный дизайн за счет вышитого логотипа спереди. Есть следы носок. Коллекция: 69. Размер по бирке: L. Фактический размер: M - L.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10400.0,
-      "USD": 131.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9430"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9430",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_46_d1db2b9e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_46_806136f1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_46_f1358f70.jpg",
-      "https://liknine.github.io/mestniybot/images/product_46_e8eca98c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_46_37235ba9.jpg"
-    ]
-  },
-  {
     "id": 47,
     "category_id": 10,
     "brand": "lonsdale",
