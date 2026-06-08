@@ -527,37 +527,6 @@
     ]
   },
   {
-    "id": 28,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Классный. Легкий. С патчем на рукаве, база. Коллекция: 56. В отличном состоянии. Оригинал. Минимальные следы носок",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10000.0,
-      "USD": 127.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9085"
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9085",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_28_0be32b6f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_28_cc8daa72.jpg",
-      "https://liknine.github.io/mestniybot/images/product_28_5a5b44ca.jpg",
-      "https://liknine.github.io/mestniybot/images/product_28_17022711.jpg",
-      "https://liknine.github.io/mestniybot/images/product_28_edac9bd1.jpg"
-    ]
-  },
-  {
     "id": 29,
     "category_id": 8,
     "brand": "nike",
