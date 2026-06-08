@@ -1858,37 +1858,6 @@
     ]
   },
   {
-    "id": 81,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Свитшот C.P. Company",
-    "description": "Необычный дизайн, за счет логотип спереди, прорезиненный, а также, логотип на задней части горла, тоже прорезиненный. Данная модель, очень похожа на Metropolis Series. Но это не она. Размер по бирке: S. Фактический размер: S - M.  Дата изготовления: 02/2020.",
-    "price_byn": 180.0,
-    "prices": {
-      "BYN": 180.0,
-      "RUB": 5500.0,
-      "USD": 67.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9976"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9976",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_81_cec65b48.jpg",
-      "https://liknine.github.io/mestniybot/images/product_81_a072724d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_81_e1a5d8f7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_81_34b8d4aa.jpg",
-      "https://liknine.github.io/mestniybot/images/product_81_a2709569.jpg"
-    ]
-  },
-  {
     "id": 82,
     "category_id": 6,
     "brand": "cp",
