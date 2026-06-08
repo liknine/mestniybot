@@ -1765,37 +1765,6 @@
     ]
   },
   {
-    "id": 82,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Худи C.P. Company",
-    "description": "Очень классный. Плотный материал. Яркий. Необычный дизайн, за счет прорезиненного логотипа на капюшоне. Размер по бирке: S. Фактический размер: S - M. Дата изготовления: 12/2020.",
-    "price_byn": 240.0,
-    "prices": {
-      "BYN": 240.0,
-      "RUB": 7300.0,
-      "USD": 89.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9981"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9981",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_82_ab935d82.jpg",
-      "https://liknine.github.io/mestniybot/images/product_82_c726cfc5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_82_8751038e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_82_d3ebf36b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_82_620a5d94.jpg"
-    ]
-  },
-  {
     "id": 83,
     "category_id": 6,
     "brand": "stone",
