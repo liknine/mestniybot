@@ -1765,37 +1765,6 @@
     ]
   },
   {
-    "id": 80,
-    "category_id": 4,
-    "brand": "stone",
-    "name": "Рубашка Stone Island Marina",
-    "description": "Винтажная. Очень редкая коллекция: Marina. Классный, песчаный цвет, отлично сидит на теле. Размер: XXL.",
-    "price_byn": 230.0,
-    "prices": {
-      "BYN": 230.0,
-      "RUB": 7000.0,
-      "USD": 86.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9961"
-    },
-    "sizes": [
-      "XXL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9961",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_80_e9d829fd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_80_33c81771.jpg",
-      "https://liknine.github.io/mestniybot/images/product_80_2f7b8681.jpg",
-      "https://liknine.github.io/mestniybot/images/product_80_112cff07.jpg",
-      "https://liknine.github.io/mestniybot/images/product_80_b4a9adfd.jpg"
-    ]
-  },
-  {
     "id": 82,
     "category_id": 6,
     "brand": "cp",
