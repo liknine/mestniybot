@@ -1393,37 +1393,6 @@
     ]
   },
   {
-    "id": 65,
-    "category_id": 6,
-    "brand": "mastrum",
-    "name": "Худи Ma.Strum",
-    "description": "Плотный материал. Черный цвет. Оригинал. Отличное состояние, есть следы носок. Размер по бирке: XS. Фактический размер: S - M.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7500.0,
-      "USD": 93.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9816"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9816",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_65_cbf28a1f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_65_6be86cef.jpg",
-      "https://liknine.github.io/mestniybot/images/product_65_278c8cda.jpg",
-      "https://liknine.github.io/mestniybot/images/product_65_90026011.jpg",
-      "https://liknine.github.io/mestniybot/images/product_65_c020a2a9.jpg"
-    ]
-  },
-  {
     "id": 66,
     "category_id": 6,
     "brand": "lonsdale",
