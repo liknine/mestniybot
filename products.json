@@ -62,37 +62,6 @@
     ]
   },
   {
-    "id": 8,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Зип - Худи C.P. Company Goggle",
-    "description": "C.P. COMPANY Diagonal Raised Fleece Zipped Hoodie. Размер М. Отличное состояние, есть следы носки! Очень классная, плотный материал, приятный цвет, оригинал! Модель 12 месяца 2022 года!",
-    "price_byn": 430.0,
-    "prices": {
-      "BYN": 430.0,
-      "RUB": 12500.0,
-      "USD": 161.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8682"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8682",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_8_9fa8189c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_8_4c8c22b8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_8_72cde8f3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_8_0f4a5ea1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_8_50f31b22.jpg"
-    ]
-  },
-  {
     "id": 9,
     "category_id": 6,
     "brand": "stone",
