@@ -1455,37 +1455,6 @@
     ]
   },
   {
-    "id": 75,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Зип - Худи C.P. Company Goggle",
-    "description": "Очень классный цвет, приятный плотный материал, отличное состояние, есть следы носок. Размер: M. Дата изготовления: 02/2020.",
-    "price_byn": 380.0,
-    "prices": {
-      "BYN": 380.0,
-      "RUB": 11300.0,
-      "USD": 142.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9889"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9889",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_75_e5be9e3c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_75_58a6a626.jpg",
-      "https://liknine.github.io/mestniybot/images/product_75_2aa2302d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_75_d337bc24.jpg",
-      "https://liknine.github.io/mestniybot/images/product_75_6aa64659.jpg"
-    ]
-  },
-  {
     "id": 76,
     "category_id": 5,
     "brand": "polo",
