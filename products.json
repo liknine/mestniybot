@@ -1207,37 +1207,6 @@
     ]
   },
   {
-    "id": 64,
-    "category_id": 7,
-    "brand": "tommy",
-    "name": "Штаны Palm Angels",
-    "description": "Очень приятные. Нежный цвет. Отличное состояние, есть следы носок. Оригинал, модель на CLG коде. Размер по бирке: S. Фактический размер: S - M.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8300.0,
-      "USD": 104.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9809"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9809",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_64_2ca2326a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_64_6322c0df.jpg",
-      "https://liknine.github.io/mestniybot/images/product_64_3a7f7c2a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_64_eccae9d1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_64_350693af.jpg"
-    ]
-  },
-  {
     "id": 66,
     "category_id": 6,
     "brand": "lonsdale",
