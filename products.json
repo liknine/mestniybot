@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 5,
-    "category_id": 10,
-    "brand": "alyx",
-    "name": "Браслет ALYX",
-    "description": "Красивый. Приятный цвет, широкий ремешок. В комплекте с коробкой, навесные бирки! Отличное состояние, но если следы носок!",
-    "price_byn": 180.0,
-    "prices": {
-      "BYN": 180.0,
-      "RUB": 5400.0,
-      "USD": 67.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8667"
-    },
-    "sizes": [
-      "UNI"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8667",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_5_9747a9c2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_5_94c0a00a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_5_137cda84.jpg",
-      "https://liknine.github.io/mestniybot/images/product_5_7f88ff0e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_5_9cb8551e.jpg"
-    ]
-  },
-  {
     "id": 10,
     "category_id": 10,
     "brand": "stone",
