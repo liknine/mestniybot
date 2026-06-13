@@ -62,37 +62,6 @@
     ]
   },
   {
-    "id": 9,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Очень классный, плотный, отличное состояние, присутствуют небольшие следы носок! Продажа со взрослым патчем! Размер по бирке: 14/164. Фактический размер: S - M. Коллекция: 65. Autumn / Winter 2016",
-    "price_byn": 270.0,
-    "prices": {
-      "BYN": 270.0,
-      "RUB": 7900.0,
-      "USD": 101.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8692"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8692",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_9_0ac440ae.jpg",
-      "https://liknine.github.io/mestniybot/images/product_9_530ad659.jpg",
-      "https://liknine.github.io/mestniybot/images/product_9_80c10709.jpg",
-      "https://liknine.github.io/mestniybot/images/product_9_d120fedf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_9_51ba41ae.jpg"
-    ]
-  },
-  {
     "id": 10,
     "category_id": 10,
     "brand": "stone",
@@ -524,37 +493,6 @@
       "https://liknine.github.io/mestniybot/images/product_27_481fa4d0.jpg",
       "https://liknine.github.io/mestniybot/images/product_27_54d8a89d.jpg",
       "https://liknine.github.io/mestniybot/images/product_27_85e320ba.jpg"
-    ]
-  },
-  {
-    "id": 29,
-    "category_id": 8,
-    "brand": "nike",
-    "name": "Шорты Nike Tech Fleece",
-    "description": "Отличное состояние! Очень редкие, в продаже таких почти нигде нету. Редкая и классная модель!",
-    "price_byn": 230.0,
-    "prices": {
-      "BYN": 230.0,
-      "RUB": 7000.0,
-      "USD": 86.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9108"
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9108",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_29_a9a1234f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_29_91efee2d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_29_a57c04e2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_29_a1951401.jpg",
-      "https://liknine.github.io/mestniybot/images/product_29_16fafb0b.jpg"
     ]
   },
   {
