@@ -1487,37 +1487,6 @@
     ]
   },
   {
-    "id": 87,
-    "category_id": 1,
-    "brand": "nike",
-    "name": "Nike Dunk High НОВЫЕ",
-    "description": "Приятные, оригинал, абсолютно новые! В комплекте с коробкой. Размер: 42.5 / 27 СМ ( по стельке )",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 8900.0,
-      "USD": 112.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/10032"
-    },
-    "sizes": [
-      "42.5"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/10032",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_87_4c6d35c9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_87_2be96bc5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_87_59a62657.jpg",
-      "https://liknine.github.io/mestniybot/images/product_87_762ddb3e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_87_c266affa.jpg"
-    ]
-  },
-  {
     "id": 88,
     "category_id": 1,
     "brand": "adidas",
