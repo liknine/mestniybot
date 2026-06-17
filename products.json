@@ -1,36 +1,5 @@
 [
   {
-    "id": 20,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Лонгслив Stone Island",
-    "description": "Очень хорошее состояние, есть следы носок, база. Простой лонгслив с патчем на рукаве. Размер по бирке: M. Фактический размер: S - M. Под CLG кодом срезаны бирки.",
-    "price_byn": 320.0,
-    "prices": {
-      "BYN": 320.0,
-      "RUB": 9500.0,
-      "USD": 119.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8880"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8880",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_20_8223be4b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_20_bfaf1247.jpg",
-      "https://liknine.github.io/mestniybot/images/product_20_295f885e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_20_639d38fa.jpg",
-      "https://liknine.github.io/mestniybot/images/product_20_a3fb69fd.jpg"
-    ]
-  },
-  {
     "id": 22,
     "category_id": 1,
     "brand": "raf",
