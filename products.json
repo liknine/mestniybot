@@ -31,38 +31,6 @@
     ]
   },
   {
-    "id": 88,
-    "category_id": 1,
-    "brand": "adidas",
-    "name": "Кроссовки Adidas Crazychaos 2000 НОВЫЕ",
-    "description": "Абсолютно новые, классная, и очень удобная пара. В комплекте с коробкой, и этикеткой. Размер по бирке: \n43 1/3 | 27.5 СМ\n44 | 28 СМ",
-    "price_byn": 270.0,
-    "prices": {
-      "BYN": 270.0,
-      "RUB": 8000.0,
-      "USD": 101.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/10037"
-    },
-    "sizes": [
-      "43",
-      "44"
-    ],
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/10037",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_88_04f643c0.jpg",
-      "https://liknine.github.io/mestniybot/images/product_88_8ddd83af.jpg",
-      "https://liknine.github.io/mestniybot/images/product_88_05f6da64.jpg",
-      "https://liknine.github.io/mestniybot/images/product_88_c45c3e0f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_88_2e3a687d.jpg"
-    ]
-  },
-  {
     "id": 89,
     "category_id": 1,
     "brand": "raf",
