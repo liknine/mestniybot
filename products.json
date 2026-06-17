@@ -1,36 +1,5 @@
 [
   {
-    "id": 48,
-    "category_id": 6,
-    "brand": "lonsdale",
-    "name": "Свитшот Lonsdale",
-    "description": "Отличное состояние. Есть следы носок. Размер по бирке: S. Фактический размер: M - L.",
-    "price_byn": 140.0,
-    "prices": {
-      "BYN": 140.0,
-      "RUB": 4500.0,
-      "USD": 52.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9537"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9537",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_48_69eb6811.jpg",
-      "https://liknine.github.io/mestniybot/images/product_48_a95ef4b7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_48_fc839dbc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_48_8d0b42c3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_48_e0a08260.jpg"
-    ]
-  },
-  {
     "id": 49,
     "category_id": 6,
     "brand": "stone",
