@@ -1,36 +1,5 @@
 [
   {
-    "id": 51,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Худи C.P. Company Tracery Goggle",
-    "description": "Очень классное. Редкое худи коллекции Tracery. Крутой дизайн, даже очень! Редкость в наше время! Размер по бирке: M. Фактический размер: M - L. Дата изготовления: 12/2022.",
-    "price_byn": 570.0,
-    "prices": {
-      "BYN": 570.0,
-      "RUB": 13500.0,
-      "USD": 213.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9613"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9613",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_51_94fd57d8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_51_8742ce85.jpg",
-      "https://liknine.github.io/mestniybot/images/product_51_c077aea0.jpg",
-      "https://liknine.github.io/mestniybot/images/product_51_bb4f521a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_51_7185e2d1.jpg"
-    ]
-  },
-  {
     "id": 52,
     "category_id": 2,
     "brand": "weekend",
