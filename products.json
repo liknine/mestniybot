@@ -1,36 +1,5 @@
 [
   {
-    "id": 13,
-    "category_id": 10,
-    "brand": "eastpak",
-    "name": "Барсетка Eastpak НОВАЯ",
-    "description": "Очень классные, необычный цвет, красиво выглядят на теле! Полностью новые, в комплекте с навесными бирками! Оригинал! Объём 2 литра! Есть рефлективные элементы! Дополнительный карман сзади!",
-    "price_byn": 55.0,
-    "prices": {
-      "BYN": 55.0,
-      "RUB": 1900.0,
-      "USD": 20.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/8760"
-    },
-    "sizes": [
-      "ONE SIZE"
-    ],
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/8760",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_13_b172ddf3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_13_3b7993eb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_13_297757a5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_13_c1f9b41d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_13_1b0d7400.jpg"
-    ]
-  },
-  {
     "id": 14,
     "category_id": 1,
     "brand": "nike",
