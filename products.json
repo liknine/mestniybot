@@ -1,36 +1,5 @@
 [
   {
-    "id": 19,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Приятный свитшот. Оригинал. Размер по бирке: S. Фактический размер S - M. Коллекция: 68. Spring / Summer 2018. Made in Romania.",
-    "price_byn": 340.0,
-    "prices": {
-      "BYN": 340.0,
-      "RUB": 9900.0,
-      "USD": 127.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8870"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8870",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_19_7b96d2a7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_19_c0e99041.jpg",
-      "https://liknine.github.io/mestniybot/images/product_19_70d9eb51.jpg",
-      "https://liknine.github.io/mestniybot/images/product_19_a5b70da2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_19_c3280f0e.jpg"
-    ]
-  },
-  {
     "id": 20,
     "category_id": 6,
     "brand": "stone",
