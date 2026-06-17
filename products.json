@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 62,
-    "category_id": 6,
-    "brand": "cp",
-    "name": "Зип - Худи C.P. Company Goggle",
-    "description": "Плотная. Отлично сидит на теле. Легендарная зипка. Размер: М. Отличное состояние, есть следы носок. Дата изготовления: 06/2022.",
-    "price_byn": 400.0,
-    "prices": {
-      "BYN": 400.0,
-      "RUB": 11800.0,
-      "USD": 149.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9799"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9799",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_62_855f309b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_62_b3a79e7d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_62_f4d47416.jpg",
-      "https://liknine.github.io/mestniybot/images/product_62_afff2790.jpg",
-      "https://liknine.github.io/mestniybot/images/product_62_349b0363.jpg"
-    ]
-  },
-  {
     "id": 66,
     "category_id": 6,
     "brand": "lonsdale",
