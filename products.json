@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 74,
-    "category_id": 6,
-    "brand": "mastrum",
-    "name": "Худи Ma.Strum",
-    "description": "Плотное худи. Отлично сидит на теле. Отличное состояние, есть минимальные следы носок! Размер по бирке: S. Фактический размер: M.",
-    "price_byn": 240.0,
-    "prices": {
-      "BYN": 240.0,
-      "RUB": 7200.0,
-      "USD": 89.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9884"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9884",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_74_14145828.jpg",
-      "https://liknine.github.io/mestniybot/images/product_74_12d15bce.jpg",
-      "https://liknine.github.io/mestniybot/images/product_74_a061f20b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_74_896a7438.jpg",
-      "https://liknine.github.io/mestniybot/images/product_74_1464cfc1.jpg"
-    ]
-  },
-  {
     "id": 76,
     "category_id": 5,
     "brand": "polo",
