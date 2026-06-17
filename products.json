@@ -1,36 +1,5 @@
 [
   {
-    "id": 4,
-    "category_id": 9,
-    "brand": "cp",
-    "name": "Шапка C.P. Company Knit НОВАЯ",
-    "description": "Очень красивая, приятная, нежная. Абсолютно новая, в комплекте с навесными бирками, пакет! Линза в плёнке! Оригинал! Отлично сидит на голове! Коллекция 103. Размер: UNI",
-    "price_byn": 360.0,
-    "prices": {
-      "BYN": 360.0,
-      "RUB": 10400.0,
-      "USD": 145.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/8662"
-    },
-    "sizes": [
-      "UNI"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/8662",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_4_366c8d6c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_4_5324a2b8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_4_72d9b30e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_4_0e0b90ae.jpg",
-      "https://liknine.github.io/mestniybot/images/product_4_83a61000.jpg"
-    ]
-  },
-  {
     "id": 10,
     "category_id": 10,
     "brand": "stone",
