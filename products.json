@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 76,
-    "category_id": 5,
-    "brand": "polo",
-    "name": "Поло Ralph Lauren",
-    "description": "Темное, классное поло от Polo Ralph Lauren. Необычный дизайн за счет множества логотипов. Размер: XL.",
-    "price_byn": 85.0,
-    "prices": {
-      "BYN": 85.0,
-      "RUB": 2900.0,
-      "USD": 31.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9894"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9894",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_76_49877aa1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_76_d455aeee.jpg",
-      "https://liknine.github.io/mestniybot/images/product_76_3f7d7ede.jpg",
-      "https://liknine.github.io/mestniybot/images/product_76_aea4847e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_76_1c2ccd86.jpg"
-    ]
-  },
-  {
     "id": 78,
     "category_id": 6,
     "brand": "weekend",
