@@ -1,36 +1,5 @@
 [
   {
-    "id": 15,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Худи Stone Island Patch Program",
-    "description": "Отличное состояние, белый цвет, без нюансов! Фирменный логотип на груди! Размер по бирке S, фактический S - M",
-    "price_byn": 320.0,
-    "prices": {
-      "BYN": 320.0,
-      "RUB": 9500.0,
-      "USD": 120.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8770"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8770",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_15_11f70871.jpg",
-      "https://liknine.github.io/mestniybot/images/product_15_9ec1150c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_15_52417d69.jpg",
-      "https://liknine.github.io/mestniybot/images/product_15_a71efbd0.jpg",
-      "https://liknine.github.io/mestniybot/images/product_15_0433e832.jpg"
-    ]
-  },
-  {
     "id": 16,
     "category_id": 2,
     "brand": "mastrum",
