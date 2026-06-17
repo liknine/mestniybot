@@ -1,36 +1,5 @@
 [
   {
-    "id": 22,
-    "category_id": 1,
-    "brand": "raf",
-    "name": "Кроссовки Raf Simons Ultrasceptre",
-    "description": "Очень хорошее состояние! Очень близки к полному идеалу! Размер по бирке 40, но данная модель всегда большемерит. Фактический размер: 41.5 ( 26.5 СМ по стельке ) В комплекте с родной коробкой!",
-    "price_byn": 680.0,
-    "prices": {
-      "BYN": 680.0,
-      "RUB": 19300.0,
-      "USD": 254.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8890"
-    },
-    "sizes": [
-      "41.5"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8890",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_22_a5073930.jpg",
-      "https://liknine.github.io/mestniybot/images/product_22_d9009918.jpg",
-      "https://liknine.github.io/mestniybot/images/product_22_4634024b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_22_212a2e3e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_22_f400d104.jpg"
-    ]
-  },
-  {
     "id": 24,
     "category_id": 6,
     "brand": "mastrum",
