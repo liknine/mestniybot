@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 90,
-    "category_id": 1,
-    "brand": "nike",
-    "name": "Кроссовки Nike Air Max 1 НОВЫЕ",
-    "description": "Очень классные, удобные, абсолютно новые, оригинал. В комплекте с коробкой. Размер по бирке: 42.5 | 27 СМ ( по стельке )",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/10048"
-    },
-    "sizes": [
-      "42.5"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/10048",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_90_06591371.jpg",
-      "https://liknine.github.io/mestniybot/images/product_90_680d4f79.jpg",
-      "https://liknine.github.io/mestniybot/images/product_90_76ddd97f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_90_7d86ab45.jpg",
-      "https://liknine.github.io/mestniybot/images/product_90_ab0d9fe8.jpg"
-    ]
-  },
-  {
     "id": 91,
     "category_id": 6,
     "brand": "stone",
