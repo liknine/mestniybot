@@ -474,7 +474,6 @@ function productCard(product) {
             '</div>' +
             '<div class="product-card-body">' +
                 '<h3>' + escapeHtml(product.name) + '</h3>' +
-                '<div class="product-card-brand">' + escapeHtml(getBrandName(product.brand)) + '</div>' +
                 '<div class="product-card-price">' + formatPrice(product.price_byn, state.currency, product) + '</div>' +
                 '<div class="product-status ' + status.className + '">' + status.text + '</div>' +
             '</div>' +
