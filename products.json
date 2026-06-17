@@ -1,36 +1,5 @@
 [
   {
-    "id": 54,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Очень классный. Плотный. Без нюансов, есть следы носок. Коллекция: 65. Размер по бирке: М. Фактический размер: M - L.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9700.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9648"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9648",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_54_b5a7bee5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_84aeed11.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_a7c68a98.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_18a527b2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_54_b8bc87b3.jpg"
-    ]
-  },
-  {
     "id": 55,
     "category_id": 6,
     "brand": "stone",
