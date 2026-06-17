@@ -1,36 +1,5 @@
 [
   {
-    "id": 12,
-    "category_id": 8,
-    "brand": "weekend",
-    "name": "Шорты Weekend Offender Nylon",
-    "description": "Очень классные, нейлоновые, переливаются на солнце, металлический логотип, размер по бирке S, фактический S - M",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4500.0,
-      "USD": 56.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8755"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8755",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_12_c3c8b133.jpg",
-      "https://liknine.github.io/mestniybot/images/product_12_aaa232a1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_12_4815becc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_12_8634ea72.jpg",
-      "https://liknine.github.io/mestniybot/images/product_12_92fe3fb7.jpg"
-    ]
-  },
-  {
     "id": 13,
     "category_id": 10,
     "brand": "eastpak",
