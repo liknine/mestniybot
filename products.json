@@ -1,36 +1,5 @@
 [
   {
-    "id": 16,
-    "category_id": 2,
-    "brand": "mastrum",
-    "name": "Овершот Ma.Strum",
-    "description": "Плотный, красивый цвет, патч на плече, как все любят! Размер L! Отличное состояние, минимальные следы носок",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8775"
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8775",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_16_e8f4fcbc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_16_e796badf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_16_85843d08.jpg",
-      "https://liknine.github.io/mestniybot/images/product_16_54062542.jpg",
-      "https://liknine.github.io/mestniybot/images/product_16_71ae5ac7.jpg"
-    ]
-  },
-  {
     "id": 18,
     "category_id": 10,
     "brand": "cp",
