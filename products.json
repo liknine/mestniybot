@@ -1,36 +1,5 @@
 [
   {
-    "id": 18,
-    "category_id": 10,
-    "brand": "cp",
-    "name": "Сумка C.P. Company Nylon",
-    "description": "Очень классная, удобная, нейлон, переливается на солнце, офигенный фит, оригинал!",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9600.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/8820"
-    },
-    "sizes": [
-      "ONE SIZE"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/8820",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_18_ee15d816.jpg",
-      "https://liknine.github.io/mestniybot/images/product_18_e3bb89c2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_18_f01fc905.jpg",
-      "https://liknine.github.io/mestniybot/images/product_18_39592e77.jpg",
-      "https://liknine.github.io/mestniybot/images/product_18_ebaadfd5.jpg"
-    ]
-  },
-  {
     "id": 19,
     "category_id": 6,
     "brand": "stone",
