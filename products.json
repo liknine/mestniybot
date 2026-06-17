@@ -1,36 +1,5 @@
 [
   {
-    "id": 55,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Худи Stone island Off Dye",
-    "description": "Очень классное худи. Плотное, самый хайп именно сейчас! Каждая вещь от Stone Island, линейки Off Dye, имеет свою уникальность, так как, все вещи Off Dye, окрашиваются в ручную, и одинаковых вещей этой линейки быть не может! Коллекция: 75. Размер по бирке: L. Фактический размер: L - XL.",
-    "price_byn": 950.0,
-    "prices": {
-      "BYN": 950.0,
-      "RUB": 27500.0,
-      "USD": 355.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9658"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9658",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_55_c66d4a70.jpg",
-      "https://liknine.github.io/mestniybot/images/product_55_8655fd33.jpg",
-      "https://liknine.github.io/mestniybot/images/product_55_4bd41869.jpg",
-      "https://liknine.github.io/mestniybot/images/product_55_7dbdd4cf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_55_c548d80d.jpg"
-    ]
-  },
-  {
     "id": 91,
     "category_id": 6,
     "brand": "stone",
