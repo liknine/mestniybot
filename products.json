@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 79,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Зип - Худи Stone Island",
-    "description": "Классный цвет. Плотный материал, удобная. База, с патчем на рукаве, все, как мы любим. Коллекция: 61. Оригинал.",
-    "price_byn": 450.0,
-    "prices": {
-      "BYN": 450.0,
-      "RUB": 13100.0,
-      "USD": 168.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9956"
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9956",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_79_bd95a6bd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_79_2df86c67.jpg",
-      "https://liknine.github.io/mestniybot/images/product_79_aa9137ed.jpg",
-      "https://liknine.github.io/mestniybot/images/product_79_c5bd0e72.jpg",
-      "https://liknine.github.io/mestniybot/images/product_79_fd94aac3.jpg"
-    ]
-  },
-  {
     "id": 86,
     "category_id": 1,
     "brand": "nike",
