@@ -361,13 +361,24 @@ function getCategoryName(product) {
 }
 
 function getBrandName(key) {
-    const value = String(key || '').trim();
-    return BRANDS[value] || BRAND_ALIASES[value] || value || 'Бренд';
+    const value = cleanBrandValue(key);
+    if (!value) return 'Бренд';
+    const lookup = value.toLowerCase();
+    return BRANDS[value] || BRANDS[lookup] || BRAND_ALIASES[lookup] || value;
+}
+
+function cleanBrandValue(value) {
+    return String(value || '').trim().replace(/\s+/g, ' ');
+}
+
+function getBrandFilterKey(brand) {
+    const value = cleanBrandValue(brand);
+    return value ? getBrandName(value).toLowerCase().replace(/\s+/g, ' ') : '';
 }
 
 function brandMatches(productBrand, selectedBrand) {
     if (!selectedBrand || selectedBrand === 'all') return true;
-    return String(productBrand || '').toLowerCase() === String(selectedBrand || '').toLowerCase();
+    return getBrandFilterKey(productBrand) === getBrandFilterKey(selectedBrand);
 }
 
 function money(value, currency) {
@@ -656,16 +667,23 @@ function renderCatalogBrands() {
     const orderProducts = getOrderProducts();
     const groups = new Map();
     orderProducts.forEach(function(product) {
-        const brand = String(product.brand || 'no_name');
-        if (!groups.has(brand)) groups.set(brand, []);
-        groups.get(brand).push(product);
+        const brand = cleanBrandValue(product.brand);
+        const key = getBrandFilterKey(brand);
+        if (!brand || !key) return;
+        if (!groups.has(key)) {
+            groups.set(key, {
+                title: getBrandName(brand),
+                products: []
+            });
+        }
+        groups.get(key).products.push(product);
     });
-    const cards = Array.from(groups.entries()).map(function(entry) {
-        const products = entry[1];
+    const cards = Array.from(groups.values()).map(function(group) {
+        const products = group.products;
         const product = lastProduct(products);
         return {
-            id: entry[0],
-            title: getBrandName(entry[0]),
+            id: group.title,
+            title: group.title,
             count: products.length,
             image: product?.images?.[0] || ''
         };
@@ -1183,12 +1201,17 @@ function openExternalLink(link) {
     else window.open(link, '_blank');
 }
 
+function isTelegramLink(link) {
+    return /^https?:\/\/t\.me\//i.test(String(link || '').trim());
+}
+
 function openTelegramOrExternal(link) {
-    if (!link) return;
-    if (tg && typeof tg.openTelegramLink === 'function' && /^https:\/\/t\.me\//i.test(link)) {
-        tg.openTelegramLink(link);
+    const cleanLink = String(link || '').trim();
+    if (!cleanLink) return;
+    if (tg && typeof tg.openTelegramLink === 'function' && isTelegramLink(cleanLink)) {
+        tg.openTelegramLink(cleanLink.replace(/^http:\/\//i, 'https://'));
     } else {
-        window.open(link, '_blank');
+        window.open(cleanLink, '_blank');
     }
 }
 
@@ -1372,7 +1395,8 @@ function initListeners() {
         const updateCard = event.target.closest('.update-card');
         if (updateCard) {
             const update = state.updates[Number(updateCard.dataset.index)];
-            if (update?.link) openExternalLink(update.link);
+            const postUrl = String(update?.post_url || '').trim();
+            if (isTelegramLink(postUrl)) openTelegramOrExternal(postUrl);
             return;
         }
 
