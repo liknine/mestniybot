@@ -1,38 +1,5 @@
 [
   {
-    "id": 50,
-    "category_id": 1,
-    "brand": "jordan",
-    "name": "Кроссовки Nike x Air Jordan 1 Low НОВЫЕ",
-    "description": "Абсолютно новые! Классные! Отлично сидят на ноге! Самое то, на предстоящую погоду! В комплекте с коробкой! Оригинал!\nДлина по стельке:\n41 = ( 26 CM )\n42 = ( 26.5 CM )\n42.5 = ( 27 CM )",
-    "price_byn": 270.0,
-    "prices": {
-      "BYN": 270.0,
-      "RUB": 8000.0,
-      "USD": 101.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/9587"
-    },
-    "sizes": [
-      "41",
-      "42",
-      "42.5"
-    ],
-    "stock": 8,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/9587",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_50_f33dd9eb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_50_696e0bbb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_50_6237d09b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_50_527bbb25.jpg",
-      "https://liknine.github.io/mestniybot/images/product_50_3b573bcd.jpg"
-    ]
-  },
-  {
     "id": 51,
     "category_id": 6,
     "brand": "cp",
