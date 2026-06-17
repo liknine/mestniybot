@@ -1,36 +1,5 @@
 [
   {
-    "id": 49,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Очень классный. Необычный дизайн из-за вышитого логотипа на груди. Размер по бирке: 14/170. Фактический размер: S - M. Коллекция: 71",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7700.0,
-      "USD": 93.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9547"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9547",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_49_42dac2f8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_018d5ab5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_4b39d74b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_af101ede.jpg",
-      "https://liknine.github.io/mestniybot/images/product_49_8ae291d6.jpg"
-    ]
-  },
-  {
     "id": 50,
     "category_id": 1,
     "brand": "jordan",
