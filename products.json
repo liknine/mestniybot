@@ -1,36 +1,5 @@
 [
   {
-    "id": 26,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Зип - Худи Stone Island",
-    "description": "Отличное состояние. Есть следы носок. Оригинал, бирки под CLG кодом срезаны. База, с патчем, как мы любим! Размер по бирке: S. Фактический размер: S - M.",
-    "price_byn": 470.0,
-    "prices": {
-      "BYN": 470.0,
-      "RUB": 13700.0,
-      "USD": 176.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9053"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9053",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_26_b4452e4c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_20896dea.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_2989d7f6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_983e511c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_26_5ab638e1.jpg"
-    ]
-  },
-  {
     "id": 27,
     "category_id": 2,
     "brand": "levis",
