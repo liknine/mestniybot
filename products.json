@@ -31,37 +31,6 @@
     ]
   },
   {
-    "id": 61,
-    "category_id": 1,
-    "brand": "adidas",
-    "name": "Кроссовки Adidas London",
-    "description": "Очень редкая пара в наше время. Отлично сохранилось состояние. В комплекте с коробкой. Размер по бирке: 43 1/3. Длина по стельке: 27.5 СМ.",
-    "price_byn": 400.0,
-    "prices": {
-      "BYN": 400.0,
-      "RUB": 11800.0,
-      "USD": 149.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9789"
-    },
-    "sizes": [
-      "43"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9789",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_61_1a187f81.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_84175e06.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_9063f11f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_d0a41ac8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_61_fe5b1f00.jpg"
-    ]
-  },
-  {
     "id": 62,
     "category_id": 6,
     "brand": "cp",
