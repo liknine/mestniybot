@@ -1,36 +1,5 @@
 [
   {
-    "id": 52,
-    "category_id": 2,
-    "brand": "weekend",
-    "name": "Овершот Weekend Offender НОВЫЙ",
-    "description": "Классный, очень необычный дизайн, за счет вышитого принта спереди, и сзади. Абсолютно новый, с этикетками. Привезен прямиком из магазина.",
-    "price_byn": 200.0,
-    "prices": {
-      "BYN": 200.0,
-      "RUB": 6000.0,
-      "USD": 74.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/9592"
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/9592",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_52_17bb8cdf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_e0d4461b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_4ad4f279.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_1ba61504.jpg",
-      "https://liknine.github.io/mestniybot/images/product_52_110c27b6.jpg"
-    ]
-  },
-  {
     "id": 53,
     "category_id": 8,
     "brand": "mcm",
