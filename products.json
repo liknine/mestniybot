@@ -1,36 +1,5 @@
 [
   {
-    "id": 43,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Классный. Вышитый логотип на груди, также есть патч на рукаве. Размер по бирке: 14/170. Фактический размер: S. Коллекция: 71. Есть следы носок.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7700.0,
-      "USD": 93.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9365"
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9365",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_43_79d6f0e0.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_2e54a969.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_ad64c493.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_c15e8e3c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_43_79f07c43.jpg"
-    ]
-  },
-  {
     "id": 47,
     "category_id": 10,
     "brand": "lonsdale",
