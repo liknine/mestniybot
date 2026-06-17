@@ -1,36 +1,5 @@
 [
   {
-    "id": 32,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island",
-    "description": "Плотный, классный свитшот, в темно синем цвете! База, с патчем на рукаве, все бирки на месте! Оригинал! Коллекция: 65. Есть следы носок.",
-    "price_byn": 320.0,
-    "prices": {
-      "BYN": 320.0,
-      "RUB": 9500.0,
-      "USD": 119.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9168"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9168",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_32_b4e433bb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_32_031d55c5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_32_929ffb4d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_32_41c1e43f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_32_92ab79a5.jpg"
-    ]
-  },
-  {
     "id": 33,
     "category_id": 9,
     "brand": "weekend",
