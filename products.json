@@ -1,36 +1,5 @@
 [
   {
-    "id": 41,
-    "category_id": 6,
-    "brand": "stone",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Классный цвет. Отличное состояние, есть следы носок. Размер по бирке: 14/170. Фактический размер: S. Коллекция: 80.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8400.0,
-      "USD": 104.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9355"
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9355",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_41_43327279.jpg",
-      "https://liknine.github.io/mestniybot/images/product_41_d427e9b6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_41_6c95ef72.jpg",
-      "https://liknine.github.io/mestniybot/images/product_41_3cf61129.jpg",
-      "https://liknine.github.io/mestniybot/images/product_41_61cbdac2.jpg"
-    ]
-  },
-  {
     "id": 43,
     "category_id": 6,
     "brand": "stone",
