@@ -1,36 +1,5 @@
 [
   {
-    "id": 33,
-    "category_id": 9,
-    "brand": "weekend",
-    "name": "Панама Weekend Offender НОВАЯ",
-    "description": "Абсолютно новая! Очень классно сидит на голове! С навесной биркой! Легендарная клетка, всё, как мы любим!",
-    "price_byn": 120.0,
-    "prices": {
-      "BYN": 120.0,
-      "RUB": 3900.0,
-      "USD": 44.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniybaryga/9178"
-    },
-    "sizes": [
-      "ONE SIZE"
-    ],
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniybaryga/9178",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_33_0768a470.jpg",
-      "https://liknine.github.io/mestniybot/images/product_33_a20e7c5b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_33_2f05fd0b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_33_feb47601.jpg",
-      "https://liknine.github.io/mestniybot/images/product_33_cb17c4a0.jpg"
-    ]
-  },
-  {
     "id": 35,
     "category_id": 8,
     "brand": "nike",
