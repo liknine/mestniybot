@@ -1,36 +1,5 @@
 [
   {
-    "id": 35,
-    "category_id": 8,
-    "brand": "nike",
-    "name": "Шорты Nike",
-    "description": "Лёгкие. Вышитый логотип. Есть шнурки. Размер по бирке: М. Фактический размер: S - M. Пояс можно утянуть!",
-    "price_byn": 35.0,
-    "prices": {
-      "BYN": 35.0,
-      "RUB": 1200.0,
-      "USD": 13.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniybaryga/9219"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniybaryga/9219",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_35_04b75f3c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_35_c51f2fcd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_35_c280d856.jpg",
-      "https://liknine.github.io/mestniybot/images/product_35_99fab2e2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_35_fc3fe0cd.jpg"
-    ]
-  },
-  {
     "id": 39,
     "category_id": 7,
     "brand": "weekend",
