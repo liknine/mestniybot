@@ -29,5 +29,34 @@
       "https://liknine.github.io/mestniybot/images/product_91_9a4a3cb8.jpg",
       "https://liknine.github.io/mestniybot/images/product_91_77cfbfba.jpg"
     ]
+  },
+  {
+    "id": 92,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Nike Shoes Test",
+    "description": "NO BUY!!!",
+    "price_byn": 500.0,
+    "prices": {
+      "BYN": 500.0,
+      "RUB": 15000.0,
+      "USD": 190.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/9869"
+    },
+    "sizes": [
+      "43",
+      "45"
+    ],
+    "stock": 5,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/9869",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_525e368c.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_498dcf3a.jpg"
+    ]
   }
 ]
