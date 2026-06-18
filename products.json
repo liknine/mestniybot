@@ -401,5 +401,32 @@
       "https://liknine.github.io/mestniybot/images/product_103_cae0f35d.jpg",
       "https://liknine.github.io/mestniybot/images/product_103_b84f3643.jpg"
     ]
+  },
+  {
+    "id": 104,
+    "category_id": 6,
+    "brand": "Ma.Strum",
+    "name": "Худи Ma.Strum",
+    "description": "Отличное состояние, очень классный цвет. Фирменный логотип на груди, патч съемный! Размер по бирке: S. Фактический размер: M.",
+    "price_byn": 230.0,
+    "prices": {
+      "BYN": 230.0,
+      "RUB": 6900.0,
+      "USD": 86.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8973"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8973",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_b24a185b.jpg"
+    ]
   }
 ]
