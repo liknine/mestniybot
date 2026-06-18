@@ -370,5 +370,32 @@
       "https://liknine.github.io/mestniybot/images/product_102_6e40c1b4.jpg",
       "https://liknine.github.io/mestniybot/images/product_102_cc750d4c.jpg"
     ]
+  },
+  {
+    "id": 103,
+    "category_id": 10,
+    "brand": "Armani Exchange",
+    "name": "Часы Armani Exchange НОВЫЕ",
+    "description": "Размер: Регулируется! Абсолютно новые! Ремешок, стекло, задняя часть - всё в плёнках! Есть навесная бирка, коробка, инструкция, пакетик! Отлично сидят на руке! Имеют строгий вид! Собирают взгляды.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/8895"
+    },
+    "sizes": [
+      "UNI"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/8895",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_66aabf18.jpg"
+    ]
   }
 ]
