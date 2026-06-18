@@ -29,5 +29,32 @@
       "https://liknine.github.io/mestniybot/images/product_91_9a4a3cb8.jpg",
       "https://liknine.github.io/mestniybot/images/product_91_77cfbfba.jpg"
     ]
+  },
+  {
+    "id": 92,
+    "category_id": 5,
+    "brand": "Stussy",
+    "name": "Футболка Stussy НОВАЯ",
+    "description": "Абсолютно новая, несколько штук в наличии! Очень классный материал, плотные! Оригинал, в комплекте пакет, навесные бирки! Очень красивый цвет! Размер по бирке: S. Фактический размер: S - M",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3500.0,
+      "USD": 45.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/8627"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/8627",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_1adc4850.jpg"
+    ]
   }
 ]
