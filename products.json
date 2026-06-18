@@ -868,5 +868,32 @@
       "https://liknine.github.io/mestniybot/images/product_118_46d7d342.jpg",
       "https://liknine.github.io/mestniybot/images/product_118_3df48064.jpg"
     ]
+  },
+  {
+    "id": 119,
+    "category_id": 6,
+    "brand": "C.P. Company",
+    "name": "Худи C.P. Company Tracery Goggle",
+    "description": "Очень классное. Редкое худи коллекции Tracery. Крутой дизайн, даже очень! Редкость в наше время! Отличное состояние, есть минимальные следы носок. Размер по бирке: M. Фактический размер: M - L. Дата изготовления: 12/2022.",
+    "price_byn": 570.0,
+    "prices": {
+      "BYN": 570.0,
+      "RUB": 16500.0,
+      "USD": 213.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9613"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9613",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_e250f7ed.jpg"
+    ]
   }
 ]
