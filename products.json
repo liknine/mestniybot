@@ -587,5 +587,32 @@
       "https://liknine.github.io/mestniybot/images/product_109_1b8d52d4.jpg",
       "https://liknine.github.io/mestniybot/images/product_109_6ffff9b6.jpg"
     ]
+  },
+  {
+    "id": 110,
+    "category_id": 5,
+    "brand": "Jordan",
+    "name": "Футболка Jordan НОВАЯ",
+    "description": "Нежный цвет, приятный материал, отлично сидит на теле, новая, буквально одна примерка! В комплекте с этикеткой. Размер по бирке: S. Фактический размер: S - M.",
+    "price_byn": 90.0,
+    "prices": {
+      "BYN": 90.0,
+      "RUB": 3000.0,
+      "USD": 33.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/9244"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/9244",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_e13c1676.jpg"
+    ]
   }
 ]
