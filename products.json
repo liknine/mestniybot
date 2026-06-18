@@ -215,5 +215,32 @@
       "https://liknine.github.io/mestniybot/images/product_97_acb0277a.jpg",
       "https://liknine.github.io/mestniybot/images/product_97_f623557c.jpg"
     ]
+  },
+  {
+    "id": 98,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Худи Stone Island Patch Program",
+    "description": "Отличное состояние, белый цвет, без нюансов! Есть небольшие следы носок. Фирменный логотип на груди! Размер по бирке S. Фактический размер: S - M.",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500.0,
+      "USD": 120.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8774"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8774",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_83f19be0.jpg"
+    ]
   }
 ]
