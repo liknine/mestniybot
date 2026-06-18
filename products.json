@@ -339,5 +339,32 @@
       "https://liknine.github.io/mestniybot/images/product_101_200bb7d8.jpg",
       "https://liknine.github.io/mestniybot/images/product_101_9cec878a.jpg"
     ]
+  },
+  {
+    "id": 102,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Лонгслив Stone Island",
+    "description": "Отличное состояние, есть следы носок. Простой лонгслив с патчем на рукаве. Размер по бирке: M. Фактический размер: S - M. Под CLG кодом срезаны бирки.",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500.0,
+      "USD": 119.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8880"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8880",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_c2e4d438.jpg"
+    ]
   }
 ]
