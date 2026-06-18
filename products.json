@@ -308,5 +308,32 @@
       "https://liknine.github.io/mestniybot/images/product_100_5d259f61.jpg",
       "https://liknine.github.io/mestniybot/images/product_100_5b51d560.jpg"
     ]
+  },
+  {
+    "id": 101,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Свитшот Stone Island",
+    "description": "Приятный свитшот. Оригинал. Отличное состояние, есть небольшие следы носок. Размер по бирке: S. Фактический размер S - M. Коллекция: 68. Spring / Summer 2018. Made in Romania.",
+    "price_byn": 330.0,
+    "prices": {
+      "BYN": 330.0,
+      "RUB": 9800.0,
+      "USD": 123.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8870"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8870",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_a3ae9873.jpg"
+    ]
   }
 ]
