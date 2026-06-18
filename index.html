@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="style.css?v=order_catalog_labels_search_1">
+    <link rel="stylesheet" href="style.css?v=delete_id_fix_1">
 </head>
 <body>
     <div class="app">
@@ -58,17 +58,21 @@
 
         <section class="page" id="catalogPage" data-page="catalog">
             <div class="page-head">
-                <h2>Товары под<br>заказ</h2>
+                <h2>Каталог</h2>
             </div>
 
             <div class="catalog-screen" id="catalogStartScreen">
                 <button class="catalog-action-card" id="catalogTypeButton" type="button">
                     <i data-lucide="layout-grid"></i>
-                    <span>Список предложенных нами товаров под заказ</span>
+                    <span>Выбрать тип товара</span>
+                </button>
+                <button class="catalog-action-card" id="catalogBrandButton" type="button">
+                    <i data-lucide="tag"></i>
+                    <span>Выбрать бренд товара</span>
                 </button>
                 <button class="catalog-action-card preorder-card" id="preorderButton" type="button">
                     <i data-lucide="message-circle"></i>
-                    <span>Связаться с менеджером</span>
+                    <span>Заказать товар по предзаказу</span>
                 </button>
             </div>
 
@@ -101,13 +105,9 @@
                     <p>Если вы не нашли из предложенных нами товаров, нужный для вас, то обратитесь к нашему менеджеру, он вам поможет определиться с выбором!</p>
                     <button class="manager-button" id="catalogManagerButton" type="button">
                         <i data-lucide="message-circle"></i>
-                        <span>Связаться с менеджером</span>
+                        <span>Написать нашему менеджеру</span>
                     </button>
                 </div>
-                <label class="catalog-search-field" id="catalogProductsSearchWrap">
-                    <i data-lucide="search"></i>
-                    <input id="catalogProductsSearch" type="search" placeholder="Поиск по товарам в категории..." autocomplete="off">
-                </label>
                 <main class="products-grid" id="catalogProductsGrid"></main>
                 <div class="empty-state compact" id="catalogProductsEmpty" hidden>
                     <p>Товаров под заказ не найдено</p>
@@ -207,13 +207,13 @@
                     <button class="social-card youtube" data-link="https://youtube.com/@mestniy.baryga?si=aVwjhLuqbkTvMo4D" type="button">
                         <span>YouTube</span>
                     </button>
-                    <button class="social-card vk" data-link="https://vk.ru/mestniybarygastore" type="button">
+                    <button class="social-card vk" data-link="https://vk.ru/mestniystoree" type="button">
                         <span>VK</span>
                     </button>
-                    <button class="social-card instagram" data-link="https://www.instagram.com/_mestniy.baryga_?igsh=MW43YTNrY3NmZjV5dA%3D%3D&amp;utm_source=qr" type="button">
+                    <button class="social-card instagram" data-link="https://www.instagram.com/_mestniy_store_?igsh=MW43YTNrY3NmZjV5dA%3D%3D&amp;utm_source=qr" type="button">
                         <span>Instagram</span>
                     </button>
-                    <button class="social-card tiktok" data-link="https://www.tiktok.com/@_mestniy.baryga_?_r=1&amp;_t=ZS-96COytne6XF" type="button">
+                    <button class="social-card tiktok" data-link="https://www.tiktok.com/@_mestniy_store_?_r=1&amp;_t=ZS-97JQpc2lg7I" type="button">
                         <span>TikTok</span>
                     </button>
                 </div>
@@ -306,7 +306,7 @@
         </button>
         <button class="nav-btn" data-page="catalog" id="navCatalog" type="button">
             <i data-lucide="grid-2x2"></i>
-            <span>Товары под<br>заказ</span>
+            <span>Каталог</span>
         </button>
         <button class="nav-btn" data-page="cart" id="navCart" type="button">
             <i data-lucide="shopping-bag"></i>
@@ -328,6 +328,6 @@
         <span id="toastText">Готово</span>
     </div>
 
-    <script src="app.js?v=hide_brand_cards_1"></script>
+    <script src="app.js?v=social_links_hide_brand_1"></script>
 </body>
 </html>

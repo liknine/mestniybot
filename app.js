@@ -12,7 +12,7 @@ window.addEventListener('error', function(event) {
 });
 
 // ==================== CONFIG ====================
-const BUILD_VERSION = 'sizes_on_photo_1';
+const BUILD_VERSION = 'delete_id_fix_1';
 const SUPPORT_USERNAME = 'manager_of_mestniy';
 const BOT_USERNAME = 'testmestniybot';
 const ADMIN_IDS = [1639462053, 8465820993];
@@ -161,7 +161,6 @@ const state = {
     catalogReturnScreen: 'start',
     catalogCategory: null,
     catalogBrand: null,
-    catalogSearch: '',
     selectedProduct: null,
     selectedSizes: [],
     user: { id: null, firstName: 'Пользователь', lastName: '', username: '', photoUrl: null },
@@ -462,14 +461,11 @@ function productCard(product) {
     const status = getStockStatus(product);
     const order = isOrderProduct(product);
     const image = product.images && product.images[0] ? product.images[0] : '';
-    const sizes = getProductSizes(product);
-    const sizeBadge = sizes.length ? '<div class="product-size-badge">' + escapeHtml(sizes.join(', ')) + '</div>' : '';
     return '' +
         '<article class="product-card" data-id="' + escapeHtml(product.id) + '" role="button" tabindex="0">' +
             '<div class="product-image-wrap">' +
                 imageTag(image, product.name, 'product-image') +
                 (hasDiscount(product, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
-                sizeBadge +
                 '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + escapeHtml(product.id) + '" type="button" aria-label="Избранное"><i data-lucide="heart"></i></button>' +
             '</div>' +
             '<div class="product-card-body">' +
@@ -596,7 +592,6 @@ function openHomeTypeModal() {
 
 function showCatalogScreen(screen) {
     state.catalogScreen = screen;
-    if (screen !== 'products') state.catalogSearch = '';
     ['catalogStartScreen', 'catalogCategoriesScreen', 'catalogBrandsScreen', 'catalogProductsScreen'].forEach(function(id) {
         const el = byId(id);
         if (el) el.hidden = true;
@@ -654,7 +649,6 @@ function renderCatalogCategories() {
         card.addEventListener('click', function() {
             state.catalogCategory = card.dataset.category;
             state.catalogBrand = null;
-            state.catalogSearch = '';
             state.catalogReturnScreen = 'categories';
             showCatalogScreen('products');
             haptic();
@@ -713,7 +707,7 @@ function renderCatalogBrands() {
 
 function renderCatalogProducts() {
     let products = getOrderProducts();
-    let crumb = 'Товары под заказ';
+    let crumb = 'Каталог';
     if (state.catalogCategory) {
         const category = getCategoryById(state.catalogCategory);
         products = products.filter(function(product) {
@@ -726,16 +720,6 @@ function renderCatalogProducts() {
             return brandMatches(product.brand, state.catalogBrand);
         });
         crumb += ' / ' + getBrandName(state.catalogBrand);
-    }
-    const searchInput = byId('catalogProductsSearch');
-    if (searchInput && searchInput.value !== state.catalogSearch) searchInput.value = state.catalogSearch;
-    if (state.catalogSearch.trim()) {
-        const query = state.catalogSearch.trim().toLowerCase();
-        products = products.filter(function(product) {
-            return String(product.name || '').toLowerCase().includes(query) ||
-                String(product.description || '').toLowerCase().includes(query) ||
-                getBrandName(product.brand).toLowerCase().includes(query);
-        });
     }
     const breadcrumb = byId('catalogBreadcrumb');
     if (breadcrumb) breadcrumb.textContent = crumb;
@@ -1285,15 +1269,6 @@ function initListeners() {
         });
     }
 
-
-    const catalogProductsSearch = byId('catalogProductsSearch');
-    if (catalogProductsSearch) {
-        catalogProductsSearch.addEventListener('input', function() {
-            state.catalogSearch = catalogProductsSearch.value;
-            renderCatalogProducts();
-        });
-    }
-
     byId('homeSizeButton')?.addEventListener('click', openHomeSizeModal);
     byId('homeTypeButton')?.addEventListener('click', openHomeTypeModal);
     byId('menuButton')?.addEventListener('click', openSidePanel);
@@ -1309,6 +1284,9 @@ function initListeners() {
     byId('catalogTypeButton')?.addEventListener('click', function() {
         showCatalogScreen('categories');
     });
+    byId('catalogBrandButton')?.addEventListener('click', function() {
+        showCatalogScreen('brands');
+    });
     byId('preorderButton')?.addEventListener('click', function() {
         openManagerWithText(PREORDER_TEXT);
     });
@@ -1321,7 +1299,6 @@ function initListeners() {
     byId('catalogProductsBack')?.addEventListener('click', function() {
         state.catalogCategory = null;
         state.catalogBrand = null;
-        state.catalogSearch = '';
         showCatalogScreen(state.catalogReturnScreen || 'start');
     });
     byId('catalogManagerButton')?.addEventListener('click', function() {
