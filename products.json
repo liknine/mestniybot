@@ -1054,5 +1054,32 @@
       "https://liknine.github.io/mestniybot/images/product_124_95db0b55.jpg",
       "https://liknine.github.io/mestniybot/images/product_124_aea2f835.jpg"
     ]
+  },
+  {
+    "id": 125,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Shox R4 НОВЫЕ",
+    "description": "Очень красивые. Абсолютно новые. Оригинал. Отлично сидят на ноге. Размер: 41. Длина по стельке: 26 CM. В комплекте с коробкой.",
+    "price_byn": 450.0,
+    "prices": {
+      "BYN": 450.0,
+      "RUB": 13000.0,
+      "USD": 168.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/9759"
+    },
+    "sizes": [
+      "41"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/9759",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_e9f72c6f.jpg"
+    ]
   }
 ]
