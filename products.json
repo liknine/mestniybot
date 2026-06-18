@@ -122,5 +122,32 @@
       "https://liknine.github.io/mestniybot/images/product_94_1beb4e32.jpg",
       "https://liknine.github.io/mestniybot/images/product_94_c378ca23.jpg"
     ]
+  },
+  {
+    "id": 95,
+    "category_id": 8,
+    "brand": "Weekend Offender",
+    "name": "Шорты Weekend Offender Nylon Metal",
+    "description": "Очень классные, нейлоновые, переливаются на солнце, металлический логотип, размер по бирке: S. Фактический размер: S.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4500.0,
+      "USD": 56.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8755"
+    },
+    "sizes": [
+      "S"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8755",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_f932f4b5.jpg"
+    ]
   }
 ]
