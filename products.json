@@ -556,5 +556,32 @@
       "https://liknine.github.io/mestniybot/images/product_108_6104fa9e.jpg",
       "https://liknine.github.io/mestniybot/images/product_108_b7e37246.jpg"
     ]
+  },
+  {
+    "id": 109,
+    "category_id": 8,
+    "brand": "Nike",
+    "name": "Шорты Nike",
+    "description": "Лёгкие. Вышитый логотип. Есть шнурки. Размер по бирке: М. Фактический размер: S - M. Пояс можно утянуть! Состояние отличное. Есть небольшие следы носок!",
+    "price_byn": 35.0,
+    "prices": {
+      "BYN": 35.0,
+      "RUB": 1200.0,
+      "USD": 13.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9219"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9219",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_1e7973a2.jpg"
+    ]
   }
 ]
