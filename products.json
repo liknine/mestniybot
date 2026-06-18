@@ -463,5 +463,32 @@
       "https://liknine.github.io/mestniybot/images/product_105_a49731d2.jpg",
       "https://liknine.github.io/mestniybot/images/product_105_aaeb1e76.jpg"
     ]
+  },
+  {
+    "id": 106,
+    "category_id": 2,
+    "brand": "Levi’s",
+    "name": "Куртка Levi’s Denim",
+    "description": "Очень классная, джинс. Идет как овершот. Внутри дизайн клетки. Все фурнитуры на замках есть! Оригинал. Отличное состояние.",
+    "price_byn": 140.0,
+    "prices": {
+      "BYN": 140.0,
+      "RUB": 4500.0,
+      "USD": 52.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9058"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9058",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_cc540fa6.jpg"
+    ]
   }
 ]
