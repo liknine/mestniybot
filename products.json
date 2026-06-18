@@ -246,5 +246,32 @@
       "https://liknine.github.io/mestniybot/images/product_98_b84f6eb0.jpg",
       "https://liknine.github.io/mestniybot/images/product_98_297da862.jpg"
     ]
+  },
+  {
+    "id": 99,
+    "category_id": 2,
+    "brand": "Ma.Strum",
+    "name": "Овершот Ma.Strum",
+    "description": "Плотный, красивый цвет, патч на плече, как все любят! Размер по бирке: L. Фактический размер: M - L. Состояние отличное! Очень классно сидит на теле.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8775"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8775",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_0a83b47d.jpg"
+    ]
   }
 ]
