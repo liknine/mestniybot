@@ -525,5 +525,32 @@
       "https://liknine.github.io/mestniybot/images/product_107_13a5f977.jpg",
       "https://liknine.github.io/mestniybot/images/product_107_f791aa5b.jpg"
     ]
+  },
+  {
+    "id": 108,
+    "category_id": 9,
+    "brand": "Weekend Offender",
+    "name": "Панама Weekend Offender НОВАЯ",
+    "description": "Абсолютно новая! Очень классно сидит на голове! С навесной биркой! Легендарная клетка, все как мы любим!",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900.0,
+      "USD": 44.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/9178"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/9178",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_4266d745.jpg"
+    ]
   }
 ]
