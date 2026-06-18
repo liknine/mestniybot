@@ -153,5 +153,32 @@
       "https://liknine.github.io/mestniybot/images/product_95_4f2a428a.jpg",
       "https://liknine.github.io/mestniybot/images/product_95_e0abee90.jpg"
     ]
+  },
+  {
+    "id": 96,
+    "category_id": 10,
+    "brand": "Eastpak",
+    "name": "Барсетка Eastpak НОВАЯ",
+    "description": "Очень классная, необычный цвет, красиво выглядит на теле! Полностью новая, в комплекте с этикетками! Оригинал! Объём 2 литра! Размер: 23х15 СМ. Есть рефлективные элементы! Дополнительный карман сзади!",
+    "price_byn": 55.0,
+    "prices": {
+      "BYN": 55.0,
+      "RUB": 1900.0,
+      "USD": 20.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/8760"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/8760",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_4c5e7dca.jpg"
+    ]
   }
 ]
