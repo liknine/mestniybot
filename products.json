@@ -277,5 +277,32 @@
       "https://liknine.github.io/mestniybot/images/product_99_64d5dadb.jpg",
       "https://liknine.github.io/mestniybot/images/product_99_4690ab97.jpg"
     ]
+  },
+  {
+    "id": 100,
+    "category_id": 10,
+    "brand": "C.P. Company",
+    "name": "Сумка C.P. Company Nylon Metal",
+    "description": "Очень классная, удобная, нейлон, переливается на солнце. Очень классно смотрится на теле. Отличное состояние. Размер: UNI.",
+    "price_byn": 330.0,
+    "prices": {
+      "BYN": 330.0,
+      "RUB": 9600.0,
+      "USD": 123.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8820"
+    },
+    "sizes": [
+      "UNI"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8820",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_8bebbabb.jpg"
+    ]
   }
 ]
