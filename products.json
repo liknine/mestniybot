@@ -184,5 +184,32 @@
       "https://liknine.github.io/mestniybot/images/product_96_8d25f02e.jpg",
       "https://liknine.github.io/mestniybot/images/product_96_2bc5ff7a.jpg"
     ]
+  },
+  {
+    "id": 97,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Air Force 1 Platform",
+    "description": "Красивые, отличное состояние, есть небольшие следы носок. Оригинал, классика, отлично сидят на ноге. Размер по бирке: 40. Длина по стельке: 25.5 СМ.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3800.0,
+      "USD": 45.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/8765"
+    },
+    "sizes": [
+      "40"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/8765",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_bd89188e.jpg"
+    ]
   }
 ]
