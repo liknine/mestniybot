@@ -899,5 +899,32 @@
       "https://liknine.github.io/mestniybot/images/product_119_e34677fd.jpg",
       "https://liknine.github.io/mestniybot/images/product_119_8e1f305f.jpg"
     ]
+  },
+  {
+    "id": 120,
+    "category_id": 8,
+    "brand": "Mind Error",
+    "name": "Карго шорты Mind Error Denim",
+    "description": "Классный фит. Карго шорты, самое то на лето. Отличное состояние, есть небольшие следы носок. Без нюансов. Размер по бирке: L. Фактический размер: M - L. Оригинал.",
+    "price_byn": 100.0,
+    "prices": {
+      "BYN": 100.0,
+      "RUB": 3400.0,
+      "USD": 37.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9628"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9628",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_0a577707.jpg"
+    ]
   }
 ]
