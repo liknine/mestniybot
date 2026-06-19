@@ -1333,5 +1333,32 @@
       "https://liknine.github.io/mestniybot/images/product_133_9f3fffce.jpg",
       "https://liknine.github.io/mestniybot/images/product_133_c8c6b2a4.jpg"
     ]
+  },
+  {
+    "id": 134,
+    "category_id": 5,
+    "brand": "Polo Ralph Lauren",
+    "name": "Поло Polo Ralph Lauren",
+    "description": "Темное, классное поло от Polo Ralph Lauren. Необычный дизайн за счет множества логотипов. Отличное состояние, есть минимальные следы носок! Размер: XL. Оригинал.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 2900.0,
+      "USD": 31.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9894"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9894",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_889cd676.jpg"
+    ]
   }
 ]
