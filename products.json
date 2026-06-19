@@ -1147,5 +1147,32 @@
       "https://liknine.github.io/mestniybot/images/product_127_b310d650.jpg",
       "https://liknine.github.io/mestniybot/images/product_127_049e2708.jpg"
     ]
+  },
+  {
+    "id": 128,
+    "category_id": 6,
+    "brand": "Lonsdale",
+    "name": "Худи Lonsdale",
+    "description": "Классное, плотное худи от Lonsdale. Размерная бирка срезана, но фактический размер: S - M. Отличное состояние, есть небольшие следы носок. Оригинал.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4800.0,
+      "USD": 56.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9827"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9827",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5c4b9f2a.jpg"
+    ]
   }
 ]
