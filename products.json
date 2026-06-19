@@ -1116,5 +1116,32 @@
       "https://liknine.github.io/mestniybot/images/product_126_5f644e0f.jpg",
       "https://liknine.github.io/mestniybot/images/product_126_86ffc3ed.jpg"
     ]
+  },
+  {
+    "id": 127,
+    "category_id": 6,
+    "brand": "C.P. Company",
+    "name": "Зип - Худи C.P. Company Goggle",
+    "description": "Плотная. Отлично сидит на теле. Легендарная зипка. Размер по бирке: S. Фактический размер: S - M. Отличное состояние. Дата изготовления: 06/2022. Оригинал.",
+    "price_byn": 370.0,
+    "prices": {
+      "BYN": 370.0,
+      "RUB": 10900.0,
+      "USD": 138.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9799"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9799",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_45e85f79.jpg"
+    ]
   }
 ]
