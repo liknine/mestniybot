@@ -1271,5 +1271,32 @@
       "https://liknine.github.io/mestniybot/images/product_131_ec649199.jpg",
       "https://liknine.github.io/mestniybot/images/product_131_1fd23099.jpg"
     ]
+  },
+  {
+    "id": 132,
+    "category_id": 7,
+    "brand": "Stone Island",
+    "name": "Карго штаны Stone Island",
+    "description": "Легкие, приятные карго штаны от Stone Island. Отличное состояние. Коллекция: 74. Размер по бирке: W29. Фактический размер: M. Оригинал.",
+    "price_byn": 360.0,
+    "prices": {
+      "BYN": 360.0,
+      "RUB": 10700.0,
+      "USD": 134.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9869"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9869",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_aeae6cdc.jpg"
+    ]
   }
 ]
