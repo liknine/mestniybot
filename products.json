@@ -1521,5 +1521,32 @@
       "https://liknine.github.io/mestniybot/images/product_139_983e27e1.jpg",
       "https://liknine.github.io/mestniybot/images/product_139_f0f16f3e.jpg"
     ]
+  },
+  {
+    "id": 140,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Air Max 1 НОВЫЕ",
+    "description": "Очень классные, удобные, абсолютно новые. Оригинал. В комплекте с коробкой. Размер по бирке: 42.5 | 27 СМ ( по стельке )",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10048"
+    },
+    "sizes": [
+      "42.5"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10048",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_993f6e03.jpg"
+    ]
   }
 ]
