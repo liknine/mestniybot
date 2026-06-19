@@ -1395,5 +1395,32 @@
       "https://liknine.github.io/mestniybot/images/product_135_010bb53d.jpg",
       "https://liknine.github.io/mestniybot/images/product_135_bb22cfe3.jpg"
     ]
+  },
+  {
+    "id": 136,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Зип - Худи Stone Island",
+    "description": "Классный цвет. Плотный материал, удобная. База, с патчем на рукаве, все, как мы любим. Коллекция: 61. Оригинал. Отличное состояние, есть небольшие следы носок!",
+    "price_byn": 450.0,
+    "prices": {
+      "BYN": 450.0,
+      "RUB": 13100.0,
+      "USD": 168.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/9956"
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/9956",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_f6928dbb.jpg"
+    ]
   }
 ]
