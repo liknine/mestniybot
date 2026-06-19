@@ -1240,5 +1240,32 @@
       "https://liknine.github.io/mestniybot/images/product_130_55484645.jpg",
       "https://liknine.github.io/mestniybot/images/product_130_18b8aea4.jpg"
     ]
+  },
+  {
+    "id": 131,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Dunk High НОВЫЕ",
+    "description": "Отличная пара. Очень крутой цвет, самая база, как все мы любим, именно этот цвет! Абсолютно новые! В комплекте с коробкой! Оригинал! Размер по бирке: 45.5. Длина по стельке: 29.5 СМ.",
+    "price_byn": 280.0,
+    "prices": {
+      "BYN": 280.0,
+      "RUB": 8300.0,
+      "USD": 104.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/9859"
+    },
+    "sizes": [
+      "45.5"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/9859",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_292d44cc.jpg"
+    ]
   }
 ]
