@@ -1458,5 +1458,33 @@
       "https://liknine.github.io/mestniybot/images/product_137_521e2f03.jpg",
       "https://liknine.github.io/mestniybot/images/product_137_2cb9f2a2.jpg"
     ]
+  },
+  {
+    "id": 138,
+    "category_id": 1,
+    "brand": "Adidas",
+    "name": "Кроссовки Adidas Crazychaos НОВЫЕ",
+    "description": "Абсолютно новые, классная, и очень удобная пара. В комплекте с коробкой, и этикеткой. Оригинал. \nРазмер по бирке: \n43 1/3 | 27.5 СМ\n44 | 28 СМ",
+    "price_byn": 270.0,
+    "prices": {
+      "BYN": 270.0,
+      "RUB": 8000.0,
+      "USD": 101.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10037"
+    },
+    "sizes": [
+      "43",
+      "44"
+    ],
+    "stock": 2,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10037",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_29341ede.jpg"
+    ]
   }
 ]
