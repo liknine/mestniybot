@@ -341,37 +341,6 @@
     ]
   },
   {
-    "id": 102,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Лонгслив Stone Island",
-    "description": "Отличное состояние, есть следы носок. Простой лонгслив с патчем на рукаве. Размер по бирке: M. Фактический размер: S - M. Под CLG кодом срезаны бирки.",
-    "price_byn": 320.0,
-    "prices": {
-      "BYN": 320.0,
-      "RUB": 9500.0,
-      "USD": 119.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/8880"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/8880",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_102_d6c78668.jpg",
-      "https://liknine.github.io/mestniybot/images/product_102_c20d5e42.jpg",
-      "https://liknine.github.io/mestniybot/images/product_102_a166867b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_102_6e40c1b4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_102_cc750d4c.jpg"
-    ]
-  },
-  {
     "id": 103,
     "category_id": 10,
     "brand": "Armani Exchange",
@@ -1363,37 +1332,6 @@
       "https://liknine.github.io/mestniybot/images/product_134_80f11ef8.jpg",
       "https://liknine.github.io/mestniybot/images/product_134_354b4f75.jpg",
       "https://liknine.github.io/mestniybot/images/product_134_5956296f.jpg"
-    ]
-  },
-  {
-    "id": 135,
-    "category_id": 6,
-    "brand": "Weekend Offender",
-    "name": "Лонгслив Weekend Offender НОВЫЙ",
-    "description": "Абсолютно новый, с этикеткой. Оригинал. Размер по бирке: L. Фактический размер: L - XL. Классный принт спереди.",
-    "price_byn": 130.0,
-    "prices": {
-      "BYN": 130.0,
-      "RUB": 4200.0,
-      "USD": 48.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9951"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/9951",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_135_878bfc23.jpg",
-      "https://liknine.github.io/mestniybot/images/product_135_e4d1469a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_135_bdc2502b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_135_010bb53d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_135_bb22cfe3.jpg"
     ]
   },
   {
