@@ -1211,37 +1211,6 @@
     ]
   },
   {
-    "id": 131,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Dunk High НОВЫЕ",
-    "description": "Отличная пара. Очень крутой цвет, самая база, как все мы любим, именно этот цвет! Абсолютно новые! В комплекте с коробкой! Оригинал! Размер по бирке: 45.5. Длина по стельке: 29.5 СМ.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8300.0,
-      "USD": 104.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9859"
-    },
-    "sizes": [
-      "45.5"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/9859",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_131_7dad5d75.jpg",
-      "https://liknine.github.io/mestniybot/images/product_131_ad1fb317.jpg",
-      "https://liknine.github.io/mestniybot/images/product_131_e4f9367b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_131_ec649199.jpg",
-      "https://liknine.github.io/mestniybot/images/product_131_1fd23099.jpg"
-    ]
-  },
-  {
     "id": 132,
     "category_id": 7,
     "brand": "Stone Island",
