@@ -1489,5 +1489,32 @@
       "https://liknine.github.io/mestniybot/images/product_140_743fb8a9.jpg",
       "https://liknine.github.io/mestniybot/images/product_140_e4b1488d.jpg"
     ]
+  },
+  {
+    "id": 141,
+    "category_id": 1,
+    "brand": "Adidas x Raf Simons",
+    "name": "Кроссовки Adidas x Raf Simons Replicant НОВЫЕ",
+    "description": "Состояние новых, буквально 1 - 3 носок. Оригинал. В комплекте с коробкой, сертификатом Raf Simons, этикеткой, дополнительными шнурками. Очень круто сидят на ноге. \nРазмер:\n41 1/3 / 26 См по стельке.",
+    "price_byn": 750.0,
+    "prices": {
+      "BYN": 750.0,
+      "RUB": 21500.0,
+      "USD": 280.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10078"
+    },
+    "sizes": [
+      "41.5"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10078",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_ce0d4663.jpg"
+    ]
   }
 ]
