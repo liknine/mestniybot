@@ -1489,5 +1489,32 @@
       "https://liknine.github.io/mestniybot/images/product_142_45656bf5.jpg",
       "https://liknine.github.io/mestniybot/images/product_142_5ddc12f4.jpg"
     ]
+  },
+  {
+    "id": 143,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Air Max 90 НОВЫЕ",
+    "description": "Абсолютно новая пара. В комплекте с коробкой. Отлично сидят на ноге. Оригинал. Очень классный цвет. \nРазмер: 43 / 27.5 СМ( по стельке )",
+    "price_byn": 450.0,
+    "prices": {
+      "BYN": 450.0,
+      "RUB": 13100.0,
+      "USD": 168.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10174"
+    },
+    "sizes": [
+      "43"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10174",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_be48164b.jpg"
+    ]
   }
 ]
