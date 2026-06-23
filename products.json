@@ -1582,5 +1582,32 @@
       "https://liknine.github.io/mestniybot/images/product_146_4d6616e5.jpg",
       "https://liknine.github.io/mestniybot/images/product_146_7a830c99.jpg"
     ]
+  },
+  {
+    "id": 147,
+    "category_id": 6,
+    "brand": "C.P. Company",
+    "name": "Свитшот C.P. Company",
+    "description": "Отличное состояние. Приятный тёмный цвет. Оригинал. Без нюансов. Отлично сидит на теле.",
+    "price_byn": 230.0,
+    "prices": {
+      "BYN": 230.0,
+      "RUB": 7000.0,
+      "USD": 86.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10200"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10200",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_12dd21b9.jpg"
+    ]
   }
 ]
