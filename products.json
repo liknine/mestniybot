@@ -1458,5 +1458,32 @@
       "https://liknine.github.io/mestniybot/images/product_141_3543a38a.jpg",
       "https://liknine.github.io/mestniybot/images/product_141_8aca6abb.jpg"
     ]
+  },
+  {
+    "id": 142,
+    "category_id": 5,
+    "brand": "C.P. Company",
+    "name": "Футболка C.P. Company",
+    "description": "Отличное состояние, есть минимальные следы носок. Приятный цвет. Классный дизайн, из-за интересного резинового логотипа. Дата изготовления: 12/2020.",
+    "price_byn": 135.0,
+    "prices": {
+      "BYN": 135.0,
+      "RUB": 4200.0,
+      "USD": 50.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10169"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10169",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5162cfa9.jpg"
+    ]
   }
 ]
