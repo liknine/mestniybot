@@ -558,37 +558,6 @@
     ]
   },
   {
-    "id": 111,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Свитшот Stone Island",
-    "description": "Яркий, плотный, классный свитшот от Stone Island. Помимо логотипа в виде патча на рукаве, есть вышитый логотип на задней части горла. Размер по бирке: S, фактический тоже S. Есть небольшие следы носок. Коллекция: 77.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9800.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9345"
-    },
-    "sizes": [
-      "S"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9345",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_111_cca61f82.jpg",
-      "https://liknine.github.io/mestniybot/images/product_111_e81dfa60.jpg",
-      "https://liknine.github.io/mestniybot/images/product_111_9e318a7e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_111_a76c7b92.jpg",
-      "https://liknine.github.io/mestniybot/images/product_111_fa1d4823.jpg"
-    ]
-  },
-  {
     "id": 112,
     "category_id": 6,
     "brand": "Stone Island",
