@@ -1553,37 +1553,6 @@
     ]
   },
   {
-    "id": 146,
-    "category_id": 7,
-    "brand": "C.P. Company",
-    "name": "Штаны C.P. Company Nylon Metal",
-    "description": "Отличное состояние. Есть небольшие следы носок. Линза в плёнке. Очень классная модель, нейлон, легендарный материал. Оригинал. Размер по бирке: 52. Фактический размер: XL. Дата изготовления: 03/2020.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10195"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10195",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_146_a88e9643.jpg",
-      "https://liknine.github.io/mestniybot/images/product_146_742b36dc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_146_c93c71f6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_146_4d6616e5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_146_7a830c99.jpg"
-    ]
-  },
-  {
     "id": 147,
     "category_id": 6,
     "brand": "C.P. Company",
