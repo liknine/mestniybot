@@ -456,16 +456,27 @@ function getStockStatus(product) {
     return { text: 'В наличии', className: 'in-stock' };
 }
 
+function getCardSizeLabel(product) {
+    const sizes = getProductSizes(product).map(function(size) {
+        return String(size || '').trim();
+    }).filter(Boolean);
+    if (!sizes.length) return '';
+    if (sizes.length <= 3) return sizes.join(', ');
+    return sizes.slice(0, 3).join(', ') + '+';
+}
+
 function productCard(product) {
     const isFav = state.favorites.includes(Number(product.id));
     const status = getStockStatus(product);
     const order = isOrderProduct(product);
     const image = product.images && product.images[0] ? product.images[0] : '';
+    const sizeLabel = getCardSizeLabel(product);
     return '' +
         '<article class="product-card" data-id="' + escapeHtml(product.id) + '" role="button" tabindex="0">' +
             '<div class="product-image-wrap">' +
                 imageTag(image, product.name, 'product-image') +
                 (hasDiscount(product, state.currency) ? '<div class="discount-badge">SALE</div>' : '') +
+                (sizeLabel ? '<div class="product-card-size-badge">' + escapeHtml(sizeLabel) + '</div>' : '') +
                 '<button class="product-favorite ' + (isFav ? 'active' : '') + '" data-id="' + escapeHtml(product.id) + '" type="button" aria-label="Избранное"><i data-lucide="heart"></i></button>' +
             '</div>' +
             '<div class="product-card-body">' +
