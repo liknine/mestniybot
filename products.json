@@ -1737,5 +1737,32 @@
       "https://liknine.github.io/mestniybot/images/product_151_ad7bd167.jpg",
       "https://liknine.github.io/mestniybot/images/product_151_54bf3417.jpg"
     ]
+  },
+  {
+    "id": 152,
+    "category_id": 6,
+    "brand": "C.P. Company",
+    "name": "Свитшот C.P. Company",
+    "description": "Отличное состояние, есть небольшие следы носок. Очень круто сидит на теле. Необычный дизайн за счет резинового логотипа на задней части шеи. Оригинал. Дата изготовления: 02/2020.",
+    "price_byn": 230.0,
+    "prices": {
+      "BYN": 230.0,
+      "RUB": 7000.0,
+      "USD": 86.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10225"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10225",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5e1a4d94.jpg"
+    ]
   }
 ]
