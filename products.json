@@ -932,37 +932,6 @@
     ]
   },
   {
-    "id": 124,
-    "category_id": 5,
-    "brand": "Stone Island",
-    "name": "Поло Stone Island Junior",
-    "description": "Очень красивая. Яркая. Приятный материал. Отличное состояние, без нюансов, есть небольшие следы носок. Размер по бирке: 14/164. Фактический размер: XS - S. Коллекция: 60. Оригинал.",
-    "price_byn": 100.0,
-    "prices": {
-      "BYN": 100.0,
-      "RUB": 3300.0,
-      "USD": 37.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9698"
-    },
-    "sizes": [
-      "XS-S"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9698",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_124_b944217c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_124_3e814b6f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_124_ccbea960.jpg",
-      "https://liknine.github.io/mestniybot/images/product_124_95db0b55.jpg",
-      "https://liknine.github.io/mestniybot/images/product_124_aea2f835.jpg"
-    ]
-  },
-  {
     "id": 125,
     "category_id": 1,
     "brand": "Nike",
@@ -1584,37 +1553,6 @@
     ]
   },
   {
-    "id": 149,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Плотный, классный, очень приятный материал. Отличное состояние, есть следы носок. Оригинал. Размер по бирке: 14/170. Фактический размер: S - M. Коллекция: 73.",
-    "price_byn": 230.0,
-    "prices": {
-      "BYN": 230.0,
-      "RUB": 6900.0,
-      "USD": 86.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10210"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10210",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_149_201402d4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_149_1d79b48b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_149_efb703e0.jpg",
-      "https://liknine.github.io/mestniybot/images/product_149_b3b2aca3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_149_5e723033.jpg"
-    ]
-  },
-  {
     "id": 150,
     "category_id": 5,
     "brand": "C.P. Company",
@@ -1736,37 +1674,6 @@
       "https://liknine.github.io/mestniybot/images/product_154_909d5470.jpg",
       "https://liknine.github.io/mestniybot/images/product_154_046ce6ea.jpg",
       "https://liknine.github.io/mestniybot/images/product_154_0a7aa0d4.jpg"
-    ]
-  },
-  {
-    "id": 155,
-    "category_id": 7,
-    "brand": "Polar",
-    "name": "Джинсы Polar 93",
-    "description": "Отличное состояние, есть минимальные следы носок. Размер по бирке: 30/32. Фактический размер: M. Оригинал. Отлично сидят на теле.",
-    "price_byn": 170.0,
-    "prices": {
-      "BYN": 170.0,
-      "RUB": 5300.0,
-      "USD": 63.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10245"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10245",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_155_72d8cbdb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_70b31ba5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_35924595.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_6ca92ab9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_c5df6e05.jpg"
     ]
   }
 ]
