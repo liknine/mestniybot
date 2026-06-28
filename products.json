@@ -1429,37 +1429,6 @@
     ]
   },
   {
-    "id": 144,
-    "category_id": 5,
-    "brand": "C.P. Company",
-    "name": "Футболка C.P. Company",
-    "description": "Отличное состояние, есть минимальные следы носок. Приятный цвет. Классный дизайн, из-за интересного резинового логотипа. Оригинал. Дата изготовления: 12/2020.",
-    "price_byn": 135.0,
-    "prices": {
-      "BYN": 135.0,
-      "RUB": 4200.0,
-      "USD": 50.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10169"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10169",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_144_a6c7af9b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_144_7b289a40.jpg",
-      "https://liknine.github.io/mestniybot/images/product_144_22cd1d5f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_144_245202c9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_144_721a7fa2.jpg"
-    ]
-  },
-  {
     "id": 145,
     "category_id": 5,
     "brand": "C.P. Company",
@@ -1674,6 +1643,33 @@
       "https://liknine.github.io/mestniybot/images/product_154_909d5470.jpg",
       "https://liknine.github.io/mestniybot/images/product_154_046ce6ea.jpg",
       "https://liknine.github.io/mestniybot/images/product_154_0a7aa0d4.jpg"
+    ]
+  },
+  {
+    "id": 155,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Dunk High НОВЫЕ",
+    "description": "Абсолютно новые, очень классный цвет. Оригинал. В комплекте с коробкой, и дополнительными шнурками. Размер по бирке: 42. Длина по стельке: 26.5 CM.",
+    "price_byn": 300.0,
+    "prices": {
+      "BYN": 300.0,
+      "RUB": 8900.0,
+      "USD": 112.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10255"
+    },
+    "sizes": [
+      "42"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10255",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_e945636e.jpg"
     ]
   }
 ]
