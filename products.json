@@ -1924,5 +1924,32 @@
       "https://liknine.github.io/mestniybot/images/product_163_91730a61.jpg",
       "https://liknine.github.io/mestniybot/images/product_163_a201405d.jpg"
     ]
+  },
+  {
+    "id": 164,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Свитшот Stone Island Junior",
+    "description": "Очень крутой, за счет необычного дизайна, нейлона по рукавам, таких моделей довольно мало! Оригинал. Отличное состояние. Коллекция: 67. Размер по бирке: 14/170. Фактический размер: S - M.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7500.0,
+      "USD": 93.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10326"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10326",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_20757a2f.jpg"
+    ]
   }
 ]
