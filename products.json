@@ -1738,5 +1738,32 @@
       "https://liknine.github.io/mestniybot/images/product_157_90d84623.jpg",
       "https://liknine.github.io/mestniybot/images/product_157_e8a30a2f.jpg"
     ]
+  },
+  {
+    "id": 158,
+    "category_id": 5,
+    "brand": "C.P. Company",
+    "name": "Футболка C.P. Company НОВАЯ",
+    "description": "Очень классная, абсолютно новая футболка. В комплекте с этикетками. Оригинал. Дата изготовления: 01/2022. Коллекция: 888.",
+    "price_byn": 180.0,
+    "prices": {
+      "BYN": 180.0,
+      "RUB": 5500.0,
+      "USD": 67.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10271"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10271",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_71690485.jpg"
+    ]
   }
 ]
