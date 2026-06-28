@@ -1864,37 +1864,6 @@
     ]
   },
   {
-    "id": 162,
-    "category_id": 5,
-    "brand": "Fred Perry",
-    "name": "Футболка Fred Perry",
-    "description": "Очень классная. Отлично сидит на теле. Оригинал. Отличное состояние, есть небольшие следы носок.",
-    "price_byn": 55.0,
-    "prices": {
-      "BYN": 55.0,
-      "RUB": 2000.0,
-      "USD": 20.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10311"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10311",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_162_133ea90d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_162_e7d3ca31.jpg",
-      "https://liknine.github.io/mestniybot/images/product_162_1293ca07.jpg",
-      "https://liknine.github.io/mestniybot/images/product_162_6224f149.jpg",
-      "https://liknine.github.io/mestniybot/images/product_162_63b0ad21.jpg"
-    ]
-  },
-  {
     "id": 164,
     "category_id": 6,
     "brand": "Stone Island",
