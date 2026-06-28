@@ -1769,5 +1769,32 @@
       "https://liknine.github.io/mestniybot/images/product_158_6dca136d.jpg",
       "https://liknine.github.io/mestniybot/images/product_158_8a4a4628.jpg"
     ]
+  },
+  {
+    "id": 159,
+    "category_id": 8,
+    "brand": "C.P. Company",
+    "name": "Карго шорты C.P. Company",
+    "description": "Очень классные, плотные шорты от C.P. Company. Оригинал. Есть шнурки, чтобы затянуть пояс, можно растянуть. Отлично сидят на теле. Дата изготовления: 03/2020.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7500.0,
+      "USD": 93.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10276"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10276",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_ce0a08e9.jpg"
+    ]
   }
 ]
