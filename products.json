@@ -1955,5 +1955,32 @@
       "https://liknine.github.io/mestniybot/images/product_166_9890b97b.jpg",
       "https://liknine.github.io/mestniybot/images/product_166_d0279700.jpg"
     ]
+  },
+  {
+    "id": 167,
+    "category_id": 8,
+    "brand": "Bershka",
+    "name": "Карго шорты Bershka Denim НОВЫЕ",
+    "description": "Абсолютно новые, очень классные карго шорты. Джинсовые. Размер по бирке: 40. Фактический размер: M - L. Оригинал. В комплекте с этикеткой.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 2800.0,
+      "USD": 31.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10346"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10346",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_c03b39e6.jpg"
+    ]
   }
 ]
