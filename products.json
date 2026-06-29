@@ -1924,5 +1924,32 @@
       "https://liknine.github.io/mestniybot/images/product_165_2795b1ee.jpg",
       "https://liknine.github.io/mestniybot/images/product_165_b7ee6721.jpg"
     ]
+  },
+  {
+    "id": 166,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Зипка Stone Island Patch Program",
+    "description": "Очень классная, плотная. Дизайн не тот, что мы привыкли везде видеть, вместо патча на рукаве, тут патч на груди, в виде прямоугольника, так называемый: Patch Program. Размер по бирке: L. Фактический размер: M - L. Оригинал. Коллекция: 57.",
+    "price_byn": 300.0,
+    "prices": {
+      "BYN": 300.0,
+      "RUB": 8900.0,
+      "USD": 112.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10336"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10336",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_109e2114.jpg"
+    ]
   }
 ]
