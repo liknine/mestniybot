@@ -1955,5 +1955,32 @@
       "https://liknine.github.io/mestniybot/images/product_167_61e4f746.jpg",
       "https://liknine.github.io/mestniybot/images/product_167_78f81080.jpg"
     ]
+  },
+  {
+    "id": 168,
+    "category_id": 8,
+    "brand": "Stone Island",
+    "name": "Шорты Stone Island",
+    "description": "Отличное состояние, после покраски, цвет минимально получился неравномерно, но это только в некоторых местах, в целом, всё хорошо. Оригинал. Продажа без патча. Коллекция: 70.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7500.0,
+      "USD": 93.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10351"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10351",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_3ae56d7b.jpg"
+    ]
   }
 ]
