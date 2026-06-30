@@ -2017,5 +2017,32 @@
       "https://liknine.github.io/mestniybot/images/product_169_15a2a360.jpg",
       "https://liknine.github.io/mestniybot/images/product_169_c65cbdb1.jpg"
     ]
+  },
+  {
+    "id": 170,
+    "category_id": 8,
+    "brand": "Stone Island",
+    "name": "Шорты Stone Island",
+    "description": "Белоснежные, очень классные шорты от Stone Island. Отличное состояние. Оригинал. Продажа с оригинальным патчем. Коллекция: 70.",
+    "price_byn": 420.0,
+    "prices": {
+      "BYN": 420.0,
+      "RUB": 12300.0,
+      "USD": 157.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10361"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10361",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_1978f8d6.jpg"
+    ]
   }
 ]
