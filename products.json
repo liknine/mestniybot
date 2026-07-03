@@ -1211,37 +1211,6 @@
     ]
   },
   {
-    "id": 136,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Зип - Худи Stone Island",
-    "description": "Классный цвет. Плотный материал, удобная. База, с патчем на рукаве, все, как мы любим. Коллекция: 61. Оригинал. Отличное состояние, есть небольшие следы носок!",
-    "price_byn": 450.0,
-    "prices": {
-      "BYN": 450.0,
-      "RUB": 13100.0,
-      "USD": 168.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9956"
-    },
-    "sizes": [
-      "L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9956",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_136_eb40a2a3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_136_83f9deea.jpg",
-      "https://liknine.github.io/mestniybot/images/product_136_edec1512.jpg",
-      "https://liknine.github.io/mestniybot/images/product_136_435d6ab3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_136_e5033812.jpg"
-    ]
-  },
-  {
     "id": 137,
     "category_id": 1,
     "brand": "Nike",
@@ -1457,37 +1426,6 @@
       "https://liknine.github.io/mestniybot/images/product_145_09496531.jpg",
       "https://liknine.github.io/mestniybot/images/product_145_e61c0e59.jpg",
       "https://liknine.github.io/mestniybot/images/product_145_f703090a.jpg"
-    ]
-  },
-  {
-    "id": 147,
-    "category_id": 6,
-    "brand": "C.P. Company",
-    "name": "Свитшот C.P. Company",
-    "description": "Отличное состояние. Приятный тёмный цвет. Оригинал. Без нюансов. Отлично сидит на теле.",
-    "price_byn": 230.0,
-    "prices": {
-      "BYN": 230.0,
-      "RUB": 7000.0,
-      "USD": 86.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10200"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10200",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_147_c79c5f86.jpg",
-      "https://liknine.github.io/mestniybot/images/product_147_94bd5eba.jpg",
-      "https://liknine.github.io/mestniybot/images/product_147_72e38c67.jpg",
-      "https://liknine.github.io/mestniybot/images/product_147_9418567d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_147_2efb61dc.jpg"
     ]
   },
   {
