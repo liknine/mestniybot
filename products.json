@@ -2110,5 +2110,32 @@
       "https://liknine.github.io/mestniybot/images/product_174_1fbb28fb.jpg",
       "https://liknine.github.io/mestniybot/images/product_174_415aefd2.jpg"
     ]
+  },
+  {
+    "id": 175,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Кроссовки Nike Blazer Jumbo НОВЫЕ",
+    "description": "Очень классные, приятная модель. Оригинал. Абсолютно новые, в комплекте с коробкой, пломбами Poizon. Размер по бирке:\n41 / 25.5 CM ( по стельке )",
+    "price_byn": 220.0,
+    "prices": {
+      "BYN": 220.0,
+      "RUB": 6600.0,
+      "USD": 82.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10404"
+    },
+    "sizes": [
+      "41"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10404",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_4feb8f0d.jpg"
+    ]
   }
 ]
