@@ -2079,5 +2079,32 @@
       "https://liknine.github.io/mestniybot/images/product_173_6a1aaeaf.jpg",
       "https://liknine.github.io/mestniybot/images/product_173_86ae4571.jpg"
     ]
+  },
+  {
+    "id": 174,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Лонгслив Stone Island",
+    "description": "Очень классный, база, с патчем на рукаве. Отличное состояние, есть небольшие следы носок. Оригинал. Продажа с оригинальным патчем. Коллекция: 66.",
+    "price_byn": 280.0,
+    "prices": {
+      "BYN": 280.0,
+      "RUB": 8300.0,
+      "USD": 104.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10394"
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10394",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_33cdab5b.jpg"
+    ]
   }
 ]
