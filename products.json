@@ -2141,5 +2141,32 @@
       "https://liknine.github.io/mestniybot/images/product_175_769cb6d5.jpg",
       "https://liknine.github.io/mestniybot/images/product_175_84fe3863.jpg"
     ]
+  },
+  {
+    "id": 176,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Худи Stone Island",
+    "description": "Классное, базовое белое худи с патчем. Оригинал. Отличное состояние, есть минимальные следы носок. Продажа с оригинальным патчем. Коллекция: 64",
+    "price_byn": 370.0,
+    "prices": {
+      "BYN": 370.0,
+      "RUB": 10900.0,
+      "USD": 138.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10419"
+    },
+    "sizes": [
+      "L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10419",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_014dc9bf.jpg"
+    ]
   }
 ]
