@@ -2172,5 +2172,32 @@
       "https://liknine.github.io/mestniybot/images/product_176_ba7a00ca.jpg",
       "https://liknine.github.io/mestniybot/images/product_176_88cf642c.jpg"
     ]
+  },
+  {
+    "id": 177,
+    "category_id": 5,
+    "brand": "Aape",
+    "name": "Футболка Aape",
+    "description": "Очень классный дизайн. Плотный логотип на груди, без трещин. Отличное состояние, есть следы носок. Оригинал. Размер по бирке: S. Фактический размер: S - M.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600.0,
+      "USD": 28.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10424"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10424",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_44e35258.jpg"
+    ]
   }
 ]
