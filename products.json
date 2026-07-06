@@ -2203,5 +2203,32 @@
       "https://liknine.github.io/mestniybot/images/product_177_8102acf1.jpg",
       "https://liknine.github.io/mestniybot/images/product_177_a98becd8.jpg"
     ]
+  },
+  {
+    "id": 178,
+    "category_id": 5,
+    "brand": "OFF - WHITE",
+    "name": "Футболка Off - White",
+    "description": "Очень классное, состояние как у новой. Плотный материал, и плотный прорезиненный логотип. Оригинал. Модель на CLG, что довольно редко для данного бренда!",
+    "price_byn": 140.0,
+    "prices": {
+      "BYN": 140.0,
+      "RUB": 4400.0,
+      "USD": 52.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10429"
+    },
+    "sizes": [
+      "M"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10429",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5fed7228.jpg"
+    ]
   }
 ]
