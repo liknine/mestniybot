@@ -2448,5 +2448,32 @@
       "https://liknine.github.io/mestniybot/images/product_186_5983514e.jpg",
       "https://liknine.github.io/mestniybot/images/product_186_3e768661.jpg"
     ]
+  },
+  {
+    "id": 187,
+    "category_id": 6,
+    "brand": "C.P. Company",
+    "name": "Свитшот C.P. Company",
+    "description": "Очень классный, крутой дизайн за счёт прорезиненного логотипа за задней части горла. Оригинал. Отличное состояние. Размер по бирке: L. Фактический размер: M - L. Дата изготовления: 03/2020.",
+    "price_byn": 220.0,
+    "prices": {
+      "BYN": 220.0,
+      "RUB": 6700.0,
+      "USD": 82.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10492"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10492",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_84236792.jpg"
+    ]
   }
 ]
