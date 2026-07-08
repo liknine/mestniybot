@@ -2234,5 +2234,32 @@
       "https://liknine.github.io/mestniybot/images/product_179_a7d9b565.jpg",
       "https://liknine.github.io/mestniybot/images/product_179_03512105.jpg"
     ]
+  },
+  {
+    "id": 180,
+    "category_id": 10,
+    "brand": "Stone Island",
+    "name": "Патч Stone Island НОВЫЙ",
+    "description": "Абсолютно новые. Оригинал. Взрослый размер.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 2800.0,
+      "USD": 31.0,
+      "product_type": "stock",
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10445"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "stock": 10,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10445",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_80eabbc2.jpg"
+    ]
   }
 ]
