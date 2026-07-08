@@ -2417,5 +2417,32 @@
       "https://liknine.github.io/mestniybot/images/product_185_bdd7866b.jpg",
       "https://liknine.github.io/mestniybot/images/product_185_ab3fe30c.jpg"
     ]
+  },
+  {
+    "id": 186,
+    "category_id": 5,
+    "brand": "Ma.Strum",
+    "name": "Футболка Ma.Strum",
+    "description": "Очень классная. На груди вышитый логотип. Отличное состояние. Размер по бирке: L. Фактический размер: M - L.",
+    "price_byn": 110.0,
+    "prices": {
+      "BYN": 110.0,
+      "RUB": 3500.0,
+      "USD": 41.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10487"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10487",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_dd6147ee.jpg"
+    ]
   }
 ]
