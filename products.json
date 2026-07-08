@@ -2293,5 +2293,32 @@
       "https://liknine.github.io/mestniybot/images/product_181_c19349cb.jpg",
       "https://liknine.github.io/mestniybot/images/product_181_29604302.jpg"
     ]
+  },
+  {
+    "id": 182,
+    "category_id": 8,
+    "brand": "Nike",
+    "name": "Шорты Nike Just Do It",
+    "description": "Плотные, широкие, очень классные шорты. Оригинал. Отличное состояние, есть следы носок. Помимо большо логотипа на калоши, есть маленький логотип на правом кармане. Размер по бирке: L. Фактический размер: L - XL.",
+    "price_byn": 110.0,
+    "prices": {
+      "BYN": 110.0,
+      "RUB": 3500.0,
+      "USD": 41.0,
+      "product_type": "stock",
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10457"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10457",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_4384ae40.jpg"
+    ]
   }
 ]
