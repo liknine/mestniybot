@@ -1771,37 +1771,6 @@
     ]
   },
   {
-    "id": 165,
-    "category_id": 6,
-    "brand": "Comme des Fuckdown",
-    "name": "Худи Comme des Fuckdown",
-    "description": "Очень классная кофта, плотная. Оригинал. Отличное состояние, есть следы носок. Размер по бирке: M. Фактический размер: M - L.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7500.0,
-      "USD": 93.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10331"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10331",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_165_fb8b0a8f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_165_5e566b4f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_165_45846675.jpg",
-      "https://liknine.github.io/mestniybot/images/product_165_2795b1ee.jpg",
-      "https://liknine.github.io/mestniybot/images/product_165_b7ee6721.jpg"
-    ]
-  },
-  {
     "id": 166,
     "category_id": 6,
     "brand": "Stone Island",
