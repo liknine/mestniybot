@@ -9,9 +9,9 @@ const BONUS_RULES=[
   {max:Infinity,rate:3.5}
 ];
 const BONUS_TRANSACTIONS=[];
-const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortAsc:true,filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
+const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_frontend_v25_live_1';
+const BUILD_VERSION='mestniy_frontend_v25_live_3';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -29,26 +29,27 @@ function displayBrand(value){
   if(!clean)return 'MESTNIY STORE';
   return BRAND_LABELS[clean]||BRAND_LABELS[clean.toLowerCase()]||clean.replace(/_/g,' ').replace(/\b\w/g,char=>char.toUpperCase());
 }
-function sourcePrice(product,currency='RUB'){
+function sourcePrice(product,currency='BYN'){
+  if(currency==='BYN'){
+    const directByn=Number(product?.price_byn);
+    if(Number.isFinite(directByn)&&directByn>0)return directByn;
+  }
   const prices=product?.prices||{};
   const direct=Number(prices[currency]);
   if(Number.isFinite(direct)&&direct>0)return direct;
-  if(currency==='RUB'){
-    const byn=Number(product?.price_byn||prices.BYN||0);
-    if(Number.isFinite(byn)&&byn>0)return Math.round(byn*28.5);
-  }
-  return Number(product?.price_byn||0);
+  return 0;
 }
-function sourceOldPrice(product,currency='RUB'){
+function sourceOldPrice(product,currency='BYN'){
   const prices=product?.prices||{};
   const candidates=[product?.old_prices?.[currency],product?.old_price?.[currency],product?.[`old_price_${currency.toLowerCase()}`],prices?.old_prices?.[currency],prices?.old_price?.[currency],prices?.[`old_price_${currency.toLowerCase()}`]];
   for(const value of candidates){const number=Number(value);if(Number.isFinite(number)&&number>0)return number}
   return null;
 }
 function normalizeSourceProduct(product,index){
-  const price=sourcePrice(product,'RUB');
-  const old=sourceOldPrice(product,'RUB');
-  const image=(Array.isArray(product?.images)&&product.images.find(Boolean))||PRODUCT_PLACEHOLDER;
+  const price=sourcePrice(product,'BYN');
+  const old=sourceOldPrice(product,'BYN');
+  const sourceImages=Array.isArray(product?.images)?[...new Set(product.images.map(value=>String(value||'').trim()).filter(Boolean))]:[];
+  const image=sourceImages[0]||PRODUCT_PLACEHOLDER;
   const rawSizeStock=product?.size_stock||product?.prices?.size_stock||{};
   const sizeStock={};
   if(rawSizeStock&&typeof rawSizeStock==='object'&&!Array.isArray(rawSizeStock)){
@@ -80,11 +81,12 @@ function normalizeSourceProduct(product,index){
     sizeStock,
     unavailableSizes,
     image,
-    images:Array.isArray(product?.images)?product.images.filter(Boolean):[],
+    images:sourceImages,
     category:CATEGORY_BY_ID[Number(product?.category_id)]||'other',
     stock,
     condition:String(product?.condition||product?.prices?.condition||'').trim(),
     extraPhotosUrl:String(product?.extra_photos_url||product?.prices?.extra_photos_url||'').trim(),
+    sortKey:(()=>{const timestamp=Date.parse(product?.created_at||product?.createdAt||product?.updated_at||'');if(Number.isFinite(timestamp))return timestamp;const numericId=Number(product?.id);return Number.isFinite(numericId)?numericId:index})(),
     raw:product
   };
 }
@@ -178,7 +180,7 @@ function buildOrderPayload(){
   const bonuses=Math.max(0,Math.min(Number(c.bonuses)||0,state.bonusBalance,cartSubtotal()));
   return {
     items:state.cart.map(item=>{const p=productById(item.id);return {id:p?.id,productId:p?.id,name:p?.code||p?.name||'Товар',brand:p?.brand||'',sizes:[item.size],size:item.size,qty:item.qty,quantity:item.qty,price:p?productPrice(p):0,image:p?.image||''}}),
-    total:Math.max(0,cartSubtotal()-bonuses),currency:'RUB',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':null,
+    total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':null,
     deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{address:c.address,postalIndex:c.postalIndex,postOffice:c.postOffice}:null,
     customer:{firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses
   };
@@ -199,7 +201,7 @@ state.dataError=DEMO_STATE;
 
 const screens=[...document.querySelectorAll('.screen')];
 const nav=document.getElementById('bottomNav');
-const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
+const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n)+' BYN';
 let toastTimer=null;
 function showToast(message){
   const toast=document.getElementById('toast');if(!toast)return;
@@ -345,10 +347,20 @@ function updateFilterButton(){
   const count=activeFilterCount();
   button.innerHTML=count?`ФИЛЬТРЫ <span>(${count})</span>`:'ФИЛЬТРЫ&nbsp;&nbsp;+';
 }
+const SORT_OPTIONS={
+  newest:{label:'ПО НОВИЗНЕ',short:'НОВИЗНА'},
+  price_desc:{label:'СНАЧАЛА ДОРОЖЕ',short:'ДОРОЖЕ'},
+  price_asc:{label:'СНАЧАЛА ДЕШЕВЛЕ',short:'ДЕШЕВЛЕ'}
+};
 function updateSortButton(){
   const button=document.getElementById('sortBtn');if(!button)return;
-  button.innerHTML=`ЦЕНА <span>${state.sortAsc?'↑':'↓'}</span>`;
-  button.setAttribute('aria-label',state.sortAsc?'Сначала дешевле':'Сначала дороже');
+  const option=SORT_OPTIONS[state.sortMode]||SORT_OPTIONS.newest;
+  button.innerHTML=`${option.short} <span>⌄</span>`;
+  button.setAttribute('aria-label',`Сортировка: ${option.label.toLowerCase()}`);
+}
+function renderSortDrawer(){
+  const body=document.getElementById('drawerBody');if(!body)return;
+  body.innerHTML=`<div class="drawer-list sort-list">${Object.entries(SORT_OPTIONS).map(([value,option])=>`<button data-sort-mode="${value}"><span>${option.label}</span><span>${state.sortMode===value?'✓':''}</span></button>`).join('')}</div>`;
 }
 function filterChoice({label,value,key}){
   const selected=(state.filterDraft||state.filters)[key]===value;
@@ -367,7 +379,7 @@ function renderFilterDrawer(){
   const categoryOptions=[['ВСЕ ТОВАРЫ','all'],...Object.entries(CATEGORY_LABELS).filter(([value])=>PRODUCTS.some(product=>productCategory(product)===value)).map(([value,label])=>[label,value]),['ТОВАРЫ СО СКИДКОЙ','sale']];
   const categories=`<div class="filter-section"><p class="filter-section-title">Категория</p>${categoryOptions.map(([label,value])=>filterChoice({label,value,key:'category'})).join('')}</div>
   <div class="filter-section"><p class="filter-section-title">Размер</p><div class="filter-chips">${filterChip({label:'ВСЕ',value:'all',key:'size'})}${sizes.map(size=>filterChip({label:size,value:size,key:'size'})).join('')}</div></div>
-  <div class="filter-section"><p class="filter-section-title">Цена</p><div class="price-range"><label class="price-range-field"><span>ОТ</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="0" value="${state.filterDraft.priceMin||''}" data-price-filter="priceMin"><b>₽</b></div></label><label class="price-range-field"><span>ДО</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="БЕЗ ОГРАНИЧЕНИЯ" value="${state.filterDraft.priceMax||''}" data-price-filter="priceMax"><b>₽</b></div></label></div></div>`;
+  <div class="filter-section"><p class="filter-section-title">Цена</p><div class="price-range"><label class="price-range-field"><span>ОТ</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="0" value="${state.filterDraft.priceMin||''}" data-price-filter="priceMin"><b>BYN</b></div></label><label class="price-range-field"><span>ДО</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="БЕЗ ОГРАНИЧЕНИЯ" value="${state.filterDraft.priceMax||''}" data-price-filter="priceMax"><b>BYN</b></div></label></div></div>`;
   const brandPanel=`<div class="filter-section"><p class="filter-section-title">Бренд</p>${filterChoice({label:'ВСЕ БРЕНДЫ',value:'all',key:'brand'})}${brands.map(brand=>filterChoice({label:brand,value:brand,key:'brand'})).join('')}</div>`;
   const draftCount=activeFilterCount(state.filterDraft);
   body.innerHTML=`<div class="drawer-tabs"><button class="drawer-tab ${state.filterTab==='categories'?'active':''}" data-filter-tab="categories">КАТЕГОРИИ</button><button class="drawer-tab ${state.filterTab==='brands'?'active':''}" data-filter-tab="brands">БРЕНДЫ</button></div><div class="filter-panel">${state.filterTab==='brands'?brandPanel:categories}</div><div class="filter-summary" data-filter-summary>${draftCount?`ВЫБРАНО ФИЛЬТРОВ: ${draftCount}`:'ФИЛЬТРЫ НЕ ВЫБРАНЫ'}</div><div class="drawer-footer"><div class="filter-footer-actions"><button class="filter-reset-btn" data-filter-reset>СБРОСИТЬ</button><button class="black-btn" data-apply-filter>ПОКАЗАТЬ</button></div></div>`;
@@ -387,7 +399,7 @@ function renderCatalog(){
     .filter(({p})=>state.filters.size==='all'||availableSizes(p).includes(state.filters.size))
     .filter(({p})=>matchesPriceRange(p,state.filters))
     .filter(({p})=>!q||`${p.code} ${p.brand} ${p.desc} ${p.name}`.toLowerCase().includes(q));
-  list.sort((a,b)=>state.sortAsc?productPrice(a.p)-productPrice(b.p):productPrice(b.p)-productPrice(a.p));
+  list.sort((a,b)=>state.sortMode==='price_asc'?productPrice(a.p)-productPrice(b.p):state.sortMode==='price_desc'?productPrice(b.p)-productPrice(a.p):(Number(b.p.sortKey)||0)-(Number(a.p.sortKey)||0));
   updateSortButton();
   if(list.length){grid.innerHTML=list.map(x=>productCard(x.p,x.i)).join('');return}
   if(q){grid.innerHTML=emptyStateMarkup({type:'search',title:'НИЧЕГО НЕ НАЙДЕНО',text:`По запросу «${escapeHtml(input.value.trim())}» товаров нет. Попробуйте изменить запрос.`,action:'СБРОСИТЬ ПОИСК',actionAttr:'data-reset-search'});return}
@@ -509,10 +521,51 @@ function renderOrderSuccess(){
   const expected=calculateOrderBonus(order);
   box.innerHTML=`<div class="success-wrap"><div class="success-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div><div class="success-kicker">ЗАЯВКА СОЗДАНА</div><h1 class="success-title">ЗАКАЗ №${order.id}<br>ПРИНЯТ</h1><p class="success-copy">Заказ уже появился в разделе «Мои покупки». Все изменения статуса будут отображаться там и приходить сообщением от бота.</p><div class="success-card"><div class="success-row"><span>СТАТУС</span><strong>${ORDER_STATUS[order.status]}</strong></div><div class="success-row"><span>ПОЛУЧЕНИЕ</span><strong>${order.delivery}</strong></div>${order.bonuses?`<div class="success-row"><span>ИСПОЛЬЗОВАНО БОНУСОВ</span><strong>${formatBonus(order.bonuses)}</strong></div>`:''}<div class="success-row"><span>К ОПЛАТЕ</span><strong>${money(orderTotal(order))}</strong></div></div><div class="bonus-order-note">После статуса «Завершен» за эту покупку будет начислено ${formatBonus(expected)}.</div><div class="success-actions"><button class="black-btn" data-success-orders>МОИ ПОКУПКИ</button><button class="outline-btn" data-go="catalog">ВЕРНУТЬСЯ В КАТАЛОГ</button></div></div>`;
 }
+function productGalleryImages(product){
+  const images=[...(product?.images||[]),product?.image]
+    .map(value=>String(value||'').trim())
+    .filter(Boolean);
+  return [...new Set(images)].length?[...new Set(images)]:[PRODUCT_PLACEHOLDER];
+}
+function updateProductGalleryDots(index){
+  const dots=document.querySelectorAll('#detailDots [data-gallery-index]');
+  dots.forEach((dot,dotIndex)=>dot.classList.toggle('active',dotIndex===index));
+}
+function setProductGalleryIndex(index,{smooth=true}={}){
+  const track=document.getElementById('detailTrack');
+  if(!track)return;
+  const count=track.children.length;
+  const safeIndex=Math.max(0,Math.min(Number(index)||0,count-1));
+  state.galleryIndex=safeIndex;
+  track.scrollTo({left:track.clientWidth*safeIndex,behavior:smooth?'smooth':'auto'});
+  updateProductGalleryDots(safeIndex);
+}
+function renderProductGallery(product){
+  const track=document.getElementById('detailTrack');
+  const dots=document.getElementById('detailDots');
+  if(!track||!dots)return;
+  const images=productGalleryImages(product);
+  state.galleryIndex=0;
+  track.innerHTML=images.map((src,index)=>`<div class="detail-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(product?.name||product?.brand||'Товар')}" loading="${index===0?'eager':'lazy'}" draggable="false"></div>`).join('');
+  dots.innerHTML=images.length>1?images.map((_,index)=>`<button type="button" class="detail-dot ${index===0?'active':''}" data-gallery-index="${index}" aria-label="Фото ${index+1} из ${images.length}"></button>`).join(''):'';
+  dots.hidden=images.length<=1;
+  requestAnimationFrame(()=>setProductGalleryIndex(0,{smooth:false}));
+}
+let galleryScrollFrame=0;
+function handleProductGalleryScroll(){
+  cancelAnimationFrame(galleryScrollFrame);
+  galleryScrollFrame=requestAnimationFrame(()=>{
+    const track=document.getElementById('detailTrack');
+    if(!track||!track.clientWidth)return;
+    const index=Math.round(track.scrollLeft/track.clientWidth);
+    if(index!==state.galleryIndex){state.galleryIndex=index;updateProductGalleryDots(index)}
+  });
+}
+
 function openProduct(index){
   state.selectedProduct=index;state.selectedSize=null;const p=PRODUCTS[index];if(!p)return;
   const blocked=new Set(p.unavailableSizes||[]),available=availableSizes(p),soldOut=!available.length;
-  document.getElementById('detailImage').src=p.image;
+  renderProductGallery(p);
   document.getElementById('detailTitle').textContent=p.code+'  '+p.brand;
   document.getElementById('detailDesc').textContent=soldOut?'Эта позиция временно закончилась. Товар снова станет доступен после обновления остатков.':(p.desc||'Оригинальная позиция из актуального наличия MESTNIY STORE. Выберите размер перед добавлением в корзину.');
   document.getElementById('detailPrice').innerHTML=priceMarkup(p);
@@ -627,12 +680,14 @@ function renderMenuDrawer(){
 function openDrawer(type){
   const overlay=document.getElementById('drawerOverlay'),title=document.getElementById('drawerTitle');
   if(type==='filter'){title.textContent='ФИЛЬТР';state.filterDraft={...state.filters};state.filterTab='categories';renderFilterDrawer()}
+  else if(type==='sort'){title.textContent='СОРТИРОВКА';renderSortDrawer()}
   else{title.textContent='MESTNIY STORE';state.menuTab='collections';renderMenuDrawer()}
   overlay.classList.add('open');
 }
 function closeDrawer(){document.getElementById('drawerOverlay').classList.remove('open');state.filterDraft=null}
 
 document.addEventListener('click',e=>{
+  const galleryDot=e.target.closest('[data-gallery-index]');if(galleryDot){setProductGalleryIndex(Number(galleryDot.dataset.galleryIndex));return}
   const go=e.target.closest('[data-go]');if(go){showScreen(go.dataset.go);closeDrawer();return}
   const menuTab=e.target.closest('[data-menu-tab]');if(menuTab){state.menuTab=menuTab.dataset.menuTab;renderMenuDrawer();return}
   const menuBrand=e.target.closest('[data-menu-brand]');if(menuBrand){state.filters={...state.filters,brand:menuBrand.dataset.menuBrand,category:'all'};closeDrawer();showScreen('catalog');showToast(`Бренд: ${menuBrand.dataset.menuBrand}`);return}
@@ -648,7 +703,7 @@ document.addEventListener('click',e=>{
   const drawer=e.target.closest('[data-drawer]');if(drawer){openDrawer(drawer.dataset.drawer);return}
   if(e.target.closest('[data-close-drawer]')||e.target.id==='drawerOverlay'){closeDrawer();return}
   const search=e.target.closest('[data-search]');if(search){document.querySelector('.search-panel')?.classList.toggle('open');document.getElementById('searchInput')?.focus();return}
-  if(e.target.id==='sortBtn'||e.target.closest('#sortBtn')){state.sortAsc=!state.sortAsc;renderCatalog();showToast(state.sortAsc?'Сначала дешевле':'Сначала дороже');return}
+  const sortChoice=e.target.closest('[data-sort-mode]');if(sortChoice){state.sortMode=sortChoice.dataset.sortMode;closeDrawer();renderCatalog();showToast(SORT_OPTIONS[state.sortMode]?.label||'Сортировка изменена');return}
   const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return}
   const act=e.target.closest('[data-action]');if(act){e.stopPropagation();if(act.disabled)return;const i=Number(act.dataset.id);if(act.dataset.action==='unfav')toggleFav(i);else addToCart(i);return}
   const card=e.target.closest('[data-card]');if(card){openProduct(Number(card.dataset.card));return}
@@ -687,11 +742,13 @@ document.addEventListener('input',e=>{
   if(field){state.checkout[field.dataset.checkoutField]=field.value;const err=document.getElementById('checkoutError');if(err)err.classList.remove('show');return}
 });
 document.getElementById('searchInput').addEventListener('input',renderCatalog);
+document.getElementById('detailTrack')?.addEventListener('scroll',handleProductGalleryScroll,{passive:true});
 
 // v19 FINAL: keep responsive indicators aligned after viewport or keyboard changes.
 function refreshResponsiveUi(){
   const selectedSize=document.querySelector('#sizeRow .size-btn.active');
   if(selectedSize) moveSizeIndicator(selectedSize,true);
+  if(state.screen==='product')setProductGalleryIndex(state.galleryIndex||0,{smooth:false});
 }
 let responsiveUiTimer=0;
 function scheduleResponsiveUiRefresh(){

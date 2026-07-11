@@ -121,8 +121,15 @@
     .search-panel.open{display:block}
     .search-panel input{width:100%;height:48px;border:1px solid #111;padding:0 14px;outline:none}
     /* Product detail */
-    .detail-media{background:var(--media);aspect-ratio:1/1;overflow:hidden;margin:0 16px}
-    .detail-media img{width:100%;height:100%;object-fit:cover}
+    .detail-gallery{position:relative;margin:0 16px;background:var(--media);overflow:hidden}
+    .detail-track{display:flex;width:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;touch-action:pan-x pan-y}
+    .detail-track::-webkit-scrollbar{display:none}
+    .detail-slide{flex:0 0 100%;aspect-ratio:1/1;scroll-snap-align:start;scroll-snap-stop:always;background:var(--media);overflow:hidden}
+    .detail-slide img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+    .detail-dots{display:flex;justify-content:center;align-items:center;gap:7px;position:absolute;left:50%;bottom:12px;transform:translateX(-50%);min-height:16px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .detail-dots[hidden]{display:none}
+    .detail-dot{width:5px;height:5px;padding:0;border:0;border-radius:50%;background:rgba(17,17,17,.28);transition:width .34s var(--motion-ease),border-radius .34s var(--motion-ease),background .34s var(--motion-ease)}
+    .detail-dot.active{width:18px;border-radius:999px;background:#111}
     .detail-body{padding:18px 16px 112px}
     .detail-line{width:54px;border-top:2px solid #000;margin-bottom:16px}
     .detail-title{font-size:18px;font-weight:600;line-height:1.3;text-transform:uppercase}
@@ -681,7 +688,7 @@
     .product-card:nth-child(2n),.news-list-card:nth-child(2n),.order-card:nth-child(2n){animation-delay:.045s}
     .product-card:nth-child(3n),.news-list-card:nth-child(3n),.order-card:nth-child(3n){animation-delay:.08s}
     @keyframes content-reveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-    .product-image img,.cart-image img,.detail-media img,.news-list-media img,.news-card img{transition:transform .45s var(--ease),filter .35s var(--ease)}
+    .product-image img,.cart-image img,.detail-slide img,.news-list-media img,.news-card img{transition:transform .45s var(--ease),filter .35s var(--ease)}
     .product-card:active .product-image img,.news-list-card:active .news-list-media img{transform:scale(1.025)}
     .favorite-dot{transition:transform .22s var(--ease),background-color .22s var(--ease),border-color .22s var(--ease)}
     .favorite-dot:active{transform:scale(.88)}
@@ -745,7 +752,7 @@
     @keyframes content-reveal-v18{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     .icon-btn,.nav-item,.black-btn,.outline-btn,.filter-reset-btn,.home-cta,.product-action,.underlined-cta,.tab,.orders-filter,.drawer-tab,.filter-chip,.filter-choice{transition:transform .24s var(--motion-ease),opacity .24s var(--motion-ease),background-color .28s var(--motion-ease),color .28s var(--motion-ease),border-color .28s var(--motion-ease)}
     .icon-btn:active,.nav-item:active,.black-btn:active,.outline-btn:active,.filter-reset-btn:active,.home-cta:active,.product-action:active,.underlined-cta:active{transform:scale(.985)}
-    .product-image img,.cart-image img,.detail-media img,.news-list-media img,.news-card img{transition:transform .62s var(--motion-ease),filter .45s var(--motion-ease)}
+    .product-image img,.cart-image img,.detail-slide img,.news-list-media img,.news-card img{transition:transform .62s var(--motion-ease),filter .45s var(--motion-ease)}
     .product-card:active .product-image img,.news-list-card:active .news-list-media img{transform:scale(1.012)}
     .drawer{transition:transform .46s var(--motion-ease)}
     .overlay{transition:opacity .34s var(--motion-ease),visibility .34s var(--motion-ease)}
@@ -1220,4 +1227,11 @@
   font-size:clamp(34px,9.4vw,40px);
   letter-spacing:.08em;
   padding-left:.08em;
+}
+
+
+/* Product gallery: swipe through all uploaded photos. */
+@media (prefers-reduced-motion:reduce){
+  .detail-track{scroll-behavior:auto}
+  .detail-dot{transition:none!important}
 }
