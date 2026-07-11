@@ -1,5 +1,32 @@
 [
   {
+    "id": 6,
+    "user_id": "1639462053",
+    "status": "accepted",
+    "total": 149.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-1639462053-1783779393570-pww5dr",
+    "created_at": "2026-07-11T17:16:33.746230",
+    "updated_at": "2026-07-11T17:16:33.745249",
+    "bonuses": 1.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 186,
+        "brand": "Nike",
+        "name": "Тест товар",
+        "size": "43",
+        "qty": 1,
+        "unit_price": 150.0,
+        "old_unit_price": 150.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_0_f394ba24.jpg"
+      }
+    ]
+  },
+  {
     "id": 5,
     "user_id": "1639462053",
     "status": "completed",
