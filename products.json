@@ -2624,5 +2624,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_f394ba24.jpg",
       "https://liknine.github.io/mestniybot/images/product_0_461903d3.jpg"
     ]
+  },
+  {
+    "id": 187,
+    "category_id": 1,
+    "brand": "Maison Margiela",
+    "name": "Evolution",
+    "description": "НЕ ПОКУПАТЬ, ТЕСТ ТОВАР",
+    "price_byn": 1200.0,
+    "prices": {
+      "BYN": 1200.0,
+      "RUB": 31857.0,
+      "USD": 419.48,
+      "product_type": "stock",
+      "size_stock": {
+        "44": 1,
+        "43": 2
+      },
+      "condition": "Хорошее",
+      "extra_photos_url": "https://t.me/mestniystore/9587"
+    },
+    "sizes": [
+      "44",
+      "43"
+    ],
+    "size_stock": {
+      "44": 1,
+      "43": 2
+    },
+    "stock": 3,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Хорошее",
+    "extra_photos_url": "https://t.me/mestniystore/9587",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_1004a35e.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c67db16b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_6e9f60bd.jpg"
+    ]
   }
 ]
