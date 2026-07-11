@@ -1,5 +1,39 @@
 [
   {
+    "id": 3,
+    "user_id": "1639462053",
+    "status": "accepted",
+    "total": 2400.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-1639462053-1783777787844-jabn6s",
+    "created_at": "2026-07-11T16:49:48.023168",
+    "updated_at": "2026-07-11T16:49:48.019184",
+    "items": [
+      {
+        "product_id": 187,
+        "brand": "Maison Margiela",
+        "name": "Evolution",
+        "size": "43",
+        "qty": 1,
+        "unit_price": 1200.0,
+        "old_unit_price": 1200.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_0_1004a35e.jpg"
+      },
+      {
+        "product_id": 187,
+        "brand": "Maison Margiela",
+        "name": "Evolution",
+        "size": "44",
+        "qty": 1,
+        "unit_price": 1200.0,
+        "old_unit_price": 1200.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_0_1004a35e.jpg"
+      }
+    ]
+  },
+  {
     "id": 2,
     "user_id": "1639462053",
     "status": "shipped",
