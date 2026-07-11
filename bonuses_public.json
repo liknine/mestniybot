@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "user_id": "1639462053",
+    "balance": 1.0,
+    "transactions": [
+      {
+        "id": 1,
+        "type": "order_earned",
+        "amount": 1.0,
+        "title": "Начислено за завершённый заказ",
+        "order_id": 5,
+        "created_at": "2026-07-11T17:13:55.891688"
+      }
+    ]
+  }
+]
