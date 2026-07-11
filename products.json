@@ -2677,7 +2677,7 @@
       "USD": 52.43,
       "product_type": "stock",
       "size_stock": {
-        "40": 1,
+        "40": 0,
         "43": 2
       },
       "condition": "Новое",
@@ -2688,10 +2688,10 @@
       "43"
     ],
     "size_stock": {
-      "40": 1,
+      "40": 0,
       "43": 2
     },
-    "stock": 3,
+    "stock": 2,
     "product_type": "stock",
     "section": "stock",
     "condition": "Новое",
