@@ -1,6 +1,7 @@
 
 let PRODUCTS=[];
 const ORDERS=[];
+let REMOTE_ORDERS=[];
 let NEWS=[];
 const BONUS_RULES=[
   {max:150,rate:1},
@@ -9,9 +10,9 @@ const BONUS_RULES=[
   {max:Infinity,rate:3.5}
 ];
 const BONUS_TRANSACTIONS=[];
-const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
+const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_news_admin_v3';
+const BUILD_VERSION='mestniy_orders_v1';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -105,8 +106,90 @@ async function fetchJson(path){
   if(!response.ok)throw new Error(`${path}: HTTP ${response.status}`);
   return response.json();
 }
+async function fetchJsonOptional(path,fallback=[]){
+  try{return await fetchJson(path)}catch(error){
+    if(String(error?.message||'').includes('HTTP 404'))return fallback;
+    throw error;
+  }
+}
+function orderDateLabel(value){
+  const date=new Date(value||Date.now());
+  if(Number.isNaN(date.getTime()))return 'Дата не указана';
+  return new Intl.DateTimeFormat('ru-RU',{day:'2-digit',month:'long',year:'numeric'}).format(date);
+}
+function normalizeOrderStatus(value){
+  const clean=String(value||'accepted').toLowerCase();
+  return ({new:'accepted',processing:'accepted',delivered:'completed'})[clean]||clean;
+}
+function normalizePublicOrder(order){
+  const items=Array.isArray(order?.items)?order.items.map((item,index)=>{
+    const unitPrice=Number(item?.unit_price??item?.unitPrice??item?.price??0)||0;
+    const oldUnitPrice=Number(item?.old_unit_price??item?.oldUnitPrice??unitPrice)||unitPrice;
+    const snapshot={
+      id:String(item?.product_id??item?.productId??`removed-${index}`),
+      code:String(item?.name||'Товар'),
+      name:String(item?.name||'Товар'),
+      brand:displayBrand(item?.brand),
+      image:String(item?.image||PRODUCT_PLACEHOLDER),
+      price:unitPrice,
+      oldPrice:oldUnitPrice
+    };
+    return {productId:snapshot.id,snapshot,size:String(item?.size||'—'),qty:Math.max(1,Number(item?.qty??item?.quantity??1)||1),unitPrice,oldUnitPrice};
+  }):[];
+  const createdTimestamp=Date.parse(order?.created_at||order?.createdAt||'')||Date.now();
+  return {
+    id:String(order?.id??'—'),
+    date:orderDateLabel(order?.created_at||order?.createdAt),
+    createdTimestamp,
+    status:normalizeOrderStatus(order?.status),
+    items,
+    total:Number(order?.total)||items.reduce((sum,item)=>sum+item.unitPrice*item.qty,0),
+    delivery:String(order?.delivery||'Доставка'),
+    place:String(order?.place||'Данные переданы менеджеру'),
+    clientRequestId:String(order?.client_request_id||order?.clientRequestId||''),
+    pending:false,
+    bonuses:Number(order?.bonuses)||0,
+    bonusEarned:Number(order?.bonusEarned)||0
+  };
+}
+function mergeOrderCollections(){
+  const remoteRequests=new Set(REMOTE_ORDERS.map(order=>order.clientRequestId).filter(Boolean));
+  const now=Date.now();
+  state.pendingOrders=(state.pendingOrders||[]).filter(order=>{
+    if(order.clientRequestId&&remoteRequests.has(order.clientRequestId))return false;
+    return now-Number(order.createdTimestamp||now)<24*60*60*1000;
+  });
+  const merged=[...REMOTE_ORDERS,...state.pendingOrders].sort((a,b)=>Number(b.createdTimestamp||0)-Number(a.createdTimestamp||0));
+  ORDERS.splice(0,ORDERS.length,...merged);
+  if(state.lastCreatedOrder?.clientRequestId){
+    const actual=ORDERS.find(order=>order.clientRequestId===state.lastCreatedOrder.clientRequestId);
+    if(actual)state.lastCreatedOrder=actual;
+  }
+}
+async function refreshOrdersFromServer({silent=true}={}){
+  const userId=String(state.profile?.id||'');
+  if(!userId){REMOTE_ORDERS=[];mergeOrderCollections();return false}
+  try{
+    const raw=await fetchJsonOptional('orders_public.json',[]);
+    REMOTE_ORDERS=(Array.isArray(raw)?raw:[])
+      .filter(order=>String(order?.user_id||order?.userId||'')===userId)
+      .map(normalizePublicOrder);
+    mergeOrderCollections();
+    persistState();
+    if(state.screen==='orders')renderOrders();
+    if(state.screen==='orderDetail')renderOrderDetail();
+    if(state.screen==='profile')renderProfileSummary();
+    if(state.screen==='orderSuccess')renderOrderSuccess();
+    return true;
+  }catch(error){if(!silent)showToast('Не удалось обновить покупки');console.error('Orders refresh failed',error);return false}
+}
 async function loadStoreData(){
-  const results=await Promise.allSettled([fetchJson('products.json'),fetchJson('updates.json')]);
+  const userId=String(state.profile?.id||'');
+  const results=await Promise.allSettled([
+    fetchJson('products.json'),
+    fetchJson('updates.json'),
+    userId?fetchJsonOptional('orders_public.json',[]):Promise.resolve([])
+  ]);
   if(results[0].status==='fulfilled'){PRODUCTS=(Array.isArray(results[0].value)?results[0].value:[]).map(normalizeSourceProduct)}
   else{state.dataError='catalog-error';console.error(results[0].reason)}
   if(results[1].status==='fulfilled'){
@@ -126,13 +209,18 @@ async function loadStoreData(){
     NEWS=activeNews.map(normalizeSourceNews);
   }
   else{console.error(results[1].reason);NEWS=[...DEFAULT_NEWS]}
+  if(results[2].status==='fulfilled'){
+    REMOTE_ORDERS=(Array.isArray(results[2].value)?results[2].value:[])
+      .filter(order=>String(order?.user_id||order?.userId||'')===userId)
+      .map(normalizePublicOrder);
+  }else{REMOTE_ORDERS=[];console.error(results[2].reason)}
 }
 function productById(id){return PRODUCTS.find(product=>String(product.id)===String(id))||null}
 function productIndexById(id){return PRODUCTS.findIndex(product=>String(product.id)===String(id))}
-function productForOrderItem(item){return productById(item?.productId)||PRODUCTS[item?.product]||item?.snapshot||null}
-function orderItemSnapshot(product){return product?{id:product.id,code:product.code,brand:product.brand,image:product.image,price:productPrice(product),oldPrice:Number(product.price)||productPrice(product)}:null}
+function productForOrderItem(item){return item?.snapshot||productById(item?.productId)||PRODUCTS[item?.product]||null}
+function orderItemSnapshot(product){return product?{id:product.id,code:product.code,name:product.name,brand:product.brand,image:product.image,price:productPrice(product),oldPrice:Number(product.price)||productPrice(product)}:null}
 
-const STORAGE_KEYS={cart:'mestniy_cart_v24',favorites:'mestniy_favorites_v24',orders:'mestniy_orders_local_v24',bonuses:'mestniy_bonus_local_v24',profile:'mestniy_profile_v24'};
+const STORAGE_KEYS={cart:'mestniy_cart_v24',favorites:'mestniy_favorites_v24',pendingOrders:'mestniy_pending_orders_v1',bonuses:'mestniy_bonus_orders_v1',profile:'mestniy_profile_v24'};
 function safeParse(value,fallback){try{return JSON.parse(value)}catch(_e){return fallback}}
 function storageRead(key,fallback){try{return safeParse(localStorage.getItem(key),fallback)}catch(_e){return fallback}}
 function loadPersistedState(){
@@ -140,14 +228,16 @@ function loadPersistedState(){
   state.cart=Array.isArray(cart)?cart.filter(item=>productById(item.id)&&item.size&&Number(item.qty)>0).map(item=>({id:String(item.id),size:String(item.size),qty:Math.max(1,Number(item.qty)||1)})):[];
   const favorites=storageRead(STORAGE_KEYS.favorites,[]);
   state.favorites=new Set((Array.isArray(favorites)?favorites:[]).map(String).filter(id=>productById(id)));
-  const orders=storageRead(STORAGE_KEYS.orders,[]);if(Array.isArray(orders))ORDERS.splice(0,ORDERS.length,...orders);
+  const pending=storageRead(STORAGE_KEYS.pendingOrders,[]);
+  state.pendingOrders=Array.isArray(pending)?pending.filter(order=>order&&order.pending&&order.clientRequestId):[];
   const bonus=storageRead(STORAGE_KEYS.bonuses,[]);if(Array.isArray(bonus))state.bonusTransactions=bonus;
+  mergeOrderCollections();
 }
 function persistState(){
   try{
     localStorage.setItem(STORAGE_KEYS.cart,JSON.stringify(state.cart));
     localStorage.setItem(STORAGE_KEYS.favorites,JSON.stringify([...state.favorites]));
-    localStorage.setItem(STORAGE_KEYS.orders,JSON.stringify(ORDERS));
+    localStorage.setItem(STORAGE_KEYS.pendingOrders,JSON.stringify((state.pendingOrders||[]).filter(order=>order.pending)));
     localStorage.setItem(STORAGE_KEYS.bonuses,JSON.stringify(state.bonusTransactions));
   }catch(error){console.warn('Storage unavailable',error)}
 }
@@ -157,13 +247,18 @@ function mergeProfile(...sources){
   const valid=sources.filter(Boolean);const pick=(...keys)=>{for(const source of valid)for(const key of keys)if(source?.[key])return source[key];return ''};
   return {id:pick('id','telegram_id'),username:pick('username'),firstName:pick('first_name','firstName','name'),lastName:pick('last_name','lastName'),photoUrl:pick('photo_url','photoUrl')};
 }
+function getTelegramProfile(){
+  const tg=window.Telegram?.WebApp;
+  const cached=storageRead(STORAGE_KEYS.profile,null);
+  return mergeProfile(tg?.initDataUnsafe?.user,parseInitDataUser(tg?.initData),readProfileFromUrl(),cached);
+}
 function applyTelegramProfile(){
   const tg=window.Telegram?.WebApp;try{tg?.ready?.();tg?.expand?.()}catch(_e){}
-  const cached=storageRead(STORAGE_KEYS.profile,null);
-  const profile=mergeProfile(tg?.initDataUnsafe?.user,parseInitDataUser(tg?.initData),readProfileFromUrl(),cached);
+  const profile=getTelegramProfile();state.profile=profile;
   if(profile.id||profile.username||profile.firstName||profile.photoUrl){try{localStorage.setItem(STORAGE_KEYS.profile,JSON.stringify(profile))}catch(_e){}}
   const username=document.getElementById('profileUsername');if(username)username.textContent=profile.username?`@${profile.username}`:(profile.firstName||'ПОЛЬЗОВАТЕЛЬ');
   const avatar=document.getElementById('profileAvatar');if(avatar&&profile.photoUrl){avatar.onload=()=>avatar.classList.add('is-loaded');avatar.onerror=()=>{avatar.src='assets/profile-fallback.webp'};avatar.src=profile.photoUrl}
+  return profile;
 }
 function renderHomeNews(){
   const box=document.getElementById('homeNews');if(!box)return;
@@ -189,14 +284,14 @@ function renderHomeNews(){
       <i aria-hidden="true">→</i>
     </button>`:''}`;
 }
-function buildOrderPayload(){
+function buildOrderPayload(clientRequestId){
   const c=state.checkout;
-  const bonuses=Math.max(0,Math.min(Number(c.bonuses)||0,state.bonusBalance,cartSubtotal()));
+  const bonuses=0;
   return {
-    items:state.cart.map(item=>{const p=productById(item.id);return {id:p?.id,productId:p?.id,name:p?.code||p?.name||'Товар',brand:p?.brand||'',sizes:[item.size],size:item.size,qty:item.qty,quantity:item.qty,price:p?productPrice(p):0,image:p?.image||''}}),
+    items:state.cart.map(item=>({productId:item.id,size:item.size,qty:item.qty})),
     total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':null,
     deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{address:c.address,postalIndex:c.postalIndex,postOffice:c.postOffice}:null,
-    customer:{firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses
+    customer:{fullName:c.name,firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses,clientRequestId
   };
 }
 function sendOrderToBot(payload){
@@ -258,9 +353,9 @@ function showScreen(name, push=true){
   if(name==='cart') renderCart();
   if(name==='checkout') renderCheckout();
   if(name==='orderSuccess') renderOrderSuccess();
-  if(name==='profile') renderProfileSummary();
+  if(name==='profile'){renderProfileSummary();refreshOrdersFromServer()}
   if(name==='bonuses') renderBonuses();
-  if(name==='orders') renderOrders();
+  if(name==='orders'){renderOrders();refreshOrdersFromServer()}
   if(name==='orderDetail') renderOrderDetail();
   if(name==='news') renderNews();
   if(name==='newsDetail') renderNewsDetail();
@@ -511,29 +606,50 @@ function createPrototypeOrder(){
   if(error){if(errorBox){errorBox.textContent=error;errorBox.classList.add('show')}return}
   if(errorBox)errorBox.classList.remove('show');
   syncBonusBalance();
-  const nextId=String(Math.max(0,...ORDERS.map(order=>Number(order.id)||0))+1).padStart(4,'0');
-  const bonuses=Math.max(0,Math.min(Number(state.checkout.bonuses)||0,state.bonusBalance,cartSubtotal()));
-  const orderDate=new Intl.DateTimeFormat('ru-RU',{day:'2-digit',month:'long',year:'numeric'}).format(new Date());
-  const newOrder={id:nextId,date:orderDate,status:'accepted',items:state.cart.map(item=>{const p=productById(item.id);return {productId:p?.id,product:productIndexById(p?.id),snapshot:orderItemSnapshot(p),size:item.size,qty:item.qty,unitPrice:p?productPrice(p):0,oldUnitPrice:p?(Number(p.price)||productPrice(p)):0}}),delivery:checkoutDeliveryLabel(state.checkout.delivery),place:checkoutPlace(),recipient:state.checkout.name.trim(),phone:state.checkout.phone.trim(),comment:state.checkout.comment.trim(),bonuses,bonusEarned:0};
-  sendOrderToBot(buildOrderPayload());
-  ORDERS.unshift(newOrder);
-  if(bonuses>0){
-    state.bonusTransactions.unshift({id:`b-${nextId}-use`,type:'spend',amount:-bonuses,date:orderDate,title:'Использовано в заказе',orderId:nextId});
-  }
-  syncBonusBalance();
+  const clientRequestId=`web-${state.profile?.id||'user'}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
+  const payload=buildOrderPayload(clientRequestId);
+  const bonuses=0;
+  const createdTimestamp=Date.now();
+  const orderDate=orderDateLabel(createdTimestamp);
+  const previousCart=state.cart.map(item=>({...item}));
+  const previousCheckout={...state.checkout};
+  const newOrder={
+    id:'—',date:orderDate,createdTimestamp,status:'accepted',pending:true,clientRequestId,
+    items:state.cart.map(item=>{const p=productById(item.id);return {productId:p?.id,product:productIndexById(p?.id),snapshot:orderItemSnapshot(p),size:item.size,qty:item.qty,unitPrice:p?productPrice(p):0,oldUnitPrice:p?(Number(p.price)||productPrice(p)):0}}),
+    total:Math.max(0,cartSubtotal()-bonuses),delivery:checkoutDeliveryLabel(state.checkout.delivery),place:'Данные переданы менеджеру',bonuses,bonusEarned:0
+  };
+  // Сохраняем заявку до sendData: Telegram может сразу закрыть Mini App после отправки.
+  state.pendingOrders.unshift(newOrder);
   state.lastCreatedOrder=newOrder;
   state.selectedOrder=0;
   state.cart=[];
   state.checkout={delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0};
+  mergeOrderCollections();
+  persistState();
+  if(!sendOrderToBot(payload)){
+    state.pendingOrders=state.pendingOrders.filter(order=>order.clientRequestId!==clientRequestId);
+    state.cart=previousCart;
+    state.checkout=previousCheckout;
+    state.lastCreatedOrder=null;
+    mergeOrderCollections();
+    persistState();
+    if(errorBox){errorBox.textContent='Заказ можно оформить только внутри Telegram Mini App.';errorBox.classList.add('show')}
+    return;
+  }
+  if(bonuses>0){state.bonusTransactions.unshift({id:`b-${clientRequestId}-use`,type:'spend',amount:-bonuses,date:orderDate,title:'Использовано в заказе',orderId:'—'})}
+  syncBonusBalance();
   persistState();
   renderCart();renderOrders();renderProfileSummary();renderBonuses();updateCounts();
   showScreen('orderSuccess');
+  setTimeout(()=>refreshOrdersFromServer({silent:true}),3500);
+  setTimeout(()=>refreshOrdersFromServer({silent:true}),12000);
 }
 function renderOrderSuccess(){
   const order=state.lastCreatedOrder||ORDERS[0];
   const box=document.getElementById('orderSuccessBody');if(!box||!order)return;
   const expected=calculateOrderBonus(order);
-  box.innerHTML=`<div class="success-wrap"><div class="success-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div><div class="success-kicker">ЗАЯВКА СОЗДАНА</div><h1 class="success-title">ЗАКАЗ №${order.id}<br>ПРИНЯТ</h1><p class="success-copy">Заказ уже появился в разделе «Мои покупки». Все изменения статуса будут отображаться там и приходить сообщением от бота.</p><div class="success-card"><div class="success-row"><span>СТАТУС</span><strong>${ORDER_STATUS[order.status]}</strong></div><div class="success-row"><span>ПОЛУЧЕНИЕ</span><strong>${order.delivery}</strong></div>${order.bonuses?`<div class="success-row"><span>ИСПОЛЬЗОВАНО БОНУСОВ</span><strong>${formatBonus(order.bonuses)}</strong></div>`:''}<div class="success-row"><span>К ОПЛАТЕ</span><strong>${money(orderTotal(order))}</strong></div></div><div class="bonus-order-note">После статуса «Завершен» за эту покупку будет начислено ${formatBonus(expected)}.</div><div class="success-actions"><button class="black-btn" data-success-orders>МОИ ПОКУПКИ</button><button class="outline-btn" data-go="catalog">ВЕРНУТЬСЯ В КАТАЛОГ</button></div></div>`;
+  const title=order.pending?'ЗАКАЗ ПРИНЯТ':`ЗАКАЗ №${order.id}<br>ПРИНЯТ`;
+  box.innerHTML=`<div class="success-wrap"><div class="success-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div><div class="success-kicker">ЗАЯВКА СОЗДАНА</div><h1 class="success-title">${title}</h1><p class="success-copy">Заказ уже появился в разделе «Мои покупки». Все изменения статуса будут отображаться там и приходить сообщением от бота.</p><div class="success-card"><div class="success-row"><span>СТАТУС</span><strong>${ORDER_STATUS[order.status]}</strong></div><div class="success-row"><span>ПОЛУЧЕНИЕ</span><strong>${order.delivery}</strong></div>${order.bonuses?`<div class="success-row"><span>ИСПОЛЬЗОВАНО БОНУСОВ</span><strong>${formatBonus(order.bonuses)}</strong></div>`:''}<div class="success-row"><span>К ОПЛАТЕ</span><strong>${money(orderTotal(order))}</strong></div></div><div class="bonus-order-note">После статуса «Завершен» за эту покупку будет начислено ${formatBonus(expected)}.</div><div class="success-actions"><button class="black-btn" data-success-orders>МОИ ПОКУПКИ</button><button class="outline-btn" data-go="catalog">ВЕРНУТЬСЯ В КАТАЛОГ</button></div></div>`;
 }
 function productGalleryImages(product){
   const images=[...(product?.images||[]),product?.image]
@@ -639,8 +755,8 @@ function orderSubtotal(order){return order.items.reduce((sum,item)=>sum+orderUni
 function orderOriginalSubtotal(order){return order.items.reduce((sum,item)=>sum+orderOldUnitPrice(item,productForOrderItem(item))*item.qty,0)}
 function orderDiscountTotal(order){return Math.max(0,orderOriginalSubtotal(order)-orderSubtotal(order))}
 function orderPriceMarkup(item,p,extraClass=''){const current=orderUnitPrice(item,p)*item.qty,old=orderOldUnitPrice(item,p)*item.qty;return `<span class="price-stack ${extraClass}"><span class="price-current">${money(current)}</span>${old>current?`<span class="price-old">${money(old)}</span>`:''}</span>`}
-function orderTotal(order){return orderSubtotal(order)-Number(order.bonuses||0)}
-function statusClass(status){return status==='completed'?'is-completed':status==='canceled'?'is-canceled':''}
+function orderTotal(order){const actual=Number(order?.total);return Number.isFinite(actual)?actual:orderSubtotal(order)-Number(order.bonuses||0)}
+function statusClass(status){return status==='completed'?'is-completed':status==='canceled'?'is-canceled':status==='accepted'?'is-accepted':''}
 function orderItemMarkup(item,detail=false){
   const p=productForOrderItem(item);
   if(detail)return `<article class="order-detail-item"><img src="${p.image}" alt="${p.brand}"><div><h4>${p.brand}</h4><p>${p.code}</p><p>РАЗМЕР: ${item.size}&nbsp;&nbsp;/&nbsp;&nbsp;КОЛ-ВО: ${item.qty}</p>${orderPriceMarkup(item,p)}</div></article>`;
@@ -655,7 +771,7 @@ function renderOrders(){
   });
   const count=document.getElementById('ordersCount');if(count)count.textContent=ORDERS.length;
   const box=document.getElementById('ordersList');
-  box.innerHTML=list.length?list.map(({order,index})=>`<button class="order-card" data-order-index="${index}"><div class="order-card-head"><div><div class="order-number">ЗАКАЗ №${order.id}</div><span class="order-date">${order.date}</span></div><span class="order-status ${statusClass(order.status)}">${ORDER_STATUS[order.status]}</span></div><div class="order-items-preview">${order.items.map(item=>orderItemMarkup(item)).join('')}</div><div class="order-card-foot"><strong>${money(orderTotal(order))}</strong><span>ПОДРОБНЕЕ</span></div></button>`).join(''):emptyStateMarkup({type:'orders',title:ORDERS.length?'В ЭТОМ РАЗДЕЛЕ ПУСТО':'ПОКУПОК ПОКА НЕТ',text:ORDERS.length?'Заказов с выбранным статусом пока нет.':'После оформления заказа он появится здесь вместе со статусом и деталями.',action:ORDERS.length?'ПОКАЗАТЬ ВСЕ':'ПЕРЕЙТИ В КАТАЛОГ',go:ORDERS.length?'':'catalog',actionAttr:ORDERS.length?'data-order-show-all':''});
+  box.innerHTML=list.length?list.map(({order,index})=>`<button class="order-card" data-order-index="${index}"><div class="order-card-head"><div><div class="order-number">ЗАКАЗ №${order.id}</div><span class="order-date">${order.date}</span></div><span class="order-status ${statusClass(order.status)}">${ORDER_STATUS[order.status]||'Принят'}</span></div><div class="order-items-preview">${order.items.map(item=>orderItemMarkup(item)).join('')}</div><div class="order-card-foot"><strong>${money(orderTotal(order))}</strong><span>ПОДРОБНЕЕ</span></div></button>`).join(''):emptyStateMarkup({type:'orders',title:ORDERS.length?'В ЭТОМ РАЗДЕЛЕ ПУСТО':'ПОКУПОК ПОКА НЕТ',text:ORDERS.length?'Заказов с выбранным статусом пока нет.':'После оформления заказа он появится здесь вместе со статусом и деталями.',action:ORDERS.length?'ПОКАЗАТЬ ВСЕ':'ПЕРЕЙТИ В КАТАЛОГ',go:ORDERS.length?'':'catalog',actionAttr:ORDERS.length?'data-order-show-all':''});
 }
 function renderOrderDetail(){
   const order=ORDERS[state.selectedOrder]||ORDERS[0];
@@ -670,7 +786,7 @@ function renderOrderDetail(){
     : order.status==='canceled'
       ? `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${formatBonus(order.bonuses)}</span></div><div class="order-info-row total"><span>ВОЗВРАЩЕНО</span><span>+ ${formatBonus(order.bonusReturned||order.bonuses)}</span></div>`:'<div class="bonus-order-note">В этом заказе бонусы не использовались.</div>'}`
       : `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${formatBonus(order.bonuses)}</span></div>`:''}<div class="order-info-row total"><span>ПОСЛЕ ЗАВЕРШЕНИЯ</span><span>+ ${formatBonus(expectedBonus)}</span></div>`;
-  document.getElementById('orderDetailBody').innerHTML=`<section class="order-detail-hero"><div class="order-detail-kicker">ТЕКУЩИЙ СТАТУС</div><div class="order-detail-status">${ORDER_STATUS[order.status]}</div><div class="order-detail-meta"><span>№${order.id}</span><span>${order.date}</span></div></section>${timeline}<section class="order-detail-section"><h3 class="order-detail-title">ТОВАРЫ</h3>${order.items.map(item=>orderItemMarkup(item,true)).join('')}</section><section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧЕНИЕ</h3><div class="order-info-row"><span>СПОСОБ</span><span>${order.delivery}</span></div><div class="order-info-row"><span>МЕСТО</span><span>${order.place}</span></div></section>${order.recipient?`<section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧАТЕЛЬ</h3><div class="order-info-row"><span>ИМЯ</span><span>${escapeHtml(order.recipient)}</span></div><div class="order-info-row"><span>ТЕЛЕФОН</span><span>${escapeHtml(order.phone)}</span></div>${order.comment?`<div class="order-info-row"><span>КОММЕНТАРИЙ</span><span>${escapeHtml(order.comment)}</span></div>`:''}</section>`:''}<section class="order-detail-section"><h3 class="order-detail-title">БОНУСЫ</h3>${bonusRows}</section><section class="order-detail-section"><h3 class="order-detail-title">ИТОГО</h3><div class="order-info-row"><span>${discountTotal?'СТОИМОСТЬ ТОВАРОВ':'ТОВАРЫ'}</span><span>${money(discountTotal?originalSubtotal:subtotal)}</span></div>${discountTotal?`<div class="order-info-row"><span>СКИДКА</span><span>− ${money(discountTotal)}</span></div>`:''}${order.bonuses?`<div class="order-info-row"><span>БОНУСЫ</span><span>− ${money(order.bonuses)}</span></div>`:''}<div class="order-info-row total"><span>К ОПЛАТЕ</span><span>${money(orderTotal(order))}</span></div></section>`;
+  document.getElementById('orderDetailBody').innerHTML=`<section class="order-detail-hero"><div class="order-detail-kicker">ТЕКУЩИЙ СТАТУС</div><div class="order-detail-status">${ORDER_STATUS[order.status]||'Принят'}</div><div class="order-detail-meta"><span>№${order.id}</span><span>${order.date}</span></div></section>${timeline}<section class="order-detail-section"><h3 class="order-detail-title">ТОВАРЫ</h3>${order.items.map(item=>orderItemMarkup(item,true)).join('')}</section><section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧЕНИЕ</h3><div class="order-info-row"><span>СПОСОБ</span><span>${order.delivery}</span></div><div class="order-info-row"><span>МЕСТО</span><span>${order.place}</span></div></section>${order.recipient?`<section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧАТЕЛЬ</h3><div class="order-info-row"><span>ИМЯ</span><span>${escapeHtml(order.recipient)}</span></div><div class="order-info-row"><span>ТЕЛЕФОН</span><span>${escapeHtml(order.phone)}</span></div>${order.comment?`<div class="order-info-row"><span>КОММЕНТАРИЙ</span><span>${escapeHtml(order.comment)}</span></div>`:''}</section>`:''}<section class="order-detail-section"><h3 class="order-detail-title">БОНУСЫ</h3>${bonusRows}</section><section class="order-detail-section"><h3 class="order-detail-title">ИТОГО</h3><div class="order-info-row"><span>${discountTotal?'СТОИМОСТЬ ТОВАРОВ':'ТОВАРЫ'}</span><span>${money(discountTotal?originalSubtotal:subtotal)}</span></div>${discountTotal?`<div class="order-info-row"><span>СКИДКА</span><span>− ${money(discountTotal)}</span></div>`:''}${order.bonuses?`<div class="order-info-row"><span>БОНУСЫ</span><span>− ${money(order.bonuses)}</span></div>`:''}<div class="order-info-row total"><span>К ОПЛАТЕ</span><span>${money(orderTotal(order))}</span></div></section>`;
 }
 function renderProfileSummary(){
   updateCounts();
@@ -681,7 +797,7 @@ function renderProfileSummary(){
   if(!ORDERS.length){if(latestBox)latestBox.innerHTML='<div class="profile-empty-purchase"><strong>ПОКУПОК ПОКА НЕТ</strong><p>После первого заказа здесь появится его статус и товар.</p><button data-go="catalog">ПЕРЕЙТИ В КАТАЛОГ</button></div>';return}
   const latest=ORDERS[0],item=latest.items[0],p=productForOrderItem(item);
   if(!p){if(latestBox)latestBox.innerHTML='';return}
-  if(latestBox)latestBox.innerHTML=`<button class="order-preview" data-order-index="0"><img src="${p.image}" alt="${p.brand}"><div><h4>${p.brand}</h4><p>${p.code}</p><p>Размер: ${item.size}&nbsp;&nbsp;/&nbsp;&nbsp;Кол-во: ${item.qty}</p><p class="status">● ${ORDER_STATUS[latest.status]}<br>${latest.date}</p><strong>${money(orderTotal(latest))}</strong></div></button>`;
+  if(latestBox)latestBox.innerHTML=`<button class="order-preview" data-order-index="0"><img src="${p.image}" alt="${p.brand}"><div><h4>${p.brand}</h4><p>${p.code}</p><p>Размер: ${item.size}&nbsp;&nbsp;/&nbsp;&nbsp;Кол-во: ${item.qty}</p><p class="status">● ${ORDER_STATUS[latest.status]||'Принят'}<br>${latest.date}</p><strong>${money(orderTotal(latest))}</strong></div></button>`;
 }
 function renderMenuDrawer(){
   const body=document.getElementById('drawerBody');if(!body)return;
@@ -785,11 +901,12 @@ document.addEventListener('focusin',event=>{
 async function initApp(){
   const loader=document.getElementById('appLoader');
   try{
+    applyTelegramProfile();
     await loadStoreData();
     loadPersistedState();
-    applyTelegramProfile();
     renderHomeNews();
     updateFilterButton();syncBonusBalance();updateSortButton();renderCatalog();renderFavorites();renderCart();renderProfileSummary();renderOrders();renderBonuses();
+    if(state.profile?.id)setInterval(()=>refreshOrdersFromServer({silent:true}),30000);
   }catch(error){console.error('MESTNIY frontend init error',error);state.dataError='catalog-error';renderCatalog()}
   finally{loader?.classList.add('hidden');setTimeout(()=>loader?.remove(),350)}
 }

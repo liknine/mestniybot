@@ -5,6 +5,7 @@ import aiohttp
 from aiohttp import web
 from datetime import datetime
 from typing import Optional
+import html
 import json
 import uuid
 import os
@@ -25,7 +26,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from sqlalchemy import select, delete, or_
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import String, Integer, Float, JSON, DateTime, BigInteger, Text
+from sqlalchemy import String, Integer, Float, JSON, DateTime, BigInteger, Text, Boolean, text
 
 # ==================== ФИКС SSL для Mac ====================
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -220,7 +221,7 @@ class Order(Base):
     __tablename__ = "orders"
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(BigInteger)
-    items: Mapped[dict] = mapped_column(JSON)
+    items: Mapped[list] = mapped_column(JSON)
     total: Mapped[float] = mapped_column(Float)
     currency: Mapped[str] = mapped_column(String(3))
     delivery_type: Mapped[str] = mapped_column(String(50))
@@ -228,12 +229,27 @@ class Order(Base):
     delivery_data: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
     customer: Mapped[dict] = mapped_column(JSON)
     comment: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    status: Mapped[str] = mapped_column(String(50), default="new")
+    status: Mapped[str] = mapped_column(String(50), default="accepted")
+    stock_decremented: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
 async def init_db():
+    """Создаёт таблицы и безопасно добавляет новые поля в существующую SQLite-базу."""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        columns_result = await conn.execute(text("PRAGMA table_info(orders)"))
+        order_columns = {row[1] for row in columns_result.fetchall()}
+        if "stock_decremented" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN stock_decremented BOOLEAN NOT NULL DEFAULT 0"))
+        if "updated_at" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN updated_at DATETIME"))
+        # Старые статусы приводим к новой единой схеме.
+        await conn.execute(text("UPDATE orders SET status = 'accepted' WHERE status IN ('new', 'processing')"))
+        await conn.execute(text("UPDATE orders SET status = 'completed' WHERE status = 'delivered'"))
+        await conn.execute(text("UPDATE orders SET updated_at = created_at WHERE updated_at IS NULL"))
+        # Старые уже отправленные заказы не списываем повторно после обновления кода.
+        await conn.execute(text("UPDATE orders SET stock_decremented = 1 WHERE status = 'shipped' AND stock_decremented = 0"))
     print("✅ База данных готова")
 
 # ==================== КУРСЫ ВАЛЮТ ====================
@@ -3296,125 +3312,410 @@ async def admin_stats(callback: CallbackQuery):
 
 # ==================== ADMIN: ЗАКАЗЫ ====================
 
+ORDER_STATUS_LABELS = {
+    "accepted": "Принят",
+    "shipped": "Отправлен",
+    "ready": "Готов к выдаче",
+    "completed": "Завершен",
+    "canceled": "Отменен",
+}
+ORDER_STATUS_ICONS = {
+    "accepted": "🟡",
+    "shipped": "🚚",
+    "ready": "📍",
+    "completed": "✅",
+    "canceled": "❌",
+}
+ORDER_STATUS_ALIASES = {
+    "new": "accepted",
+    "processing": "accepted",
+    "delivered": "completed",
+}
+ORDER_LIST_PAGE_SIZE = 7
+
+
+def normalize_order_status(value: str) -> str:
+    clean = str(value or "accepted").strip().lower()
+    clean = ORDER_STATUS_ALIASES.get(clean, clean)
+    return clean if clean in ORDER_STATUS_LABELS else "accepted"
+
+
+def order_status_label(value: str) -> str:
+    return ORDER_STATUS_LABELS[normalize_order_status(value)]
+
+
+def order_delivery_label(order: Order) -> str:
+    if order.delivery_type == "europost":
+        return "Европочта"
+    if order.delivery_type == "belpost":
+        return "Белпочта"
+    if order.delivery_type == "pickup":
+        return "Самовывоз"
+    return str(order.delivery_service or order.delivery_type or "Не указано")
+
+
+def order_customer_label(order: Order) -> str:
+    customer = order.customer or {}
+    username = str(customer.get("username") or "").lstrip("@").strip()
+    full_name = str(customer.get("fullName") or customer.get("firstName") or "").strip()
+    if username:
+        return f"@{username}"
+    if full_name:
+        return full_name
+    return f"ID {order.user_id}"
+
+
+def order_item_text(item: dict, number: int) -> str:
+    brand = html.escape(str(item.get("brand") or "").strip())
+    name = html.escape(str(item.get("name") or "Товар").strip())
+    size = html.escape(str(item.get("size") or "—"))
+    qty = max(1, int(item.get("qty") or item.get("quantity") or 1))
+    price = float(item.get("unit_price") or item.get("unitPrice") or item.get("price") or 0)
+    title = " — ".join(part for part in (brand, name) if part) or "Товар"
+    return (
+        f"{number}) <b>{title}</b>\n"
+        f"   Размер: <b>{size}</b> · Кол-во: <b>{qty}</b> · Цена: <b>{price:g} BYN</b>"
+    )
+
+
+def order_admin_text(order: Order, notice: str | None = None) -> str:
+    customer = order.customer or {}
+    delivery_data = order.delivery_data or {}
+    full_name = html.escape(str(customer.get("fullName") or customer.get("firstName") or "Не указано"))
+    phone = html.escape(str(customer.get("phone") or "Не указан"))
+    username = str(customer.get("username") or "").lstrip("@").strip()
+    username_text = f"@{html.escape(username)}" if username else "без username"
+    item_lines = "\n".join(order_item_text(item, index) for index, item in enumerate(order.items or [], 1)) or "Товары не указаны"
+    delivery_lines = [f"🚚 <b>Получение:</b> {html.escape(order_delivery_label(order))}"]
+    if order.delivery_type == "europost":
+        delivery_lines.append(f"🏤 <b>Отделение:</b> {html.escape(str(delivery_data.get('branch') or 'Не указано'))}")
+    elif order.delivery_type == "belpost":
+        delivery_lines.extend([
+            f"🏠 <b>Адрес:</b> {html.escape(str(delivery_data.get('address') or 'Не указано'))}",
+            f"📮 <b>Индекс:</b> {html.escape(str(delivery_data.get('postalIndex') or 'Не указан'))}",
+            f"🏤 <b>Отделение:</b> {html.escape(str(delivery_data.get('postOffice') or 'Не указано'))}",
+        ])
+    comment = html.escape(str(order.comment or "").strip())
+    created = order.created_at.strftime("%d.%m.%Y %H:%M") if order.created_at else "—"
+    stock_note = "да" if bool(order.stock_decremented) else "нет"
+    blocks = []
+    if notice:
+        blocks.append(notice)
+    blocks.append(
+        f"{ORDER_STATUS_ICONS[normalize_order_status(order.status)]} <b>Заказ #{order.id}</b>\n"
+        f"Статус: <b>{order_status_label(order.status)}</b>\n"
+        f"Дата: {created}"
+    )
+    blocks.append(
+        f"👤 <b>Клиент:</b> {full_name}\n"
+        f"Telegram: {username_text} · <code>{order.user_id}</code>\n"
+        f"📞 <b>Телефон:</b> {phone}"
+    )
+    blocks.append("\n".join(delivery_lines))
+    blocks.append(f"📦 <b>Товары:</b>\n{item_lines}")
+    blocks.append(f"💰 <b>Итого:</b> {float(order.total or 0):g} BYN\n📉 Остаток списан: <b>{stock_note}</b>")
+    if comment:
+        blocks.append(f"💬 <b>Комментарий:</b> {comment}")
+    return "\n\n".join(blocks)
+
+
+def get_order_status_keyboard(order_id: int, current_status: str):
+    current = normalize_order_status(current_status)
+    rows = []
+    pairs = [("accepted", "shipped"), ("ready", "completed")]
+    for pair in pairs:
+        row = []
+        for status in pair:
+            prefix = "✓ " if status == current else ""
+            row.append(InlineKeyboardButton(
+                text=f"{prefix}{ORDER_STATUS_ICONS[status]} {ORDER_STATUS_LABELS[status]}",
+                callback_data="noop" if status == current else f"os:{order_id}:{status}",
+            ))
+        rows.append(row)
+    rows.append([
+        InlineKeyboardButton(
+            text=("✓ " if current == "canceled" else "") + "❌ Отменен",
+            callback_data="noop" if current == "canceled" else f"os:{order_id}:canceled",
+        )
+    ])
+    rows.append([InlineKeyboardButton(text="🔄 Обновить карточку", callback_data=f"ov:{order_id}")])
+    rows.append([InlineKeyboardButton(text="⬅️ К заказам", callback_data="admin_orders")])
+    return InlineKeyboardMarkup(inline_keyboard=rows)
+
+
+async def send_order_admin_card(message: Message, order: Order, notice: str | None = None):
+    await message.answer(
+        order_admin_text(order, notice),
+        reply_markup=get_order_status_keyboard(order.id, order.status),
+        disable_web_page_preview=True,
+    )
+
+
+async def decrease_stock_for_order(session: AsyncSession, order: Order) -> tuple[int, list[str]]:
+    """Списывает выбранные размеры один раз. Возвращает число изменённых товаров и предупреждения."""
+    changed_products: set[int] = set()
+    warnings: list[str] = []
+    for item in order.items or []:
+        raw_product_id = item.get("product_id") or item.get("productId") or item.get("id")
+        try:
+            product_id = int(raw_product_id)
+        except (TypeError, ValueError):
+            warnings.append(f"Не удалось определить товар для позиции {item.get('name') or '?'}")
+            continue
+        product = await session.get(Product, product_id)
+        if not product:
+            warnings.append(f"Товар #{product_id} больше не найден")
+            continue
+        requested_size = str(item.get("size") or "").strip()
+        qty = max(1, int(item.get("qty") or item.get("quantity") or 1))
+        size_stock = product_size_stock(product)
+        matched_size = next((size for size in size_stock if size.casefold() == requested_size.casefold()), requested_size)
+        available = max(0, int(size_stock.get(matched_size, 0)))
+        if available < qty:
+            warnings.append(f"#{product_id} размер {requested_size}: было {available}, нужно списать {qty}")
+        size_stock[matched_size] = max(0, available - qty)
+        prices = dict(product.prices or {})
+        prices["size_stock"] = size_stock
+        product.prices = prices
+        product.sizes = list(size_stock.keys())
+        product.stock = sum(size_stock.values())
+        changed_products.add(product_id)
+    order.stock_decremented = True
+    return len(changed_products), warnings
+
+
+async def change_order_status(order_id: int, new_status: str):
+    target = normalize_order_status(new_status)
+    async with async_session() as session:
+        order = await session.get(Order, order_id)
+        if not order:
+            return None, False, [], None
+        old_status = normalize_order_status(order.status)
+        stock_changed = False
+        warnings: list[str] = []
+        if target == "shipped" and not bool(order.stock_decremented):
+            changed_count, warnings = await decrease_stock_for_order(session, order)
+            stock_changed = changed_count > 0
+        order.status = target
+        order.updated_at = datetime.now()
+        await session.commit()
+        await session.refresh(order)
+    return order, stock_changed, warnings, old_status
+
+
+async def notify_customer_about_status(order: Order):
+    try:
+        await bot.send_message(
+            order.user_id,
+            f"{ORDER_STATUS_ICONS[normalize_order_status(order.status)]} "
+            f"Статус заказа <b>#{order.id}</b> изменён: <b>{order_status_label(order.status)}</b>.",
+            reply_markup=get_main_keyboard(),
+        )
+    except Exception as exc:
+        print(f"⚠️ Не удалось уведомить покупателя по заказу #{order.id}: {exc}")
+
+
+async def get_orders_by_filter(status_filter: str):
+    async with async_session() as session:
+        query = select(Order).order_by(Order.created_at.desc(), Order.id.desc())
+        if status_filter in ORDER_STATUS_LABELS:
+            query = query.where(Order.status == status_filter)
+        return list((await session.execute(query)).scalars().all())
+
+
+def admin_orders_menu_keyboard(counts: dict[str, int]):
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=f"📋 Все · {sum(counts.values())}", callback_data="ol:all:0")],
+        [
+            InlineKeyboardButton(text=f"🟡 Приняты · {counts['accepted']}", callback_data="ol:accepted:0"),
+            InlineKeyboardButton(text=f"🚚 Отправлены · {counts['shipped']}", callback_data="ol:shipped:0"),
+        ],
+        [
+            InlineKeyboardButton(text=f"📍 Готовы · {counts['ready']}", callback_data="ol:ready:0"),
+            InlineKeyboardButton(text=f"✅ Завершены · {counts['completed']}", callback_data="ol:completed:0"),
+        ],
+        [InlineKeyboardButton(text=f"❌ Отменены · {counts['canceled']}", callback_data="ol:canceled:0")],
+        [InlineKeyboardButton(text="⬅️ Админ-панель", callback_data="panel:home")],
+    ])
+
+
 @router.callback_query(F.data == "admin_orders")
 async def admin_orders(callback: CallbackQuery):
-    if callback.from_user.id not in ADMIN_IDS:
+    if not admin_only(callback.from_user.id):
         await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
-
-    async with async_session() as session:
-        result = await session.execute(
-            select(Order).where(Order.status == "new").order_by(Order.created_at.desc())
-        )
-        orders = result.scalars().all()
-
-    if not orders:
-        await callback.message.answer("✅ Новых заказов нет")
-        await callback.answer()
-        return
-
-    for order in orders[:5]:
-        customer = order.customer or {}
-        items = order.items or []
-
-        items_text = ""
-        for item in items:
-            sizes = item.get('sizes', [item.get('size', '?')])
-            if isinstance(sizes, list):
-                sizes_str = ', '.join(sizes)
-            else:
-                sizes_str = str(sizes)
-            items_text += f"   • {item.get('name', '?')} (р. {sizes_str})\n"
-
-        text = (
-            f"🆕 <b>Заказ #{order.id}</b>\n\n"
-            f"👤 {customer.get('lastName', '')} {customer.get('firstName', '')}\n"
-            f"📞 {customer.get('phone', 'Не указан')}\n"
-            f"💰 {order.total:.2f} {order.currency}\n"
-            f"🚚 {order.delivery_type}\n"
-            f"📦 Товары:\n{items_text}"
-            f"📅 {order.created_at.strftime('%d.%m.%Y %H:%M')}"
-        )
-
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [
-                InlineKeyboardButton(text="✅ Принять", callback_data=f"order_accept_{order.id}"),
-                InlineKeyboardButton(text="🚚 Отправлен", callback_data=f"order_ship_{order.id}")
-            ]
-        ])
-        await callback.message.answer(text, reply_markup=keyboard)
-
+    orders = await get_orders_by_filter("all")
+    counts = {status: 0 for status in ORDER_STATUS_LABELS}
+    for order in orders:
+        counts[normalize_order_status(order.status)] += 1
+    await callback.message.answer(
+        "🛒 <b>Заказы</b>\n\nВыберите статус или откройте полный список:",
+        reply_markup=admin_orders_menu_keyboard(counts),
+    )
     await callback.answer()
 
-@router.callback_query(F.data.startswith("order_accept_"))
-async def accept_order(callback: CallbackQuery):
-    if callback.from_user.id not in ADMIN_IDS:
+
+@router.callback_query(F.data.startswith("ol:"))
+async def admin_orders_list(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
-
-    order_id = int(callback.data.split("_")[2])
-
-    async with async_session() as session:
-        result = await session.execute(select(Order).where(Order.id == order_id))
-        order = result.scalar_one_or_none()
-        if order:
-            order.status = "processing"
-            await session.commit()
-
-    await callback.answer("✅ Заказ принят в обработку")
-    await callback.message.edit_text(
-        callback.message.text + "\n\n✅ <b>ПРИНЯТ В ОБРАБОТКУ</b>"
+    try:
+        _, status_filter, page_raw = callback.data.split(":", 2)
+        page = max(0, int(page_raw))
+    except (ValueError, AttributeError):
+        status_filter, page = "all", 0
+    if status_filter != "all" and status_filter not in ORDER_STATUS_LABELS:
+        status_filter = "all"
+    orders = await get_orders_by_filter(status_filter)
+    total_pages = max(1, (len(orders) + ORDER_LIST_PAGE_SIZE - 1) // ORDER_LIST_PAGE_SIZE)
+    page = min(page, total_pages - 1)
+    chunk = orders[page * ORDER_LIST_PAGE_SIZE:(page + 1) * ORDER_LIST_PAGE_SIZE]
+    rows = []
+    for order in chunk:
+        status = normalize_order_status(order.status)
+        label = (
+            f"{ORDER_STATUS_ICONS[status]} #{order.id} · "
+            f"{compact_text(order_customer_label(order), 17)} · {float(order.total or 0):g} BYN"
+        )
+        rows.append([InlineKeyboardButton(text=label, callback_data=f"ov:{order.id}")])
+    if not rows:
+        rows.append([InlineKeyboardButton(text="Заказов пока нет", callback_data="noop")])
+    nav = []
+    if page > 0:
+        nav.append(InlineKeyboardButton(text="←", callback_data=f"ol:{status_filter}:{page-1}"))
+    nav.append(InlineKeyboardButton(text=f"{page+1}/{total_pages}", callback_data="noop"))
+    if page + 1 < total_pages:
+        nav.append(InlineKeyboardButton(text="→", callback_data=f"ol:{status_filter}:{page+1}"))
+    rows.append(nav)
+    rows.append([InlineKeyboardButton(text="⬅️ Заказы", callback_data="admin_orders")])
+    title = "Все заказы" if status_filter == "all" else ORDER_STATUS_LABELS[status_filter]
+    await callback.message.answer(
+        f"🛒 <b>{title}</b>\nВсего: {len(orders)}",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=rows),
     )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("ov:"))
+async def admin_order_view(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    try:
+        order_id = int(callback.data.split(":", 1)[1])
+    except ValueError:
+        await callback.answer("Некорректный номер заказа", show_alert=True)
+        return
+    async with async_session() as session:
+        order = await session.get(Order, order_id)
+    if not order:
+        await callback.answer("Заказ не найден", show_alert=True)
+        return
+    await send_order_admin_card(callback.message, order)
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("os:"))
+async def admin_order_set_status(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    try:
+        _, order_id_raw, status = callback.data.split(":", 2)
+        order_id = int(order_id_raw)
+    except (ValueError, AttributeError):
+        await callback.answer("Некорректное действие", show_alert=True)
+        return
+    if status not in ORDER_STATUS_LABELS:
+        await callback.answer("Некорректный статус", show_alert=True)
+        return
+    await callback.answer("Сохраняю статус…")
+    order, stock_changed, warnings, old_status = await change_order_status(order_id, status)
+    if not order:
+        await callback.message.answer("❌ Заказ не найден", reply_markup=admin_orders_menu_keyboard({key: 0 for key in ORDER_STATUS_LABELS}))
+        return
+    products_pushed = True
+    if stock_changed:
+        products_pushed = await auto_push_to_github()
+    orders_pushed = await auto_push_orders_to_github()
+    await notify_customer_about_status(order)
+    notices = [f"✅ Статус изменён: <b>{order_status_label(old_status)}</b> → <b>{order_status_label(order.status)}</b>."]
+    if status == "shipped":
+        if bool(order.stock_decremented):
+            notices.append("📉 Остаток выбранного размера списан один раз.")
+        if warnings:
+            notices.append("⚠️ " + "\n⚠️ ".join(html.escape(warning) for warning in warnings))
+    if not products_pushed:
+        notices.append("⚠️ Остатки сохранены в базе, но products.json пока не обновился на GitHub.")
+    if not orders_pushed:
+        notices.append("⚠️ Статус сохранён в базе, но orders_public.json пока не обновился на GitHub.")
+    await send_order_admin_card(callback.message, order, "\n".join(notices))
+
+
+# Совместимость со старыми кнопками в уже отправленных сообщениях.
+@router.callback_query(F.data.startswith("order_accept_"))
+async def accept_order_legacy(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        return
+    try:
+        order_id = int(callback.data.rsplit("_", 1)[1])
+    except ValueError:
+        await callback.answer("Некорректный заказ", show_alert=True)
+        return
+    order, _, _, _ = await change_order_status(order_id, "accepted")
+    if order:
+        await auto_push_orders_to_github()
+        await notify_customer_about_status(order)
+        await send_order_admin_card(callback.message, order, "✅ Заказ принят.")
+    await callback.answer()
+
 
 @router.callback_query(F.data.startswith("order_ship_"))
-async def ship_order(callback: CallbackQuery):
-    if callback.from_user.id not in ADMIN_IDS:
+async def ship_order_legacy(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
         return
+    try:
+        order_id = int(callback.data.rsplit("_", 1)[1])
+    except ValueError:
+        await callback.answer("Некорректный заказ", show_alert=True)
+        return
+    order, stock_changed, warnings, _ = await change_order_status(order_id, "shipped")
+    if order:
+        if stock_changed:
+            await auto_push_to_github()
+        await auto_push_orders_to_github()
+        await notify_customer_about_status(order)
+        notice = "🚚 Заказ отправлен. Остаток выбранного размера списан один раз."
+        if warnings:
+            notice += "\n⚠️ " + "\n⚠️ ".join(html.escape(warning) for warning in warnings)
+        await send_order_admin_card(callback.message, order, notice)
+    await callback.answer()
 
-    order_id = int(callback.data.split("_")[2])
-
-    async with async_session() as session:
-        result = await session.execute(select(Order).where(Order.id == order_id))
-        order = result.scalar_one_or_none()
-        if order:
-            order.status = "shipped"
-            await session.commit()
-
-    await callback.answer("🚚 Заказ отмечен как отправленный")
-    await callback.message.edit_text(
-        callback.message.text + "\n\n🚚 <b>ОТПРАВЛЕН</b>"
-    )
 
 # ==================== ПОЛЬЗОВАТЕЛЬ: МОИ ЗАКАЗЫ ====================
 
 @router.callback_query(F.data == "my_orders")
 async def show_my_orders(callback: CallbackQuery):
     user_id = callback.from_user.id
-
     async with async_session() as session:
-        result = await session.execute(
+        orders = list((await session.execute(
             select(Order).where(Order.user_id == user_id).order_by(Order.created_at.desc())
-        )
-        orders = result.scalars().all()
-
+        )).scalars().all())
     if not orders:
         await callback.message.answer("📦 У тебя пока нет заказов")
     else:
-        text = "📦 <b>Твои заказы:</b>\n\n"
+        lines = ["📦 <b>Твои заказы:</b>", ""]
         for order in orders[:10]:
-            status_emoji = {
-                "new": "🆕",
-                "processing": "⏳",
-                "shipped": "🚚",
-                "delivered": "✅"
-            }.get(order.status, "❓")
-
-            text += (
-                f"{status_emoji} <b>Заказ #{order.id}</b>\n"
-                f"   Сумма: {order.total:.2f} {order.currency}\n"
-                f"   Дата: {order.created_at.strftime('%d.%m.%Y %H:%M')}\n\n"
-            )
-        await callback.message.answer(text)
-
+            status = normalize_order_status(order.status)
+            lines.extend([
+                f"{ORDER_STATUS_ICONS[status]} <b>Заказ #{order.id}</b>",
+                f"Статус: <b>{ORDER_STATUS_LABELS[status]}</b>",
+                f"Сумма: {float(order.total or 0):g} BYN",
+                f"Дата: {order.created_at.strftime('%d.%m.%Y %H:%M') if order.created_at else '—'}",
+                "",
+            ])
+        await callback.message.answer("\n".join(lines))
     await callback.answer()
 
 
@@ -3479,94 +3780,214 @@ async def show_info(callback: CallbackQuery):
 
 # ==================== ОБРАБОТКА ЗАКАЗОВ ОТ WEBAPP ====================
 
+
+def clean_order_text(value, limit: int = 500) -> str:
+    return " ".join(str(value or "").strip().split())[:limit]
+
+
+def find_size_key(size_stock: dict[str, int], requested_size: str) -> str | None:
+    requested = str(requested_size or "").strip()
+    return next((size for size in size_stock if size.casefold() == requested.casefold()), None)
+
+
+async def find_duplicate_order(session: AsyncSession, user_id: int, client_request_id: str):
+    if not client_request_id:
+        return None
+    recent = list((await session.execute(
+        select(Order).where(Order.user_id == user_id).order_by(Order.created_at.desc()).limit(30)
+    )).scalars().all())
+    for order in recent:
+        data = order.delivery_data or {}
+        if str(data.get("_client_request_id") or "") == client_request_id:
+            return order
+    return None
+
+
+async def build_validated_order_items(session: AsyncSession, raw_items) -> tuple[list[dict], float]:
+    if not isinstance(raw_items, list) or not raw_items:
+        raise ValueError("Корзина пуста")
+    if len(raw_items) > 25:
+        raise ValueError("Слишком много позиций в одном заказе")
+
+    aggregated: dict[tuple[int, str], int] = {}
+    for raw_item in raw_items:
+        if not isinstance(raw_item, dict):
+            raise ValueError("Некорректная позиция в корзине")
+        raw_product_id = raw_item.get("productId") or raw_item.get("id")
+        try:
+            product_id = int(raw_product_id)
+        except (TypeError, ValueError):
+            raise ValueError("Не удалось определить товар")
+        size = clean_order_text(raw_item.get("size") or (raw_item.get("sizes") or [""])[0], 40)
+        if not size:
+            raise ValueError("У одного из товаров не выбран размер")
+        try:
+            qty = int(raw_item.get("qty") or raw_item.get("quantity") or 1)
+        except (TypeError, ValueError):
+            raise ValueError("Некорректное количество товара")
+        if qty < 1 or qty > 20:
+            raise ValueError("Количество одной позиции должно быть от 1 до 20")
+        aggregated[(product_id, size)] = aggregated.get((product_id, size), 0) + qty
+
+    canonical_items: list[dict] = []
+    total = 0.0
+    for (product_id, requested_size), qty in aggregated.items():
+        product = await session.get(Product, product_id)
+        if not product:
+            raise ValueError(f"Товар #{product_id} больше недоступен")
+        size_stock = product_size_stock(product)
+        size_key = find_size_key(size_stock, requested_size)
+        if not size_key:
+            raise ValueError(f"Размер {requested_size} у товара #{product_id} больше недоступен")
+        available = max(0, int(size_stock.get(size_key, 0)))
+        if available < qty:
+            raise ValueError(f"Товар #{product_id}, размер {size_key}: доступно только {available} шт.")
+        current_price = float(product.price_byn or 0)
+        if current_price <= 0:
+            raise ValueError(f"У товара #{product_id} некорректная цена")
+        old_price = product_normal_price(product)
+        image = next((str(url).strip() for url in (product.images or []) if str(url).strip()), "")
+        item = {
+            "product_id": product.id,
+            "brand": display_brand_name(product.brand) or "",
+            "name": product.name,
+            "size": size_key,
+            "qty": qty,
+            "unit_price": current_price,
+            "old_unit_price": old_price if old_price > current_price else current_price,
+            "image": image,
+        }
+        canonical_items.append(item)
+        total += current_price * qty
+    return canonical_items, round(total, 2)
+
+
+def validated_delivery_payload(data: dict) -> tuple[str, str | None, dict, dict, str]:
+    delivery_type = clean_order_text(data.get("deliveryType"), 30).lower()
+    if delivery_type not in {"europost", "belpost"}:
+        raise ValueError("Выберите Европочту или Белпочту")
+    customer_raw = data.get("customer") if isinstance(data.get("customer"), dict) else {}
+    full_name = clean_order_text(customer_raw.get("fullName") or customer_raw.get("firstName"), 160)
+    phone = clean_order_text(customer_raw.get("phone"), 40)
+    if len(full_name) < 5:
+        raise ValueError("Укажите ФИО получателя")
+    if len(re.sub(r"\D", "", phone)) < 7:
+        raise ValueError("Укажите корректный номер телефона")
+    raw_delivery = data.get("deliveryData") if isinstance(data.get("deliveryData"), dict) else {}
+    if delivery_type == "europost":
+        branch = clean_order_text(raw_delivery.get("branch"), 180)
+        if not branch:
+            raise ValueError("Укажите отделение Европочты")
+        delivery_service = "Европочта"
+        delivery_data = {"branch": branch}
+    else:
+        address = clean_order_text(raw_delivery.get("address"), 250)
+        postal_index = clean_order_text(raw_delivery.get("postalIndex"), 20)
+        post_office = clean_order_text(raw_delivery.get("postOffice"), 120)
+        if not address:
+            raise ValueError("Укажите адрес получателя")
+        if len(re.sub(r"\D", "", postal_index)) != 6:
+            raise ValueError("Укажите шестизначный почтовый индекс")
+        if not post_office:
+            raise ValueError("Укажите номер отделения Белпочты")
+        delivery_service = "Белпочта"
+        delivery_data = {"address": address, "postalIndex": postal_index, "postOffice": post_office}
+    customer = {"fullName": full_name, "phone": phone}
+    comment = clean_order_text(data.get("comment"), 700)
+    return delivery_type, delivery_service, delivery_data, customer, comment
+
+
+def user_order_confirmation_text(order: Order) -> str:
+    lines = [
+        f"✅ <b>Заказ #{order.id} принят!</b>",
+        "",
+        f"Статус: <b>{order_status_label(order.status)}</b>",
+        "",
+        "📦 <b>Товары:</b>",
+    ]
+    for index, item in enumerate(order.items or [], 1):
+        lines.append(order_item_text(item, index))
+    lines.extend([
+        "",
+        f"💰 <b>Итого:</b> {float(order.total or 0):g} BYN",
+        f"🚚 <b>Получение:</b> {html.escape(order_delivery_label(order))}",
+        "",
+        "Все изменения статуса будут приходить сообщением и отображаться в разделе «Мои покупки».",
+    ])
+    return "\n".join(lines)
+
+
 @router.message(F.web_app_data)
 async def handle_webapp_data(message: Message):
     try:
         data = json.loads(message.web_app_data.data)
+        if not isinstance(data, dict):
+            raise ValueError("Некорректные данные заказа")
         user_id = message.from_user.id
+        client_request_id = clean_order_text(data.get("clientRequestId"), 120)
+        delivery_type, delivery_service, delivery_data, customer, comment = validated_delivery_payload(data)
+        customer["username"] = message.from_user.username or ""
+        customer["telegramId"] = user_id
+        delivery_data["_client_request_id"] = client_request_id
 
         async with async_session() as session:
+            duplicate = await find_duplicate_order(session, user_id, client_request_id)
+            if duplicate:
+                await message.answer(
+                    f"ℹ️ Этот заказ уже был принят как <b>#{duplicate.id}</b>.",
+                    reply_markup=get_main_keyboard(),
+                )
+                return
+            items, total = await build_validated_order_items(session, data.get("items"))
             order = Order(
                 user_id=user_id,
-                items=data.get('items', []),
-                total=data.get('total', 0),
-                currency=data.get('currency', 'BYN'),
-                delivery_type=data.get('deliveryType', 'pickup'),
-                delivery_service=data.get('deliveryService'),
-                delivery_data=data.get('deliveryData'),
-                customer=data.get('customer', {}),
-                comment=data.get('comment', ''),
-                status='new'
+                items=items,
+                total=total,
+                currency="BYN",
+                delivery_type=delivery_type,
+                delivery_service=delivery_service,
+                delivery_data=delivery_data,
+                customer=customer,
+                comment=comment,
+                status="accepted",
+                stock_decremented=False,
+                updated_at=datetime.now(),
             )
             session.add(order)
+            user = (await session.execute(select(User).where(User.telegram_id == user_id))).scalar_one_or_none()
+            if not user:
+                session.add(User(telegram_id=user_id, username=message.from_user.username))
+            elif user.username != message.from_user.username:
+                user.username = message.from_user.username
             await session.commit()
-            order_id = order.id
+            await session.refresh(order)
 
-        customer = data.get('customer', {})
-        items = data.get('items', [])
-
-        items_text = ""
-        for item in items:
-            sizes = item.get('sizes', [])
-            sizes_str = ', '.join(sizes) if isinstance(sizes, list) else str(sizes)
-            items_text += f"   • {item.get('name', '?')} (р. {sizes_str})\n"
-
-        user_text = (
-            f"✅ <b>Заказ #{order_id} оформлен!</b>\n\n"
-            f"📦 Товары:\n{items_text}\n"
-            f"💰 Сумма: {data.get('total', 0):.2f} {data.get('currency', 'BYN')}\n"
-            f"🚚 Доставка: {data.get('deliveryType', 'pickup')}\n\n"
-            f"Мы свяжемся с вами в ближайшее время! 📞"
-        )
-
-        await message.answer(user_text, reply_markup=get_main_keyboard())
+        await message.answer(user_order_confirmation_text(order), reply_markup=get_main_keyboard())
+        public_synced = await auto_push_orders_to_github()
 
         for admin_id in ADMIN_IDS:
             try:
-                admin_text = (
-                    f"🆕 <b>Новый заказ #{order_id}!</b>\n\n"
-                    f"👤 {customer.get('lastName', '')} {customer.get('firstName', '')}\n"
-                    f"📞 {customer.get('phone', 'Не указан')}\n"
-                    f"💰 {data.get('total', 0):.2f} {data.get('currency', 'BYN')}\n"
-                    f"🚚 {data.get('deliveryType', 'pickup')}"
+                notice = "🆕 <b>Новый заказ из Mini App</b>"
+                if not public_synced:
+                    notice += "\n⚠️ Заказ сохранён, но orders_public.json пока не обновился на GitHub."
+                await bot.send_message(
+                    admin_id,
+                    order_admin_text(order, notice),
+                    reply_markup=get_order_status_keyboard(order.id, order.status),
+                    disable_web_page_preview=True,
                 )
+            except Exception as exc:
+                print(f"❌ Не удалось уведомить админа {admin_id}: {exc}")
+        print(f"✅ Заказ #{order.id} создан от пользователя {user_id}")
 
-                if data.get('deliveryService'):
-                    admin_text += f" ({data.get('deliveryService')})"
-
-                admin_text += f"\n\n📦 <b>Товары:</b>\n"
-
-                for item in items:
-                    sizes = item.get('sizes', [])
-                    sizes_str = ', '.join(sizes) if isinstance(sizes, list) else str(sizes)
-                    admin_text += f"• {item.get('name', '?')}\n  Размеры: {sizes_str}\n"
-
-                    img = item.get('image', '')
-                    if img:
-                        admin_text += f"  Фото: {img}\n"
-
-                if data.get('comment'):
-                    admin_text += f"\n💬 Комментарий: {data.get('comment')}"
-
-                keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                    [
-                        InlineKeyboardButton(text="✅ Принять", callback_data=f"order_accept_{order_id}"),
-                        InlineKeyboardButton(text="🚚 Отправлен", callback_data=f"order_ship_{order_id}")
-                    ]
-                ])
-
-                await bot.send_message(admin_id, admin_text, reply_markup=keyboard)
-
-            except Exception as e:
-                print(f"❌ Не удалось уведомить админа {admin_id}: {e}")
-
-        print(f"✅ Заказ #{order_id} создан от пользователя {user_id}")
-
-    except Exception as e:
-        print(f"❌ Ошибка обработки WebApp данных: {e}")
+    except ValueError as exc:
+        await message.answer(f"❌ Не удалось оформить заказ: {html.escape(str(exc))}")
+    except Exception as exc:
+        print(f"❌ Ошибка обработки WebApp данных: {exc}")
         import traceback
         traceback.print_exc()
-        await message.answer("❌ Ошибка при оформлении заказа. Попробуйте ещё раз.")
+        await message.answer("❌ Ошибка при оформлении заказа. Попробуйте ещё раз или напишите менеджеру.")
+
 
 # ==================== API ДЛЯ WEBAPP ====================
 
@@ -3672,6 +4093,89 @@ import base64
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "").strip()
 GITHUB_REPO = os.getenv("GITHUB_REPO", "liknine/mestniybot")
 GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
+
+
+def public_order_item(item: dict) -> dict:
+    return {
+        "product_id": item.get("product_id") or item.get("productId") or item.get("id"),
+        "brand": str(item.get("brand") or ""),
+        "name": str(item.get("name") or "Товар"),
+        "size": str(item.get("size") or ""),
+        "qty": max(1, int(item.get("qty") or item.get("quantity") or 1)),
+        "unit_price": float(item.get("unit_price") or item.get("unitPrice") or item.get("price") or 0),
+        "old_unit_price": float(item.get("old_unit_price") or item.get("oldUnitPrice") or item.get("unit_price") or item.get("price") or 0),
+        "image": str(item.get("image") or ""),
+    }
+
+
+async def export_public_orders_to_file():
+    async with async_session() as session:
+        orders = list((await session.execute(
+            select(Order).order_by(Order.created_at.desc(), Order.id.desc())
+        )).scalars().all())
+    data = []
+    for order in orders:
+        delivery_data = order.delivery_data or {}
+        data.append({
+            "id": order.id,
+            "user_id": str(order.user_id),
+            "status": normalize_order_status(order.status),
+            "total": float(order.total or 0),
+            "currency": "BYN",
+            "delivery": order_delivery_label(order),
+            "place": "Данные переданы менеджеру",
+            "client_request_id": str(delivery_data.get("_client_request_id") or ""),
+            "created_at": order.created_at.isoformat() if order.created_at else None,
+            "updated_at": order.updated_at.isoformat() if order.updated_at else (order.created_at.isoformat() if order.created_at else None),
+            "items": [public_order_item(item) for item in (order.items or [])],
+        })
+    path = PROJECT_DIR / "orders_public.json"
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"🧾 Экспортировано {len(data)} публичных заказов")
+    return data
+
+
+async def push_json_to_github(filename: str, payload_data, commit_message: str) -> bool:
+    if not GITHUB_TOKEN:
+        print(f"⚠️ {filename} не отправлен: GITHUB_TOKEN не задан")
+        return False
+    try:
+        content = json.dumps(payload_data, ensure_ascii=False, indent=2).encode("utf-8")
+        api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}"
+        headers = {
+            "Authorization": f"token {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github.v3+json",
+        }
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector) as github_session:
+            async with github_session.get(api_url, headers=headers) as response:
+                sha = (await response.json()).get("sha") if response.status == 200 else None
+            request_payload = {
+                "message": commit_message,
+                "content": base64.b64encode(content).decode("utf-8"),
+                "branch": GITHUB_BRANCH,
+            }
+            if sha:
+                request_payload["sha"] = sha
+            async with github_session.put(api_url, headers=headers, json=request_payload) as response:
+                if response.status in {200, 201}:
+                    print(f"✅ {filename} загружен на GitHub")
+                    return True
+                print(f"❌ Ошибка GitHub API для {filename}: {await response.text()}")
+                return False
+    except Exception as exc:
+        print(f"❌ Ошибка отправки {filename}: {exc}")
+        return False
+
+
+async def auto_push_orders_to_github() -> bool:
+    orders_data = await export_public_orders_to_file()
+    return await push_json_to_github(
+        "orders_public.json",
+        orders_data,
+        f"🤖 Обновление заказов ({len(orders_data)} шт)",
+    )
+
 
 async def export_products_to_file():
     async with async_session() as session:
