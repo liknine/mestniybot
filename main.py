@@ -4643,10 +4643,9 @@ def order_admin_text(order: Order, notice: str | None = None) -> str:
     if order.delivery_type == "europost":
         delivery_lines.append(f"Город, отделение: {html.escape(str(delivery_data.get('branch') or 'Не указано'))}")
     elif order.delivery_type == "belpost":
-        delivery_lines.extend([
-            f"Индекс: <code>{html.escape(str(delivery_data.get('postalIndex') or 'Не указан'))}</code>",
-            f"Отделение: {html.escape(str(delivery_data.get('postOffice') or 'Не указано'))}",
-        ])
+        delivery_lines.append(
+            f"Индекс: <code>{html.escape(str(delivery_data.get('postalIndex') or 'Не указан'))}</code>"
+        )
     elif order.delivery_type == "cdek":
         delivery_lines.append(f"Город, пункт CDEK: {html.escape(str(delivery_data.get('branch') or 'Не указано'))}")
     comment = html.escape(str(order.comment or "").strip())
@@ -5211,13 +5210,10 @@ def validated_delivery_payload(data: dict) -> tuple[str, str | None, dict, dict,
         delivery_data = {"branch": branch}
     elif delivery_type == "belpost":
         postal_index = clean_order_text(raw_delivery.get("postalIndex"), 20)
-        post_office = clean_order_text(raw_delivery.get("postOffice"), 120)
         if len(re.sub(r"\D", "", postal_index)) != 6:
             raise ValueError("Укажите шестизначный почтовый индекс")
-        if not post_office:
-            raise ValueError("Укажите номер отделения Белпочты")
         delivery_service = "Белпочта"
-        delivery_data = {"postalIndex": postal_index, "postOffice": post_office}
+        delivery_data = {"postalIndex": postal_index}
     else:
         branch = clean_order_text(raw_delivery.get("branch"), 220)
         if not branch:

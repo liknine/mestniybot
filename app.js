@@ -10,7 +10,7 @@ const BONUS_RULES=[
   {max:Infinity,rate:3.5}
 ];
 const BONUS_TRANSACTIONS=[];
-const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
+const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
 
 const BUILD_VERSION='mestniy_client_edits_v1';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
@@ -397,7 +397,7 @@ function buildOrderPayload(clientRequestId){
   return {
     items:state.cart.map(item=>({productId:item.id,size:item.size,qty:item.qty})),
     total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':c.delivery==='cdek'?'CDEK':null,
-    deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{postalIndex:c.postalIndex,postOffice:c.postOffice}:c.delivery==='cdek'?{branch:c.cdekPoint}:null,
+    deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{postalIndex:c.postalIndex}:c.delivery==='cdek'?{branch:c.cdekPoint}:null,
     customer:{fullName:c.name,firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses,clientRequestId
   };
 }
@@ -685,7 +685,7 @@ function checkoutPlace(){
   const c=state.checkout;
   if(c.delivery==='europost')return c.europostBranch;
   if(c.delivery==='cdek')return c.cdekPoint;
-  if(c.delivery==='belpost')return [`Индекс ${c.postalIndex}`,`Отделение ${c.postOffice}`].filter(Boolean).join(', ');
+  if(c.delivery==='belpost')return c.postalIndex?`Индекс ${c.postalIndex}`:'';
   return 'MESTNIY STORE';
 }
 function managerCartText(method='pickup'){
@@ -720,7 +720,7 @@ function renderCheckout(){
   if(c.delivery==='europost'){
     recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutEuropostBranch">Город, отделение Европочты</label><input id="checkoutEuropostBranch" data-checkout-field="europostBranch" value="${escapeHtml(c.europostBranch)}" placeholder="Город, номер или адрес отделения"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='belpost'){
-    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutPostalIndex">Почтовый индекс</label><input id="checkoutPostalIndex" data-checkout-field="postalIndex" value="${escapeHtml(c.postalIndex)}" inputmode="numeric" maxlength="6" placeholder="220000"></div><div class="field"><label for="checkoutPostOffice">Номер отделения Белпочты</label><input id="checkoutPostOffice" data-checkout-field="postOffice" value="${escapeHtml(c.postOffice)}" placeholder="Например, №25"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
+    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutPostalIndex">Почтовый индекс</label><input id="checkoutPostalIndex" data-checkout-field="postalIndex" value="${escapeHtml(c.postalIndex)}" inputmode="numeric" maxlength="6" placeholder="220000"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='cdek'){
     recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375 / +7"></div><div class="field"><label for="checkoutCdekPoint">Город, пункт CDEK</label><input id="checkoutCdekPoint" data-checkout-field="cdekPoint" value="${escapeHtml(c.cdekPoint)}" placeholder="Город, адрес или код пункта CDEK"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='shuttle'){
@@ -754,7 +754,7 @@ function validateCheckout(){
   if(c.phone.replace(/\D/g,'').length<7)return 'Укажите корректный номер телефона.';
   if(c.delivery==='europost'&&!c.europostBranch.trim())return 'Укажите отделение Европочты.';
   if(c.delivery==='belpost'&&c.postalIndex.replace(/\D/g,'').length!==6)return 'Укажите шестизначный почтовый индекс.';
-  if(c.delivery==='belpost'&&!c.postOffice.trim())return 'Укажите номер отделения Белпочты.';
+  
   if(c.delivery==='cdek'&&!c.cdekPoint.trim())return 'Укажите город и пункт CDEK.';
   return '';
 }
@@ -781,7 +781,7 @@ function createPrototypeOrder(){
   state.lastCreatedOrder=newOrder;
   state.selectedOrder=0;
   state.cart=[];
-  state.checkout={delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0};
+  state.checkout={delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0};
   mergeOrderCollections();
   persistState();
   if(!sendOrderToBot(payload)){
