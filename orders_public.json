@@ -1,5 +1,32 @@
 [
   {
+    "id": 5,
+    "user_id": "1639462053",
+    "status": "accepted",
+    "total": 150.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-1639462053-1783779222745-ehp97e",
+    "created_at": "2026-07-11T17:13:42.973172",
+    "updated_at": "2026-07-11T17:13:42.970725",
+    "bonuses": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 186,
+        "brand": "Nike",
+        "name": "Тест товар",
+        "size": "43",
+        "qty": 1,
+        "unit_price": 150.0,
+        "old_unit_price": 150.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_0_f394ba24.jpg"
+      }
+    ]
+  },
+  {
     "id": 4,
     "user_id": "1639462053",
     "status": "ready",
@@ -10,6 +37,9 @@
     "client_request_id": "web-1639462053-1783777876368-b3wn1h",
     "created_at": "2026-07-11T16:51:16.574635",
     "updated_at": "2026-07-11T16:52:27.238355",
+    "bonuses": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
     "items": [
       {
         "product_id": 186,
@@ -34,6 +64,9 @@
     "client_request_id": "web-1639462053-1783777787844-jabn6s",
     "created_at": "2026-07-11T16:49:48.023168",
     "updated_at": "2026-07-11T16:58:33.994609",
+    "bonuses": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
     "items": [
       {
         "product_id": 187,
@@ -68,6 +101,9 @@
     "client_request_id": "web-1639462053-1783776983747-udtma3",
     "created_at": "2026-07-11T16:36:23.948359",
     "updated_at": "2026-07-11T16:36:50.744761",
+    "bonuses": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
     "items": [
       {
         "product_id": 187,
@@ -92,6 +128,9 @@
     "client_request_id": "web-1639462053-1783776153971-26hq1h",
     "created_at": "2026-07-11T16:22:34.200341",
     "updated_at": "2026-07-11T16:23:19.522943",
+    "bonuses": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
     "items": [
       {
         "product_id": 186,
