@@ -2,6 +2,8 @@ import asyncio
 import logging
 import ssl
 import aiohttp
+import base64
+import hashlib
 from aiohttp import web
 from datetime import datetime
 from typing import Optional
@@ -11,6 +13,7 @@ import uuid
 import os
 import re
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
 
 
@@ -549,15 +552,106 @@ async def save_app_setting(key: str, value: str) -> None:
     APP_SETTINGS_CACHE[key] = value
 
 
-def get_shop_reply_keyboard():
-    """Постоянная кнопка запуска Mini App.
+def build_personalized_webapp_url(user, avatar_url: Optional[str] = None) -> str:
+    """Добавляет безопасный fallback профиля в URL постоянной WebApp-кнопки.
 
-    Важно: именно KeyboardButton(web_app=...) позволяет frontend вызвать
-    Telegram.WebApp.sendData(), после чего бот получает F.web_app_data.
+    Telegram initData остается главным источником. URL-параметры нужны для
+    клиентов, где initDataUnsafe.user почему-либо приходит пустым.
     """
+    parts = urlsplit(WEBAPP_URL)
+    query = dict(parse_qsl(parts.query, keep_blank_values=True))
+    full_name = " ".join(
+        part.strip() for part in [getattr(user, "first_name", "") or "", getattr(user, "last_name", "") or ""]
+        if part and part.strip()
+    )
+    query.update({
+        "fr_uid": str(user.id),
+        "fr_username": str(getattr(user, "username", "") or ""),
+        "fr_name": full_name or str(getattr(user, "first_name", "") or "Пользователь"),
+    })
+    if avatar_url:
+        query["fr_photo"] = avatar_url
+    else:
+        query.pop("fr_photo", None)
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
+
+
+def _git_blob_sha(content: bytes) -> str:
+    header = f"blob {len(content)}\0".encode("utf-8")
+    return hashlib.sha1(header + content).hexdigest()
+
+
+async def sync_user_avatar_to_github(telegram_bot: Bot, user_id: int) -> Optional[str]:
+    """Копирует актуальную Telegram-аватарку в GitHub Pages.
+
+    Токен бота никогда не попадает во frontend. Если фото закрыто или GitHub
+    недоступен, профиль все равно работает через id/username/name fallback.
+    """
+    if not GITHUB_TOKEN:
+        print(f"PROFILE AVATAR SKIPPED {user_id}: GITHUB_TOKEN is empty")
+        return None
+    try:
+        photos = await telegram_bot.get_user_profile_photos(user_id=user_id, limit=1)
+        if not photos.photos:
+            print(f"PROFILE AVATAR MISSING {user_id}: Telegram returned no profile photos")
+            return None
+        variants = photos.photos[0]
+        photo = max(variants, key=lambda item: int(item.file_size or 0))
+        file_info = await telegram_bot.get_file(photo.file_id)
+        if not file_info.file_path:
+            return None
+
+        telegram_url = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_info.file_path}"
+        timeout = aiohttp.ClientTimeout(total=20)
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector, timeout=timeout) as http_session:
+            async with http_session.get(telegram_url) as response:
+                if response.status != 200:
+                    print(f"PROFILE AVATAR FAILED {user_id}: Telegram HTTP {response.status}")
+                    return None
+                image_data = await response.read()
+
+            github_path = f"images/avatars/user-{user_id}.jpg"
+            api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{github_path}"
+            headers = {
+                "Authorization": f"token {GITHUB_TOKEN}",
+                "Accept": "application/vnd.github.v3+json",
+            }
+            existing_sha = None
+            async with http_session.get(api_url, headers=headers) as response:
+                if response.status == 200:
+                    existing_sha = (await response.json()).get("sha")
+
+            content_sha = _git_blob_sha(image_data)
+            if existing_sha != content_sha:
+                payload = {
+                    "message": f"Update Telegram avatar {user_id}",
+                    "content": base64.b64encode(image_data).decode("utf-8"),
+                    "branch": GITHUB_BRANCH,
+                }
+                if existing_sha:
+                    payload["sha"] = existing_sha
+                async with http_session.put(api_url, headers=headers, json=payload) as response:
+                    if response.status not in {200, 201}:
+                        print(f"PROFILE AVATAR FAILED {user_id}: GitHub {await response.text()}")
+                        return None
+
+        public_url = urljoin(WEBAPP_URL, github_path) + f"?v={content_sha[:12]}"
+        print(f"PROFILE AVATAR SYNCED {user_id}: {public_url}")
+        return public_url
+    except Exception as exc:
+        print(f"PROFILE AVATAR FAILED {user_id}: {exc}")
+        return None
+
+
+def get_shop_reply_keyboard(webapp_url: Optional[str] = None):
+    """Постоянная персонализированная кнопка запуска Mini App."""
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text=get_app_setting("shop_button_text") or "🛍 Открыть магазин", web_app=WebAppInfo(url=WEBAPP_URL))],
+            [KeyboardButton(
+                text=get_app_setting("shop_button_text") or "🛍 Открыть магазин",
+                web_app=WebAppInfo(url=webapp_url or WEBAPP_URL),
+            )],
         ],
         resize_keyboard=True,
         is_persistent=True,
@@ -805,9 +899,17 @@ async def cmd_start(message: Message, state: FSMContext):
     if is_admin:
         text += "\n\n🔧 <i>Режим администратора</i>"
 
+    # Персонализированный URL страхует профиль, заказы и бонусы в клиентах,
+    # где Telegram не отдает initDataUnsafe.user.
+    avatar_url = await sync_user_avatar_to_github(message.bot, user_id)
+    personalized_webapp_url = build_personalized_webapp_url(message.from_user, avatar_url)
+    print(
+        f"PROFILE BUTTON DATA user_id={user_id} username={username or '-'} "
+        f"avatar={'ok' if avatar_url else 'missing'}"
+    )
+
     # Сначала закрепляем постоянную reply-кнопку запуска Mini App.
-    # Inline-кнопки ниже не заменяют эту клавиатуру, поэтому она остается у поля ввода.
-    await message.answer(text, reply_markup=get_shop_reply_keyboard())
+    await message.answer(text, reply_markup=get_shop_reply_keyboard(personalized_webapp_url))
 
     if is_admin:
         await message.answer("🛠 <b>Управление магазином</b>", reply_markup=get_admin_keyboard())

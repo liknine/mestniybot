@@ -12,7 +12,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_admin_final_v1';
+const BUILD_VERSION='mestniy_identity_refresh_v2';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -268,9 +268,15 @@ function productIndexById(id){return PRODUCTS.findIndex(product=>String(product.
 function productForOrderItem(item){return item?.snapshot||productById(item?.productId)||PRODUCTS[item?.product]||null}
 function orderItemSnapshot(product){return product?{id:product.id,code:product.code,name:product.name,brand:product.brand,image:product.image,price:productPrice(product),oldPrice:Number(product.price)||productPrice(product)}:null}
 
-const STORAGE_KEYS={cart:'mestniy_cart_v24',favorites:'mestniy_favorites_v24',pendingOrders:'mestniy_pending_orders_v1',profile:'mestniy_profile_v24'};
+const STORAGE_KEYS={
+  cart:'mestniy_cart_v24',
+  favorites:'mestniy_favorites_v24',
+  pendingOrders:'mestniy_pending_orders_v1',
+  profilePrefix:'mestniy_profile_v25'
+};
 function safeParse(value,fallback){try{return JSON.parse(value)}catch(_e){return fallback}}
 function storageRead(key,fallback){try{return safeParse(localStorage.getItem(key),fallback)}catch(_e){return fallback}}
+function profileStorageKey(id){return `${STORAGE_KEYS.profilePrefix}:${String(id||'unknown')}`}
 function loadPersistedState(){
   const cart=storageRead(STORAGE_KEYS.cart,[]);
   state.cart=Array.isArray(cart)?cart.filter(item=>productById(item.id)&&item.size&&Number(item.qty)>0).map(item=>({id:String(item.id),size:String(item.size),qty:Math.max(1,Number(item.qty)||1)})):[];
@@ -287,24 +293,70 @@ function persistState(){
     localStorage.setItem(STORAGE_KEYS.pendingOrders,JSON.stringify((state.pendingOrders||[]).filter(order=>order.pending)));
   }catch(error){console.warn('Storage unavailable',error)}
 }
-function parseInitDataUser(initData){try{const raw=new URLSearchParams(initData||'').get('user');return raw?JSON.parse(decodeURIComponent(raw)):null}catch(_e){return null}}
-function readProfileFromUrl(){const params=new URLSearchParams(location.search);return {id:params.get('fr_uid'),username:params.get('fr_username'),first_name:params.get('fr_name'),photo_url:params.get('fr_photo')}}
+function parseInitDataUser(initData){
+  try{
+    const raw=new URLSearchParams(initData||'').get('user');
+    if(!raw)return null;
+    try{return JSON.parse(raw)}catch(_e){return JSON.parse(decodeURIComponent(raw))}
+  }catch(_e){return null}
+}
+function readProfileFromUrl(){
+  const params=new URLSearchParams(location.search);
+  return {id:params.get('fr_uid'),username:params.get('fr_username'),first_name:params.get('fr_name'),photo_url:params.get('fr_photo')};
+}
 function mergeProfile(...sources){
-  const valid=sources.filter(Boolean);const pick=(...keys)=>{for(const source of valid)for(const key of keys)if(source?.[key])return source[key];return ''};
+  const valid=sources.filter(Boolean);
+  const pick=(...keys)=>{for(const source of valid)for(const key of keys){const value=source?.[key];if(value!==undefined&&value!==null&&String(value).trim()!=='')return value}return ''};
   return {id:pick('id','telegram_id'),username:pick('username'),firstName:pick('first_name','firstName','name'),lastName:pick('last_name','lastName'),photoUrl:pick('photo_url','photoUrl')};
+}
+function readMatchingCachedProfile(freshSources){
+  const freshId=String(mergeProfile(...freshSources).id||'');
+  return freshId?storageRead(profileStorageKey(freshId),null):null;
 }
 function getTelegramProfile(){
   const tg=window.Telegram?.WebApp;
-  const cached=storageRead(STORAGE_KEYS.profile,null);
-  return mergeProfile(tg?.initDataUnsafe?.user,parseInitDataUser(tg?.initData),readProfileFromUrl(),cached);
+  const freshSources=[tg?.initDataUnsafe?.user,parseInitDataUser(tg?.initData),readProfileFromUrl()];
+  const cached=readMatchingCachedProfile(freshSources);
+  return mergeProfile(...freshSources,cached);
+}
+function cacheTelegramProfile(profile){
+  if(!profile?.id)return;
+  try{localStorage.setItem(profileStorageKey(profile.id),JSON.stringify(profile))}catch(_e){}
+}
+function renderTelegramProfile(profile){
+  const username=document.getElementById('profileUsername');
+  if(username)username.textContent=profile.username?`@${profile.username}`:(profile.firstName||'ПОЛЬЗОВАТЕЛЬ');
+  const avatar=document.getElementById('profileAvatar');
+  if(!avatar)return;
+  avatar.classList.remove('is-loaded');
+  avatar.onload=()=>avatar.classList.add('is-loaded');
+  avatar.onerror=()=>{avatar.onerror=null;avatar.classList.remove('is-loaded');avatar.src='assets/profile-fallback.webp'};
+  avatar.src=profile.photoUrl||'assets/profile-fallback.webp';
 }
 function applyTelegramProfile(){
   const tg=window.Telegram?.WebApp;try{tg?.ready?.();tg?.expand?.()}catch(_e){}
   const profile=getTelegramProfile();state.profile=profile;
-  if(profile.id||profile.username||profile.firstName||profile.photoUrl){try{localStorage.setItem(STORAGE_KEYS.profile,JSON.stringify(profile))}catch(_e){}}
-  const username=document.getElementById('profileUsername');if(username)username.textContent=profile.username?`@${profile.username}`:(profile.firstName||'ПОЛЬЗОВАТЕЛЬ');
-  const avatar=document.getElementById('profileAvatar');if(avatar&&profile.photoUrl){avatar.onload=()=>avatar.classList.add('is-loaded');avatar.onerror=()=>{avatar.src='assets/profile-fallback.webp'};avatar.src=profile.photoUrl}
+  cacheTelegramProfile(profile);
+  renderTelegramProfile(profile);
+  console.info('MESTNIY PROFILE',{id:String(profile.id||''),username:profile.username||'',avatar:Boolean(profile.photoUrl),initData:Boolean(tg?.initData)});
   return profile;
+}
+async function refreshIdentityAndRemoteData(){
+  const previousId=String(state.profile?.id||'');
+  const profile=applyTelegramProfile();
+  const currentId=String(profile?.id||'');
+  if(!currentId)return false;
+  if(previousId!==currentId){
+    REMOTE_ORDERS=[];
+    state.bonusBalance=0;
+    state.bonusTransactions=[];
+  }
+  await Promise.allSettled([
+    refreshOrdersFromServer({silent:true}),
+    refreshBonusesFromServer({silent:true})
+  ]);
+  renderProfileSummary();renderOrders();renderBonuses();
+  return true;
 }
 function renderHomeNews(){
   const box=document.getElementById('homeNews');if(!box)return;
@@ -399,9 +451,9 @@ function showScreen(name, push=true){
   if(name==='cart') renderCart();
   if(name==='checkout') renderCheckout();
   if(name==='orderSuccess') renderOrderSuccess();
-  if(name==='profile'){renderProfileSummary();refreshOrdersFromServer()}
-  if(name==='bonuses') renderBonuses();
-  if(name==='orders'){renderOrders();refreshOrdersFromServer()}
+  if(name==='profile'){renderProfileSummary();refreshIdentityAndRemoteData()}
+  if(name==='bonuses'){renderBonuses();refreshIdentityAndRemoteData()}
+  if(name==='orders'){renderOrders();refreshIdentityAndRemoteData()}
   if(name==='orderDetail') renderOrderDetail();
   if(name==='news') renderNews();
   if(name==='newsDetail') renderNewsDetail();
@@ -937,6 +989,10 @@ function scheduleResponsiveUiRefresh(){
 }
 window.addEventListener('resize',scheduleResponsiveUiRefresh,{passive:true});
 window.visualViewport?.addEventListener('resize',scheduleResponsiveUiRefresh,{passive:true});
+
+window.addEventListener('focus',()=>refreshIdentityAndRemoteData(),{passive:true});
+window.addEventListener('pageshow',()=>refreshIdentityAndRemoteData(),{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshIdentityAndRemoteData()});
 document.addEventListener('focusin',event=>{
   const field=event.target.closest?.('#checkout input,#checkout textarea');
   if(!field)return;
@@ -951,7 +1007,9 @@ async function initApp(){
     loadPersistedState();
     renderHomeNews();
     updateFilterButton();syncBonusBalance();updateSortButton();renderCatalog();renderFavorites();renderCart();renderProfileSummary();renderOrders();renderBonuses();
-    if(state.profile?.id)setInterval(()=>{refreshOrdersFromServer({silent:true});refreshBonusesFromServer({silent:true})},30000);
+    setTimeout(()=>refreshIdentityAndRemoteData(),180);
+    setTimeout(()=>refreshIdentityAndRemoteData(),900);
+    setInterval(()=>refreshIdentityAndRemoteData(),30000);
   }catch(error){console.error('MESTNIY frontend init error',error);state.dataError='catalog-error';renderCatalog()}
   finally{loader?.classList.add('hidden');setTimeout(()=>loader?.remove(),350)}
 }
