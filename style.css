@@ -1235,3 +1235,7 @@
   .detail-track{scroll-behavior:auto}
   .detail-dot{transition:none!important}
 }
+
+/* Header brand navigates to catalog */
+.brand[data-go="catalog"]{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:opacity .22s ease}
+.brand[data-go="catalog"]:active{opacity:.58}

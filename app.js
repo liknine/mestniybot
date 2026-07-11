@@ -11,7 +11,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_frontend_v25_live_3';
+const BUILD_VERSION='mestniy_news_admin_v3';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -109,9 +109,23 @@ async function loadStoreData(){
   const results=await Promise.allSettled([fetchJson('products.json'),fetchJson('updates.json')]);
   if(results[0].status==='fulfilled'){PRODUCTS=(Array.isArray(results[0].value)?results[0].value:[]).map(normalizeSourceProduct)}
   else{state.dataError='catalog-error';console.error(results[0].reason)}
-  if(results[1].status==='fulfilled'){NEWS=(Array.isArray(results[1].value)?results[1].value:[]).map(normalizeSourceNews)}
-  else{console.error(results[1].reason)}
-  if(!NEWS.length)NEWS=[...DEFAULT_NEWS];
+  if(results[1].status==='fulfilled'){
+    const rawNews=Array.isArray(results[1].value)?results[1].value:[];
+    const activeNews=rawNews
+      .filter(item=>item?.is_active!==false&&item?.is_active!==0&&String(item?.is_active??'true').toLowerCase()!=='false')
+      .sort((a,b)=>{
+        const pa=Number(a?.position),pb=Number(b?.position);
+        const hasPa=Number.isFinite(pa),hasPb=Number.isFinite(pb);
+        if(hasPa&&hasPb&&pa!==pb)return pa-pb;
+        if(hasPa&&!hasPb)return -1;
+        if(!hasPa&&hasPb)return 1;
+        const da=Date.parse(a?.created_at||''),db=Date.parse(b?.created_at||'');
+        if(Number.isFinite(da)&&Number.isFinite(db)&&da!==db)return db-da;
+        return 0;
+      });
+    NEWS=activeNews.map(normalizeSourceNews);
+  }
+  else{console.error(results[1].reason);NEWS=[...DEFAULT_NEWS]}
 }
 function productById(id){return PRODUCTS.find(product=>String(product.id)===String(id))||null}
 function productIndexById(id){return PRODUCTS.findIndex(product=>String(product.id)===String(id))}
@@ -685,6 +699,11 @@ function openDrawer(type){
   overlay.classList.add('open');
 }
 function closeDrawer(){document.getElementById('drawerOverlay').classList.remove('open');state.filterDraft=null}
+
+document.addEventListener('keydown',e=>{
+  const brand=e.target.closest?.('.brand[data-go="catalog"]');
+  if(brand&&(e.key==='Enter'||e.key===' ')){e.preventDefault();showScreen('catalog');closeDrawer();}
+});
 
 document.addEventListener('click',e=>{
   const galleryDot=e.target.closest('[data-gallery-index]');if(galleryDot){setProductGalleryIndex(Number(galleryDot.dataset.galleryIndex));return}

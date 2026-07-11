@@ -531,42 +531,46 @@ def product_normal_price(product: Product) -> float:
 
 
 def product_admin_text(product: Product) -> str:
-    prices = product.prices or {}
     brand = display_brand_name(product.brand) or "Без бренда"
     category = CATEGORIES.get(product.category_id, {})
-    product_type = prices.get("product_type", "stock")
-    type_label = "На заказ" if product_type == "order" else "В наличии"
     size_stock = product_size_stock(product)
     sizes_text = ", ".join(f"{size}: {qty}" for size, qty in size_stock.items()) or "не указаны"
-    price_text = f"{float(product.price_byn or 0):g} BYN"
+    current_price = float(product.price_byn or 0)
+    price_text = f"{current_price:g} BYN"
     if product_has_discount(product):
-        price_text = f"{product_normal_price(product):g} BYN → {float(product.price_byn or 0):g} BYN"
+        price_text = f"<s>{product_normal_price(product):g} BYN</s> → <b>{current_price:g} BYN</b>"
+    created_text = product.created_at.strftime("%d.%m.%Y %H:%M") if product.created_at else "не указана"
     return (
         f"📦 <b>Товар #{product.id}</b>\n\n"
         f"<b>{product.name}</b>\n"
         f"🏷 Бренд: {brand}\n"
         f"📁 Категория: {category.get('icon', '')} {category.get('name', 'Не указана')}\n"
-        f"📌 Раздел: {type_label}\n"
         f"💰 Цена: {price_text}\n"
-        f"📏 Размеры: {sizes_text}\n"
-        f"📦 Всего: {int(product.stock or 0)} шт.\n"
+        f"📏 Размеры / остатки: {sizes_text}\n"
+        f"📦 Всего: {sum(size_stock.values()) if size_stock else int(product.stock or 0)} шт.\n"
         f"🖼 Фото: {len(product.images or [])}\n"
-        f"📝 Описание: {compact_text(product.description or 'не указано', 120)}"
+        f"📅 Добавлен: {created_text}\n"
+        f"📝 Описание: {compact_text(product.description or 'не указано', 180)}"
     )
 
 
-def get_product_actions_keyboard(product_id: int):
-    return InlineKeyboardMarkup(inline_keyboard=[
+def get_product_actions_keyboard(product_id: int, has_discount: bool = False):
+    rows = [
         [
             InlineKeyboardButton(text="✏️ Редактировать", callback_data=f"pe:{product_id}"),
             InlineKeyboardButton(text="🏷 Скидка", callback_data=f"ds:{product_id}"),
-        ],
+        ]
+    ]
+    if has_discount:
+        rows.append([InlineKeyboardButton(text="🧹 Убрать скидку", callback_data=f"dr:{product_id}")])
+    rows.extend([
         [
             InlineKeyboardButton(text="🗑 Удалить", callback_data=f"pd:{product_id}"),
             InlineKeyboardButton(text="📋 К списку", callback_data="pl:0"),
         ],
         [InlineKeyboardButton(text="⬅️ Товары", callback_data="panel:products")],
     ])
+    return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
 def get_product_edit_keyboard(product_id: int):
@@ -588,11 +592,26 @@ def get_product_edit_keyboard(product_id: int):
             InlineKeyboardButton(text="Доп. фото", callback_data=f"pf:{product_id}:extra"),
         ],
         [
-            InlineKeyboardButton(text="Раздел", callback_data=f"pf:{product_id}:section"),
             InlineKeyboardButton(text="Состояние", callback_data=f"pf:{product_id}:condition"),
+            InlineKeyboardButton(text="Скидка", callback_data=f"ds:{product_id}"),
         ],
         [InlineKeyboardButton(text="⬅️ Назад к товару", callback_data=f"pv:{product_id}")],
     ])
+
+
+async def send_product_admin_card(message: Message, product: Product, notice: str | None = None):
+    text = product_admin_text(product)
+    if notice:
+        text = f"{notice}\n\n{text}"
+    keyboard = get_product_actions_keyboard(product.id, product_has_discount(product))
+    first_image = next((str(url).strip() for url in (product.images or []) if str(url).strip()), None)
+    if first_image:
+        try:
+            await message.answer_photo(photo=first_image, caption=text, reply_markup=keyboard)
+            return
+        except Exception as exc:
+            print(f"⚠️ Не удалось показать фото товара #{product.id}: {exc}")
+    await message.answer(text, reply_markup=keyboard)
 
 
 async def find_products(query: str, limit: int = 20) -> list[Product]:
@@ -612,10 +631,13 @@ async def find_products(query: str, limit: int = 20) -> list[Product]:
 
 
 async def send_product_search_results(message: Message, products: list[Product], action: str, title: str):
+    if action in {"discount_view", "discount_edit", "discount_remove"}:
+        products = [product for product in products if product_has_discount(product)]
+    back_callback = "panel:products" if action in {"view", "edit", "delete"} else "panel:discounts"
     if not products:
         await message.answer(
             "Ничего не найдено. Отправьте другой ID, название или бренд.",
-            reply_markup=get_admin_cancel_keyboard("panel:products"),
+            reply_markup=get_admin_cancel_keyboard(back_callback),
         )
         return
     prefix = {
@@ -623,13 +645,22 @@ async def send_product_search_results(message: Message, products: list[Product],
         "edit": "pe",
         "delete": "pd",
         "discount_set": "ds",
+        "discount_view": "dv",
+        "discount_edit": "ds",
         "discount_remove": "dr",
     }.get(action, "pv")
     rows = []
     for product in products[:20]:
-        label = f"#{product.id} · {compact_text(product.name, 28)} · {float(product.price_byn or 0):g} BYN"
+        brand = compact_text(display_brand_name(product.brand) or "Без бренда", 18)
+        stock = sum(product_size_stock(product).values())
+        price = float(product.price_byn or 0)
+        if product_has_discount(product):
+            price_label = f"{product_normal_price(product):g}→{price:g}"
+        else:
+            price_label = f"{price:g}"
+        label = f"#{product.id} · {brand} · {compact_text(product.name, 20)} · {price_label} BYN · {stock} шт."
         rows.append([InlineKeyboardButton(text=label, callback_data=f"{prefix}:{product.id}")])
-    rows.append([InlineKeyboardButton(text="⬅️ Назад", callback_data="panel:products" if action in {"view", "edit", "delete"} else "panel:discounts")])
+    rows.append([InlineKeyboardButton(text="⬅️ Назад", callback_data=back_callback)])
     await message.answer(title, reply_markup=InlineKeyboardMarkup(inline_keyboard=rows))
 
 
@@ -779,10 +810,16 @@ async def admin_products_page(callback: CallbackQuery):
     total_pages = max(1, (len(products) + ADMIN_PAGE_SIZE - 1) // ADMIN_PAGE_SIZE)
     page = min(page, total_pages - 1)
     chunk = products[page * ADMIN_PAGE_SIZE:(page + 1) * ADMIN_PAGE_SIZE]
-    rows = [[InlineKeyboardButton(
-        text=f"#{p.id} · {compact_text(p.name, 26)} · {float(p.price_byn or 0):g} BYN",
-        callback_data=f"pv:{p.id}",
-    )] for p in chunk]
+    rows = []
+    for p in chunk:
+        brand = compact_text(display_brand_name(p.brand) or "Без бренда", 16)
+        stock = sum(product_size_stock(p).values())
+        price = float(p.price_byn or 0)
+        price_label = f"{product_normal_price(p):g}→{price:g}" if product_has_discount(p) else f"{price:g}"
+        rows.append([InlineKeyboardButton(
+            text=f"#{p.id} · {brand} · {compact_text(p.name, 18)} · {price_label} BYN · {stock} шт.",
+            callback_data=f"pv:{p.id}",
+        )])
     nav_row = []
     if page > 0:
         nav_row.append(InlineKeyboardButton(text="←", callback_data=f"pl:{page-1}"))
@@ -813,8 +850,8 @@ async def admin_product_search_start(callback: CallbackQuery, state: FSMContext)
         "pp:edit": ("edit", "✏️ Редактировать товар"),
         "pp:delete": ("delete", "🗑 Удалить товар"),
         "dd:add": ("discount_set", "➕ Добавить скидку"),
-        "dd:find": ("discount_set", "🔎 Найти товар для скидки"),
-        "dd:edit": ("discount_set", "✏️ Редактировать скидку"),
+        "dd:find": ("discount_view", "🔎 Найти товар со скидкой"),
+        "dd:edit": ("discount_edit", "✏️ Редактировать скидку"),
         "dd:remove": ("discount_remove", "🗑 Удалить скидку"),
     }
     action, title = action_map[callback.data]
@@ -841,6 +878,8 @@ async def admin_product_search_message(message: Message, state: FSMContext):
         "edit": "✏️ Выберите товар для редактирования",
         "delete": "🗑 Выберите товар для удаления",
         "discount_set": "🏷 Выберите товар",
+        "discount_view": "🔎 Выберите товар со скидкой",
+        "discount_edit": "✏️ Выберите скидку для редактирования",
         "discount_remove": "🗑 Выберите скидку для удаления",
     }
     if products:
@@ -859,7 +898,7 @@ async def admin_product_view(callback: CallbackQuery):
     if not product:
         await callback.answer("Товар не найден", show_alert=True)
         return
-    await callback.message.answer(product_admin_text(product), reply_markup=get_product_actions_keyboard(product_id))
+    await send_product_admin_card(callback.message, product)
     await callback.answer()
 
 
@@ -1008,10 +1047,8 @@ async def admin_product_edit_value(message: Message, state: FSMContext):
         await session.commit()
     await state.clear()
     success = await auto_push_to_github()
-    await message.answer(
-        "✅ Изменения сохранены" + (" и отправлены в каталог." if success else ", но GitHub пока не обновился."),
-        reply_markup=get_product_actions_keyboard(product_id),
-    )
+    notice = "✅ Изменения сохранены" + (" и отправлены в каталог." if success else ", но GitHub пока не обновился.")
+    await send_product_admin_card(message, product, notice)
 
 
 @router.callback_query(F.data.startswith("pc:"))
@@ -1028,8 +1065,9 @@ async def admin_product_edit_category(callback: CallbackQuery):
             return
         product.category_id = category_id
         await session.commit()
-    await auto_push_to_github()
-    await callback.message.answer("✅ Категория обновлена", reply_markup=get_product_actions_keyboard(product_id))
+    success = await auto_push_to_github()
+    notice = "✅ Категория обновлена" + (" и отправлена в каталог." if success else ", но GitHub пока не обновился.")
+    await send_product_admin_card(callback.message, product, notice)
     await callback.answer()
 
 
@@ -1052,8 +1090,9 @@ async def admin_product_edit_section(callback: CallbackQuery):
         prices["product_type"] = section
         product.prices = prices
         await session.commit()
-    await auto_push_to_github()
-    await callback.message.answer("✅ Раздел товара изменён", reply_markup=get_product_actions_keyboard(product_id))
+    success = await auto_push_to_github()
+    notice = "✅ Параметр товара изменён" + (" и отправлен в каталог." if success else ", но GitHub пока не обновился.")
+    await send_product_admin_card(callback.message, product, notice)
     await callback.answer()
 
 
@@ -1077,8 +1116,9 @@ async def admin_product_edit_condition(callback: CallbackQuery):
             prices.pop("condition", None)
         product.prices = prices
         await session.commit()
-    await auto_push_to_github()
-    await callback.message.answer("✅ Состояние обновлено", reply_markup=get_product_actions_keyboard(product_id))
+    success = await auto_push_to_github()
+    notice = "✅ Состояние обновлено" + (" и отправлено в каталог." if success else ", но GitHub пока не обновился.")
+    await send_product_admin_card(callback.message, product, notice)
     await callback.answer()
 
 
@@ -1166,6 +1206,44 @@ async def remove_product_discount(product_id: int) -> tuple[bool, str]:
     return True, "Скидка удалена"
 
 
+def get_discount_actions_keyboard(product_id: int):
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="✏️ Изменить скидку", callback_data=f"ds:{product_id}")],
+        [InlineKeyboardButton(text="🧹 Удалить скидку", callback_data=f"dr:{product_id}")],
+        [InlineKeyboardButton(text="📦 Открыть товар", callback_data=f"pv:{product_id}")],
+        [InlineKeyboardButton(text="⬅️ Скидки", callback_data="panel:discounts")],
+    ])
+
+
+@router.callback_query(F.data.startswith("dv:"))
+async def admin_discount_view(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    product_id = int(callback.data.split(":", 1)[1])
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+    if not product or not product_has_discount(product):
+        await callback.answer("Скидка не найдена", show_alert=True)
+        return
+    text = (
+        f"🏷 <b>Скидка товара #{product.id}</b>\n\n"
+        f"<b>{product.name}</b>\n"
+        f"Обычная цена: <s>{product_normal_price(product):g} BYN</s>\n"
+        f"Цена со скидкой: <b>{float(product.price_byn or 0):g} BYN</b>"
+    )
+    first_image = next((str(url).strip() for url in (product.images or []) if str(url).strip()), None)
+    if first_image:
+        try:
+            await callback.message.answer_photo(photo=first_image, caption=text, reply_markup=get_discount_actions_keyboard(product_id))
+            await callback.answer()
+            return
+        except Exception as exc:
+            print(f"⚠️ Не удалось показать фото скидки товара #{product_id}: {exc}")
+    await callback.message.answer(text, reply_markup=get_discount_actions_keyboard(product_id))
+    await callback.answer()
+
+
 @router.callback_query(F.data.startswith("ds:"))
 async def admin_discount_set_start(callback: CallbackQuery, state: FSMContext):
     if not admin_only(callback.from_user.id):
@@ -1180,9 +1258,12 @@ async def admin_discount_set_start(callback: CallbackQuery, state: FSMContext):
     await state.clear()
     await state.update_data(discount_product_id=product_id)
     await state.set_state(AdminPanelFlow.discount_value)
+    rows = [[InlineKeyboardButton(text="❌ Отмена", callback_data="panel:discounts")]]
+    if product_has_discount(product):
+        rows.insert(0, [InlineKeyboardButton(text="🧹 Удалить текущую скидку", callback_data=f"dr:{product_id}")])
     await callback.message.answer(
         f"🏷 <b>Скидка для товара #{product_id}</b>\n\nОбычная цена: {product_normal_price(product):g} BYN\nТекущая цена: {float(product.price_byn or 0):g} BYN\n\nОтправьте новую скидочную цену в BYN:",
-        reply_markup=get_admin_cancel_keyboard("panel:discounts"),
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=rows),
     )
     await callback.answer()
 
@@ -1204,10 +1285,13 @@ async def admin_discount_value(message: Message, state: FSMContext):
         return
     await state.clear()
     success = await auto_push_to_github()
-    await message.answer(
-        "✅ Скидка сохранена" + (" и отправлена в каталог." if success else ", но GitHub пока не обновился."),
-        reply_markup=get_discounts_panel_keyboard(),
-    )
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+    if product:
+        notice = "✅ Скидка сохранена" + (" и отправлена в каталог." if success else ", но GitHub пока не обновился.")
+        await send_product_admin_card(message, product, notice)
+    else:
+        await message.answer("✅ Скидка сохранена", reply_markup=get_discounts_panel_keyboard())
 
 
 @router.callback_query(F.data.startswith("dr:"))
@@ -1220,7 +1304,7 @@ async def admin_discount_remove_confirm(callback: CallbackQuery):
         f"Удалить скидку у товара #{product_id}?",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text="Да, удалить скидку", callback_data=f"drc:{product_id}")],
-            [InlineKeyboardButton(text="Отмена", callback_data="panel:discounts")],
+            [InlineKeyboardButton(text="Отмена", callback_data=f"dv:{product_id}")],
         ]),
     )
     await callback.answer()
@@ -1237,10 +1321,13 @@ async def admin_discount_remove_execute(callback: CallbackQuery):
         await callback.answer(result, show_alert=True)
         return
     success = await auto_push_to_github()
-    await callback.message.answer(
-        "✅ Скидка удалена" + (" и каталог обновлён." if success else ", но GitHub пока не обновился."),
-        reply_markup=get_discounts_panel_keyboard(),
-    )
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+    if product:
+        notice = "✅ Скидка удалена" + (" и каталог обновлён." if success else ", но GitHub пока не обновился.")
+        await send_product_admin_card(callback.message, product, notice)
+    else:
+        await callback.message.answer("✅ Скидка удалена", reply_markup=get_discounts_panel_keyboard())
     await callback.answer()
 
 
@@ -1260,7 +1347,7 @@ async def admin_discount_list(callback: CallbackQuery):
     chunk = products[page * ADMIN_PAGE_SIZE:(page + 1) * ADMIN_PAGE_SIZE]
     rows = [[InlineKeyboardButton(
         text=f"#{p.id} · {compact_text(p.name, 24)} · {product_normal_price(p):g}→{float(p.price_byn):g} BYN",
-        callback_data=f"ds:{p.id}",
+        callback_data=f"dv:{p.id}",
     )] for p in chunk]
     if not rows:
         rows.append([InlineKeyboardButton(text="Скидок пока нет", callback_data="noop")])
@@ -1282,17 +1369,31 @@ async def admin_discount_list(callback: CallbackQuery):
 # -------------------- Новости --------------------
 
 def news_admin_text(item: dict) -> str:
+    status = "Опубликована" if news_is_active(item) else "Скрыта"
+    position = item.get("position", "—")
+    created = item.get("created_at") or "—"
     return (
         f"📰 <b>Новость #{item.get('id')}</b>\n\n"
         f"<b>{item.get('title', '')}</b>\n\n"
+        f"Статус: <b>{status}</b>\n"
+        f"Позиция: <b>{position}</b>\n"
+        f"Дата: {created}\n"
         f"🔗 {item.get('post_url') or 'ссылка не указана'}\n"
         f"🖼 {item.get('image') or 'фото не указано'}"
     )
 
 
-def get_news_actions_keyboard(news_id: int):
+def get_news_actions_keyboard(news_id: int, item: Optional[dict] = None):
+    if item is None:
+        item = next((value for value in load_updates_sync() if int(value.get("id", 0)) == news_id), {})
+    toggle_text = "🙈 Скрыть" if news_is_active(item or {}) else "👁 Опубликовать"
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="✏️ Редактировать", callback_data=f"ne:{news_id}")],
+        [
+            InlineKeyboardButton(text="⬆️ Выше", callback_data=f"nm:{news_id}:up"),
+            InlineKeyboardButton(text="⬇️ Ниже", callback_data=f"nm:{news_id}:down"),
+        ],
+        [InlineKeyboardButton(text=toggle_text, callback_data=f"nt:{news_id}")],
         [InlineKeyboardButton(text="🗑 Удалить", callback_data=f"nd:{news_id}")],
         [InlineKeyboardButton(text="📋 К списку", callback_data="nl:0")],
         [InlineKeyboardButton(text="⬅️ Новости", callback_data="panel:news")],
@@ -1301,7 +1402,7 @@ def get_news_actions_keyboard(news_id: int):
 
 def find_news(query: str) -> list[dict]:
     clean = str(query or "").strip()
-    updates = load_updates_sync()
+    updates = normalize_news_order(load_updates_sync())
     if clean.isdigit():
         return [item for item in updates if str(item.get("id")) == clean]
     lower = clean.casefold()
@@ -1327,11 +1428,14 @@ async def admin_news_page(callback: CallbackQuery):
         page = max(0, int(callback.data.split(":", 1)[1]))
     except ValueError:
         page = 0
-    updates = load_updates_sync()
+    updates = normalize_news_order(load_updates_sync())
     total_pages = max(1, (len(updates) + ADMIN_PAGE_SIZE - 1) // ADMIN_PAGE_SIZE)
     page = min(page, total_pages - 1)
     chunk = updates[page * ADMIN_PAGE_SIZE:(page + 1) * ADMIN_PAGE_SIZE]
-    rows = [[InlineKeyboardButton(text=f"#{item.get('id')} · {compact_text(item.get('title', ''), 32)}", callback_data=f"nv:{item.get('id')}")] for item in chunk]
+    rows = [[InlineKeyboardButton(
+        text=f"{'🟢' if news_is_active(item) else '⚪️'} {item.get('position', '?')}. #{item.get('id')} · {compact_text(item.get('title', ''), 26)}",
+        callback_data=f"nv:{item.get('id')}",
+    )] for item in chunk]
     if not rows:
         rows.append([InlineKeyboardButton(text="Новостей пока нет", callback_data="noop")])
     nav_row = []
@@ -1377,11 +1481,60 @@ async def admin_news_view(callback: CallbackQuery):
         await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
     news_id = int(callback.data.split(":", 1)[1])
-    item = next((value for value in load_updates_sync() if int(value.get("id", 0)) == news_id), None)
+    item = next((value for value in normalize_news_order(load_updates_sync()) if int(value.get("id", 0)) == news_id), None)
     if not item:
         await callback.answer("Новость не найдена", show_alert=True)
         return
-    await callback.message.answer(news_admin_text(item), disable_web_page_preview=True, reply_markup=get_news_actions_keyboard(news_id))
+    await callback.message.answer(news_admin_text(item), disable_web_page_preview=True, reply_markup=get_news_actions_keyboard(news_id, item))
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("nt:"))
+async def admin_news_toggle_visibility(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    news_id = int(callback.data.split(":", 1)[1])
+    updates = load_updates_sync()
+    item = next((entry for entry in updates if int(entry.get("id", 0)) == news_id), None)
+    if not item:
+        await callback.answer("Новость не найдена", show_alert=True)
+        return
+    item["is_active"] = not news_is_active(item)
+    save_updates_sync(updates)
+    success = await push_updates_to_github()
+    status = "опубликована" if news_is_active(item) else "скрыта"
+    await callback.message.answer(
+        f"✅ Новость #{news_id} {status}" + (" и список обновлён." if success else ", но GitHub пока не обновился."),
+        reply_markup=get_news_actions_keyboard(news_id, item),
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("nm:"))
+async def admin_news_move(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    _, news_id_raw, direction = callback.data.split(":", 2)
+    news_id = int(news_id_raw)
+    updates = normalize_news_order(load_updates_sync())
+    index = next((idx for idx, item in enumerate(updates) if int(item.get("id", 0)) == news_id), None)
+    if index is None:
+        await callback.answer("Новость не найдена", show_alert=True)
+        return
+    target = index - 1 if direction == "up" else index + 1
+    if target < 0 or target >= len(updates):
+        await callback.answer("Новость уже находится на крайней позиции")
+        return
+    updates[index], updates[target] = updates[target], updates[index]
+    save_updates_sync(updates)
+    success = await push_updates_to_github()
+    item = next((entry for entry in normalize_news_order(updates) if int(entry.get("id", 0)) == news_id), {})
+    await callback.message.answer(
+        "✅ Порядок новостей изменён" + (" и опубликован." if success else ", но GitHub пока не обновился."),
+        reply_markup=get_news_actions_keyboard(news_id, item),
+    )
     await callback.answer()
 
 
@@ -1446,7 +1599,7 @@ async def admin_news_edit_value(message: Message, state: FSMContext):
     save_updates_sync(updates)
     await state.clear()
     success = await push_updates_to_github()
-    await message.answer("✅ Новость обновлена" + (" и опубликована." if success else ", но GitHub пока не обновился."), reply_markup=get_news_actions_keyboard(news_id))
+    await message.answer("✅ Новость обновлена" + (" и опубликована." if success else ", но GitHub пока не обновился."), reply_markup=get_news_actions_keyboard(news_id, item))
 
 
 @router.message(AdminPanelFlow.news_edit_photo, F.photo)
@@ -1476,7 +1629,7 @@ async def admin_news_edit_photo(message: Message, state: FSMContext):
     save_updates_sync(updates)
     await state.clear()
     success = await push_updates_to_github()
-    await message.answer("✅ Фотография обновлена" + (" и опубликована." if success else ", но GitHub пока не обновился."), reply_markup=get_news_actions_keyboard(news_id))
+    await message.answer("✅ Фотография обновлена" + (" и опубликована." if success else ", но GitHub пока не обновился."), reply_markup=get_news_actions_keyboard(news_id, item))
 
 
 @router.message(AdminPanelFlow.news_edit_photo)
@@ -2559,10 +2712,29 @@ def load_updates_sync():
         print(f"⚠️ Не удалось прочитать updates.json: {e}")
         return []
 
+def news_is_active(item: dict) -> bool:
+    value = item.get("is_active", True)
+    if isinstance(value, str):
+        return value.strip().casefold() not in {"false", "0", "нет", "off", "hidden"}
+    return bool(value)
+
+
+def normalize_news_order(updates: list[dict]) -> list[dict]:
+    """Preserve current list order and make visibility/position explicit."""
+    normalized = []
+    for position, item in enumerate(updates, start=1):
+        current = dict(item or {})
+        current["is_active"] = news_is_active(current)
+        current["position"] = position
+        normalized.append(current)
+    return normalized
+
+
 def save_updates_sync(updates):
     path = get_updates_path()
+    normalized = normalize_news_order(list(updates or []))
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(updates, f, ensure_ascii=False, indent=2)
+        json.dump(normalized, f, ensure_ascii=False, indent=2)
 
 def next_update_id(updates):
     ids = []
@@ -2740,9 +2912,9 @@ async def process_update_photo(message: Message, state: FSMContext):
         await state.set_state(AddUpdate.post_url)
         await message.answer(
             "✅ Фото сохранено!\n\n"
-            "Шаг 3: отправьте <b>ссылку на пост</b> из канала.\n\n"
-            "Например:\n"
-            "<code>https://t.me/mestniybaryga/9587</code>",
+            "Шаг 3: отправьте <b>ссылку</b> на пост или страницу.\n\n"
+            "Если ссылка не нужна — напишите <code>нет</code>.\n"
+            "Пример: <code>https://t.me/mestniystore/10021</code>",
             reply_markup=InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
             ])
@@ -2759,11 +2931,12 @@ async def process_update_photo_invalid(message: Message, state: FSMContext):
 async def process_update_url(message: Message, state: FSMContext):
     post_url = (message.text or "").strip()
 
-    if not (post_url.startswith("https://t.me/") or post_url.startswith("http://t.me/")):
+    if post_url.casefold() in {"нет", "-", "без ссылки", "убрать"}:
+        post_url = ""
+    elif not (post_url.startswith("https://") or post_url.startswith("http://")):
         await message.answer(
-            "❌ Нужна ссылка на пост Telegram.\n\n"
-            "Например:\n"
-            "<code>https://t.me/mestniybaryga/9587</code>"
+            "❌ Отправьте корректную ссылку, начинающуюся с http:// или https://.\n\n"
+            "Если ссылка не нужна — напишите <code>нет</code>."
         )
         return
 
@@ -2775,7 +2948,9 @@ async def process_update_url(message: Message, state: FSMContext):
         "title": data.get("title", "Обновление"),
         "image": data.get("image", ""),
         "post_url": post_url,
-        "created_at": datetime.now().isoformat(timespec="seconds")
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "is_active": True,
+        "position": 1,
     }
 
     updates.insert(0, update)
@@ -2787,7 +2962,7 @@ async def process_update_url(message: Message, state: FSMContext):
     text = (
         f"✅ <b>Обновление добавлено!</b>\n\n"
         f"📰 #{update['id']} — <b>{update['title']}</b>\n"
-        f"🔗 {update['post_url']}\n"
+        f"🔗 {update['post_url'] or 'без ссылки — переход в каталог'}\n"
         f"🖼 Фото: {update['image']}\n\n"
     )
     if success:
@@ -3718,6 +3893,17 @@ async def fix_product_photo(message: Message, state: FSMContext):
 
     # Одиночное фото
     if not media_group_id:
+        current_data = await state.get_data()
+        fix_images = list(current_data.get("fix_images", []))
+        if len(fix_images) >= MAX_PRODUCT_IMAGES:
+            await message.answer(
+                f"⚠️ Уже добавлено максимум {MAX_PRODUCT_IMAGES} фото. Нажмите «Готово — сохранить».",
+                reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+                    [InlineKeyboardButton(text="✅ Готово — сохранить", callback_data="fix_save")],
+                    [InlineKeyboardButton(text="❌ Отмена", callback_data="fix_cancel")],
+                ]),
+            )
+            return
         await message.answer("⏳ Загружаю фото на GitHub...")
 
         connector = aiohttp.TCPConnector(ssl=False)
@@ -3770,6 +3956,19 @@ async def fix_product_photo(message: Message, state: FSMContext):
             if not collected_urls:
                 return
 
+            current_data = await state.get_data()
+            current_images = list(current_data.get("fix_images", []))
+            remaining_slots = max(MAX_PRODUCT_IMAGES - len(current_images), 0)
+            if remaining_slots <= 0:
+                await message.answer(
+                    f"⚠️ Уже добавлено максимум {MAX_PRODUCT_IMAGES} фото. Нажмите «Готово — сохранить».",
+                    reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+                        [InlineKeyboardButton(text="✅ Готово — сохранить", callback_data="fix_save")],
+                        [InlineKeyboardButton(text="❌ Отмена", callback_data="fix_cancel")],
+                    ]),
+                )
+                return
+            collected_urls = collected_urls[:remaining_slots]
             await message.answer(f"⏳ Загружаю {len(collected_urls)} фото на GitHub...")
 
             await ensure_images_folder_exists()
@@ -3822,7 +4021,7 @@ async def fix_save(callback: CallbackQuery, state: FSMContext):
 
     data = await state.get_data()
     product_id = data.get('fix_product_id')
-    fix_images = data.get('fix_images', [])
+    fix_images = list(data.get('fix_images', []))[:MAX_PRODUCT_IMAGES]
 
     if not fix_images:
         await callback.answer("❌ Нет фото для сохранения!", show_alert=True)
