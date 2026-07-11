@@ -12,7 +12,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_bonus_v1';
+const BUILD_VERSION='mestniy_admin_final_v1';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -24,6 +24,18 @@ const DEFAULT_NEWS=[
   {id:'default-2',title:'Смотрите новинки в каталоге',excerpt:'Актуальные бренды и размеры собраны в одном разделе.',body:['Используйте фильтры по бренду, категории, размеру и цене, чтобы быстрее найти нужную позицию.'],category:'КАТАЛОГ',date:'MESTNIY STORE',image:'assets/home-news-02.webp',action:{type:'catalog',label:'ОТКРЫТЬ КАТАЛОГ'}}
 ];
 const PRODUCT_PLACEHOLDER='assets/product-placeholder.svg';
+const PUBLIC_SETTINGS_DEFAULT={support_username:'manager_of_mestniy',reviews_url:'https://t.me/mestniyotzivyy'};
+let PUBLIC_SETTINGS={...PUBLIC_SETTINGS_DEFAULT};
+
+function applyPublicSettings(raw){
+  const source=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
+  const username=String(source.support_username||PUBLIC_SETTINGS_DEFAULT.support_username).trim().replace(/^@/,'');
+  const reviewsUrl=String(source.reviews_url||PUBLIC_SETTINGS_DEFAULT.reviews_url).trim();
+  PUBLIC_SETTINGS={
+    support_username:/^[A-Za-z0-9_]{3,64}$/.test(username)?username:PUBLIC_SETTINGS_DEFAULT.support_username,
+    reviews_url:/^https?:\/\//i.test(reviewsUrl)?reviewsUrl:PUBLIC_SETTINGS_DEFAULT.reviews_url
+  };
+}
 
 function displayBrand(value){
   const clean=String(value||'').trim();
@@ -219,7 +231,8 @@ async function loadStoreData(){
     fetchJson('products.json'),
     fetchJson('updates.json'),
     userId?fetchJsonOptional('orders_public.json',[]):Promise.resolve([]),
-    userId?fetchJsonOptional('bonuses_public.json',[]):Promise.resolve([])
+    userId?fetchJsonOptional('bonuses_public.json',[]):Promise.resolve([]),
+    fetchJsonOptional('settings_public.json',PUBLIC_SETTINGS_DEFAULT)
   ]);
   if(results[0].status==='fulfilled'){PRODUCTS=(Array.isArray(results[0].value)?results[0].value:[]).map(normalizeSourceProduct)}
   else{state.dataError='catalog-error';console.error(results[0].reason)}
@@ -247,6 +260,8 @@ async function loadStoreData(){
   }else{REMOTE_ORDERS=[];console.error(results[2].reason)}
   if(results[3].status==='fulfilled')applyPublicBonusData(results[3].value);
   else{state.bonusBalance=0;state.bonusTransactions=[];console.error(results[3].reason)}
+  if(results[4].status==='fulfilled')applyPublicSettings(results[4].value);
+  else{PUBLIC_SETTINGS={...PUBLIC_SETTINGS_DEFAULT};console.error(results[4].reason)}
 }
 function productById(id){return PRODUCTS.find(product=>String(product.id)===String(id))||null}
 function productIndexById(id){return PRODUCTS.findIndex(product=>String(product.id)===String(id))}
@@ -578,7 +593,7 @@ ${lines.join(String.fromCharCode(10))}
 Итого: ${money(cartSubtotal())}`;
 }
 function openPickupManager(){
-  const url=`https://t.me/manager_of_mestniy?text=${encodeURIComponent(pickupCartText())}`;
+  const url=`https://t.me/${PUBLIC_SETTINGS.support_username}?text=${encodeURIComponent(pickupCartText())}`;
   try{if(window.Telegram?.WebApp?.openTelegramLink){window.Telegram.WebApp.openTelegramLink(url);return}}catch(_e){}
   window.open(url,'_blank','noopener');
 }

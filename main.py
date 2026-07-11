@@ -25,6 +25,7 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.exceptions import TelegramRetryAfter, TelegramForbiddenError, TelegramBadRequest
 
 from sqlalchemy import select, delete, or_
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
@@ -76,6 +77,49 @@ API_PORT = int(os.getenv("API_PORT", "8080"))
 MAX_PRODUCT_IMAGES = int(os.getenv("MAX_PRODUCT_IMAGES", "5"))
 PRODUCT_CONDITIONS = ["Новое", "Отличное", "Очень хорошее", "Хорошее"]
 PREMIUM_SUCCESS_EMOJI_ID = os.getenv("PREMIUM_SUCCESS_EMOJI_ID", "5368324170671202286").strip()
+BROADCAST_DELAY_SECONDS = max(0.04, float(os.getenv("BROADCAST_DELAY_SECONDS", "0.06")))
+
+DEFAULT_APP_SETTINGS = {
+    "support_username": "manager_of_mestniy",
+    "reviews_url": "https://t.me/mestniyotzivyy",
+    "shop_button_text": "🛍 Открыть магазин",
+    "start_text": (
+        "👋 Привет, <b>MESTNIY MANAGER!</b>\n\n"
+        "<b>Как пользоваться ботом?</b>\n\n"
+        "Нажимай открыть каталог! Там сверху выбирай нужную валюту, категорию товара, нужный размер! "
+        "Когда определился с заказом, нажимай на кнопку <b>В корзину</b>! "
+        "В корзину можно добавлять сразу несколько вещей! После заходи в корзину, там сверху будет кнопка "
+        "<b>ОФОРМИТЬ ЗАКАЗ</b>! Нажимай на неё! После, тебя направят к менеджеру! "
+        "Хороших и удачных покупок! Спасибо что выбираете нас! 🫶\n\n"
+        "🛞 <b>САМОВЫВОЗ:</b>\n"
+        "Мы находимся в городе Лида!\n\n"
+        "📦 <b>ДОСТАВКА:</b>\n"
+        "Мы отправляем через:\n"
+        "Европочта / Белпочта / CDEK / Маршрутка\n\n"
+        "По всем вопросам обращайтесь сюда: <b>{support}</b>"
+    ),
+    "delivery_text": (
+        "• <b>Личная встреча:</b> г. Лида 🌇\n\n"
+        "• <b>Доставка:</b> По всем странам СНГ, через:\n"
+        "Белпочта ( по Беларуси )\n"
+        "Европочта ( по Беларуси )\n"
+        "Маршрутка ( по Беларуси )\n"
+        "Такси ( по городу Лида )\n"
+        "CDEK ( между странами СНГ )\n\n"
+        "По всем интересующим вопросам обращаться сюда:\n"
+        "<b>{support}</b>"
+    ),
+    "custom_order_text": (
+        "Мы, с нашей командой, можем привезти вам абсолютно любой товар, из разных стран, "
+        "вам необходимо найти любую фотку в интернете, нужного товара, затем скинуть её нашему менеджеру, "
+        "и обязательно скажите нужный размер, он вам расскажет обо всём: "
+        "Какая будет итоговая цена | сроки доставки, и ответит на все ваши вопросы!\n\n"
+        "<b>Как связаться с менеджером?</b>\n\n"
+        "Открывай приложение → Внизу выбирай раздел каталог → Заказать товар по предзаказу\n\n"
+        "<b>Канал по предзаказам:</b>\n"
+        "<b><a href='https://t.me/mestniypodzakaz'>https://t.me/mestniypodzakaz</a></b>"
+    ),
+}
 
 # Курсы валют (без EUR)
 CURRENCIES = {
@@ -199,8 +243,19 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True)
     username: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    first_name: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    last_name: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     bonus_balance: Mapped[float] = mapped_column(Float, default=0)
+    broadcast_enabled: Mapped[bool] = mapped_column(Boolean, default=True)
+    last_seen_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+
+class AppSetting(Base):
+    __tablename__ = "app_settings"
+    key: Mapped[str] = mapped_column(String(100), primary_key=True)
+    value: Mapped[str] = mapped_column(Text)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, onupdate=datetime.now)
+
 
 class Category(Base):
     __tablename__ = "categories"
@@ -263,6 +318,15 @@ async def init_db():
         user_columns = {row[1] for row in user_columns_result.fetchall()}
         if "bonus_balance" not in user_columns:
             await conn.execute(text("ALTER TABLE users ADD COLUMN bonus_balance FLOAT NOT NULL DEFAULT 0"))
+        if "first_name" not in user_columns:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN first_name VARCHAR(255)"))
+        if "last_name" not in user_columns:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN last_name VARCHAR(255)"))
+        if "broadcast_enabled" not in user_columns:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN broadcast_enabled BOOLEAN NOT NULL DEFAULT 1"))
+        if "last_seen_at" not in user_columns:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN last_seen_at DATETIME"))
+        await conn.execute(text("UPDATE users SET last_seen_at = created_at WHERE last_seen_at IS NULL"))
 
         columns_result = await conn.execute(text("PRAGMA table_info(orders)"))
         order_columns = {row[1] for row in columns_result.fetchall()}
@@ -346,6 +410,10 @@ class AdminPanelFlow(StatesGroup):
     news_edit_photo = State()
     bonus_user_search = State()
     bonus_amount = State()
+    broadcast_message = State()
+    user_search = State()
+    user_direct_message = State()
+    setting_value = State()
 
 # ==================== ГЛОБАЛЬНЫЕ БУФЕРЫ ====================
 
@@ -359,6 +427,51 @@ fix_product_locks = {}
 
 router = Router()
 bot: Bot = None
+APP_SETTINGS_CACHE = dict(DEFAULT_APP_SETTINGS)
+
+
+def get_app_setting(key: str) -> str:
+    return str(APP_SETTINGS_CACHE.get(key, DEFAULT_APP_SETTINGS.get(key, "")) or "")
+
+
+def normalized_support_username() -> str:
+    value = get_app_setting("support_username").strip().lstrip("@")
+    return value or "manager_of_mestniy"
+
+
+def render_app_text(key: str) -> str:
+    value = get_app_setting(key)
+    support = "@" + normalized_support_username()
+    return value.replace("{support}", html.escape(support)).replace(
+        "{reviews_url}", html.escape(get_app_setting("reviews_url"), quote=True)
+    )
+
+
+def support_url() -> str:
+    return f"https://t.me/{normalized_support_username()}"
+
+
+async def load_app_settings_cache() -> None:
+    APP_SETTINGS_CACHE.clear()
+    APP_SETTINGS_CACHE.update(DEFAULT_APP_SETTINGS)
+    async with async_session() as session:
+        rows = list((await session.execute(select(AppSetting))).scalars().all())
+    for row in rows:
+        APP_SETTINGS_CACHE[row.key] = row.value
+
+
+async def save_app_setting(key: str, value: str) -> None:
+    async with async_session() as session:
+        item = (await session.execute(select(AppSetting).where(AppSetting.key == key))).scalar_one_or_none()
+        if item is None:
+            item = AppSetting(key=key, value=value, updated_at=datetime.now())
+            session.add(item)
+        else:
+            item.value = value
+            item.updated_at = datetime.now()
+        await session.commit()
+    APP_SETTINGS_CACHE[key] = value
+
 
 def get_shop_reply_keyboard():
     """Постоянная кнопка запуска Mini App.
@@ -368,7 +481,7 @@ def get_shop_reply_keyboard():
     """
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="🛍 Открыть магазин", web_app=WebAppInfo(url=WEBAPP_URL))],
+            [KeyboardButton(text=get_app_setting("shop_button_text") or "🛍 Открыть магазин", web_app=WebAppInfo(url=WEBAPP_URL))],
         ],
         resize_keyboard=True,
         is_persistent=True,
@@ -382,7 +495,7 @@ def get_main_keyboard():
         [InlineKeyboardButton(text="Информация о доставке", callback_data="delivery_info")],
         [InlineKeyboardButton(text="Привезем вещь по вашим критериям", callback_data="custom_order_info")],
         [InlineKeyboardButton(text="Отзывы✅", callback_data="reviews_info")],
-        [InlineKeyboardButton(text="Обратиться в поддержку⚙️", url="https://t.me/manager_of_mestniy")]
+        [InlineKeyboardButton(text="Обратиться в поддержку⚙️", url=support_url())]
     ])
 
 
@@ -392,7 +505,7 @@ def get_admin_keyboard():
         [InlineKeyboardButton(text="Информация о доставке", callback_data="delivery_info")],
         [InlineKeyboardButton(text="Привезем вещь по вашим критериям", callback_data="custom_order_info")],
         [InlineKeyboardButton(text="Отзывы✅", callback_data="reviews_info")],
-        [InlineKeyboardButton(text="Обратиться в поддержку⚙️", url="https://t.me/manager_of_mestniy")],
+        [InlineKeyboardButton(text="Обратиться в поддержку⚙️", url=support_url())],
         [InlineKeyboardButton(text="🛠 Админ-панель", callback_data="panel:home")],
     ])
 
@@ -463,6 +576,53 @@ def get_bonuses_panel_keyboard():
     ])
 
 
+def get_broadcast_panel_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Создать рассылку", callback_data="broadcast:new")],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data="panel:home")],
+    ])
+
+
+def get_users_panel_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Список пользователей", callback_data="users:list:0")],
+        [InlineKeyboardButton(text="Найти пользователя", callback_data="users:find")],
+        [InlineKeyboardButton(text="Статистика", callback_data="users:stats")],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data="panel:home")],
+    ])
+
+
+SETTING_CODE_TO_KEY = {
+    "welcome": "start_text",
+    "delivery": "delivery_text",
+    "preorder": "custom_order_text",
+    "support": "support_username",
+    "reviews": "reviews_url",
+    "shopbtn": "shop_button_text",
+}
+
+SETTING_TITLES = {
+    "start_text": "Приветствие /start",
+    "delivery_text": "Информация о доставке",
+    "custom_order_text": "Текст предзаказа",
+    "support_username": "Username поддержки",
+    "reviews_url": "Ссылка на отзывы",
+    "shop_button_text": "Текст кнопки магазина",
+}
+
+
+def get_settings_panel_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Приветствие /start", callback_data="setting:welcome")],
+        [InlineKeyboardButton(text="Информация о доставке", callback_data="setting:delivery")],
+        [InlineKeyboardButton(text="Текст предзаказа", callback_data="setting:preorder")],
+        [InlineKeyboardButton(text="Username поддержки", callback_data="setting:support")],
+        [InlineKeyboardButton(text="Ссылка на отзывы", callback_data="setting:reviews")],
+        [InlineKeyboardButton(text="Кнопка магазина", callback_data="setting:shopbtn")],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data="panel:home")],
+    ])
+
+
 def get_admin_cancel_keyboard(back_callback: str = "panel:home"):
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="❌ Отмена", callback_data=back_callback)]
@@ -528,38 +688,43 @@ async def cmd_start(message: Message, state: FSMContext):
         user = result.scalar_one_or_none()
 
         if not user:
-            user = User(telegram_id=user_id, username=username, bonus_balance=0)
+            user = User(
+                telegram_id=user_id,
+                username=username,
+                first_name=message.from_user.first_name,
+                last_name=message.from_user.last_name,
+                bonus_balance=0,
+                broadcast_enabled=True,
+                last_seen_at=datetime.now(),
+            )
             session.add(user)
             await session.commit()
             print(f"👤 Новый пользователь: @{username} ({user_id})")
         else:
             changed = False
-            if user.username != username:
-                user.username = username
-                changed = True
+            profile_values = {
+                "username": username,
+                "first_name": message.from_user.first_name,
+                "last_name": message.from_user.last_name,
+            }
+            for field, value in profile_values.items():
+                if getattr(user, field, None) != value:
+                    setattr(user, field, value)
+                    changed = True
             if user.bonus_balance is None:
                 user.bonus_balance = 0
                 changed = True
+            if not bool(user.broadcast_enabled):
+                user.broadcast_enabled = True
+                changed = True
+            user.last_seen_at = datetime.now()
+            changed = True
             if changed:
                 await session.commit()
 
     is_admin = user_id in ADMIN_IDS
 
-    text = (
-        "👋 Привет, <b>MESTNIY MANAGER!</b>\n\n"
-        "<b>Как пользоваться ботом?</b>\n\n"
-        "Нажимай открыть каталог! Там сверху выбирай нужную валюту, категорию товара, нужный размер! "
-        "Когда определился с заказом, нажимай на кнопку <b>В корзину</b>! "
-        "В корзину можно добавлять сразу несколько вещей! После заходи в корзину, там сверху будет кнопка "
-        "<b>ОФОРМИТЬ ЗАКАЗ</b>! Нажимай на неё! После, тебя направят к менеджеру! "
-        "Хороших и удачных покупок! Спасибо что выбираете нас! 🫶\n\n"
-        "🛞 <b>САМОВЫВОЗ:</b>\n"
-        "Мы находимся в городе Лида!\n\n"
-        "📦 <b>ДОСТАВКА:</b>\n"
-        "Мы отправляем через:\n"
-        "Европочта / Белпочта / CDEK / Маршрутка\n\n"
-        "По всем вопросам обращайтесь сюда: <b>@manager_of_mestniy</b>"
-    )
+    text = render_app_text("start_text")
 
     if is_admin:
         text += "\n\n🔧 <i>Режим администратора</i>"
@@ -1130,41 +1295,547 @@ async def admin_bonus_history(callback: CallbackQuery):
 
 
 @router.callback_query(F.data == "panel:broadcast")
-async def admin_broadcast_placeholder(callback: CallbackQuery):
+async def admin_broadcast_panel(callback: CallbackQuery, state: FSMContext):
     if not admin_only(callback.from_user.id):
-        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        await callback.answer("Доступ запрещён", show_alert=True)
         return
-    await callback.message.answer("📣 Массовую рассылку подключим отдельным этапом.", reply_markup=get_admin_panel_keyboard())
-    await callback.answer()
-
-
-@router.callback_query(F.data == "panel:settings")
-async def admin_settings_placeholder(callback: CallbackQuery):
-    if not admin_only(callback.from_user.id):
-        await callback.answer("⛔ Доступ запрещён", show_alert=True)
-        return
+    await state.clear()
+    async with async_session() as session:
+        users = list((await session.execute(select(User))).scalars().all())
+    available = sum(1 for user in users if bool(user.broadcast_enabled))
+    disabled = len(users) - available
     await callback.message.answer(
-        "⚙️ <b>Настройки</b>\n\nОсновные настройки пока берутся из файла <code>.env</code>. Управление ими через кнопки добавим после заказов и бонусов.",
-        reply_markup=get_admin_panel_keyboard(),
+        "<b>Рассылка</b>\n\n"
+        f"Получателей: <code>{available}</code>\n"
+        f"Недоступны: <code>{disabled}</code>\n\n"
+        "Можно отправить текст, фотографию, видео, документ, голосовое сообщение или другой обычный пост. "
+        "Перед отправкой бот покажет предпросмотр.",
+        reply_markup=get_broadcast_panel_keyboard(),
     )
     await callback.answer()
 
 
-@router.callback_query(F.data == "panel:users")
-async def admin_users_list(callback: CallbackQuery):
+@router.callback_query(F.data == "broadcast:new")
+async def admin_broadcast_start(callback: CallbackQuery, state: FSMContext):
     if not admin_only(callback.from_user.id):
-        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    await state.set_state(AdminPanelFlow.broadcast_message)
+    await callback.message.answer(
+        "<b>Новая рассылка</b>\n\n"
+        "Отправьте одним сообщением текст или медиа, которое нужно разослать всем зарегистрированным пользователям.",
+        reply_markup=get_admin_cancel_keyboard("panel:broadcast"),
+    )
+    await callback.answer()
+
+
+@router.message(AdminPanelFlow.broadcast_message)
+async def admin_broadcast_preview(message: Message, state: FSMContext):
+    if not admin_only(message.from_user.id):
+        await state.clear()
+        return
+    if message.text and message.text.startswith("/"):
+        await message.answer("Команда не может быть рассылкой. Отправьте обычное сообщение.")
+        return
+    await state.update_data(
+        broadcast_source_chat_id=message.chat.id,
+        broadcast_source_message_id=message.message_id,
+    )
+    async with async_session() as session:
+        users = list((await session.execute(select(User))).scalars().all())
+    recipients = sum(1 for user in users if bool(user.broadcast_enabled))
+    await message.answer("<b>Предпросмотр рассылки</b>")
+    try:
+        await message.bot.copy_message(
+            chat_id=message.chat.id,
+            from_chat_id=message.chat.id,
+            message_id=message.message_id,
+        )
+    except TelegramBadRequest:
+        await message.answer("Не удалось скопировать это сообщение. Попробуйте обычный текст, фото, видео или документ.")
+        return
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=f"Отправить {recipients} пользователям", callback_data="broadcast:confirm")],
+        [InlineKeyboardButton(text="Изменить сообщение", callback_data="broadcast:new")],
+        [InlineKeyboardButton(text="Отмена", callback_data="panel:broadcast")],
+    ])
+    await message.answer(
+        f"Получателей: <code>{recipients}</code>\n\n"
+        "Проверьте сообщение и подтвердите отправку.",
+        reply_markup=keyboard,
+    )
+
+
+async def copy_broadcast_with_retry(target_user_id: int, source_chat_id: int, source_message_id: int) -> str:
+    try:
+        await bot.copy_message(
+            chat_id=target_user_id,
+            from_chat_id=source_chat_id,
+            message_id=source_message_id,
+        )
+        return "sent"
+    except TelegramRetryAfter as exc:
+        await asyncio.sleep(float(exc.retry_after) + 0.5)
+        try:
+            await bot.copy_message(
+                chat_id=target_user_id,
+                from_chat_id=source_chat_id,
+                message_id=source_message_id,
+            )
+            return "sent"
+        except TelegramForbiddenError:
+            return "blocked"
+        except Exception:
+            return "failed"
+    except TelegramForbiddenError:
+        return "blocked"
+    except TelegramBadRequest as exc:
+        message = str(exc).casefold()
+        if "chat not found" in message or "user is deactivated" in message or "bot was blocked" in message:
+            return "blocked"
+        return "failed"
+    except Exception:
+        return "failed"
+
+
+@router.callback_query(F.data == "broadcast:confirm")
+async def admin_broadcast_confirm(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    data = await state.get_data()
+    source_chat_id = data.get("broadcast_source_chat_id")
+    source_message_id = data.get("broadcast_source_message_id")
+    if not source_chat_id or not source_message_id:
+        await callback.answer("Сообщение для рассылки не найдено", show_alert=True)
+        await state.clear()
+        return
+
+    async with async_session() as session:
+        users = list((await session.execute(
+            select(User).where(User.broadcast_enabled == True).order_by(User.id.asc())
+        )).scalars().all())
+
+    await callback.answer("Рассылка запущена")
+    try:
+        await callback.message.edit_text(
+            f"<b>Рассылка выполняется</b>\n\nПолучателей: <code>{len(users)}</code>"
+        )
+    except TelegramBadRequest:
+        pass
+
+    sent = 0
+    failed = 0
+    blocked_ids: list[int] = []
+    for user in users:
+        result = await copy_broadcast_with_retry(user.telegram_id, int(source_chat_id), int(source_message_id))
+        if result == "sent":
+            sent += 1
+        elif result == "blocked":
+            blocked_ids.append(user.telegram_id)
+        else:
+            failed += 1
+        await asyncio.sleep(BROADCAST_DELAY_SECONDS)
+
+    if blocked_ids:
+        async with async_session() as session:
+            blocked_users = list((await session.execute(
+                select(User).where(User.telegram_id.in_(blocked_ids))
+            )).scalars().all())
+            for user in blocked_users:
+                user.broadcast_enabled = False
+            await session.commit()
+
+    await state.clear()
+    await callback.message.answer(
+        "<b>Рассылка завершена</b>\n\n"
+        f"Доставлено: <code>{sent}</code>\n"
+        f"Бот заблокирован / чат недоступен: <code>{len(blocked_ids)}</code>\n"
+        f"Другие ошибки: <code>{failed}</code>",
+        reply_markup=get_broadcast_panel_keyboard(),
+    )
+
+
+@router.callback_query(F.data == "panel:settings")
+async def admin_settings_panel(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    await state.clear()
+    await callback.message.answer(
+        "<b>Настройки</b>\n\n"
+        f"Поддержка: <code>@{html.escape(normalized_support_username())}</code>\n"
+        f"Отзывы: <code>{html.escape(compact_text(get_app_setting('reviews_url'), 55))}</code>\n"
+        f"Кнопка магазина: <b>{html.escape(get_app_setting('shop_button_text'))}</b>\n\n"
+        "Тексты поддерживают HTML-разметку Telegram. В приветствии и информационных сообщениях можно использовать "
+        "переменную <code>{support}</code>.",
+        reply_markup=get_settings_panel_keyboard(),
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("setting:"))
+async def admin_setting_edit_start(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    code = callback.data.split(":", 1)[1]
+    key = SETTING_CODE_TO_KEY.get(code)
+    if not key:
+        await callback.answer("Неизвестная настройка", show_alert=True)
+        return
+    current = get_app_setting(key)
+    shown = html.escape(current) if key not in {"start_text", "delivery_text", "custom_order_text"} else current
+    await state.update_data(setting_key=key)
+    await state.set_state(AdminPanelFlow.setting_value)
+    await callback.message.answer(
+        f"<b>{SETTING_TITLES[key]}</b>\n\n"
+        f"Текущее значение:\n{shown}\n\n"
+        "Отправьте новое значение. Отправьте <code>-</code>, чтобы вернуть значение по умолчанию.",
+        reply_markup=get_admin_cancel_keyboard("panel:settings"),
+        disable_web_page_preview=True,
+    )
+    await callback.answer()
+
+
+@router.message(AdminPanelFlow.setting_value)
+async def admin_setting_value_input(message: Message, state: FSMContext):
+    if not admin_only(message.from_user.id):
+        await state.clear()
+        return
+    data = await state.get_data()
+    key = data.get("setting_key")
+    if key not in SETTING_TITLES:
+        await state.clear()
+        await message.answer("Настройка не найдена.", reply_markup=get_settings_panel_keyboard())
+        return
+    raw = (message.text or "").strip()
+    if not raw:
+        await message.answer("Отправьте текстовое значение.")
+        return
+    value = DEFAULT_APP_SETTINGS[key] if raw == "-" else raw
+
+    if key == "support_username":
+        value = value.lstrip("@").strip()
+        if not re.fullmatch(r"[A-Za-z0-9_]{3,64}", value):
+            await message.answer("Введите username без ссылки, например: <code>manager_of_mestniy</code>")
+            return
+    elif key == "reviews_url":
+        if value.startswith("@"):
+            value = "https://t.me/" + value.lstrip("@")
+        elif value.startswith("t.me/"):
+            value = "https://" + value
+        if not re.fullmatch(r"https?://[^\s]+", value):
+            await message.answer("Введите полную ссылку, например: <code>https://t.me/mestniyotzivyy</code>")
+            return
+    elif key == "shop_button_text":
+        value = " ".join(value.split())
+        if not 1 <= len(value) <= 40:
+            await message.answer("Текст кнопки должен содержать от 1 до 40 символов.")
+            return
+    else:
+        if len(value) > 3900:
+            await message.answer("Текст слишком длинный. Максимум — 3900 символов.")
+            return
+
+    await save_app_setting(key, value)
+    public_synced = True
+    if key in {"support_username", "reviews_url"}:
+        public_synced = await auto_push_settings_to_github()
+    await state.clear()
+    sync_note = "" if public_synced else "\n\nНе удалось обновить настройки Mini App на GitHub. Настройки бота сохранены локально."
+    await message.answer(
+        f"<b>{SETTING_TITLES[key]} сохранено</b>\n\n"
+        "Новое значение начнёт использоваться сразу. Для обновления постоянной кнопки магазина пользователю нужно снова нажать /start."
+        + sync_note,
+        reply_markup=get_settings_panel_keyboard(),
+    )
+
+
+@router.callback_query(F.data == "panel:users")
+async def admin_users_panel(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    await state.clear()
+    async with async_session() as session:
+        users = list((await session.execute(select(User))).scalars().all())
+    available = sum(1 for user in users if bool(user.broadcast_enabled))
+    await callback.message.answer(
+        "<b>Пользователи</b>\n\n"
+        f"Всего зарегистрировано: <code>{len(users)}</code>\n"
+        f"Доступны для рассылки: <code>{available}</code>",
+        reply_markup=get_users_panel_keyboard(),
+    )
+    await callback.answer()
+
+
+USERS_PAGE_SIZE = 8
+
+
+def user_display_name(user: User) -> str:
+    full_name = " ".join(part for part in [user.first_name, user.last_name] if part).strip()
+    if full_name:
+        return full_name
+    if user.username:
+        return "@" + user.username
+    return f"Пользователь {user.telegram_id}"
+
+
+async def render_admin_user_card(target_user_id: int) -> tuple[str, InlineKeyboardMarkup] | None:
+    async with async_session() as session:
+        user = (await session.execute(
+            select(User).where(User.telegram_id == target_user_id)
+        )).scalar_one_or_none()
+        if user is None:
+            return None
+        orders = list((await session.execute(
+            select(Order).where(Order.user_id == target_user_id).order_by(Order.created_at.desc())
+        )).scalars().all())
+    completed = [order for order in orders if normalize_order_status(order.status) == "completed"]
+    total_spent = sum(float(order.total or 0) for order in completed)
+    last_order = orders[0] if orders else None
+    username = f"@{html.escape(user.username)}" if user.username else "—"
+    registered = user.created_at.strftime("%d.%m.%Y %H:%M") if user.created_at else "—"
+    last_seen = user.last_seen_at.strftime("%d.%m.%Y %H:%M") if user.last_seen_at else "—"
+    lines = [
+        f"<b>{html.escape(user_display_name(user))}</b>",
+        "",
+        f"Username: {username}",
+        f"Telegram ID: <code>{user.telegram_id}</code>",
+        f"Регистрация: <code>{registered}</code>",
+        f"Последний /start: <code>{last_seen}</code>",
+        f"Рассылка: <b>{'доступна' if user.broadcast_enabled else 'недоступна'}</b>",
+        f"Бонусы: <b>{format_bonus_value(user.bonus_balance)}</b>",
+        f"Заказов: <code>{len(orders)}</code>",
+        f"Завершено: <code>{len(completed)}</code>",
+        f"Сумма завершённых: <b>{total_spent:g} BYN</b>",
+    ]
+    if last_order:
+        status = normalize_order_status(last_order.status)
+        lines.extend([
+            "",
+            f"Последний заказ: <code>#{last_order.id}</code>",
+            f"Статус: <b>{ORDER_STATUS_LABELS.get(status, status)}</b>",
+        ])
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Написать", callback_data=f"user:write:{user.telegram_id}"),
+            InlineKeyboardButton(text="Начислить бонусы", callback_data=f"user:bonus:{user.telegram_id}"),
+        ],
+        [InlineKeyboardButton(text="К списку", callback_data="users:list:0")],
+        [InlineKeyboardButton(text="⬅️ Пользователи", callback_data="panel:users")],
+    ])
+    return "\n".join(lines), keyboard
+
+
+@router.callback_query(F.data.startswith("users:list:"))
+async def admin_users_page(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    try:
+        page = max(0, int(callback.data.rsplit(":", 1)[1]))
+    except ValueError:
+        page = 0
+    async with async_session() as session:
+        users = list((await session.execute(
+            select(User).order_by(User.created_at.desc(), User.id.desc())
+        )).scalars().all())
+    total_pages = max(1, (len(users) + USERS_PAGE_SIZE - 1) // USERS_PAGE_SIZE)
+    page = min(page, total_pages - 1)
+    chunk = users[page * USERS_PAGE_SIZE:(page + 1) * USERS_PAGE_SIZE]
+    rows = []
+    for user in chunk:
+        label = compact_text(user_display_name(user), 30)
+        rows.append([InlineKeyboardButton(text=label, callback_data=f"user:view:{user.telegram_id}")])
+    nav = []
+    if page > 0:
+        nav.append(InlineKeyboardButton(text="←", callback_data=f"users:list:{page-1}"))
+    nav.append(InlineKeyboardButton(text=f"{page+1}/{total_pages}", callback_data="noop"))
+    if page + 1 < total_pages:
+        nav.append(InlineKeyboardButton(text="→", callback_data=f"users:list:{page+1}"))
+    rows.append(nav)
+    rows.append([InlineKeyboardButton(text="Найти пользователя", callback_data="users:find")])
+    rows.append([InlineKeyboardButton(text="⬅️ Пользователи", callback_data="panel:users")])
+    await callback.message.answer(
+        f"<b>Список пользователей</b>\n\nВсего: <code>{len(users)}</code>",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=rows),
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("user:view:"))
+async def admin_user_view(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    try:
+        target_user_id = int(callback.data.rsplit(":", 1)[1])
+    except ValueError:
+        await callback.answer("Некорректный пользователь", show_alert=True)
+        return
+    card = await render_admin_user_card(target_user_id)
+    if card is None:
+        await callback.answer("Пользователь не найден", show_alert=True)
+        return
+    text_value, keyboard = card
+    await callback.message.answer(text_value, reply_markup=keyboard)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "users:find")
+async def admin_user_find_start(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    await state.set_state(AdminPanelFlow.user_search)
+    await callback.message.answer(
+        "Введите username или Telegram ID пользователя.",
+        reply_markup=get_admin_cancel_keyboard("panel:users"),
+    )
+    await callback.answer()
+
+
+@router.message(AdminPanelFlow.user_search)
+async def admin_user_find_input(message: Message, state: FSMContext):
+    if not admin_only(message.from_user.id):
+        await state.clear()
+        return
+    query = (message.text or "").strip()
+    async with async_session() as session:
+        exact = await find_registered_user(session, query)
+        if exact:
+            matches = [exact]
+        else:
+            needle = query.lstrip("@").casefold()
+            all_users = list((await session.execute(select(User).order_by(User.created_at.desc()))).scalars().all())
+            matches = [user for user in all_users if needle and needle in str(user.username or "").casefold()][:10]
+    await state.clear()
+    if not matches:
+        await message.answer("Пользователь не найден.", reply_markup=get_users_panel_keyboard())
+        return
+    if len(matches) == 1:
+        card = await render_admin_user_card(matches[0].telegram_id)
+        if card:
+            text_value, keyboard = card
+            await message.answer(text_value, reply_markup=keyboard)
+        return
+    rows = [[InlineKeyboardButton(
+        text=compact_text(user_display_name(user), 32),
+        callback_data=f"user:view:{user.telegram_id}",
+    )] for user in matches]
+    rows.append([InlineKeyboardButton(text="⬅️ Пользователи", callback_data="panel:users")])
+    await message.answer(
+        f"Найдено пользователей: <code>{len(matches)}</code>",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=rows),
+    )
+
+
+@router.callback_query(F.data == "users:stats")
+async def admin_users_stats(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
         return
     async with async_session() as session:
-        users = list((await session.execute(select(User).order_by(User.created_at.desc()).limit(20))).scalars().all())
-        total = len((await session.execute(select(User))).scalars().all())
-    lines = [f"👥 <b>Пользователи ({total})</b>", ""]
-    for user in users:
-        username = f"@{user.username}" if user.username else "без username"
-        lines.append(f"• <code>{user.telegram_id}</code> · {username}")
-    if total > len(users):
-        lines.append(f"\nПоказаны последние {len(users)} пользователей.")
-    await callback.message.answer("\n".join(lines), reply_markup=get_admin_panel_keyboard())
+        users = list((await session.execute(select(User))).scalars().all())
+        orders = list((await session.execute(select(Order))).scalars().all())
+    completed = [order for order in orders if normalize_order_status(order.status) == "completed"]
+    users_with_orders = len({order.user_id for order in orders})
+    total_revenue = sum(float(order.total or 0) for order in completed)
+    total_bonus = sum(float(user.bonus_balance or 0) for user in users)
+    available = sum(1 for user in users if bool(user.broadcast_enabled))
+    await callback.message.answer(
+        "<b>Статистика пользователей</b>\n\n"
+        f"Всего: <code>{len(users)}</code>\n"
+        f"Доступны для рассылки: <code>{available}</code>\n"
+        f"Недоступны: <code>{len(users) - available}</code>\n"
+        f"Покупатели с заказами: <code>{users_with_orders}</code>\n"
+        f"Всего заказов: <code>{len(orders)}</code>\n"
+        f"Завершённых заказов: <code>{len(completed)}</code>\n"
+        f"Сумма завершённых: <b>{total_revenue:g} BYN</b>\n"
+        f"Бонусов на балансах: <b>{format_bonus_value(total_bonus)}</b>",
+        reply_markup=get_users_panel_keyboard(),
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("user:write:"))
+async def admin_user_write_start(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    try:
+        target_user_id = int(callback.data.rsplit(":", 1)[1])
+    except ValueError:
+        await callback.answer("Некорректный пользователь", show_alert=True)
+        return
+    await state.update_data(direct_user_id=target_user_id)
+    await state.set_state(AdminPanelFlow.user_direct_message)
+    await callback.message.answer(
+        "Отправьте сообщение, которое нужно переслать этому пользователю.",
+        reply_markup=get_admin_cancel_keyboard("panel:users"),
+    )
+    await callback.answer()
+
+
+@router.message(AdminPanelFlow.user_direct_message)
+async def admin_user_write_send(message: Message, state: FSMContext):
+    if not admin_only(message.from_user.id):
+        await state.clear()
+        return
+    data = await state.get_data()
+    target_user_id = data.get("direct_user_id")
+    if not target_user_id:
+        await state.clear()
+        await message.answer("Пользователь не найден.", reply_markup=get_users_panel_keyboard())
+        return
+    try:
+        await message.bot.copy_message(
+            chat_id=int(target_user_id),
+            from_chat_id=message.chat.id,
+            message_id=message.message_id,
+        )
+    except TelegramForbiddenError:
+        async with async_session() as session:
+            user = (await session.execute(select(User).where(User.telegram_id == int(target_user_id)))).scalar_one_or_none()
+            if user:
+                user.broadcast_enabled = False
+                await session.commit()
+        await message.answer("Сообщение не доставлено: пользователь заблокировал бота.", reply_markup=get_users_panel_keyboard())
+        await state.clear()
+        return
+    except Exception as exc:
+        await message.answer(f"Не удалось отправить сообщение: <code>{html.escape(str(exc))}</code>", reply_markup=get_users_panel_keyboard())
+        await state.clear()
+        return
+    await state.clear()
+    await message.answer("Сообщение отправлено.", reply_markup=get_users_panel_keyboard())
+
+
+@router.callback_query(F.data.startswith("user:bonus:"))
+async def admin_user_bonus_start(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("Доступ запрещён", show_alert=True)
+        return
+    try:
+        target_user_id = int(callback.data.rsplit(":", 1)[1])
+    except ValueError:
+        await callback.answer("Некорректный пользователь", show_alert=True)
+        return
+    async with async_session() as session:
+        user = (await session.execute(select(User).where(User.telegram_id == target_user_id))).scalar_one_or_none()
+    if not user:
+        await callback.answer("Пользователь не найден", show_alert=True)
+        return
+    await state.update_data(bonus_target_user_id=target_user_id)
+    await state.set_state(AdminPanelFlow.bonus_amount)
+    await callback.message.answer(
+        f"<b>{html.escape(user_display_name(user))}</b>\n"
+        f"Текущий баланс: <b>{format_bonus_value(user.bonus_balance)}</b>\n\n"
+        "Введите количество бонусов для начисления.",
+        reply_markup=get_admin_cancel_keyboard("panel:users"),
+    )
     await callback.answer()
 
 
@@ -4194,40 +4865,28 @@ async def show_my_orders(callback: CallbackQuery):
 
 @router.callback_query(F.data == "delivery_info")
 async def delivery_info(callback: CallbackQuery):
-    text = (
-        "• <b>Личная встреча:</b> г. Лида 🌇\n\n"
-        "• <b>Доставка:</b> По всем странам СНГ, через:\n"
-        "Белпочта ( по Беларуси )\n"
-        "Европочта ( по Беларуси )\n"
-        "Маршрутка ( по Беларуси )\n"
-        "Такси ( по городу Лида )\n"
-        "CDEK ( между странами СНГ )\n\n"
-        "По всем интересующим вопросам обращаться сюда:\n"
-        "<b>@manager_of_mestniy</b>"
+    await callback.message.answer(
+        render_app_text("delivery_text"),
+        disable_web_page_preview=True,
+        reply_markup=get_main_keyboard(),
     )
-    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
     await callback.answer()
 
 
 @router.callback_query(F.data == "custom_order_info")
 async def custom_order_info(callback: CallbackQuery):
-    text = (
-        "Мы, с нашей командой, можем привезти вам абсолютно любой товар, из разных стран, "
-        "вам необходимо найти любую фотку в интернете, нужного товара, затем скинуть её нашему менеджеру, "
-        "и обязательно скажите нужный размер, он вам расскажет обо всём: "
-        "Какая будет итоговая цена | сроки доставки, и ответит на все ваши вопросы!\n\n"
-        "<b>Как связаться с менеджером?</b>\n\n"
-        "Открывай приложение → Внизу выбирай раздел каталог → Заказать товар по предзаказу\n\n"
-        "<b>Канал по предзаказам:</b>\n"
-        "<b><a href='https://t.me/mestniypodzakaz'>https://t.me/mestniypodzakaz</a></b>"
+    await callback.message.answer(
+        render_app_text("custom_order_text"),
+        disable_web_page_preview=True,
+        reply_markup=get_main_keyboard(),
     )
-    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
     await callback.answer()
 
 
 @router.callback_query(F.data == "reviews_info")
 async def reviews_info(callback: CallbackQuery):
-    text = "<b><a href='https://t.me/mestniyotzivyy'>ГЛЯНУТЬ ОТЗЫВЫ ТУТ *ТЫКАЙ</a></b>"
+    url = html.escape(get_app_setting("reviews_url"), quote=True)
+    text = f"<b><a href='{url}'>Открыть отзывы</a></b>"
     await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
     await callback.answer()
 
@@ -4235,18 +4894,11 @@ async def reviews_info(callback: CallbackQuery):
 
 @router.callback_query(F.data == "info")
 async def show_info(callback: CallbackQuery):
-    text = (
-        "• <b>Личная встреча:</b> г. Лида 🌇\n\n"
-        "• <b>Доставка:</b> По всем странам СНГ, через:\n"
-        "Белпочта ( по Беларуси )\n"
-        "Европочта ( по Беларуси )\n"
-        "Маршрутка ( по Беларуси )\n"
-        "Такси ( по городу Лида )\n"
-        "CDEK ( между странами СНГ )\n\n"
-        "По всем интересующим вопросам обращаться сюда:\n"
-        "<b>@manager_of_mestniy</b>"
+    await callback.message.answer(
+        render_app_text("delivery_text"),
+        disable_web_page_preview=True,
+        reply_markup=get_main_keyboard(),
     )
-    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
     await callback.answer()
 
 # ==================== ОБРАБОТКА ЗАКАЗОВ ОТ WEBAPP ====================
@@ -4679,6 +5331,26 @@ async def auto_push_orders_to_github() -> bool:
         "orders_public.json",
         orders_data,
         f"Обновление заказов ({len(orders_data)} шт)",
+    )
+
+
+async def export_public_settings_to_file():
+    data = {
+        "support_username": normalized_support_username(),
+        "reviews_url": get_app_setting("reviews_url"),
+    }
+    path = PROJECT_DIR / "settings_public.json"
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    print("Экспортированы публичные настройки Mini App")
+    return data
+
+
+async def auto_push_settings_to_github() -> bool:
+    settings_data = await export_public_settings_to_file()
+    return await push_json_to_github(
+        "settings_public.json",
+        settings_data,
+        "Обновление публичных настроек магазина",
     )
 
 
@@ -5162,6 +5834,7 @@ async def main():
     dp.include_router(router)
 
     await init_db()
+    await load_app_settings_cache()
     await get_exchange_rates()
 
     try:
