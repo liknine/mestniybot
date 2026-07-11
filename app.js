@@ -12,7 +12,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_orders_v1';
+const BUILD_VERSION='mestniy_bonus_v1';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -149,8 +149,26 @@ function normalizePublicOrder(order){
     clientRequestId:String(order?.client_request_id||order?.clientRequestId||''),
     pending:false,
     bonuses:Number(order?.bonuses)||0,
-    bonusEarned:Number(order?.bonusEarned)||0
+    bonusEarned:Number(order?.bonus_earned??order?.bonusEarned)||0,
+    bonusReturned:Number(order?.bonus_returned??order?.bonusReturned)||0
   };
+}
+
+function normalizeBonusTransaction(item){
+  return {
+    id:String(item?.id??''),
+    type:String(item?.type||'manual'),
+    amount:Number(item?.amount)||0,
+    title:String(item?.title||'Бонусная операция'),
+    orderId:item?.order_id??item?.orderId??null,
+    date:orderDateLabel(item?.created_at||item?.createdAt)
+  };
+}
+function applyPublicBonusData(raw){
+  const userId=String(state.profile?.id||'');
+  const profile=(Array.isArray(raw)?raw:[]).find(item=>String(item?.user_id||item?.userId||'')===userId);
+  state.bonusBalance=Math.max(0,Number(profile?.balance)||0);
+  state.bonusTransactions=Array.isArray(profile?.transactions)?profile.transactions.map(normalizeBonusTransaction):[];
 }
 function mergeOrderCollections(){
   const remoteRequests=new Set(REMOTE_ORDERS.map(order=>order.clientRequestId).filter(Boolean));
@@ -183,12 +201,25 @@ async function refreshOrdersFromServer({silent=true}={}){
     return true;
   }catch(error){if(!silent)showToast('Не удалось обновить покупки');console.error('Orders refresh failed',error);return false}
 }
+async function refreshBonusesFromServer({silent=true}={}){
+  const userId=String(state.profile?.id||'');
+  if(!userId){state.bonusBalance=0;state.bonusTransactions=[];return false}
+  try{
+    const raw=await fetchJsonOptional('bonuses_public.json',[]);
+    applyPublicBonusData(raw);
+    renderBonuses();
+    if(state.screen==='profile')renderProfileSummary();
+    if(state.screen==='checkout')renderCheckout();
+    return true;
+  }catch(error){if(!silent)showToast('Не удалось обновить бонусы');console.error('Bonus refresh failed',error);return false}
+}
 async function loadStoreData(){
   const userId=String(state.profile?.id||'');
   const results=await Promise.allSettled([
     fetchJson('products.json'),
     fetchJson('updates.json'),
-    userId?fetchJsonOptional('orders_public.json',[]):Promise.resolve([])
+    userId?fetchJsonOptional('orders_public.json',[]):Promise.resolve([]),
+    userId?fetchJsonOptional('bonuses_public.json',[]):Promise.resolve([])
   ]);
   if(results[0].status==='fulfilled'){PRODUCTS=(Array.isArray(results[0].value)?results[0].value:[]).map(normalizeSourceProduct)}
   else{state.dataError='catalog-error';console.error(results[0].reason)}
@@ -214,13 +245,15 @@ async function loadStoreData(){
       .filter(order=>String(order?.user_id||order?.userId||'')===userId)
       .map(normalizePublicOrder);
   }else{REMOTE_ORDERS=[];console.error(results[2].reason)}
+  if(results[3].status==='fulfilled')applyPublicBonusData(results[3].value);
+  else{state.bonusBalance=0;state.bonusTransactions=[];console.error(results[3].reason)}
 }
 function productById(id){return PRODUCTS.find(product=>String(product.id)===String(id))||null}
 function productIndexById(id){return PRODUCTS.findIndex(product=>String(product.id)===String(id))}
 function productForOrderItem(item){return item?.snapshot||productById(item?.productId)||PRODUCTS[item?.product]||null}
 function orderItemSnapshot(product){return product?{id:product.id,code:product.code,name:product.name,brand:product.brand,image:product.image,price:productPrice(product),oldPrice:Number(product.price)||productPrice(product)}:null}
 
-const STORAGE_KEYS={cart:'mestniy_cart_v24',favorites:'mestniy_favorites_v24',pendingOrders:'mestniy_pending_orders_v1',bonuses:'mestniy_bonus_orders_v1',profile:'mestniy_profile_v24'};
+const STORAGE_KEYS={cart:'mestniy_cart_v24',favorites:'mestniy_favorites_v24',pendingOrders:'mestniy_pending_orders_v1',profile:'mestniy_profile_v24'};
 function safeParse(value,fallback){try{return JSON.parse(value)}catch(_e){return fallback}}
 function storageRead(key,fallback){try{return safeParse(localStorage.getItem(key),fallback)}catch(_e){return fallback}}
 function loadPersistedState(){
@@ -230,7 +263,6 @@ function loadPersistedState(){
   state.favorites=new Set((Array.isArray(favorites)?favorites:[]).map(String).filter(id=>productById(id)));
   const pending=storageRead(STORAGE_KEYS.pendingOrders,[]);
   state.pendingOrders=Array.isArray(pending)?pending.filter(order=>order&&order.pending&&order.clientRequestId):[];
-  const bonus=storageRead(STORAGE_KEYS.bonuses,[]);if(Array.isArray(bonus))state.bonusTransactions=bonus;
   mergeOrderCollections();
 }
 function persistState(){
@@ -238,7 +270,6 @@ function persistState(){
     localStorage.setItem(STORAGE_KEYS.cart,JSON.stringify(state.cart));
     localStorage.setItem(STORAGE_KEYS.favorites,JSON.stringify([...state.favorites]));
     localStorage.setItem(STORAGE_KEYS.pendingOrders,JSON.stringify((state.pendingOrders||[]).filter(order=>order.pending)));
-    localStorage.setItem(STORAGE_KEYS.bonuses,JSON.stringify(state.bonusTransactions));
   }catch(error){console.warn('Storage unavailable',error)}
 }
 function parseInitDataUser(initData){try{const raw=new URLSearchParams(initData||'').get('user');return raw?JSON.parse(decodeURIComponent(raw)):null}catch(_e){return null}}
@@ -286,7 +317,7 @@ function renderHomeNews(){
 }
 function buildOrderPayload(clientRequestId){
   const c=state.checkout;
-  const bonuses=0;
+  const bonuses=c.bonuses?Math.max(0,Math.min(Number(state.bonusBalance)||0,cartSubtotal())):0;
   return {
     items:state.cart.map(item=>({productId:item.id,size:item.size,qty:item.qty})),
     total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':null,
@@ -574,6 +605,7 @@ function renderCheckout(){
   }
   syncBonusBalance();
   const maxBonus=Math.min(state.bonusBalance,cartSubtotal());
+  c.bonuses=Math.max(0,Math.min(Number(c.bonuses)||0,maxBonus));
   const bonusesApplied=Number(c.bonuses)>0;
   const bonusSection=state.bonusBalance>0
     ? `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><p class="checkout-note">К заказу применяются все доступные бонусы одной кнопкой. Выбрать только часть бонусов нельзя.</p><button class="bonus-toggle ${bonusesApplied?'active':''}" data-bonus-toggle>${bonusesApplied?'БОНУСЫ ПРИМЕНЕНЫ':'ИСПОЛЬЗОВАТЬ ВСЕ БОНУСЫ'}</button><div class="bonus-availability"><span>ДОСТУПНО: ${formatBonus(state.bonusBalance)}</span><span>${bonusesApplied?`БУДЕТ ИСПОЛЬЗОВАНО: ${formatBonus(maxBonus)}`:'НЕ ПРИМЕНЕНЫ'}</span></div></section>`
@@ -608,7 +640,7 @@ function createPrototypeOrder(){
   syncBonusBalance();
   const clientRequestId=`web-${state.profile?.id||'user'}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
   const payload=buildOrderPayload(clientRequestId);
-  const bonuses=0;
+  const bonuses=Number(payload.bonuses)||0;
   const createdTimestamp=Date.now();
   const orderDate=orderDateLabel(createdTimestamp);
   const previousCart=state.cart.map(item=>({...item}));
@@ -636,13 +668,11 @@ function createPrototypeOrder(){
     if(errorBox){errorBox.textContent='Заказ можно оформить только внутри Telegram Mini App.';errorBox.classList.add('show')}
     return;
   }
-  if(bonuses>0){state.bonusTransactions.unshift({id:`b-${clientRequestId}-use`,type:'spend',amount:-bonuses,date:orderDate,title:'Использовано в заказе',orderId:'—'})}
-  syncBonusBalance();
   persistState();
   renderCart();renderOrders();renderProfileSummary();renderBonuses();updateCounts();
   showScreen('orderSuccess');
-  setTimeout(()=>refreshOrdersFromServer({silent:true}),3500);
-  setTimeout(()=>refreshOrdersFromServer({silent:true}),12000);
+  setTimeout(()=>{refreshOrdersFromServer({silent:true});refreshBonusesFromServer({silent:true})},3500);
+  setTimeout(()=>{refreshOrdersFromServer({silent:true});refreshBonusesFromServer({silent:true})},12000);
 }
 function renderOrderSuccess(){
   const order=state.lastCreatedOrder||ORDERS[0];
@@ -717,8 +747,8 @@ function moveSizeIndicator(button,immediate=false){
 function addToCart(index,size){const p=PRODUCTS[index];if(!p)return;const chosen=size||availableSizes(p)[0];if(!chosen)return;const existing=state.cart.find(x=>String(x.id)===String(p.id)&&x.size===chosen);if(existing)existing.qty++;else state.cart.push({id:String(p.id),size:chosen,qty:1});persistState();updateCounts();pulseNav('cart');showToast('Товар добавлен в корзину');}
 function toggleFav(productId){const id=String(productId);const added=!state.favorites.has(id);added?state.favorites.add(id):state.favorites.delete(id);persistState();renderCatalog();if(state.screen==='favorites')renderFavorites();updateCounts();pulseNav('favorites');showToast(added?'Добавлено в избранное':'Удалено из избранного');}
 function updateCounts(){const qty=state.cart.reduce((s,x)=>s+x.qty,0);const badge=document.getElementById('cartBadge');badge.textContent=qty;badge.classList.toggle('show',qty>0);const fav=document.getElementById('profileFavCount');if(fav)fav.textContent=state.favorites.size;const cart=document.getElementById('profileCartCount');if(cart)cart.textContent=qty;}
-function formatBonus(value){return new Intl.NumberFormat('ru-RU').format(Math.max(0,Math.floor(Number(value)||0)))}
-function syncBonusBalance(){state.bonusBalance=Math.max(0,state.bonusTransactions.reduce((sum,item)=>sum+Number(item.amount||0),0));return state.bonusBalance}
+function formatBonus(value){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(Math.max(0,Number(value)||0))}
+function syncBonusBalance(){state.bonusBalance=Math.max(0,Number(state.bonusBalance)||0);return state.bonusBalance}
 function bonusRateForAmount(amount){const value=Math.max(0,Number(amount)||0);return BONUS_RULES.find(rule=>value<=rule.max)?.rate||3.5}
 function calculateOrderBonus(order){const base=Math.max(0,orderTotal(order));return Math.floor(base*bonusRateForAmount(base)/100)}
 function bonusTransactionMeta(item){
@@ -738,7 +768,7 @@ function renderBonuses(){
     const positive=Number(item.amount)>=0;
     const sign=positive?'+':'−';
     const icon=positive?'↑':'↓';
-    return `<article class="bonus-item ${positive?'is-positive':'is-negative'}"><span class="bonus-item-icon">${icon}</span><div><h4>${item.title}</h4><p>${bonusTransactionMeta(item)}</p></div><strong>${sign} ${formatBonus(Math.abs(item.amount))}</strong></article>`;
+    return `<article class="bonus-item ${positive?'is-positive':'is-negative'}"><span class="bonus-item-icon">${icon}</span><div><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(bonusTransactionMeta(item))}</p></div><strong>${sign} ${formatBonus(Math.abs(item.amount))}</strong></article>`;
   }).join('');
 }
 
@@ -906,7 +936,7 @@ async function initApp(){
     loadPersistedState();
     renderHomeNews();
     updateFilterButton();syncBonusBalance();updateSortButton();renderCatalog();renderFavorites();renderCart();renderProfileSummary();renderOrders();renderBonuses();
-    if(state.profile?.id)setInterval(()=>refreshOrdersFromServer({silent:true}),30000);
+    if(state.profile?.id)setInterval(()=>{refreshOrdersFromServer({silent:true});refreshBonusesFromServer({silent:true})},30000);
   }catch(error){console.error('MESTNIY frontend init error',error);state.dataError='catalog-error';renderCatalog()}
   finally{loader?.classList.add('hidden');setTimeout(()=>loader?.remove(),350)}
 }

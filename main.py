@@ -199,6 +199,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True)
     username: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    bonus_balance: Mapped[float] = mapped_column(Float, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
 class Category(Base):
@@ -235,19 +236,47 @@ class Order(Base):
     comment: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(50), default="accepted")
     stock_decremented: Mapped[bool] = mapped_column(Boolean, default=False)
+    bonuses_used: Mapped[float] = mapped_column(Float, default=0)
+    bonus_earned: Mapped[float] = mapped_column(Float, default=0)
+    bonus_returned: Mapped[float] = mapped_column(Float, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
     updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+
+
+class BonusTransaction(Base):
+    __tablename__ = "bonus_transactions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(BigInteger)
+    amount: Mapped[float] = mapped_column(Float)
+    kind: Mapped[str] = mapped_column(String(50))
+    title: Mapped[str] = mapped_column(String(255))
+    order_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    operation_key: Mapped[str] = mapped_column(String(160), unique=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
 async def init_db():
     """Создаёт таблицы и безопасно добавляет новые поля в существующую SQLite-базу."""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+        user_columns_result = await conn.execute(text("PRAGMA table_info(users)"))
+        user_columns = {row[1] for row in user_columns_result.fetchall()}
+        if "bonus_balance" not in user_columns:
+            await conn.execute(text("ALTER TABLE users ADD COLUMN bonus_balance FLOAT NOT NULL DEFAULT 0"))
+
         columns_result = await conn.execute(text("PRAGMA table_info(orders)"))
         order_columns = {row[1] for row in columns_result.fetchall()}
         if "stock_decremented" not in order_columns:
             await conn.execute(text("ALTER TABLE orders ADD COLUMN stock_decremented BOOLEAN NOT NULL DEFAULT 0"))
         if "updated_at" not in order_columns:
             await conn.execute(text("ALTER TABLE orders ADD COLUMN updated_at DATETIME"))
+        if "bonuses_used" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN bonuses_used FLOAT NOT NULL DEFAULT 0"))
+        if "bonus_earned" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN bonus_earned FLOAT NOT NULL DEFAULT 0"))
+        if "bonus_returned" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN bonus_returned FLOAT NOT NULL DEFAULT 0"))
+
         # Старые статусы приводим к новой единой схеме.
         await conn.execute(text("UPDATE orders SET status = 'accepted' WHERE status IN ('new', 'processing')"))
         await conn.execute(text("UPDATE orders SET status = 'completed' WHERE status = 'delivered'"))
@@ -315,6 +344,8 @@ class AdminPanelFlow(StatesGroup):
     news_search = State()
     news_edit_value = State()
     news_edit_photo = State()
+    bonus_user_search = State()
+    bonus_amount = State()
 
 # ==================== ГЛОБАЛЬНЫЕ БУФЕРЫ ====================
 
@@ -423,6 +454,15 @@ def get_discounts_panel_keyboard():
     ])
 
 
+def get_bonuses_panel_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="+ Начислить бонусы", callback_data="bonus:add")],
+        [InlineKeyboardButton(text="Балансы пользователей", callback_data="bonus:users:0")],
+        [InlineKeyboardButton(text="Последние операции", callback_data="bonus:history:0")],
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data="panel:home")],
+    ])
+
+
 def get_admin_cancel_keyboard(back_callback: str = "panel:home"):
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="❌ Отмена", callback_data=back_callback)]
@@ -488,10 +528,20 @@ async def cmd_start(message: Message, state: FSMContext):
         user = result.scalar_one_or_none()
 
         if not user:
-            user = User(telegram_id=user_id, username=username)
+            user = User(telegram_id=user_id, username=username, bonus_balance=0)
             session.add(user)
             await session.commit()
             print(f"👤 Новый пользователь: @{username} ({user_id})")
+        else:
+            changed = False
+            if user.username != username:
+                user.username = username
+                changed = True
+            if user.bonus_balance is None:
+                user.bonus_balance = 0
+                changed = True
+            if changed:
+                await session.commit()
 
     is_admin = user_id in ADMIN_IDS
 
@@ -537,6 +587,76 @@ def admin_only(user_id: int) -> bool:
 def compact_text(value: str, limit: int = 42) -> str:
     clean = " ".join(str(value or "").split())
     return clean if len(clean) <= limit else clean[: limit - 1] + "…"
+
+
+def bonus_rate_for_amount(amount: float) -> float:
+    value = max(0.0, float(amount or 0))
+    for maximum, rate in BONUS_RULES:
+        if value <= maximum:
+            return rate
+    return 3.5
+
+
+def calculate_bonus_earned(amount: float) -> int:
+    value = max(0.0, float(amount or 0))
+    return int(value * bonus_rate_for_amount(value) / 100)
+
+
+def format_bonus_value(value: float) -> str:
+    number = max(0.0, float(value or 0))
+    if number.is_integer():
+        return str(int(number))
+    return f"{number:.2f}".rstrip("0").rstrip(".")
+
+
+def bonus_user_label(user: User) -> str:
+    username = f"@{user.username}" if user.username else "без username"
+    return f"{username} · {format_bonus_value(user.bonus_balance)} бонусов"
+
+
+async def add_bonus_transaction(
+    session: AsyncSession,
+    user: User,
+    amount: float,
+    *,
+    kind: str,
+    title: str,
+    operation_key: str,
+    order_id: int | None = None,
+) -> tuple[bool, float]:
+    existing = (await session.execute(
+        select(BonusTransaction).where(BonusTransaction.operation_key == operation_key)
+    )).scalar_one_or_none()
+    if existing:
+        return False, float(user.bonus_balance or 0)
+
+    clean_amount = round(float(amount or 0), 2)
+    new_balance = round(float(user.bonus_balance or 0) + clean_amount, 2)
+    if new_balance < -0.001:
+        raise ValueError("Недостаточно бонусов")
+    user.bonus_balance = max(0.0, new_balance)
+    session.add(BonusTransaction(
+        user_id=user.telegram_id,
+        amount=clean_amount,
+        kind=kind,
+        title=title,
+        order_id=order_id,
+        operation_key=operation_key,
+    ))
+    return True, float(user.bonus_balance or 0)
+
+
+async def find_registered_user(session: AsyncSession, query: str) -> User | None:
+    clean = str(query or "").strip()
+    if not clean:
+        return None
+    if clean.lstrip("+").isdigit():
+        return (await session.execute(
+            select(User).where(User.telegram_id == int(clean.lstrip("+")))
+        )).scalar_one_or_none()
+    username = clean.lstrip("@").casefold()
+    users = list((await session.execute(select(User))).scalars().all())
+    return next((user for user in users if str(user.username or "").casefold() == username), None)
 
 
 def product_size_stock(product: Product) -> dict[str, int]:
@@ -791,11 +911,221 @@ async def admin_discounts_menu(callback: CallbackQuery, state: FSMContext):
 
 
 @router.callback_query(F.data == "panel:bonuses")
-async def admin_bonuses_placeholder(callback: CallbackQuery):
+async def admin_bonuses_menu(callback: CallbackQuery, state: FSMContext):
     if not admin_only(callback.from_user.id):
         await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
-    await callback.message.answer("🎁 Раздел бонусов подключим на следующем этапе.", reply_markup=get_admin_panel_keyboard())
+    await state.clear()
+    async with async_session() as session:
+        users = list((await session.execute(select(User))).scalars().all())
+        transactions_count = len(list((await session.execute(select(BonusTransaction))).scalars().all()))
+    total_balance = sum(float(user.bonus_balance or 0) for user in users)
+    await callback.message.answer(
+        "<b>Бонусы</b>\n\n"
+        f"Пользователей: <code>{len(users)}</code>\n"
+        f"Бонусов на балансах: <b>{format_bonus_value(total_balance)}</b>\n"
+        f"Операций: <code>{transactions_count}</code>",
+        reply_markup=get_bonuses_panel_keyboard(),
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data == "bonus:add")
+async def admin_bonus_add_start(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    await state.set_state(AdminPanelFlow.bonus_user_search)
+    await callback.message.answer(
+        "<b>Начисление бонусов</b>\n\n"
+        "Отправьте username пользователя или его Telegram ID.\n"
+        "Пользователь должен хотя бы один раз нажать /start.",
+        reply_markup=get_admin_cancel_keyboard("panel:bonuses"),
+    )
+    await callback.answer()
+
+
+@router.message(AdminPanelFlow.bonus_user_search)
+async def admin_bonus_find_user(message: Message, state: FSMContext):
+    if not admin_only(message.from_user.id):
+        return
+    async with async_session() as session:
+        user = await find_registered_user(session, message.text or "")
+    if not user:
+        await message.answer(
+            "Пользователь не найден. Проверьте username или Telegram ID.",
+            reply_markup=get_admin_cancel_keyboard("panel:bonuses"),
+        )
+        return
+    await state.update_data(bonus_target_user_id=user.telegram_id)
+    await state.set_state(AdminPanelFlow.bonus_amount)
+    await message.answer(
+        "<b>Пользователь найден</b>\n\n"
+        f"{html.escape(bonus_user_label(user))}\n"
+        f"ID: <code>{user.telegram_id}</code>\n\n"
+        "Введите количество бонусов для начисления.",
+        reply_markup=get_admin_cancel_keyboard("panel:bonuses"),
+    )
+
+
+@router.message(AdminPanelFlow.bonus_amount)
+async def admin_bonus_amount_input(message: Message, state: FSMContext):
+    if not admin_only(message.from_user.id):
+        return
+    raw = str(message.text or "").strip().replace(" ", "").replace(",", ".")
+    try:
+        amount = round(float(raw), 2)
+    except ValueError:
+        await message.answer("Введите число, например <code>50</code> или <code>125.5</code>.")
+        return
+    if amount <= 0 or amount > 1_000_000:
+        await message.answer("Сумма должна быть больше 0 и не превышать 1 000 000 бонусов.")
+        return
+    data = await state.get_data()
+    target_user_id = data.get("bonus_target_user_id")
+    async with async_session() as session:
+        user = (await session.execute(
+            select(User).where(User.telegram_id == target_user_id)
+        )).scalar_one_or_none()
+    if not user:
+        await state.clear()
+        await message.answer("Пользователь больше не найден.", reply_markup=get_bonuses_panel_keyboard())
+        return
+    await state.update_data(bonus_amount=amount)
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Начислить", callback_data="bonus:confirm")],
+        [InlineKeyboardButton(text="Отмена", callback_data="panel:bonuses")],
+    ])
+    await message.answer(
+        "<b>Подтвердите начисление</b>\n\n"
+        f"Пользователь: {html.escape(bonus_user_label(user))}\n"
+        f"Начислить: <b>+{format_bonus_value(amount)}</b>",
+        reply_markup=keyboard,
+    )
+
+
+@router.callback_query(F.data == "bonus:confirm")
+async def admin_bonus_confirm(callback: CallbackQuery, state: FSMContext):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    data = await state.get_data()
+    target_user_id = data.get("bonus_target_user_id")
+    amount = float(data.get("bonus_amount") or 0)
+    if not target_user_id or amount <= 0:
+        await callback.answer("Данные начисления устарели", show_alert=True)
+        return
+    async with async_session() as session:
+        user = (await session.execute(
+            select(User).where(User.telegram_id == int(target_user_id))
+        )).scalar_one_or_none()
+        if not user:
+            await callback.answer("Пользователь не найден", show_alert=True)
+            return
+        operation_key = f"manual:{uuid.uuid4().hex}"
+        _, balance = await add_bonus_transaction(
+            session,
+            user,
+            amount,
+            kind="manual",
+            title="Начислено администратором",
+            operation_key=operation_key,
+        )
+        await session.commit()
+        username = user.username
+    await state.clear()
+    synced = await auto_push_bonuses_to_github()
+    await callback.message.answer(
+        "<b>Бонусы начислены</b>\n\n"
+        f"Пользователь: {('@' + username) if username else 'без username'}\n"
+        f"Начислено: <b>+{format_bonus_value(amount)}</b>\n"
+        f"Новый баланс: <b>{format_bonus_value(balance)}</b>"
+        + ("" if synced else "\n\nФайл бонусов пока не обновился на GitHub."),
+        reply_markup=get_bonuses_panel_keyboard(),
+    )
+    try:
+        await bot.send_message(
+            int(target_user_id),
+            "<b>Вам начислены бонусы</b>\n\n"
+            f"Начислено: <b>+{format_bonus_value(amount)}</b>\n"
+            f"Баланс: <b>{format_bonus_value(balance)}</b>",
+        )
+    except Exception as exc:
+        print(f"Не удалось уведомить пользователя {target_user_id} о бонусах: {exc}")
+    await callback.answer("Готово")
+
+
+@router.callback_query(F.data.startswith("bonus:users:"))
+async def admin_bonus_users(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    try:
+        page = max(0, int(callback.data.rsplit(":", 1)[1]))
+    except ValueError:
+        page = 0
+    async with async_session() as session:
+        users = list((await session.execute(
+            select(User).order_by(User.bonus_balance.desc(), User.created_at.desc())
+        )).scalars().all())
+    total_pages = max(1, (len(users) + BONUS_USERS_PAGE_SIZE - 1) // BONUS_USERS_PAGE_SIZE)
+    page = min(page, total_pages - 1)
+    chunk = users[page * BONUS_USERS_PAGE_SIZE:(page + 1) * BONUS_USERS_PAGE_SIZE]
+    lines = ["<b>Балансы пользователей</b>", ""]
+    for user in chunk:
+        username = f"@{html.escape(user.username)}" if user.username else "без username"
+        lines.append(f"{username} · <b>{format_bonus_value(user.bonus_balance)}</b> · <code>{user.telegram_id}</code>")
+    if not chunk:
+        lines.append("Пользователей пока нет.")
+    nav = []
+    if page > 0:
+        nav.append(InlineKeyboardButton(text="←", callback_data=f"bonus:users:{page-1}"))
+    nav.append(InlineKeyboardButton(text=f"{page+1}/{total_pages}", callback_data="noop"))
+    if page + 1 < total_pages:
+        nav.append(InlineKeyboardButton(text="→", callback_data=f"bonus:users:{page+1}"))
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[nav, [InlineKeyboardButton(text="⬅️ Бонусы", callback_data="panel:bonuses")]])
+    await callback.message.answer("\n".join(lines), reply_markup=keyboard)
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("bonus:history:"))
+async def admin_bonus_history(callback: CallbackQuery):
+    if not admin_only(callback.from_user.id):
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+    try:
+        page = max(0, int(callback.data.rsplit(":", 1)[1]))
+    except ValueError:
+        page = 0
+    async with async_session() as session:
+        transactions = list((await session.execute(
+            select(BonusTransaction).order_by(BonusTransaction.created_at.desc(), BonusTransaction.id.desc())
+        )).scalars().all())
+        users = list((await session.execute(select(User))).scalars().all())
+    usernames = {user.telegram_id: user.username for user in users}
+    total_pages = max(1, (len(transactions) + BONUS_HISTORY_PAGE_SIZE - 1) // BONUS_HISTORY_PAGE_SIZE)
+    page = min(page, total_pages - 1)
+    chunk = transactions[page * BONUS_HISTORY_PAGE_SIZE:(page + 1) * BONUS_HISTORY_PAGE_SIZE]
+    lines = ["<b>Последние бонусные операции</b>", ""]
+    for item in chunk:
+        sign = "+" if float(item.amount or 0) >= 0 else "−"
+        username = usernames.get(item.user_id)
+        user_label = f"@{html.escape(username)}" if username else f"<code>{item.user_id}</code>"
+        order_part = f" · заказ <code>#{item.order_id}</code>" if item.order_id else ""
+        lines.append(
+            f"{sign}<b>{format_bonus_value(abs(float(item.amount or 0)))}</b> · {user_label}{order_part}\n"
+            f"{html.escape(item.title)}"
+        )
+    if not chunk:
+        lines.append("Операций пока нет.")
+    nav = []
+    if page > 0:
+        nav.append(InlineKeyboardButton(text="←", callback_data=f"bonus:history:{page-1}"))
+    nav.append(InlineKeyboardButton(text=f"{page+1}/{total_pages}", callback_data="noop"))
+    if page + 1 < total_pages:
+        nav.append(InlineKeyboardButton(text="→", callback_data=f"bonus:history:{page+1}"))
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[nav, [InlineKeyboardButton(text="⬅️ Бонусы", callback_data="panel:bonuses")]])
+    await callback.message.answer("\n\n".join(lines), reply_markup=keyboard)
     await callback.answer()
 
 
@@ -3359,6 +3689,15 @@ ORDER_STATUS_ALIASES = {
 }
 ORDER_LIST_PAGE_SIZE = 7
 
+BONUS_RULES = (
+    (150, 1.0),
+    (300, 2.0),
+    (900, 3.0),
+    (float("inf"), 3.5),
+)
+BONUS_USERS_PAGE_SIZE = 10
+BONUS_HISTORY_PAGE_SIZE = 12
+
 
 def normalize_order_status(value: str) -> str:
     clean = str(value or "accepted").strip().lower()
@@ -3451,7 +3790,15 @@ def order_admin_text(order: Order, notice: str | None = None) -> str:
     )
     blocks.append(f"<b>Доставка</b>\n" + "\n".join(delivery_lines))
     blocks.append(f"<b>Товары</b>\n\n{item_lines}")
-    blocks.append(f"<b>Итого: {float(order.total or 0):g} BYN</b>")
+    totals = []
+    if float(order.bonuses_used or 0) > 0:
+        totals.append(f"Бонусы: −{format_bonus_value(order.bonuses_used)}")
+    totals.append(f"<b>Итого: {float(order.total or 0):g} BYN</b>")
+    if float(order.bonus_earned or 0) > 0:
+        totals.append(f"Начислено после завершения: +{format_bonus_value(order.bonus_earned)}")
+    if float(order.bonus_returned or 0) > 0:
+        totals.append(f"Возвращено: +{format_bonus_value(order.bonus_returned)}")
+    blocks.append("\n".join(totals))
     if comment:
         blocks.append(f"<b>Комментарий</b>\n{comment}")
     return "\n\n".join(blocks)
@@ -3459,6 +3806,12 @@ def order_admin_text(order: Order, notice: str | None = None) -> str:
 
 def get_order_status_keyboard(order_id: int, current_status: str):
     current = normalize_order_status(current_status)
+    if current in {"completed", "canceled"}:
+        return InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text=f"✓ {ORDER_STATUS_LABELS[current]}", callback_data="noop")],
+            [InlineKeyboardButton(text="Обновить карточку", callback_data=f"ov:{order_id}")],
+            [InlineKeyboardButton(text="⬅️ К заказам", callback_data="admin_orders")],
+        ])
     rows = []
     pairs = [("accepted", "shipped"), ("ready", "completed")]
     for pair in pairs:
@@ -3527,18 +3880,60 @@ async def change_order_status(order_id: int, new_status: str):
     async with async_session() as session:
         order = await session.get(Order, order_id)
         if not order:
-            return None, False, [], None
+            return None, False, [], None, False
         old_status = normalize_order_status(order.status)
+        if old_status in {"completed", "canceled"} and target != old_status:
+            return order, False, ["Завершённый или отменённый заказ нельзя вернуть в работу."], old_status, False
+        if target == old_status:
+            return order, False, [], old_status, False
+
         stock_changed = False
         warnings: list[str] = []
         if target == "shipped" and not bool(order.stock_decremented):
             changed_count, warnings = await decrease_stock_for_order(session, order)
             stock_changed = changed_count > 0
+
+        user = (await session.execute(
+            select(User).where(User.telegram_id == order.user_id)
+        )).scalar_one_or_none()
+        if not user:
+            user = User(telegram_id=order.user_id, username=None, bonus_balance=0)
+            session.add(user)
+            await session.flush()
+
+        if target == "completed":
+            earned = calculate_bonus_earned(float(order.total or 0))
+            if earned > 0:
+                applied, _ = await add_bonus_transaction(
+                    session,
+                    user,
+                    earned,
+                    kind="order_earned",
+                    title="Начислено за завершённый заказ",
+                    operation_key=f"order:{order.id}:earned",
+                    order_id=order.id,
+                )
+                if applied:
+                    order.bonus_earned = earned
+        elif target == "canceled" and float(order.bonuses_used or 0) > 0:
+            returned = float(order.bonuses_used or 0)
+            applied, _ = await add_bonus_transaction(
+                session,
+                user,
+                returned,
+                kind="order_return",
+                title="Возврат бонусов за отменённый заказ",
+                operation_key=f"order:{order.id}:return",
+                order_id=order.id,
+            )
+            if applied:
+                order.bonus_returned = returned
+
         order.status = target
         order.updated_at = datetime.now()
         await session.commit()
         await session.refresh(order)
-    return order, stock_changed, warnings, old_status
+    return order, stock_changed, warnings, old_status, True
 
 
 async def notify_customer_about_status(order: Order):
@@ -3553,11 +3948,17 @@ async def notify_customer_about_status(order: Order):
     premium_prefix = ""
     if status in {"accepted", "completed"}:
         premium_prefix = premium_emoji_html(PREMIUM_SUCCESS_EMOJI_ID, "👍") + " "
+    bonus_lines = []
+    if status == "completed" and float(order.bonus_earned or 0) > 0:
+        bonus_lines.append(f"Начислено бонусов: <b>+{format_bonus_value(order.bonus_earned)}</b>")
+    if status == "canceled" and float(order.bonus_returned or 0) > 0:
+        bonus_lines.append(f"Возвращено бонусов: <b>+{format_bonus_value(order.bonus_returned)}</b>")
+    bonus_text = ("\n\n" + "\n".join(bonus_lines)) if bonus_lines else ""
     text = (
         f"{premium_prefix}<b>Статус заказа изменён</b>\n\n"
         f"Заказ: <code>#{order.id}</code>\n"
         f"Статус: <b>{order_status_label(status)}</b>\n\n"
-        f"{descriptions[status]}"
+        f"{descriptions[status]}{bonus_text}"
     )
     try:
         await bot.send_message(order.user_id, text)
@@ -3691,22 +4092,35 @@ async def admin_order_set_status(callback: CallbackQuery):
         await callback.answer("Некорректный статус", show_alert=True)
         return
     await callback.answer("Сохраняю статус…")
-    order, stock_changed, warnings, old_status = await change_order_status(order_id, status)
+    order, stock_changed, warnings, old_status, status_changed = await change_order_status(order_id, status)
     if not order:
         await callback.message.answer("❌ Заказ не найден", reply_markup=admin_orders_menu_keyboard({key: 0 for key in ORDER_STATUS_LABELS}))
+        return
+    if not status_changed:
+        notice = warnings[0] if warnings else "Статус уже установлен."
+        await send_order_admin_card(callback.message, order, f"<b>{html.escape(notice)}</b>")
         return
     products_pushed = True
     if stock_changed:
         products_pushed = await auto_push_to_github()
     orders_pushed = await auto_push_orders_to_github()
+    bonuses_pushed = True
+    if (status == "completed" and float(order.bonus_earned or 0) > 0) or (status == "canceled" and float(order.bonus_returned or 0) > 0):
+        bonuses_pushed = await auto_push_bonuses_to_github()
     await notify_customer_about_status(order)
     notices = [f"<b>Статус изменён:</b> {order_status_label(old_status)} → <b>{order_status_label(order.status)}</b>."]
+    if status == "completed" and float(order.bonus_earned or 0) > 0:
+        notices.append(f"Начислено бонусов: <b>+{format_bonus_value(order.bonus_earned)}</b>.")
+    if status == "canceled" and float(order.bonus_returned or 0) > 0:
+        notices.append(f"Возвращено бонусов: <b>+{format_bonus_value(order.bonus_returned)}</b>.")
     if status == "shipped" and warnings:
         notices.append("<b>Внимание:</b> " + "\n".join(html.escape(warning) for warning in warnings))
     if not products_pushed:
         notices.append("<b>Внимание:</b> остатки сохранены в базе, но products.json пока не обновился на GitHub.")
     if not orders_pushed:
         notices.append("<b>Внимание:</b> статус сохранён в базе, но orders_public.json пока не обновился на GitHub.")
+    if not bonuses_pushed:
+        notices.append("<b>Внимание:</b> бонусный баланс пока не обновился на GitHub.")
     await send_order_admin_card(callback.message, order, "\n".join(notices))
 
 
@@ -3720,8 +4134,8 @@ async def accept_order_legacy(callback: CallbackQuery):
     except ValueError:
         await callback.answer("Некорректный заказ", show_alert=True)
         return
-    order, _, _, _ = await change_order_status(order_id, "accepted")
-    if order:
+    order, _, _, _, changed = await change_order_status(order_id, "accepted")
+    if order and changed:
         await auto_push_orders_to_github()
         await notify_customer_about_status(order)
         await send_order_admin_card(callback.message, order, "✅ Заказ принят.")
@@ -3737,8 +4151,8 @@ async def ship_order_legacy(callback: CallbackQuery):
     except ValueError:
         await callback.answer("Некорректный заказ", show_alert=True)
         return
-    order, stock_changed, warnings, _ = await change_order_status(order_id, "shipped")
-    if order:
+    order, stock_changed, warnings, _, changed = await change_order_status(order_id, "shipped")
+    if order and changed:
         if stock_changed:
             await auto_push_to_github()
         await auto_push_orders_to_github()
@@ -3967,6 +4381,8 @@ def user_order_confirmation_text(order: Order) -> str:
     for index, item in enumerate(order.items or [], 1):
         lines.append(order_item_text(item, index))
         lines.append("")
+    if float(order.bonuses_used or 0) > 0:
+        lines.append(f"Бонусы: <b>−{format_bonus_value(order.bonuses_used)}</b>")
     lines.extend([
         f"<b>Итого: {float(order.total or 0):g} BYN</b>",
         f"Получение: <b>{html.escape(order_delivery_label(order))}</b>",
@@ -3997,7 +4413,22 @@ async def handle_webapp_data(message: Message):
                     reply_markup=get_main_keyboard(),
                 )
                 return
-            items, total = await build_validated_order_items(session, data.get("items"))
+            items, subtotal = await build_validated_order_items(session, data.get("items"))
+            user = (await session.execute(select(User).where(User.telegram_id == user_id))).scalar_one_or_none()
+            if not user:
+                user = User(telegram_id=user_id, username=message.from_user.username, bonus_balance=0)
+                session.add(user)
+                await session.flush()
+            elif user.username != message.from_user.username:
+                user.username = message.from_user.username
+
+            try:
+                requested_bonuses = max(0.0, float(data.get("bonuses") or 0))
+            except (TypeError, ValueError):
+                requested_bonuses = 0.0
+            bonuses_used = round(min(float(user.bonus_balance or 0), subtotal), 2) if requested_bonuses > 0 else 0.0
+            total = round(max(0.0, subtotal - bonuses_used), 2)
+
             order = Order(
                 user_id=user_id,
                 items=items,
@@ -4010,25 +4441,37 @@ async def handle_webapp_data(message: Message):
                 comment=comment,
                 status="accepted",
                 stock_decremented=False,
+                bonuses_used=bonuses_used,
+                bonus_earned=0,
+                bonus_returned=0,
                 updated_at=datetime.now(),
             )
             session.add(order)
-            user = (await session.execute(select(User).where(User.telegram_id == user_id))).scalar_one_or_none()
-            if not user:
-                session.add(User(telegram_id=user_id, username=message.from_user.username))
-            elif user.username != message.from_user.username:
-                user.username = message.from_user.username
+            await session.flush()
+            if bonuses_used > 0:
+                await add_bonus_transaction(
+                    session,
+                    user,
+                    -bonuses_used,
+                    kind="order_spend",
+                    title="Использовано в заказе",
+                    operation_key=f"order:{order.id}:spend",
+                    order_id=order.id,
+                )
             await session.commit()
             await session.refresh(order)
 
         await message.answer(user_order_confirmation_text(order), reply_markup=get_main_keyboard())
         public_synced = await auto_push_orders_to_github()
+        bonuses_synced = await auto_push_bonuses_to_github()
 
         for admin_id in ADMIN_IDS:
             try:
                 notice = "<b>Новый заказ</b>"
                 if not public_synced:
                     notice += "\n<b>Внимание:</b> заказ сохранён, но orders_public.json пока не обновился на GitHub."
+                if not bonuses_synced:
+                    notice += "\n<b>Внимание:</b> бонусный баланс пока не обновился на GitHub."
                 await bot.send_message(
                     admin_id,
                     order_admin_text(order, notice),
@@ -4186,6 +4629,9 @@ async def export_public_orders_to_file():
             "client_request_id": str(delivery_data.get("_client_request_id") or ""),
             "created_at": order.created_at.isoformat() if order.created_at else None,
             "updated_at": order.updated_at.isoformat() if order.updated_at else (order.created_at.isoformat() if order.created_at else None),
+            "bonuses": float(order.bonuses_used or 0),
+            "bonus_earned": float(order.bonus_earned or 0),
+            "bonus_returned": float(order.bonus_returned or 0),
             "items": [public_order_item(item) for item in (order.items or [])],
         })
     path = PROJECT_DIR / "orders_public.json"
@@ -4232,7 +4678,47 @@ async def auto_push_orders_to_github() -> bool:
     return await push_json_to_github(
         "orders_public.json",
         orders_data,
-        f"🤖 Обновление заказов ({len(orders_data)} шт)",
+        f"Обновление заказов ({len(orders_data)} шт)",
+    )
+
+
+async def export_public_bonuses_to_file():
+    async with async_session() as session:
+        users = list((await session.execute(select(User))).scalars().all())
+        transactions = list((await session.execute(
+            select(BonusTransaction).order_by(BonusTransaction.created_at.desc(), BonusTransaction.id.desc())
+        )).scalars().all())
+    grouped: dict[int, list[dict]] = {}
+    for item in transactions:
+        grouped.setdefault(item.user_id, []).append({
+            "id": item.id,
+            "type": item.kind,
+            "amount": float(item.amount or 0),
+            "title": item.title,
+            "order_id": item.order_id,
+            "created_at": item.created_at.isoformat() if item.created_at else None,
+        })
+    data = [
+        {
+            "user_id": str(user.telegram_id),
+            "balance": float(user.bonus_balance or 0),
+            "transactions": grouped.get(user.telegram_id, [])[:100],
+        }
+        for user in users
+        if float(user.bonus_balance or 0) != 0 or grouped.get(user.telegram_id)
+    ]
+    path = PROJECT_DIR / "bonuses_public.json"
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Экспортировано {len(data)} бонусных профилей")
+    return data
+
+
+async def auto_push_bonuses_to_github() -> bool:
+    bonus_data = await export_public_bonuses_to_file()
+    return await push_json_to_github(
+        "bonuses_public.json",
+        bonus_data,
+        f"Обновление бонусов ({len(bonus_data)} профилей)",
     )
 
 

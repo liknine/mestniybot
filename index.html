@@ -10,7 +10,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Roboto+Condensed:wght@500;600&amp;display=swap" rel="stylesheet"/>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="style.css?v=mestniy_orders_v1" rel="stylesheet"/>
+<link href="style.css?v=mestniy_bonus_v1" rel="stylesheet"/>
 </head>
 <body>
 <div class="app-loader" id="appLoader">ЗАГРУЗКА КАТАЛОГА</div><div class="app" id="app">
@@ -72,7 +72,7 @@
 <div id="latestOrderPreview"></div>
 </section>
 <button class="profile-row" data-go="favorites"><span class="row-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"></path></svg></span>ИЗБРАННОЕ<span class="arrow">›</span></button>
-<button class="profile-row" data-go="bonuses"><span class="row-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"></path><path d="M9 7v12M15 7v12"></path></svg></span>МОИ БОНУСЫ<span class="profile-row-value" id="profileBonusBalance">1 250</span><span class="arrow">›</span></button>
+<button class="profile-row" data-go="bonuses"><span class="row-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"></path><path d="M9 7v12M15 7v12"></path></svg></span>МОИ БОНУСЫ<span class="profile-row-value" id="profileBonusBalance">0</span><span class="arrow">›</span></button>
 </main>
 </section>
 <section class="screen" id="orders">
@@ -97,7 +97,7 @@
 <main class="content bonus-content">
 <section class="bonus-hero">
 <div class="bonus-kicker">Доступно сейчас</div>
-<div class="bonus-balance"><b id="bonusBalanceNumber">1 250</b><span>БОНУСОВ</span></div>
+<div class="bonus-balance"><b id="bonusBalanceNumber">0</b><span>БОНУСОВ</span></div>
 <p class="bonus-status" id="bonusStatusText">Бонусы можно применить при оформлении заказа одной кнопкой.</p>
 </section>
 <section class="bonus-block">
@@ -146,6 +146,6 @@
 <div id="drawerBody"></div>
 </aside>
 </div>
-<script defer="" src="app.js?v=mestniy_orders_v1"></script>
+<script defer="" src="app.js?v=mestniy_bonus_v1"></script>
 </body>
 </html>
