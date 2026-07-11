@@ -2677,8 +2677,7 @@
       "USD": 50.69,
       "product_type": "stock",
       "size_stock": {
-        "40": 0,
-        "43": 1
+        "42": 2
       },
       "condition": "Новое",
       "extra_photos_url": "https://t.me/mestniystore/9587",
@@ -2690,14 +2689,12 @@
       }
     },
     "sizes": [
-      "40",
-      "43"
+      "42"
     ],
     "size_stock": {
-      "40": 0,
-      "43": 1
+      "42": 2
     },
-    "stock": 1,
+    "stock": 2,
     "product_type": "stock",
     "section": "stock",
     "condition": "Новое",
