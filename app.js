@@ -10,15 +10,16 @@ const BONUS_RULES=[
   {max:Infinity,rate:3.5}
 ];
 const BONUS_TRANSACTIONS=[];
-const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
+const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_identity_refresh_v2';
+const BUILD_VERSION='mestniy_client_edits_v1';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
   shirts:'РУБАШКИ',shorts:'ШОРТЫ',pants:'ШТАНЫ',shoes:'ОБУВЬ',accessories:'АКСЕССУАРЫ',other:'ДРУГОЕ'
 };
 const CATEGORY_BY_ID={1:'shoes',2:'outerwear',3:'outerwear',4:'shirts',5:'tshirts',6:'sweatshirts',7:'pants',8:'shorts',9:'accessories',10:'accessories'};
+const CURRENCY_META={BYN:{label:'BYN',rate:1,digits:2},RUB:{label:'RUB',rate:28.5,digits:0},USD:{label:'USD',rate:.31,digits:2}};
 const DEFAULT_NEWS=[
   {id:'default-1',title:'Новая поставка уже в каталоге',excerpt:'Откройте каталог и посмотрите актуальные позиции MESTNIY STORE.',body:['Новые позиции уже доступны в каталоге. Выберите товар, размер и добавьте его в корзину.'],category:'НОВОЕ ПОСТУПЛЕНИЕ',date:'MESTNIY STORE',image:'assets/home-news-01.webp',action:{type:'catalog',label:'ПЕРЕЙТИ В КАТАЛОГ'}},
   {id:'default-2',title:'Смотрите новинки в каталоге',excerpt:'Актуальные бренды и размеры собраны в одном разделе.',body:['Используйте фильтры по бренду, категории, размеру и цене, чтобы быстрее найти нужную позицию.'],category:'КАТАЛОГ',date:'MESTNIY STORE',image:'assets/home-news-02.webp',action:{type:'catalog',label:'ОТКРЫТЬ КАТАЛОГ'}}
@@ -82,6 +83,8 @@ function normalizeSourceProduct(product,index){
   }
   const stock=hasPerSizeStock?Object.values(sizeStock).reduce((sum,qty)=>sum+qty,0):legacyStock;
   const unavailableSizes=sizes.filter(size=>(sizeStock[size]??(stock>0?1:0))<=0);
+  const currencyPrices={BYN:sourcePrice(product,'BYN'),RUB:sourcePrice(product,'RUB'),USD:sourcePrice(product,'USD')};
+  const currencyOldPrices={BYN:sourceOldPrice(product,'BYN'),RUB:sourceOldPrice(product,'RUB'),USD:sourceOldPrice(product,'USD')};
   return {
     id:String(product?.id??index+1),
     code:String(product?.name||`ТОВАР ${index+1}`).trim(),
@@ -90,6 +93,8 @@ function normalizeSourceProduct(product,index){
     name:String(product?.name||'Товар').trim(),
     price:old&&old>price?old:price,
     discountPrice:old&&old>price?price:undefined,
+    currencyPrices,
+    currencyOldPrices,
     sizes,
     sizeStock,
     unavailableSizes,
@@ -272,12 +277,15 @@ const STORAGE_KEYS={
   cart:'mestniy_cart_v24',
   favorites:'mestniy_favorites_v24',
   pendingOrders:'mestniy_pending_orders_v1',
-  profilePrefix:'mestniy_profile_v25'
+  profilePrefix:'mestniy_profile_v25',
+  currency:'mestniy_currency_v1'
 };
 function safeParse(value,fallback){try{return JSON.parse(value)}catch(_e){return fallback}}
 function storageRead(key,fallback){try{return safeParse(localStorage.getItem(key),fallback)}catch(_e){return fallback}}
 function profileStorageKey(id){return `${STORAGE_KEYS.profilePrefix}:${String(id||'unknown')}`}
 function loadPersistedState(){
+  const savedCurrency=String(storageRead(STORAGE_KEYS.currency,'BYN')||'BYN').toUpperCase();
+  state.currency=CURRENCY_META[savedCurrency]?savedCurrency:'BYN';
   const cart=storageRead(STORAGE_KEYS.cart,[]);
   state.cart=Array.isArray(cart)?cart.filter(item=>productById(item.id)&&item.size&&Number(item.qty)>0).map(item=>({id:String(item.id),size:String(item.size),qty:Math.max(1,Number(item.qty)||1)})):[];
   const favorites=storageRead(STORAGE_KEYS.favorites,[]);
@@ -291,6 +299,7 @@ function persistState(){
     localStorage.setItem(STORAGE_KEYS.cart,JSON.stringify(state.cart));
     localStorage.setItem(STORAGE_KEYS.favorites,JSON.stringify([...state.favorites]));
     localStorage.setItem(STORAGE_KEYS.pendingOrders,JSON.stringify((state.pendingOrders||[]).filter(order=>order.pending)));
+    localStorage.setItem(STORAGE_KEYS.currency,JSON.stringify(state.currency));
   }catch(error){console.warn('Storage unavailable',error)}
 }
 function parseInitDataUser(initData){
@@ -387,8 +396,8 @@ function buildOrderPayload(clientRequestId){
   const bonuses=c.bonuses?Math.max(0,Math.min(Number(state.bonusBalance)||0,cartSubtotal())):0;
   return {
     items:state.cart.map(item=>({productId:item.id,size:item.size,qty:item.qty})),
-    total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':null,
-    deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{address:c.address,postalIndex:c.postalIndex,postOffice:c.postOffice}:null,
+    total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':c.delivery==='cdek'?'CDEK':null,
+    deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{postalIndex:c.postalIndex,postOffice:c.postOffice}:c.delivery==='cdek'?{branch:c.cdekPoint}:null,
     customer:{fullName:c.name,firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses,clientRequestId
   };
 }
@@ -408,7 +417,15 @@ state.dataError=DEMO_STATE;
 
 const screens=[...document.querySelectorAll('.screen')];
 const nav=document.getElementById('bottomNav');
-const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n)+' BYN';
+function convertByn(value,currency=state.currency){
+  const meta=CURRENCY_META[currency]||CURRENCY_META.BYN;
+  return (Number(value)||0)*meta.rate;
+}
+function formatCurrency(value,currency=state.currency){
+  const meta=CURRENCY_META[currency]||CURRENCY_META.BYN;
+  return `${new Intl.NumberFormat('ru-RU',{minimumFractionDigits:0,maximumFractionDigits:meta.digits}).format(Number(value)||0)} ${meta.label}`;
+}
+const money=n=>formatCurrency(convertByn(n,state.currency),state.currency);
 let toastTimer=null;
 function showToast(message){
   const toast=document.getElementById('toast');if(!toast)return;
@@ -428,9 +445,28 @@ function hasDiscount(p){const base=Number(p?.price)||0,discount=Number(p?.discou
 function productPrice(p){return hasDiscount(p)?Number(p.discountPrice):Number(p.price)||0}
 function productDiscount(p,qty=1){return hasDiscount(p)?(Number(p.price)-productPrice(p))*qty:0}
 function discountPercent(p){return hasDiscount(p)?Math.round((1-productPrice(p)/Number(p.price))*100):0}
-function priceMarkup(p,qty=1,extraClass=''){const current=productPrice(p)*qty;return `<span class="price-stack ${extraClass}"><span class="price-current">${money(current)}</span>${hasDiscount(p)?`<span class="price-old">${money(Number(p.price)*qty)}</span>`:''}</span>`}
+function productDisplayPrice(p,currency=state.currency){
+  const direct=Number(p?.currencyPrices?.[currency]);
+  if(Number.isFinite(direct)&&direct>0)return direct;
+  return convertByn(productPrice(p),currency);
+}
+function productDisplayOldPrice(p,currency=state.currency){
+  if(!hasDiscount(p))return null;
+  const direct=Number(p?.currencyOldPrices?.[currency]);
+  if(Number.isFinite(direct)&&direct>productDisplayPrice(p,currency))return direct;
+  return convertByn(Number(p?.price)||0,currency);
+}
+function priceMarkup(p,qty=1,extraClass=''){
+  const current=productDisplayPrice(p)*qty;
+  const old=productDisplayOldPrice(p);
+  return `<span class="price-stack ${extraClass}"><span class="price-current">${formatCurrency(current)}</span>${old&&old>current/qty?`<span class="price-old">${formatCurrency(old*qty)}</span>`:''}</span>`;
+}
 function cartOriginalSubtotal(){return state.cart.reduce((sum,item)=>{const p=productById(item.id);return sum+(p?(Number(p.price)||0)*item.qty:0)},0)}
 function cartDiscountTotal(){return state.cart.reduce((sum,item)=>{const p=productById(item.id);return sum+(p?productDiscount(p,item.qty):0)},0)}
+function cartDisplaySubtotal(){return state.cart.reduce((sum,item)=>{const p=productById(item.id);return sum+(p?productDisplayPrice(p)*item.qty:0)},0)}
+function cartDisplayOriginalSubtotal(){return state.cart.reduce((sum,item)=>{const p=productById(item.id);const old=p?productDisplayOldPrice(p):null;return sum+(p?(old||productDisplayPrice(p))*item.qty:0)},0)}
+function cartDisplayDiscountTotal(){return Math.max(0,cartDisplayOriginalSubtotal()-cartDisplaySubtotal())}
+function renderCurrencySwitch(){document.querySelectorAll('[data-currency]').forEach(button=>button.classList.toggle('active',button.dataset.currency===state.currency))}
 function showScreen(name, push=true){
   if(push && state.screen!==name) state.previous=state.screen;
   state.screen=name;
@@ -512,7 +548,9 @@ function productSoldOut(p){return availableSizes(p).length===0}
 function productCard(p,index,mode='catalog'){
   const favorite=state.favorites.has(String(p.id)),soldOut=productSoldOut(p);
   const action=soldOut?'НЕТ В НАЛИЧИИ':mode==='favorites'?'УБРАТЬ ИЗ ИЗБРАННОГО':'ДОБАВИТЬ В КОРЗИНУ';
-  return `<article class="product-card" data-card="${index}"><div class="product-image"><img src="${p.image}" alt="${p.name}">${hasDiscount(p)?`<span class="discount-mark">−${discountPercent(p)}%</span>`:''}<button class="favorite-dot ${favorite?'on':''}" data-fav="${escapeHtml(p.id)}" aria-label="Избранное">${iconHeart(favorite)}</button></div><div class="product-meta"><p class="product-code">${p.code}</p><p class="product-desc">${p.brand}</p>${priceMarkup(p)}<button class="product-action" data-action="${mode==='favorites'?'unfav':'add'}" data-id="${index}" ${soldOut?'disabled':''}>${action}</button></div></article>`
+  const sizes=availableSizes(p);
+  const sizeLabel=sizes.length?`<p class="product-sizes">РАЗМЕРЫ: ${sizes.map(escapeHtml).join(', ')}</p>`:'';
+  return `<article class="product-card" data-card="${index}"><div class="product-image"><img src="${p.image}" alt="${p.name}">${hasDiscount(p)?`<span class="discount-mark">−${discountPercent(p)}%</span>`:''}<button class="favorite-dot ${favorite?'on':''}" data-fav="${escapeHtml(p.id)}" aria-label="Избранное">${iconHeart(favorite)}</button></div><div class="product-meta"><p class="product-code">${p.code}</p><p class="product-desc">${p.brand}</p>${sizeLabel}${priceMarkup(p)}<button class="product-action" data-action="${mode==='favorites'?'unfav':'add'}" data-id="${index}" ${soldOut?'disabled':''}>${action}</button></div></article>`
 }
 function defaultFilters(){return {category:'all',brand:'all',size:'all',priceMin:'',priceMax:''}}
 function productCategory(p){
@@ -523,7 +561,7 @@ function productCategory(p){
   return 'other';
 }
 function matchesPriceRange(p,filters=state.filters){
-  const price=productPrice(p);
+  const price=productDisplayPrice(p);
   const minRaw=String(filters?.priceMin??'').trim();
   const maxRaw=String(filters?.priceMax??'').trim();
   const min=minRaw===''?null:Number(minRaw);
@@ -577,19 +615,32 @@ function filterChip({label,value,key}){
   const selected=(state.filterDraft||state.filters)[key]===value;
   return `<button class="filter-chip ${selected?'active':''}" data-filter-key="${key}" data-filter-value="${value}">${label}</button>`;
 }
+function categoryFilterSizes(category,filters=state.filterDraft||state.filters){
+  if(!category||category==='all'||category==='sale')return [];
+  const sizeOrder=['XXS','XS','S','S-M','M','M-L','L','L-XL','XL','XXL','XXXL','UNI','ONE SIZE'];
+  const source=PRODUCTS.filter(product=>productCategory(product)===category);
+  return [...new Set(source.flatMap(product=>availableSizes(product)))].sort((a,b)=>{
+    const na=Number(a),nb=Number(b);
+    if(Number.isFinite(na)&&Number.isFinite(nb))return na-nb;
+    const ai=sizeOrder.indexOf(String(a).toUpperCase()),bi=sizeOrder.indexOf(String(b).toUpperCase());
+    return (ai<0?999:ai)-(bi<0?999:bi)||String(a).localeCompare(String(b),'ru');
+  });
+}
 function renderFilterDrawer(){
   const body=document.getElementById('drawerBody');if(!body)return;
   if(!state.filterDraft)state.filterDraft={...state.filters};
-  const brands=[...new Set(PRODUCTS.map(p=>p.brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'));
-  const sizeOrder=['XXS','XS','S','M','L','XL','XXL','XXXL'];
-  const sizes=[...new Set(PRODUCTS.flatMap(p=>availableSizes(p)))].sort((a,b)=>{const ai=sizeOrder.indexOf(String(a).toUpperCase()),bi=sizeOrder.indexOf(String(b).toUpperCase());return (ai<0?999:ai)-(bi<0?999:bi)||String(a).localeCompare(String(b),'ru')});
+  const selectedCategory=state.filterDraft.category||'all';
+  const sizes=categoryFilterSizes(selectedCategory,state.filterDraft);
+  if(state.filterDraft.size!=='all'&&!sizes.includes(state.filterDraft.size))state.filterDraft.size='all';
   const categoryOptions=[['ВСЕ ТОВАРЫ','all'],...Object.entries(CATEGORY_LABELS).filter(([value])=>PRODUCTS.some(product=>productCategory(product)===value)).map(([value,label])=>[label,value]),['ТОВАРЫ СО СКИДКОЙ','sale']];
+  const sizePanel=(selectedCategory==='all'||selectedCategory==='sale')
+    ? `<button type="button" class="category-size-warning" disabled>ВЫБЕРИТЕ КАТЕГОРИЮ ДЛЯ ВЫБОРА НЕОБХОДИМЫХ РАЗМЕРОВ!</button>`
+    : `<div class="filter-chips">${filterChip({label:'ВСЕ',value:'all',key:'size'})}${sizes.map(size=>filterChip({label:size,value:size,key:'size'})).join('')}</div>`;
   const categories=`<div class="filter-section"><p class="filter-section-title">Категория</p>${categoryOptions.map(([label,value])=>filterChoice({label,value,key:'category'})).join('')}</div>
-  <div class="filter-section"><p class="filter-section-title">Размер</p><div class="filter-chips">${filterChip({label:'ВСЕ',value:'all',key:'size'})}${sizes.map(size=>filterChip({label:size,value:size,key:'size'})).join('')}</div></div>
-  <div class="filter-section"><p class="filter-section-title">Цена</p><div class="price-range"><label class="price-range-field"><span>ОТ</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="0" value="${state.filterDraft.priceMin||''}" data-price-filter="priceMin"><b>BYN</b></div></label><label class="price-range-field"><span>ДО</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="БЕЗ ОГРАНИЧЕНИЯ" value="${state.filterDraft.priceMax||''}" data-price-filter="priceMax"><b>BYN</b></div></label></div></div>`;
-  const brandPanel=`<div class="filter-section"><p class="filter-section-title">Бренд</p>${filterChoice({label:'ВСЕ БРЕНДЫ',value:'all',key:'brand'})}${brands.map(brand=>filterChoice({label:brand,value:brand,key:'brand'})).join('')}</div>`;
+  <div class="filter-section"><p class="filter-section-title">Размер</p>${sizePanel}</div>
+  <div class="filter-section"><p class="filter-section-title">Цена</p><div class="price-range"><label class="price-range-field"><span>ОТ</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="0" value="${state.filterDraft.priceMin||''}" data-price-filter="priceMin"><b>${state.currency}</b></div></label><label class="price-range-field"><span>ДО</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="БЕЗ ОГРАНИЧЕНИЯ" value="${state.filterDraft.priceMax||''}" data-price-filter="priceMax"><b>${state.currency}</b></div></label></div></div>`;
   const draftCount=activeFilterCount(state.filterDraft);
-  body.innerHTML=`<div class="drawer-tabs"><button class="drawer-tab ${state.filterTab==='categories'?'active':''}" data-filter-tab="categories">КАТЕГОРИИ</button><button class="drawer-tab ${state.filterTab==='brands'?'active':''}" data-filter-tab="brands">БРЕНДЫ</button></div><div class="filter-panel">${state.filterTab==='brands'?brandPanel:categories}</div><div class="filter-summary" data-filter-summary>${draftCount?`ВЫБРАНО ФИЛЬТРОВ: ${draftCount}`:'ФИЛЬТРЫ НЕ ВЫБРАНЫ'}</div><div class="drawer-footer"><div class="filter-footer-actions"><button class="filter-reset-btn" data-filter-reset>СБРОСИТЬ</button><button class="black-btn" data-apply-filter>ПОКАЗАТЬ</button></div></div>`;
+  body.innerHTML=`<div class="filter-panel">${categories}</div><div class="filter-summary" data-filter-summary>${draftCount?`ВЫБРАНО ФИЛЬТРОВ: ${draftCount}`:'ФИЛЬТРЫ НЕ ВЫБРАНЫ'}</div><div class="drawer-footer"><div class="filter-footer-actions"><button class="filter-reset-btn" data-filter-reset>СБРОСИТЬ</button><button class="black-btn" data-apply-filter>ПОКАЗАТЬ</button></div></div>`;
 }
 function renderCatalog(){
   const input=document.getElementById('searchInput');
@@ -606,7 +657,7 @@ function renderCatalog(){
     .filter(({p})=>state.filters.size==='all'||availableSizes(p).includes(state.filters.size))
     .filter(({p})=>matchesPriceRange(p,state.filters))
     .filter(({p})=>!q||`${p.code} ${p.brand} ${p.desc} ${p.name}`.toLowerCase().includes(q));
-  list.sort((a,b)=>state.sortMode==='price_asc'?productPrice(a.p)-productPrice(b.p):state.sortMode==='price_desc'?productPrice(b.p)-productPrice(a.p):(Number(b.p.sortKey)||0)-(Number(a.p.sortKey)||0));
+  list.sort((a,b)=>state.sortMode==='price_asc'?productDisplayPrice(a.p)-productDisplayPrice(b.p):state.sortMode==='price_desc'?productDisplayPrice(b.p)-productDisplayPrice(a.p):(Number(b.p.sortKey)||0)-(Number(a.p.sortKey)||0));
   updateSortButton();
   if(list.length){grid.innerHTML=list.map(x=>productCard(x.p,x.i)).join('');return}
   if(q){grid.innerHTML=emptyStateMarkup({type:'search',title:'НИЧЕГО НЕ НАЙДЕНО',text:`По запросу «${escapeHtml(input.value.trim())}» товаров нет. Попробуйте изменить запрос.`,action:'СБРОСИТЬ ПОИСК',actionAttr:'data-reset-search'});return}
@@ -624,28 +675,30 @@ function renderCart(){
   const box=document.getElementById('cartList');
   if(!state.cart.length){box.innerHTML=emptyStateMarkup({type:'cart',title:'КОРЗИНА ПУСТА',text:'Добавьте товар и выберите размер — он появится здесь.',action:'ПЕРЕЙТИ В КАТАЛОГ',go:'catalog'});document.getElementById('cartSummary').innerHTML='';updateCounts();return}
   box.innerHTML=state.cart.map((item,idx)=>{const p=productById(item.id);return `<article class="cart-item"><div class="cart-image"><img src="${p.image}" alt="${p.name}">${hasDiscount(p)?`<span class="discount-mark">−${discountPercent(p)}%</span>`:''}</div><div class="cart-info"><button class="cart-remove" data-remove="${idx}">×</button><p class="product-code">${p.code}</p><p class="product-brand">${p.brand}</p><p class="product-desc" style="margin-top:16px">РАЗМЕР: ${item.size}</p><div class="qty"><button data-qty="-1" data-index="${idx}">−</button><span>${item.qty}</span><button data-qty="1" data-index="${idx}">+</button></div>${priceMarkup(p,item.qty)}</div></article>`}).join('');
-  const original=cartOriginalSubtotal(),discount=cartDiscountTotal(),total=cartSubtotal();
-  document.getElementById('cartSummary').innerHTML=`<div class="summary-row"><span>${discount?'СТОИМОСТЬ ТОВАРОВ':`ТОВАРЫ (${state.cart.reduce((s,x)=>s+x.qty,0)})`}</span><span>${money(discount?original:total)}</span></div>${discount?`<div class="summary-row discount"><span>СКИДКА</span><span>− ${money(discount)}</span></div>`:''}<div class="summary-row"><span>ДОСТАВКА</span><span>УТОЧНЯЕТСЯ</span></div><div class="summary-row total"><span>ИТОГО</span><span>${money(total)}</span></div><button class="black-btn" id="checkoutBtn">ОФОРМИТЬ ЗАКАЗ</button>`;
+  const original=cartDisplayOriginalSubtotal(),discount=cartDisplayDiscountTotal(),total=cartDisplaySubtotal();
+  document.getElementById('cartSummary').innerHTML=`<div class="summary-row"><span>${discount?'СТОИМОСТЬ ТОВАРОВ':`ТОВАРЫ (${state.cart.reduce((s,x)=>s+x.qty,0)})`}</span><span>${formatCurrency(discount?original:total)}</span></div>${discount?`<div class="summary-row discount"><span>СКИДКА</span><span>− ${formatCurrency(discount)}</span></div>`:''}<div class="summary-row"><span>ДОСТАВКА</span><span>УТОЧНЯЕТСЯ</span></div><div class="summary-row total"><span>ИТОГО</span><span>${formatCurrency(total)}</span></div><button class="black-btn" id="checkoutBtn">ОФОРМИТЬ ЗАКАЗ</button>`;
   updateCounts();
 }
 function cartSubtotal(){return state.cart.reduce((sum,item)=>{const p=productById(item.id);return sum+(p?productPrice(p)*item.qty:0)},0)}
-function checkoutDeliveryLabel(key){return key==='pickup'?'Самовывоз':key==='europost'?'Европочта':key==='belpost'?'Белпочта':'Не выбран'}
+function checkoutDeliveryLabel(key){return key==='pickup'?'Самовывоз — г. Лида':key==='shuttle'?'Маршрутка':key==='europost'?'Европочта':key==='belpost'?'Белпочта':key==='cdek'?'CDEK':'Не выбран'}
 function checkoutPlace(){
   const c=state.checkout;
-  if(c.delivery==='europost')return `Отделение Европочты ${c.europostBranch}`.trim();
-  if(c.delivery==='belpost')return [c.address,`Индекс ${c.postalIndex}`,`Отделение ${c.postOffice}`].filter(Boolean).join(', ');
+  if(c.delivery==='europost')return c.europostBranch;
+  if(c.delivery==='cdek')return c.cdekPoint;
+  if(c.delivery==='belpost')return [`Индекс ${c.postalIndex}`,`Отделение ${c.postOffice}`].filter(Boolean).join(', ');
   return 'MESTNIY STORE';
 }
-function pickupCartText(){
+function managerCartText(method='pickup'){
   const lines=state.cart.map(item=>{const p=productById(item.id);return `${p.brand} · ${p.code} · размер ${item.size} · ${item.qty} шт.`});
-  return `Здравствуйте! Хочу оформить самовывоз из MESTNIY STORE.
+  const intro=method==='shuttle'?'Здравствуйте! Хочу уточнить доставку маршруткой из города Лида.':'Здравствуйте! Хочу оформить самовывоз в г. Лида.';
+  return `${intro}
 
 ${lines.join(String.fromCharCode(10))}
 
-Итого: ${money(cartSubtotal())}`;
+Итого: ${formatCurrency(cartDisplaySubtotal())}`;
 }
-function openPickupManager(){
-  const url=`https://t.me/${PUBLIC_SETTINGS.support_username}?text=${encodeURIComponent(pickupCartText())}`;
+function openManager(method='pickup'){
+  const url=`https://t.me/${PUBLIC_SETTINGS.support_username}?text=${encodeURIComponent(managerCartText(method))}`;
   try{if(window.Telegram?.WebApp?.openTelegramLink){window.Telegram.WebApp.openTelegramLink(url);return}}catch(_e){}
   window.open(url,'_blank','noopener');
 }
@@ -654,35 +707,41 @@ function checkoutItemsMarkup(){
 }
 function renderCheckoutSummary(){
   const box=document.getElementById('checkoutSummary');if(!box)return;
-  const subtotal=cartSubtotal(),original=cartOriginalSubtotal(),discount=cartDiscountTotal();
+  const subtotal=cartSubtotal(),displaySubtotal=cartDisplaySubtotal(),original=cartDisplayOriginalSubtotal(),discount=cartDisplayDiscountTotal();
   const applied=Math.max(0,Math.min(Number(state.checkout.bonuses)||0,state.bonusBalance,subtotal));
   state.checkout.bonuses=applied;
-  box.innerHTML=`<div class="summary-row"><span>${discount?'СТОИМОСТЬ ТОВАРОВ':`ТОВАРЫ (${state.cart.reduce((s,x)=>s+x.qty,0)})`}</span><span>${money(discount?original:subtotal)}</span></div>${discount?`<div class="summary-row discount"><span>СКИДКА</span><span>− ${money(discount)}</span></div>`:''}${applied?`<div class="summary-row"><span>БОНУСЫ</span><span>− ${money(applied)}</span></div>`:''}<div class="summary-row"><span>ДОСТАВКА</span><span>ПО ТАРИФАМ СЛУЖБЫ</span></div><div class="summary-row total"><span>К ОПЛАТЕ</span><span>${money(subtotal-applied)}</span></div>`;
+  const displayedBonus=convertByn(applied,state.currency);
+  box.innerHTML=`<div class="summary-row"><span>${discount?'СТОИМОСТЬ ТОВАРОВ':`ТОВАРЫ (${state.cart.reduce((s,x)=>s+x.qty,0)})`}</span><span>${formatCurrency(discount?original:displaySubtotal)}</span></div>${discount?`<div class="summary-row discount"><span>СКИДКА</span><span>− ${formatCurrency(discount)}</span></div>`:''}${applied?`<div class="summary-row"><span>БОНУСЫ</span><span>− ${formatCurrency(displayedBonus)}</span></div>`:''}<div class="summary-row"><span>ДОСТАВКА</span><span>ПО ТАРИФАМ СЛУЖБЫ</span></div><div class="summary-row total"><span>К ОПЛАТЕ</span><span>${formatCurrency(Math.max(0,displaySubtotal-displayedBonus))}</span></div>`;
 }
 function renderCheckout(){
   if(!state.cart.length){showScreen('cart',false);return}
   const c=state.checkout;
   let recipientSection='';
   if(c.delivery==='europost'){
-    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutEuropostBranch">Отделение Европочты</label><input id="checkoutEuropostBranch" data-checkout-field="europostBranch" value="${escapeHtml(c.europostBranch)}" placeholder="Номер или адрес отделения"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
+    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutEuropostBranch">Город, отделение Европочты</label><input id="checkoutEuropostBranch" data-checkout-field="europostBranch" value="${escapeHtml(c.europostBranch)}" placeholder="Город, номер или адрес отделения"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='belpost'){
-    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutAddress">Адрес</label><input id="checkoutAddress" data-checkout-field="address" value="${escapeHtml(c.address)}" placeholder="Город, улица, дом, квартира"></div><div class="field"><label for="checkoutPostalIndex">Почтовый индекс</label><input id="checkoutPostalIndex" data-checkout-field="postalIndex" value="${escapeHtml(c.postalIndex)}" inputmode="numeric" maxlength="6" placeholder="220000"></div><div class="field"><label for="checkoutPostOffice">Номер отделения Белпочты</label><input id="checkoutPostOffice" data-checkout-field="postOffice" value="${escapeHtml(c.postOffice)}" placeholder="Например, №25"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
+    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutPostalIndex">Почтовый индекс</label><input id="checkoutPostalIndex" data-checkout-field="postalIndex" value="${escapeHtml(c.postalIndex)}" inputmode="numeric" maxlength="6" placeholder="220000"></div><div class="field"><label for="checkoutPostOffice">Номер отделения Белпочты</label><input id="checkoutPostOffice" data-checkout-field="postOffice" value="${escapeHtml(c.postOffice)}" placeholder="Например, №25"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
+  }else if(c.delivery==='cdek'){
+    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375 / +7"></div><div class="field"><label for="checkoutCdekPoint">Город, пункт CDEK</label><input id="checkoutCdekPoint" data-checkout-field="cdekPoint" value="${escapeHtml(c.cdekPoint)}" placeholder="Город, адрес или код пункта CDEK"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
+  }else if(c.delivery==='shuttle'){
+    recipientSection=`<section class="checkout-section shuttle-section"><h2 class="checkout-title">ДОСТАВКА МАРШРУТКОЙ</h2><p class="checkout-note" style="margin:0 0 18px">Доставка осуществляется из города Лида. Условия, стоимость и подходящий рейс уточняются у менеджера.</p><button class="black-btn" data-open-shuttle-manager>СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</button></section>`;
   }else{
-    recipientSection=`<section class="checkout-section"><p class="checkout-note" style="margin:0">Выберите Европочту или Белпочту для оформления заявки. Самовывоз оформляется напрямую через менеджера.</p></section>`;
+    recipientSection=`<section class="checkout-section"><p class="checkout-note" style="margin:0">Выберите Европочту, Белпочту или CDEK для оформления заявки. Самовывоз и доставка маршруткой согласовываются с менеджером.</p></section>`;
   }
   syncBonusBalance();
   const maxBonus=Math.min(state.bonusBalance,cartSubtotal());
   c.bonuses=Math.max(0,Math.min(Number(c.bonuses)||0,maxBonus));
   const bonusesApplied=Number(c.bonuses)>0;
   const bonusSection=state.bonusBalance>0
-    ? `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><p class="checkout-note">К заказу применяются все доступные бонусы одной кнопкой. Выбрать только часть бонусов нельзя.</p><button class="bonus-toggle ${bonusesApplied?'active':''}" data-bonus-toggle>${bonusesApplied?'БОНУСЫ ПРИМЕНЕНЫ':'ИСПОЛЬЗОВАТЬ ВСЕ БОНУСЫ'}</button><div class="bonus-availability"><span>ДОСТУПНО: ${formatBonus(state.bonusBalance)}</span><span>${bonusesApplied?`БУДЕТ ИСПОЛЬЗОВАНО: ${formatBonus(maxBonus)}`:'НЕ ПРИМЕНЕНЫ'}</span></div></section>`
-    : `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><button class="bonus-toggle" disabled>У ВАС ПОКА НЕТ БОНУСОВ</button><p class="checkout-note" style="margin:14px 0 0">Бонусы появятся после завершенных покупок или ручного начисления администратором.</p></section>`;
+    ? `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><p class="checkout-note">К заказу применяются все доступные бонусы одной кнопкой. Выбрать только часть бонусов нельзя. Стоимость пересылки не входит в начисление бонусов.</p><button class="bonus-toggle ${bonusesApplied?'active':''}" data-bonus-toggle>${bonusesApplied?'БОНУСЫ ПРИМЕНЕНЫ':'ИСПОЛЬЗОВАТЬ ВСЕ БОНУСЫ'}</button><div class="bonus-availability"><span>ДОСТУПНО: ${formatBonus(state.bonusBalance)}</span><span>${bonusesApplied?`БУДЕТ ИСПОЛЬЗОВАНО: ${formatBonus(maxBonus)}`:'НЕ ПРИМЕНЕНЫ'}</span></div></section>`
+    : `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><button class="bonus-toggle" disabled>У ВАС ПОКА НЕТ БОНУСОВ</button><p class="checkout-note" style="margin:14px 0 0">Бонусы появятся после завершенных покупок или ручного начисления администратором. Стоимость пересылки не входит в начисление бонусов.</p></section>`;
+  const canSubmit=['europost','belpost','cdek'].includes(c.delivery);
   document.getElementById('checkoutBody').innerHTML=`
     <section class="checkout-section"><h2 class="checkout-title">ВАШ ЗАКАЗ</h2><div class="checkout-items">${checkoutItemsMarkup()}</div></section>
-    <section class="checkout-section"><h2 class="checkout-title">СПОСОБ ПОЛУЧЕНИЯ</h2><div class="delivery-grid"><button class="delivery-option" data-delivery="pickup"><span class="delivery-radio"></span><span>САМОВЫВОЗ — НАПИСАТЬ МЕНЕДЖЕРУ</span></button><button class="delivery-option ${c.delivery==='europost'?'active':''}" data-delivery="europost"><span class="delivery-radio"></span><span>ЕВРОПОЧТА</span></button><button class="delivery-option ${c.delivery==='belpost'?'active':''}" data-delivery="belpost"><span class="delivery-radio"></span><span>БЕЛПОЧТА</span></button></div></section>
+    <section class="checkout-section"><h2 class="checkout-title">СПОСОБ ПОЛУЧЕНИЯ</h2><div class="delivery-grid"><button class="delivery-option" data-delivery="pickup"><span class="delivery-radio"></span><span>САМОВЫВОЗ — Г. ЛИДА</span></button><button class="delivery-option ${c.delivery==='europost'?'active':''}" data-delivery="europost"><span class="delivery-radio"></span><span>ЕВРОПОЧТА</span></button><button class="delivery-option ${c.delivery==='belpost'?'active':''}" data-delivery="belpost"><span class="delivery-radio"></span><span>БЕЛПОЧТА</span></button><button class="delivery-option ${c.delivery==='cdek'?'active':''}" data-delivery="cdek"><span class="delivery-radio"></span><span>CDEK</span></button><button class="delivery-option ${c.delivery==='shuttle'?'active':''}" data-delivery="shuttle"><span class="delivery-radio"></span><span>МАРШРУТКА</span></button></div></section>
     ${recipientSection}
     ${bonusSection}
-    <section class="checkout-section"><h2 class="checkout-title">ИТОГО</h2><div class="checkout-summary" id="checkoutSummary"></div><button class="black-btn checkout-submit" id="confirmOrderBtn" ${c.delivery?'':'disabled'}>ПОДТВЕРДИТЬ ЗАКАЗ</button><div class="form-error" id="checkoutError"></div></section>`;
+    <section class="checkout-section"><h2 class="checkout-title">ИТОГО</h2><div class="checkout-summary" id="checkoutSummary"></div>${canSubmit?`<button class="black-btn checkout-submit" id="confirmOrderBtn">ПОДТВЕРДИТЬ ЗАКАЗ</button>`:''}<div class="form-error" id="checkoutError"></div></section>`;
   renderCheckoutSummary();
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
@@ -690,13 +749,13 @@ function validateCheckout(){
   const c=state.checkout;
   if(!state.cart.length)return 'Корзина пуста.';
   if(!c.delivery)return 'Выберите способ получения.';
-  if(c.delivery==='pickup')return '';
+  if(c.delivery==='pickup'||c.delivery==='shuttle')return '';
   if(c.name.trim().length<5)return 'Укажите ФИО получателя.';
   if(c.phone.replace(/\D/g,'').length<7)return 'Укажите корректный номер телефона.';
   if(c.delivery==='europost'&&!c.europostBranch.trim())return 'Укажите отделение Европочты.';
-  if(c.delivery==='belpost'&&!c.address.trim())return 'Укажите адрес получателя.';
   if(c.delivery==='belpost'&&c.postalIndex.replace(/\D/g,'').length!==6)return 'Укажите шестизначный почтовый индекс.';
   if(c.delivery==='belpost'&&!c.postOffice.trim())return 'Укажите номер отделения Белпочты.';
+  if(c.delivery==='cdek'&&!c.cdekPoint.trim())return 'Укажите город и пункт CDEK.';
   return '';
 }
 function createPrototypeOrder(){
@@ -722,7 +781,7 @@ function createPrototypeOrder(){
   state.lastCreatedOrder=newOrder;
   state.selectedOrder=0;
   state.cart=[];
-  state.checkout={delivery:'',name:'',phone:'',europostBranch:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0};
+  state.checkout={delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',postOffice:'',comment:'',bonuses:0};
   mergeOrderCollections();
   persistState();
   if(!sendOrderToBot(payload)){
@@ -772,10 +831,12 @@ function renderProductGallery(product){
   const dots=document.getElementById('detailDots');
   if(!track||!dots)return;
   const images=productGalleryImages(product);
+  const extraUrl=String(product?.extraPhotosUrl||'').trim();
+  const slides=[...images.map((src,index)=>`<div class="detail-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(product?.name||product?.brand||'Товар')}" loading="${index===0?'eager':'lazy'}" draggable="false"></div>`),...(extraUrl?[`<div class="detail-slide detail-extra-slide"><div><span>БОЛЬШЕ МАТЕРИАЛОВ О ТОВАРЕ</span><strong>ДОПОЛНИТЕЛЬНЫЕ ФОТОГРАФИИ</strong><button type="button" data-extra-photos-url="${escapeHtml(extraUrl)}">ОТКРЫТЬ ФОТОГРАФИИ →</button></div></div>`]:[])];
   state.galleryIndex=0;
-  track.innerHTML=images.map((src,index)=>`<div class="detail-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(product?.name||product?.brand||'Товар')}" loading="${index===0?'eager':'lazy'}" draggable="false"></div>`).join('');
-  dots.innerHTML=images.length>1?images.map((_,index)=>`<button type="button" class="detail-dot ${index===0?'active':''}" data-gallery-index="${index}" aria-label="Фото ${index+1} из ${images.length}"></button>`).join(''):'';
-  dots.hidden=images.length<=1;
+  track.innerHTML=slides.join('');
+  dots.innerHTML=slides.length>1?slides.map((_,index)=>`<button type="button" class="detail-dot ${index===0?'active':''}" data-gallery-index="${index}" aria-label="Слайд ${index+1} из ${slides.length}"></button>`).join(''):'';
+  dots.hidden=slides.length<=1;
   requestAnimationFrame(()=>setProductGalleryIndex(0,{smooth:false}));
 }
 let galleryScrollFrame=0;
@@ -790,18 +851,21 @@ function handleProductGalleryScroll(){
 }
 
 function openProduct(index){
-  state.selectedProduct=index;state.selectedSize=null;const p=PRODUCTS[index];if(!p)return;
+  state.selectedProduct=index;const p=PRODUCTS[index];if(!p)return;
   const blocked=new Set(p.unavailableSizes||[]),available=availableSizes(p),soldOut=!available.length;
+  state.selectedSize=available.length===1?available[0]:null;
   renderProductGallery(p);
   document.getElementById('detailTitle').textContent=p.code+'  '+p.brand;
-  document.getElementById('detailDesc').textContent=soldOut?'Эта позиция временно закончилась. Товар снова станет доступен после обновления остатков.':(p.desc||'Оригинальная позиция из актуального наличия MESTNIY STORE. Выберите размер перед добавлением в корзину.');
+  document.getElementById('detailDesc').textContent=soldOut?'Эта позиция временно закончилась. Товар снова станет доступен после обновления остатков.':(p.desc||(available.length===1?'Единственный доступный размер выбран автоматически.':'Оригинальная позиция из актуального наличия MESTNIY STORE. Выберите размер перед добавлением в корзину.'));
   document.getElementById('detailPrice').innerHTML=priceMarkup(p);
+  const sizeLabel=document.getElementById('detailSizeLabel');if(sizeLabel)sizeLabel.textContent=available.length===1?'РАЗМЕР:':'ВЫБЕРИТЕ РАЗМЕР:';
   const sizeRow=document.getElementById('sizeRow');
-  sizeRow.innerHTML=(p.sizes||[]).map(size=>`<button class="size-btn" data-size="${size}" ${blocked.has(size)?'disabled':''}>${size}</button>`).join('')||'<p class="stock-note">ДОСТУПНЫХ РАЗМЕРОВ НЕТ</p>';
+  sizeRow.innerHTML=(p.sizes||[]).map(size=>`<button class="size-btn ${state.selectedSize===size?'active':''}" data-size="${size}" ${blocked.has(size)?'disabled':''}>${size}</button>`).join('')||'<p class="stock-note">ДОСТУПНЫХ РАЗМЕРОВ НЕТ</p>';
   sizeRow.style.setProperty('--size-opacity','0');
   sizeRow.style.setProperty('--size-width','0px');
   const add=document.getElementById('detailAdd');add.disabled=soldOut;add.textContent=soldOut?'НЕТ В НАЛИЧИИ':'ДОБАВИТЬ В КОРЗИНУ';
   showScreen('product');
+  if(state.selectedSize)requestAnimationFrame(()=>{const selected=sizeRow.querySelector('.size-btn.active');if(selected)moveSizeIndicator(selected,true)});
 }
 function moveSizeIndicator(button,immediate=false){
   const row=button?.closest('.size-row');if(!row)return;
@@ -811,7 +875,7 @@ function moveSizeIndicator(button,immediate=false){
   row.style.setProperty('--size-opacity','1');
   if(immediate)requestAnimationFrame(()=>requestAnimationFrame(()=>row.classList.remove('indicator-no-motion')));
 }
-function addToCart(index,size){const p=PRODUCTS[index];if(!p)return;const chosen=size||availableSizes(p)[0];if(!chosen)return;const existing=state.cart.find(x=>String(x.id)===String(p.id)&&x.size===chosen);if(existing)existing.qty++;else state.cart.push({id:String(p.id),size:chosen,qty:1});persistState();updateCounts();pulseNav('cart');showToast('Товар добавлен в корзину');}
+function addToCart(index,size){const p=PRODUCTS[index];if(!p)return;const sizes=availableSizes(p);const chosen=size||(sizes.length===1?sizes[0]:null);if(!chosen){openProduct(index);showToast('Выберите размер');return;}const existing=state.cart.find(x=>String(x.id)===String(p.id)&&x.size===chosen);if(existing)existing.qty++;else state.cart.push({id:String(p.id),size:chosen,qty:1});persistState();updateCounts();pulseNav('cart');showToast('Товар добавлен в корзину');}
 function toggleFav(productId){const id=String(productId);const added=!state.favorites.has(id);added?state.favorites.add(id):state.favorites.delete(id);persistState();renderCatalog();if(state.screen==='favorites')renderFavorites();updateCounts();pulseNav('favorites');showToast(added?'Добавлено в избранное':'Удалено из избранного');}
 function updateCounts(){const qty=state.cart.reduce((s,x)=>s+x.qty,0);const badge=document.getElementById('cartBadge');badge.textContent=qty;badge.classList.toggle('show',qty>0);const fav=document.getElementById('profileFavCount');if(fav)fav.textContent=state.favorites.size;const cart=document.getElementById('profileCartCount');if(cart)cart.textContent=qty;}
 function formatBonus(value){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(Math.max(0,Number(value)||0))}
@@ -919,6 +983,8 @@ document.addEventListener('keydown',e=>{
 });
 
 document.addEventListener('click',e=>{
+  const extraPhotos=e.target.closest('[data-extra-photos-url]');if(extraPhotos){const url=extraPhotos.dataset.extraPhotosUrl;try{if(window.Telegram?.WebApp?.openTelegramLink&&/^https:\/\/t\.me\//.test(url)){window.Telegram.WebApp.openTelegramLink(url)}else if(window.Telegram?.WebApp?.openLink){window.Telegram.WebApp.openLink(url)}else window.open(url,'_blank','noopener')}catch(_e){window.open(url,'_blank','noopener')}return}
+  const currencyButton=e.target.closest('[data-currency]');if(currencyButton){const currency=currencyButton.dataset.currency;if(CURRENCY_META[currency]){state.currency=currency;state.filters.priceMin='';state.filters.priceMax='';if(state.filterDraft){state.filterDraft.priceMin='';state.filterDraft.priceMax=''}persistState();renderCurrencySwitch();renderCatalog();renderFavorites();renderCart();if(state.screen==='product')openProduct(state.selectedProduct);if(state.screen==='checkout')renderCheckout();showToast(`Валюта: ${currency}`)}return}
   const galleryDot=e.target.closest('[data-gallery-index]');if(galleryDot){setProductGalleryIndex(Number(galleryDot.dataset.galleryIndex));return}
   const go=e.target.closest('[data-go]');if(go){showScreen(go.dataset.go);closeDrawer();return}
   const menuTab=e.target.closest('[data-menu-tab]');if(menuTab){state.menuTab=menuTab.dataset.menuTab;renderMenuDrawer();return}
@@ -937,7 +1003,7 @@ document.addEventListener('click',e=>{
   const search=e.target.closest('[data-search]');if(search){document.querySelector('.search-panel')?.classList.toggle('open');document.getElementById('searchInput')?.focus();return}
   const sortChoice=e.target.closest('[data-sort-mode]');if(sortChoice){state.sortMode=sortChoice.dataset.sortMode;closeDrawer();renderCatalog();showToast(SORT_OPTIONS[state.sortMode]?.label||'Сортировка изменена');return}
   const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return}
-  const act=e.target.closest('[data-action]');if(act){e.stopPropagation();if(act.disabled)return;const i=Number(act.dataset.id);if(act.dataset.action==='unfav')toggleFav(i);else addToCart(i);return}
+  const act=e.target.closest('[data-action]');if(act){e.stopPropagation();if(act.disabled)return;const i=Number(act.dataset.id);if(act.dataset.action==='unfav')toggleFav(PRODUCTS[i]?.id);else addToCart(i);return}
   const card=e.target.closest('[data-card]');if(card){openProduct(Number(card.dataset.card));return}
   const order=e.target.closest('[data-product]');if(order){openProduct(Number(order.dataset.product));return}
   const size=e.target.closest('[data-size]');if(size){if(size.disabled)return;state.selectedSize=size.dataset.size;document.querySelectorAll('.size-btn').forEach(b=>b.classList.toggle('active',b===size));moveSizeIndicator(size);return}
@@ -945,14 +1011,15 @@ document.addEventListener('click',e=>{
   const rem=e.target.closest('[data-remove]');if(rem){state.cart.splice(Number(rem.dataset.remove),1);persistState();renderCart();return}
   const qty=e.target.closest('[data-qty]');if(qty){const item=state.cart[Number(qty.dataset.index)];if(item){item.qty=Math.max(1,item.qty+Number(qty.dataset.qty));persistState();renderCart()}return}
   const filterTab=e.target.closest('[data-filter-tab]');if(filterTab){state.filterTab=filterTab.dataset.filterTab;renderFilterDrawer();return}
-  const filterChoiceButton=e.target.closest('[data-filter-key]');if(filterChoiceButton){if(!state.filterDraft)state.filterDraft={...state.filters};state.filterDraft[filterChoiceButton.dataset.filterKey]=filterChoiceButton.dataset.filterValue;renderFilterDrawer();return}
+  const filterChoiceButton=e.target.closest('[data-filter-key]');if(filterChoiceButton){if(!state.filterDraft)state.filterDraft={...state.filters};const key=filterChoiceButton.dataset.filterKey;state.filterDraft[key]=filterChoiceButton.dataset.filterValue;if(key==='category')state.filterDraft.size='all';renderFilterDrawer();return}
   if(e.target.closest('[data-filter-reset]')){state.filterDraft=defaultFilters();renderFilterDrawer();return}
   if(e.target.closest('[data-apply-filter]')){state.filters=normalizePriceRange(state.filterDraft||state.filters);state.filterDraft=null;closeDrawer();renderCatalog();showToast('Фильтры применены');return}
   if(e.target.id==='detailAdd'){if(!state.selectedSize){alert('Сначала выберите размер');return}addToCart(state.selectedProduct,state.selectedSize);showScreen('cart');return}
   if(e.target.id==='checkoutBtn'){showScreen('checkout');return}
   if(e.target.id==='confirmOrderBtn'){createPrototypeOrder();return}
   const successOrders=e.target.closest('[data-success-orders]');if(successOrders){state.orderFilter='all';document.querySelectorAll('[data-order-filter]').forEach((b,i)=>b.classList.toggle('active',i===0));showScreen('orders');return}
-  const delivery=e.target.closest('[data-delivery]');if(delivery){const type=delivery.dataset.delivery;if(type==='pickup'){openPickupManager();return}state.checkout.delivery=type;state.checkout.bonuses=0;renderCheckout();return}
+  const delivery=e.target.closest('[data-delivery]');if(delivery){const type=delivery.dataset.delivery;if(type==='pickup'){openManager('pickup');return}state.checkout.delivery=type;state.checkout.bonuses=0;renderCheckout();return}
+  if(e.target.closest('[data-open-shuttle-manager]')){openManager('shuttle');return}
   if(e.target.closest('[data-bonus-toggle]')){state.checkout.bonuses=state.checkout.bonuses?0:Math.min(state.bonusBalance,cartSubtotal());renderCheckout();return}
   const newsBack=e.target.closest('[data-news-back]');if(newsBack){showScreen('news',false);return}
   const newsAction=e.target.closest('[data-news-action]');if(newsAction){runNewsAction();return}
@@ -1006,7 +1073,7 @@ async function initApp(){
     await loadStoreData();
     loadPersistedState();
     renderHomeNews();
-    updateFilterButton();syncBonusBalance();updateSortButton();renderCatalog();renderFavorites();renderCart();renderProfileSummary();renderOrders();renderBonuses();
+    renderCurrencySwitch();updateFilterButton();syncBonusBalance();updateSortButton();renderCatalog();renderFavorites();renderCart();renderProfileSummary();renderOrders();renderBonuses();
     setTimeout(()=>refreshIdentityAndRemoteData(),180);
     setTimeout(()=>refreshIdentityAndRemoteData(),900);
     setInterval(()=>refreshIdentityAndRemoteData(),30000);

@@ -1239,3 +1239,69 @@
 /* Header brand navigates to catalog */
 .brand[data-go="catalog"]{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:opacity .22s ease}
 .brand[data-go="catalog"]:active{opacity:.58}
+
+
+/* Client edits v1 — stronger home contrast, category sizes, currencies and delivery */
+#home .home-shade{
+  background:linear-gradient(180deg,rgba(0,0,0,.68) 0%,rgba(0,0,0,.42) 35%,rgba(0,0,0,.74) 100%);
+}
+#home .home-bg{filter:brightness(.72) saturate(.86) contrast(1.05)}
+#home .news-card{
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 18px 52px rgba(0,0,0,.42),0 0 0 1px rgba(0,0,0,.08);
+}
+#home .home-news-feature-media img,#home .home-news-teaser-media img{filter:brightness(1.03) contrast(1.06)}
+.product-sizes{
+  margin:8px 0 2px;
+  color:#555;
+  font-family:var(--font-mono);
+  font-size:9px;
+  line-height:1.45;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+}
+.currency-switch{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  margin:0 0 20px;
+  border:1px solid #111;
+}
+.currency-switch button{
+  min-height:38px;
+  border-right:1px solid #111;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.08em;
+}
+.currency-switch button:last-child{border-right:0}
+.currency-switch button.active{background:#111;color:#fff}
+.category-size-warning{
+  width:100%;
+  min-height:52px;
+  padding:12px 14px;
+  background:#c92626;
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:10px;
+  line-height:1.45;
+  letter-spacing:.035em;
+  text-align:left;
+  text-transform:uppercase;
+  opacity:1;
+}
+.detail-extra-slide{
+  display:grid;
+  place-items:center;
+  padding:28px;
+  background:#111;
+  color:#fff;
+}
+.detail-extra-slide>div{width:100%;max-width:280px;text-align:left}
+.detail-extra-slide span{display:block;color:#aaa;font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.detail-extra-slide strong{display:block;margin-top:14px;font-family:var(--font-display);font-size:34px;line-height:.95;font-weight:500;text-transform:uppercase}
+.detail-extra-slide button{margin-top:30px;padding-bottom:5px;border-bottom:1px solid #fff;color:#fff;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.shuttle-section .black-btn{width:100%}
+@media(max-width:370px){
+  .detail-extra-slide strong{font-size:29px}
+  .product-sizes{font-size:8px}
+}

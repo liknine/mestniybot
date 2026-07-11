@@ -4586,8 +4586,12 @@ def order_delivery_label(order: Order) -> str:
         return "Европочта"
     if order.delivery_type == "belpost":
         return "Белпочта"
+    if order.delivery_type == "cdek":
+        return "CDEK"
     if order.delivery_type == "pickup":
-        return "Самовывоз"
+        return "Самовывоз — г. Лида"
+    if order.delivery_type == "shuttle":
+        return "Маршрутка"
     return str(order.delivery_service or order.delivery_type or "Не указано")
 
 
@@ -4637,13 +4641,14 @@ def order_admin_text(order: Order, notice: str | None = None) -> str:
     item_lines = "\n\n".join(order_item_text(item, index) for index, item in enumerate(order.items or [], 1)) or "Товары не указаны"
     delivery_lines = [f"Способ: <b>{html.escape(order_delivery_label(order))}</b>"]
     if order.delivery_type == "europost":
-        delivery_lines.append(f"Отделение: {html.escape(str(delivery_data.get('branch') or 'Не указано'))}")
+        delivery_lines.append(f"Город, отделение: {html.escape(str(delivery_data.get('branch') or 'Не указано'))}")
     elif order.delivery_type == "belpost":
         delivery_lines.extend([
-            f"Адрес: {html.escape(str(delivery_data.get('address') or 'Не указано'))}",
             f"Индекс: <code>{html.escape(str(delivery_data.get('postalIndex') or 'Не указан'))}</code>",
             f"Отделение: {html.escape(str(delivery_data.get('postOffice') or 'Не указано'))}",
         ])
+    elif order.delivery_type == "cdek":
+        delivery_lines.append(f"Город, пункт CDEK: {html.escape(str(delivery_data.get('branch') or 'Не указано'))}")
     comment = html.escape(str(order.comment or "").strip())
     created = order.created_at.strftime("%d.%m.%Y %H:%M") if order.created_at else "—"
     blocks = []
@@ -5188,8 +5193,8 @@ async def build_validated_order_items(session: AsyncSession, raw_items) -> tuple
 
 def validated_delivery_payload(data: dict) -> tuple[str, str | None, dict, dict, str]:
     delivery_type = clean_order_text(data.get("deliveryType"), 30).lower()
-    if delivery_type not in {"europost", "belpost"}:
-        raise ValueError("Выберите Европочту или Белпочту")
+    if delivery_type not in {"europost", "belpost", "cdek"}:
+        raise ValueError("Выберите Европочту, Белпочту или CDEK")
     customer_raw = data.get("customer") if isinstance(data.get("customer"), dict) else {}
     full_name = clean_order_text(customer_raw.get("fullName") or customer_raw.get("firstName"), 160)
     phone = clean_order_text(customer_raw.get("phone"), 40)
@@ -5201,21 +5206,24 @@ def validated_delivery_payload(data: dict) -> tuple[str, str | None, dict, dict,
     if delivery_type == "europost":
         branch = clean_order_text(raw_delivery.get("branch"), 180)
         if not branch:
-            raise ValueError("Укажите отделение Европочты")
+            raise ValueError("Укажите город и отделение Европочты")
         delivery_service = "Европочта"
         delivery_data = {"branch": branch}
-    else:
-        address = clean_order_text(raw_delivery.get("address"), 250)
+    elif delivery_type == "belpost":
         postal_index = clean_order_text(raw_delivery.get("postalIndex"), 20)
         post_office = clean_order_text(raw_delivery.get("postOffice"), 120)
-        if not address:
-            raise ValueError("Укажите адрес получателя")
         if len(re.sub(r"\D", "", postal_index)) != 6:
             raise ValueError("Укажите шестизначный почтовый индекс")
         if not post_office:
             raise ValueError("Укажите номер отделения Белпочты")
         delivery_service = "Белпочта"
-        delivery_data = {"address": address, "postalIndex": postal_index, "postOffice": post_office}
+        delivery_data = {"postalIndex": postal_index, "postOffice": post_office}
+    else:
+        branch = clean_order_text(raw_delivery.get("branch"), 220)
+        if not branch:
+            raise ValueError("Укажите город и пункт CDEK")
+        delivery_service = "CDEK"
+        delivery_data = {"branch": branch}
     customer = {"fullName": full_name, "phone": phone}
     comment = clean_order_text(data.get("comment"), 700)
     return delivery_type, delivery_service, delivery_data, customer, comment
