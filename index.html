@@ -10,17 +10,30 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Roboto+Condensed:wght@500;600&amp;display=swap" rel="stylesheet"/>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="style.css?v=mestniy_client_edits_v1" rel="stylesheet"/>
+<link href="style.css?v=mestniy_home_editorial_v1" rel="stylesheet"/>
 </head>
 <body>
 <div class="app-loader" id="appLoader">ЗАГРУЗКА КАТАЛОГА</div><div class="app" id="app">
 <section class="screen active" id="home">
-<img alt="MESTNIY STORE" class="home-bg" src="assets/home-hero.webp"/>
+<img alt="Интерьер MESTNIY STORE" class="home-bg" src="assets/home-exhibition.jpg"/>
 <div class="home-shade"></div>
 <div class="home-inner">
 <div class="home-title">MESTNIY STORE</div>
+<div class="home-spacer" aria-hidden="true"></div>
+<section class="home-news-shell is-open" id="homeNewsShell" aria-label="Новости магазина">
+<div class="home-news-head">
+<button class="home-news-toggle" data-home-news-toggle type="button" aria-expanded="true" aria-controls="homeNewsPanel">
+<span>НОВОСТИ</span>
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg>
+</button>
+<button class="home-news-all" data-go="news" type="button"><span>СМОТРЕТЬ ВСЕ</span><b aria-hidden="true">→</b></button>
+</div>
+<div class="home-news-panel" id="homeNewsPanel">
 <div class="home-news" id="homeNews"></div>
-<button class="home-cta" data-go="catalog"><span>ПЕРЕЙТИ В КАТАЛОГ</span><svg aria-hidden="true" class="home-cta-arrow" focusable="false" viewbox="0 0 132 10"><path d="M1 5H126L122 1M126 5L122 9"></path></svg></button>
+</div>
+</section>
+<button class="home-cta" data-go="catalog" type="button"><span>ПЕРЕЙТИ В КАТАЛОГ</span><svg aria-hidden="true" class="home-cta-arrow" focusable="false" viewbox="0 0 132 10"><path d="M1 5H126L122 1M126 5L122 9"></path></svg></button>
+<div class="home-down-cue" aria-hidden="true"><svg viewbox="0 0 24 24"><path d="m5 9 7 7 7-7"></path></svg></div>
 </div>
 </section>
 <section class="screen" id="catalog">
@@ -148,6 +161,6 @@
 <div id="drawerBody"></div>
 </aside>
 </div>
-<script defer="" src="app.js?v=mestniy_belpost_no_branch_v1"></script>
+<script defer="" src="app.js?v=mestniy_home_editorial_v1"></script>
 </body>
 </html>

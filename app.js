@@ -12,7 +12,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_client_edits_v1';
+const BUILD_VERSION='mestniy_home_editorial_v1';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -369,27 +369,27 @@ async function refreshIdentityAndRemoteData(){
 }
 function renderHomeNews(){
   const box=document.getElementById('homeNews');if(!box)return;
-  const items=NEWS.slice(0,2);
-  if(!items.length){
-    box.innerHTML=`<button class="home-news-empty" data-go="catalog"><span>НОВОСТИ СКОРО ПОЯВЯТСЯ</span><b>ОТКРЫТЬ КАТАЛОГ →</b></button>`;
+  if(!NEWS.length){
+    box.innerHTML=`<button class="home-news-card home-news-empty-card" data-go="catalog" type="button"><span class="home-news-card-media home-news-card-placeholder"></span><span class="home-news-card-body"><small>НОВОСТИ</small><strong>СКОРО ЗДЕСЬ ПОЯВЯТСЯ ОБНОВЛЕНИЯ</strong><i aria-hidden="true">→</i></span></button>`;
     return;
   }
-  const feature=items[0];
-  const teaser=items[1];
-  box.innerHTML=`
-    <button class="news-card home-news-feature" data-news="0">
-      <span class="home-news-feature-media"><img src="${escapeHtml(feature.image)}" alt="${escapeHtml(feature.title)}"></span>
-      <span class="home-news-feature-copy">
-        <small>${escapeHtml(feature.category||'НОВОСТИ')}</small>
-        <strong>${escapeHtml(feature.title)}</strong>
+  box.innerHTML=NEWS.map((item,index)=>`
+    <button class="home-news-card" data-news="${index}" type="button">
+      <span class="home-news-card-media"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="${index>1?'lazy':'eager'}"></span>
+      <span class="home-news-card-body">
+        <small>${escapeHtml(item.date||item.category||'MESTNIY STORE')}</small>
+        <strong>${escapeHtml(item.title)}</strong>
         <i aria-hidden="true">→</i>
       </span>
-    </button>
-    ${teaser?`<button class="news-card home-news-teaser" data-news="1">
-      <span class="home-news-teaser-media"><img src="${escapeHtml(teaser.image)}" alt="${escapeHtml(teaser.title)}"></span>
-      <span class="home-news-teaser-copy"><small>${escapeHtml(teaser.category||'НОВОСТИ')}</small><strong>${escapeHtml(teaser.title)}</strong></span>
-      <i aria-hidden="true">→</i>
-    </button>`:''}`;
+    </button>`).join('');
+}
+function toggleHomeNews(force){
+  const shell=document.getElementById('homeNewsShell');
+  const button=shell?.querySelector('[data-home-news-toggle]');
+  if(!shell||!button)return;
+  const next=typeof force==='boolean'?force:!shell.classList.contains('is-open');
+  shell.classList.toggle('is-open',next);
+  button.setAttribute('aria-expanded',String(next));
 }
 function buildOrderPayload(clientRequestId){
   const c=state.checkout;
@@ -983,6 +983,7 @@ document.addEventListener('keydown',e=>{
 });
 
 document.addEventListener('click',e=>{
+  const homeNewsToggle=e.target.closest('[data-home-news-toggle]');if(homeNewsToggle){toggleHomeNews();return}
   const extraPhotos=e.target.closest('[data-extra-photos-url]');if(extraPhotos){const url=extraPhotos.dataset.extraPhotosUrl;try{if(window.Telegram?.WebApp?.openTelegramLink&&/^https:\/\/t\.me\//.test(url)){window.Telegram.WebApp.openTelegramLink(url)}else if(window.Telegram?.WebApp?.openLink){window.Telegram.WebApp.openLink(url)}else window.open(url,'_blank','noopener')}catch(_e){window.open(url,'_blank','noopener')}return}
   const currencyButton=e.target.closest('[data-currency]');if(currencyButton){const currency=currencyButton.dataset.currency;if(CURRENCY_META[currency]){state.currency=currency;state.filters.priceMin='';state.filters.priceMax='';if(state.filterDraft){state.filterDraft.priceMin='';state.filterDraft.priceMax=''}persistState();renderCurrencySwitch();renderCatalog();renderFavorites();renderCart();if(state.screen==='product')openProduct(state.selectedProduct);if(state.screen==='checkout')renderCheckout();showToast(`Валюта: ${currency}`)}return}
   const galleryDot=e.target.closest('[data-gallery-index]');if(galleryDot){setProductGalleryIndex(Number(galleryDot.dataset.galleryIndex));return}
