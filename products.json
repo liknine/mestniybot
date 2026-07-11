@@ -2670,18 +2670,24 @@
     "brand": "Nike",
     "name": "Тест товар",
     "description": "Товар не покупать, это проверка",
-    "price_byn": 150.0,
+    "price_byn": 145.0,
     "prices": {
-      "BYN": 150.0,
-      "RUB": 3982.0,
-      "USD": 52.43,
+      "BYN": 145.0,
+      "RUB": 3849.0,
+      "USD": 50.69,
       "product_type": "stock",
       "size_stock": {
         "40": 0,
         "43": 1
       },
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9587"
+      "extra_photos_url": "https://t.me/mestniystore/9587",
+      "old_price": 150.0,
+      "old_prices": {
+        "BYN": 150.0,
+        "RUB": 3982.0,
+        "USD": 52.43
+      }
     },
     "sizes": [
       "40",
