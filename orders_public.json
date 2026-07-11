@@ -2,14 +2,14 @@
   {
     "id": 4,
     "user_id": "1639462053",
-    "status": "accepted",
+    "status": "shipped",
     "total": 150.0,
     "currency": "BYN",
     "delivery": "Европочта",
     "place": "Данные переданы менеджеру",
     "client_request_id": "web-1639462053-1783777876368-b3wn1h",
     "created_at": "2026-07-11T16:51:16.574635",
-    "updated_at": "2026-07-11T16:51:16.573235",
+    "updated_at": "2026-07-11T16:51:20.408227",
     "items": [
       {
         "product_id": 186,
