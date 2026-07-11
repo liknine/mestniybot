@@ -26,14 +26,14 @@
   {
     "id": 3,
     "user_id": "1639462053",
-    "status": "ready",
+    "status": "completed",
     "total": 2400.0,
     "currency": "BYN",
     "delivery": "Европочта",
     "place": "Данные переданы менеджеру",
     "client_request_id": "web-1639462053-1783777787844-jabn6s",
     "created_at": "2026-07-11T16:49:48.023168",
-    "updated_at": "2026-07-11T16:52:38.087036",
+    "updated_at": "2026-07-11T16:58:33.994609",
     "items": [
       {
         "product_id": 187,
