@@ -17,6 +17,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -48,6 +51,9 @@
     "sizes": [
       "UNI"
     ],
+    "size_stock": {
+      "UNI": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -79,6 +85,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -110,6 +119,9 @@
     "sizes": [
       "S"
     ],
+    "size_stock": {
+      "S": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -141,6 +153,9 @@
     "sizes": [
       "ONE SIZE"
     ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -172,6 +187,9 @@
     "sizes": [
       "40"
     ],
+    "size_stock": {
+      "40": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -203,6 +221,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -234,6 +255,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -265,6 +289,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -296,6 +323,9 @@
     "sizes": [
       "UNI"
     ],
+    "size_stock": {
+      "UNI": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -327,6 +357,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -358,6 +391,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -389,6 +425,9 @@
     "sizes": [
       "XL"
     ],
+    "size_stock": {
+      "XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -420,6 +459,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -451,6 +493,9 @@
     "sizes": [
       "ONE SIZE"
     ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -482,6 +527,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -513,6 +561,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -544,6 +595,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -575,6 +629,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -606,6 +663,9 @@
     "sizes": [
       "ONE SIZE"
     ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -637,6 +697,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -668,6 +731,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -701,6 +767,11 @@
       "42",
       "42.5"
     ],
+    "size_stock": {
+      "41": 1,
+      "42": 1,
+      "42.5": 1
+    },
     "stock": 7,
     "product_type": "stock",
     "section": "stock",
@@ -732,6 +803,9 @@
     "sizes": [
       "L"
     ],
+    "size_stock": {
+      "L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -763,6 +837,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -794,6 +871,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -825,6 +905,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -856,6 +939,9 @@
     "sizes": [
       "L-XL"
     ],
+    "size_stock": {
+      "L-XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -887,6 +973,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -918,6 +1007,9 @@
     "sizes": [
       "41"
     ],
+    "size_stock": {
+      "41": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -949,6 +1041,9 @@
     "sizes": [
       "43"
     ],
+    "size_stock": {
+      "43": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -980,6 +1075,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1011,6 +1109,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1042,6 +1143,9 @@
     "sizes": [
       "L-XL"
     ],
+    "size_stock": {
+      "L-XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1073,6 +1177,9 @@
     "sizes": [
       "XS - S"
     ],
+    "size_stock": {
+      "XS - S": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1104,6 +1211,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1135,6 +1245,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1166,6 +1279,9 @@
     "sizes": [
       "XL"
     ],
+    "size_stock": {
+      "XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1197,6 +1313,9 @@
     "sizes": [
       "44"
     ],
+    "size_stock": {
+      "44": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1229,6 +1348,10 @@
       "43",
       "44"
     ],
+    "size_stock": {
+      "43": 1,
+      "44": 1
+    },
     "stock": 2,
     "product_type": "stock",
     "section": "stock",
@@ -1260,6 +1383,9 @@
     "sizes": [
       "40.5-41"
     ],
+    "size_stock": {
+      "40.5-41": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1291,6 +1417,9 @@
     "sizes": [
       "42.5"
     ],
+    "size_stock": {
+      "42.5": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1322,6 +1451,9 @@
     "sizes": [
       "41.5"
     ],
+    "size_stock": {
+      "41.5": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1353,6 +1485,9 @@
     "sizes": [
       "43"
     ],
+    "size_stock": {
+      "43": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1384,6 +1519,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1415,6 +1553,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1446,6 +1587,9 @@
     "sizes": [
       "L"
     ],
+    "size_stock": {
+      "L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1477,6 +1621,9 @@
     "sizes": [
       "XS-S"
     ],
+    "size_stock": {
+      "XS-S": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1508,6 +1655,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1539,6 +1689,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1570,6 +1723,9 @@
     "sizes": [
       "42"
     ],
+    "size_stock": {
+      "42": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1601,6 +1757,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1633,6 +1792,10 @@
       "41",
       "42"
     ],
+    "size_stock": {
+      "41": 1,
+      "42": 1
+    },
     "stock": 2,
     "product_type": "stock",
     "section": "stock",
@@ -1664,6 +1827,9 @@
     "sizes": [
       "XL"
     ],
+    "size_stock": {
+      "XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1695,6 +1861,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1726,6 +1895,9 @@
     "sizes": [
       "L"
     ],
+    "size_stock": {
+      "L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1757,6 +1929,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1788,6 +1963,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1819,6 +1997,9 @@
     "sizes": [
       "M-L"
     ],
+    "size_stock": {
+      "M-L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1830,37 +2011,6 @@
       "https://liknine.github.io/mestniybot/images/product_167_b3b7ee3d.jpg",
       "https://liknine.github.io/mestniybot/images/product_167_61e4f746.jpg",
       "https://liknine.github.io/mestniybot/images/product_167_78f81080.jpg"
-    ]
-  },
-  {
-    "id": 168,
-    "category_id": 8,
-    "brand": "Stone Island",
-    "name": "Шорты Stone Island",
-    "description": "Отличное состояние, после покраски, цвет минимально получился неравномерно, но это только в некоторых местах, в целом, всё хорошо. Оригинал. Продажа без патча. Коллекция: 70.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7500.0,
-      "USD": 93.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10351"
-    },
-    "sizes": [
-      "M"
-    ],
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10351",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_168_21dd365a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_168_4e1b30d6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_168_14f2c5e3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_168_548b271d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_168_8f1cd871.jpg"
     ]
   },
   {
@@ -1881,6 +2031,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1912,6 +2065,9 @@
     "sizes": [
       "XL"
     ],
+    "size_stock": {
+      "XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1943,6 +2099,9 @@
     "sizes": [
       "43"
     ],
+    "size_stock": {
+      "43": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -1974,6 +2133,9 @@
     "sizes": [
       "XS-S"
     ],
+    "size_stock": {
+      "XS-S": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2005,6 +2167,9 @@
     "sizes": [
       "L"
     ],
+    "size_stock": {
+      "L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2036,6 +2201,9 @@
     "sizes": [
       "L"
     ],
+    "size_stock": {
+      "L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2067,6 +2235,9 @@
     "sizes": [
       "41"
     ],
+    "size_stock": {
+      "41": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2098,6 +2269,9 @@
     "sizes": [
       "L"
     ],
+    "size_stock": {
+      "L": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2129,6 +2303,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2160,6 +2337,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2191,6 +2371,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2222,6 +2405,9 @@
     "sizes": [
       "ONE SIZE"
     ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
     "stock": 10,
     "product_type": "stock",
     "section": "stock",
@@ -2250,6 +2436,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2281,6 +2470,9 @@
     "sizes": [
       "L-XL"
     ],
+    "size_stock": {
+      "L-XL": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2312,6 +2504,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2343,6 +2538,9 @@
     "sizes": [
       "S-M"
     ],
+    "size_stock": {
+      "S-M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2374,6 +2572,9 @@
     "sizes": [
       "M"
     ],
+    "size_stock": {
+      "M": 1
+    },
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
@@ -2385,6 +2586,43 @@
       "https://liknine.github.io/mestniybot/images/product_185_0d2901f6.jpg",
       "https://liknine.github.io/mestniybot/images/product_185_bdd7866b.jpg",
       "https://liknine.github.io/mestniybot/images/product_185_ab3fe30c.jpg"
+    ]
+  },
+  {
+    "id": 186,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Тест товар",
+    "description": "Товар не покупать, это проверка",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 3982.0,
+      "USD": 52.43,
+      "product_type": "stock",
+      "size_stock": {
+        "40": 1,
+        "43": 3
+      },
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/9587"
+    },
+    "sizes": [
+      "40",
+      "43"
+    ],
+    "size_stock": {
+      "40": 1,
+      "43": 3
+    },
+    "stock": 4,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/9587",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_f394ba24.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_461903d3.jpg"
     ]
   }
 ]
