@@ -257,6 +257,13 @@ class AppSetting(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, onupdate=datetime.now)
 
 
+class AdminProductDraft(Base):
+    __tablename__ = "admin_product_drafts"
+    user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    payload: Mapped[dict] = mapped_column(JSON)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+
 class Category(Base):
     __tablename__ = "categories"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -422,6 +429,75 @@ album_locks = {}
 product_image_state_locks = {}
 fix_product_buffer = {}
 fix_product_locks = {}
+
+# Черновик нового товара дублируется в SQLite. Это защищает предпросмотр от
+# потери остальных полей при смене FSM-состояния или перезапуске бота.
+PRODUCT_DRAFT_KEYS = {
+    "draft_owner_id",
+    "product_type",
+    "brand",
+    "name",
+    "category_id",
+    "price_byn",
+    "price_rub",
+    "price_usd",
+    "sizes",
+    "size_stock",
+    "stock",
+    "description",
+    "condition",
+    "images",
+    "extra_photos_url",
+    "extra_photos_asked",
+    "edit_return",
+}
+
+
+def product_draft_payload(data: dict) -> dict:
+    return {key: data.get(key) for key in PRODUCT_DRAFT_KEYS if key in data}
+
+
+async def save_product_draft(user_id: int, data: dict) -> None:
+    if not user_id:
+        return
+    payload = product_draft_payload(data)
+    payload["draft_owner_id"] = int(user_id)
+    async with async_session() as session:
+        draft = await session.get(AdminProductDraft, int(user_id))
+        if draft:
+            draft.payload = payload
+            draft.updated_at = datetime.now()
+        else:
+            session.add(AdminProductDraft(user_id=int(user_id), payload=payload))
+        await session.commit()
+
+
+async def load_product_draft(user_id: int) -> dict:
+    if not user_id:
+        return {}
+    async with async_session() as session:
+        draft = await session.get(AdminProductDraft, int(user_id))
+    return dict(draft.payload or {}) if draft else {}
+
+
+async def delete_product_draft(user_id: int) -> None:
+    if not user_id:
+        return
+    async with async_session() as session:
+        draft = await session.get(AdminProductDraft, int(user_id))
+        if draft:
+            await session.delete(draft)
+            await session.commit()
+
+
+async def restore_product_draft_state(user_id: int, state: FSMContext) -> dict:
+    """Возвращает полный черновик, сохраняя поверх него только новые значения."""
+    current = product_draft_payload(await state.get_data())
+    stored = product_draft_payload(await load_product_draft(user_id))
+    merged = {**stored, **current}
+    merged["draft_owner_id"] = int(user_id)
+    await state.set_data(merged)
+    return merged
 
 # ==================== TELEGRAM БОТ ====================
 
@@ -900,7 +976,7 @@ def get_product_actions_keyboard(product_id: int, has_discount: bool = False):
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
-def get_product_edit_keyboard(product_id: int):
+def get_existing_product_edit_keyboard(product_id: int):
     return InlineKeyboardMarkup(inline_keyboard=[
         [
             InlineKeyboardButton(text="Название", callback_data=f"pf:{product_id}:name"),
@@ -1958,7 +2034,7 @@ async def admin_product_edit_menu(callback: CallbackQuery):
         return
     await callback.message.answer(
         f"✏️ <b>Редактирование товара #{product_id}</b>\n\n{product.name}\n\nВыберите поле:",
-        reply_markup=get_product_edit_keyboard(product_id),
+        reply_markup=get_existing_product_edit_keyboard(product_id),
     )
     await callback.answer()
 
@@ -2726,8 +2802,9 @@ async def admin_add_product_btn(callback: CallbackQuery, state: FSMContext):
         await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
 
+    await delete_product_draft(callback.from_user.id)
     await state.clear()
-    await state.update_data(product_type="stock")
+    await state.update_data(product_type="stock", draft_owner_id=callback.from_user.id)
     await callback.message.answer(
         "➕ <b>Новый товар</b>\n\n"
         "Шаг 1 из 8: отправьте <b>название бренда</b>.\n"
@@ -2744,8 +2821,9 @@ async def cmd_add_product(message: Message, state: FSMContext):
         await message.answer("⛔ Эта команда только для администраторов")
         return
 
+    await delete_product_draft(message.from_user.id)
     await state.clear()
-    await state.update_data(product_type="stock")
+    await state.update_data(product_type="stock", draft_owner_id=message.from_user.id)
     await message.answer(
         "➕ <b>Новый товар</b>\n\n"
         "Шаг 1 из 8: отправьте <b>название бренда</b>.\n"
@@ -2776,7 +2854,7 @@ def get_product_preview_keyboard() -> InlineKeyboardMarkup:
     ])
 
 
-def get_product_edit_keyboard(product_type: str) -> InlineKeyboardMarkup:
+def get_product_draft_edit_keyboard(product_type: str) -> InlineKeyboardMarkup:
     buttons = [
         [
             InlineKeyboardButton(text="Бренд", callback_data="product_edit_brand"),
@@ -2867,6 +2945,10 @@ def format_size_stock(data: dict) -> str:
 
 async def send_product_preview(message: Message, state: FSMContext):
     data = await state.get_data()
+    owner_id = int(data.get("draft_owner_id") or 0)
+    if owner_id:
+        data = await restore_product_draft_state(owner_id, state)
+        await save_product_draft(owner_id, data)
     product_type = data.get("product_type", "stock")
     cat_data = CATEGORIES.get(data.get("category_id"), {})
     brand_name = display_brand_name(data.get("brand")) or "Без бренда"
@@ -2907,7 +2989,7 @@ async def send_product_preview(message: Message, state: FSMContext):
 
 
 async def return_to_preview_after_edit(message: Message, state: FSMContext) -> bool:
-    data = await state.get_data()
+    data = await restore_product_draft_state(message.from_user.id, state)
     if not data.get("edit_return"):
         return False
     await state.update_data(edit_return=False)
@@ -3372,11 +3454,14 @@ async def edit_callback_message(callback: CallbackQuery, text: str, reply_markup
 
 @router.callback_query(F.data == "product_edit_menu")
 async def product_edit_menu(callback: CallbackQuery, state: FSMContext):
-    data = await state.get_data()
+    data = await restore_product_draft_state(callback.from_user.id, state)
+    if not data.get("name") and not data.get("category_id") and not data.get("images"):
+        await callback.answer("Черновик товара не найден. Начните добавление заново.", show_alert=True)
+        return
     await edit_callback_message(
         callback,
         "✏️ <b>Что изменить?</b>\n\nПосле изменения вы снова увидите предпросмотр товара.",
-        get_product_edit_keyboard(data.get("product_type", "stock"))
+        get_product_draft_edit_keyboard(data.get("product_type", "stock"))
     )
     await state.set_state(AddProduct.edit_field)
     await callback.answer()
@@ -3384,11 +3469,19 @@ async def product_edit_menu(callback: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == "product_preview_back")
 async def product_preview_back(callback: CallbackQuery, state: FSMContext):
+    data = await restore_product_draft_state(callback.from_user.id, state)
+    if not data.get("name") and not data.get("category_id") and not data.get("images"):
+        await callback.answer("Черновик товара не найден. Начните добавление заново.", show_alert=True)
+        return
     await callback.answer()
     await send_product_preview(callback.message, state)
 
 
 async def start_field_edit(callback: CallbackQuery, state: FSMContext, field: str):
+    data = await restore_product_draft_state(callback.from_user.id, state)
+    if not data.get("name") and not data.get("category_id") and not data.get("images"):
+        await callback.answer("Черновик товара не найден. Начните добавление заново.", show_alert=True)
+        return
     await state.update_data(edit_return=True)
 
     prompts = {
@@ -3437,6 +3530,7 @@ async def edit_new_product_extra_photos(callback: CallbackQuery, state: FSMConte
 
 @router.callback_query(F.data == "product_edit_category")
 async def edit_new_product_category(callback: CallbackQuery, state: FSMContext):
+    await restore_product_draft_state(callback.from_user.id, state)
     await state.update_data(edit_return=True)
     await callback.message.answer("Выберите новую <b>категорию</b>:", reply_markup=get_category_keyboard())
     await state.set_state(AddProduct.category)
@@ -3445,6 +3539,7 @@ async def edit_new_product_category(callback: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == "product_edit_condition")
 async def edit_new_product_condition(callback: CallbackQuery, state: FSMContext):
+    await restore_product_draft_state(callback.from_user.id, state)
     await state.update_data(edit_return=True)
     await callback.message.answer("Выберите новое <b>состояние товара</b>:", reply_markup=get_condition_keyboard())
     await state.set_state(AddProduct.condition)
@@ -3453,6 +3548,7 @@ async def edit_new_product_condition(callback: CallbackQuery, state: FSMContext)
 
 @router.callback_query(F.data == "product_edit_images")
 async def edit_new_product_images(callback: CallbackQuery, state: FSMContext):
+    await restore_product_draft_state(callback.from_user.id, state)
     await state.update_data(images=[], edit_return=True)
     await callback.answer()
     await ask_product_images(callback.message, state, step_text="Замена фото")
@@ -3460,7 +3556,7 @@ async def edit_new_product_images(callback: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == "publish_product")
 async def publish_product(callback: CallbackQuery, state: FSMContext):
-    data = await state.get_data()
+    data = await restore_product_draft_state(callback.from_user.id, state)
     required_fields = ["category_id", "name", "price_byn", "sizes", "images"]
     missing = [field for field in required_fields if not data.get(field)]
     if missing:
@@ -3472,6 +3568,7 @@ async def publish_product(callback: CallbackQuery, state: FSMContext):
 
 
 async def finish_product_creation(target_message, state: FSMContext, data: dict, edit: bool = False):
+    draft_owner_id = int(data.get("draft_owner_id") or 0)
     try:
         images = (data.get("images") or [])[:MAX_PRODUCT_IMAGES]
         product_type = data.get("product_type", "stock")
@@ -3539,6 +3636,7 @@ async def finish_product_creation(target_message, state: FSMContext, data: dict,
             await target_message.answer(text, reply_markup=get_admin_keyboard())
 
         await state.clear()
+        await delete_product_draft(draft_owner_id)
         print(f"✅ Товар #{product_id} добавлен: {data['name']}")
 
         success = await auto_push_to_github()
@@ -3570,6 +3668,7 @@ async def process_images_invalid(message: Message, state: FSMContext):
 
 @router.callback_query(F.data == "admin_cancel")
 async def admin_cancel(callback: CallbackQuery, state: FSMContext):
+    await delete_product_draft(callback.from_user.id)
     await state.clear()
     try:
         if callback.message.photo:
