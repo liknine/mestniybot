@@ -2716,7 +2716,7 @@
       "product_type": "stock",
       "size_stock": {
         "44": 1,
-        "43": 2
+        "43": 1
       },
       "condition": "Хорошее",
       "extra_photos_url": "https://t.me/mestniystore/9587"
@@ -2727,9 +2727,9 @@
     ],
     "size_stock": {
       "44": 1,
-      "43": 2
+      "43": 1
     },
-    "stock": 3,
+    "stock": 2,
     "product_type": "stock",
     "section": "stock",
     "condition": "Хорошее",
