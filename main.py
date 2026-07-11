@@ -7,6 +7,9 @@ from datetime import datetime
 from typing import Optional
 import json
 import uuid
+import os
+import re
+from pathlib import Path
 
 
 
@@ -29,12 +32,45 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 # ==================== КОНФИГ ====================
 
-BOT_TOKEN = "8639878235:AAGHQOmcyU_wI8b4MD1ktxYg0lFWK6AK-js"
-ADMIN_IDS = [1639462053, 8465820993]
-WEBAPP_URL = "https://liknine.github.io/mestniybot/?v=webapp_redesign_v2"
-DATABASE_URL = "sqlite+aiosqlite:///./shop.db"
-API_HOST = "0.0.0.0"
-API_PORT = 8080
+def load_env_file(path: Path):
+    """Минимальный .env-loader без внешних зависимостей."""
+    if not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
+
+def parse_admin_ids(value: str):
+    ids = []
+    for part in str(value or "").replace(";", ",").split(","):
+        part = part.strip()
+        if not part:
+            continue
+        try:
+            ids.append(int(part))
+        except ValueError:
+            print(f"⚠️ Некорректный ADMIN_ID пропущен: {part}")
+    return ids
+
+PROJECT_DIR = Path(__file__).resolve().parent
+load_env_file(PROJECT_DIR / ".env")
+
+BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
+if not BOT_TOKEN:
+    raise RuntimeError("BOT_TOKEN не задан. Создайте .env рядом с main.py и укажите BOT_TOKEN=...")
+
+ADMIN_IDS = parse_admin_ids(os.getenv("ADMIN_IDS", "1639462053,8465820993"))
+WEBAPP_URL = os.getenv("WEBAPP_URL", "https://liknine.github.io/mestniybot/?v=restore_1")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./shop.db")
+API_HOST = os.getenv("API_HOST", "0.0.0.0")
+API_PORT = int(os.getenv("API_PORT", "8080"))
+MAX_PRODUCT_IMAGES = int(os.getenv("MAX_PRODUCT_IMAGES", "5"))
+PRODUCT_CONDITIONS = ["Новое", "Отличное", "Очень хорошее", "Хорошее"]
 
 # Курсы валют (без EUR)
 CURRENCIES = {
@@ -223,21 +259,33 @@ async def get_exchange_rates():
 # ==================== FSM STATES ====================
 
 class AddProduct(StatesGroup):
-    category = State()
+    product_type = State()
     brand = State()
     name = State()
-    description = State()
+    category = State()
     price_byn = State()
+    sizes = State()
+    description = State()
+    condition = State()
+    images = State()
+    extra_photos_url = State()
+    preview = State()
+    edit_field = State()
+
+    # Старые состояния оставлены для совместимости с активными FSM-сессиями.
     price_rub = State()
     price_usd = State()
-    sizes = State()
     stock = State()
-    images = State()
 
 # ==================== FIX PRODUCT STATE ====================
 
 class FixProduct(StatesGroup):
     waiting_photos = State()
+
+class AddUpdate(StatesGroup):
+    title = State()
+    photo = State()
+    post_url = State()
 
 # ==================== ГЛОБАЛЬНЫЕ БУФЕРЫ ====================
 
@@ -253,15 +301,24 @@ bot: Bot = None
 
 def get_main_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🛍 Открыть каталог", web_app=WebAppInfo(url=WEBAPP_URL))],
-        [InlineKeyboardButton(text="ℹ️ Информация", callback_data="info")]
+        [InlineKeyboardButton(text="Открыть каталог🛒", web_app=WebAppInfo(url=WEBAPP_URL))],
+        [InlineKeyboardButton(text="Информация о доставке", callback_data="delivery_info")],
+        [InlineKeyboardButton(text="Привезем вещь по вашим критериям", callback_data="custom_order_info")],
+        [InlineKeyboardButton(text="Отзывы✅", callback_data="reviews_info")],
+        [InlineKeyboardButton(text="Обратиться в поддержку⚙️", url="https://t.me/manager_of_mestniy")]
     ])
 
 def get_admin_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🛍 Открыть каталог", web_app=WebAppInfo(url=WEBAPP_URL))],
+        [InlineKeyboardButton(text="Открыть каталог🛒", web_app=WebAppInfo(url=WEBAPP_URL))],
+        [InlineKeyboardButton(text="Информация о доставке", callback_data="delivery_info")],
+        [InlineKeyboardButton(text="Привезем вещь по вашим критериям", callback_data="custom_order_info")],
+        [InlineKeyboardButton(text="Отзывы✅", callback_data="reviews_info")],
+        [InlineKeyboardButton(text="Обратиться в поддержку⚙️", url="https://t.me/manager_of_mestniy")],
         [InlineKeyboardButton(text="📦 Все товары", callback_data="admin_products")],
         [InlineKeyboardButton(text="➕ Добавить товар", callback_data="admin_add_product")],
+        [InlineKeyboardButton(text="📰 Обновления", callback_data="admin_updates")],
+        [InlineKeyboardButton(text="➕ Добавить обновление", callback_data="admin_add_update")],
         [InlineKeyboardButton(text="🧰 Команды", callback_data="admin_commands")]
     ])
 
@@ -293,6 +350,26 @@ def get_brand_keyboard():
     buttons.append([InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")])
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
+def display_brand_name(brand: Optional[str]) -> str:
+    value = (brand or "").strip()
+    return BRANDS.get(value, value)
+
+def get_condition_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Новое", callback_data="addcondition_0")],
+        [InlineKeyboardButton(text="Отличное", callback_data="addcondition_1")],
+        [InlineKeyboardButton(text="Очень хорошее", callback_data="addcondition_2")],
+        [InlineKeyboardButton(text="Хорошее", callback_data="addcondition_3")],
+        [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+    ])
+
+def get_product_type_keyboard():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="✅ Наличие", callback_data="addtype_stock")],
+        [InlineKeyboardButton(text="🛒 На заказ", callback_data="addtype_order")],
+        [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+    ])
+
 @router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext):
     await state.clear()
@@ -313,16 +390,19 @@ async def cmd_start(message: Message, state: FSMContext):
     is_admin = user_id in ADMIN_IDS
 
     text = (
-        f"👋 Привет, <b>{message.from_user.first_name}</b>!\n\n"
-        f"<b>MESTNIY | STORE</b>\n\n"
-        f"Нажимай <b>Открыть каталог</b> и выбирай раздел: <b>Наличие</b> или <b>На заказ</b>. "
-        f"В каталоге можно выбрать валюту, категорию, бренд и размер.\n\n"
-        f"Открой нужный товар, выбери размер, если размеров несколько, и нажми <b>Добавить в корзину</b>. "
-        f"Если размер один — товар добавится без лишнего выбора.\n\n"
-        f"Когда всё выбрано, зайди в корзину и нажми <b>Оформить заказ</b> — тебя сразу перекинет к менеджеру.\n\n"
-        f"🛞 <b>Самовывоз:</b> город Лида.\n\n"
-        f"📦 <b>Доставка:</b> Европочта / Белпочта / CDEK / Маршрутка.\n\n"
-        f"По всем вопросам: @manager_of_mestniy"
+        "👋 Привет, <b>MESTNIY MANAGER!</b>\n\n"
+        "<b>Как пользоваться ботом?</b>\n\n"
+        "Нажимай открыть каталог! Там сверху выбирай нужную валюту, категорию товара, нужный размер! "
+        "Когда определился с заказом, нажимай на кнопку <b>В корзину</b>! "
+        "В корзину можно добавлять сразу несколько вещей! После заходи в корзину, там сверху будет кнопка "
+        "<b>ОФОРМИТЬ ЗАКАЗ</b>! Нажимай на неё! После, тебя направят к менеджеру! "
+        "Хороших и удачных покупок! Спасибо что выбираете нас! 🫶\n\n"
+        "🛞 <b>САМОВЫВОЗ:</b>\n"
+        "Мы находимся в городе Лида!\n\n"
+        "📦 <b>ДОСТАВКА:</b>\n"
+        "Мы отправляем через:\n"
+        "Европочта / Белпочта / CDEK / Маршрутка\n\n"
+        "По всем вопросам обращайтесь сюда: <b>@manager_of_mestniy</b>"
     )
 
     if is_admin:
@@ -339,13 +419,15 @@ async def admin_add_product_btn(callback: CallbackQuery, state: FSMContext):
         await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
 
+    await state.clear()
     await callback.message.answer(
-        "➕ <b>Добавление товара</b>\n\n"
-        "Шаг 1/10: Выберите категорию:",
-        reply_markup=get_category_keyboard()
+        "➕ <b>Новый товар</b>\n\n"
+        "Шаг 1 из 9: выберите раздел товара:",
+        reply_markup=get_product_type_keyboard()
     )
-    await state.set_state(AddProduct.category)
+    await state.set_state(AddProduct.product_type)
     await callback.answer()
+
 
 @router.message(Command("add_product"))
 async def cmd_add_product(message: Message, state: FSMContext):
@@ -353,12 +435,254 @@ async def cmd_add_product(message: Message, state: FSMContext):
         await message.answer("⛔ Эта команда только для администраторов")
         return
 
+    await state.clear()
     await message.answer(
-        "➕ <b>Добавление товара</b>\n\n"
-        "Шаг 1/10: Выберите категорию:",
+        "➕ <b>Новый товар</b>\n\n"
+        "Шаг 1 из 9: выберите раздел товара:",
+        reply_markup=get_product_type_keyboard()
+    )
+    await state.set_state(AddProduct.product_type)
+
+
+def get_add_product_cancel_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="❌ Отменить добавление", callback_data="admin_cancel")]
+    ])
+
+
+def get_description_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="⏭ Пропустить описание", callback_data="add_description_skip")],
+        [InlineKeyboardButton(text="❌ Отменить добавление", callback_data="admin_cancel")]
+    ])
+
+
+def get_product_preview_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="✅ Опубликовать товар", callback_data="publish_product")],
+        [InlineKeyboardButton(text="✏️ Изменить поле", callback_data="product_edit_menu")],
+        [InlineKeyboardButton(text="❌ Отменить", callback_data="admin_cancel")]
+    ])
+
+
+def get_product_edit_keyboard(product_type: str) -> InlineKeyboardMarkup:
+    buttons = [
+        [
+            InlineKeyboardButton(text="Бренд", callback_data="product_edit_brand"),
+            InlineKeyboardButton(text="Название", callback_data="product_edit_name"),
+        ],
+        [
+            InlineKeyboardButton(text="Категория", callback_data="product_edit_category"),
+            InlineKeyboardButton(text="Цена", callback_data="product_edit_price"),
+        ],
+        [
+            InlineKeyboardButton(text="Размеры / количество", callback_data="product_edit_sizes"),
+        ],
+        [
+            InlineKeyboardButton(text="Описание", callback_data="product_edit_description"),
+            InlineKeyboardButton(text="Фото", callback_data="product_edit_images"),
+        ],
+    ]
+    if product_type != "order":
+        buttons.append([
+            InlineKeyboardButton(text="Состояние", callback_data="product_edit_condition"),
+            InlineKeyboardButton(text="Доп. фото", callback_data="product_edit_extra_photos"),
+        ])
+    buttons.extend([
+        [InlineKeyboardButton(text="⬅️ Назад к предпросмотру", callback_data="product_preview_back")],
+        [InlineKeyboardButton(text="❌ Отменить", callback_data="admin_cancel")],
+    ])
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+def calculate_product_prices(price_byn: float) -> tuple[float, float]:
+    """Автоматически считает RUB и USD от цены BYN по текущему курсу."""
+    price_rub = round(price_byn * float(CURRENCIES["RUB"]["rate"]))
+    price_usd = round(price_byn * float(CURRENCIES["USD"]["rate"]), 2)
+    return float(price_rub), float(price_usd)
+
+
+def parse_sizes_and_stock(raw_value: str) -> tuple[list[str], dict[str, int], int]:
+    """
+    Принимает форматы:
+      S:1, M:2, L:1
+      41=1; 42=2
+      ONE SIZE
+    Если количество не указано, для размера используется 1.
+    """
+    tokens = [part.strip() for part in re.split(r"[,;\n]+", raw_value or "") if part.strip()]
+    if not tokens:
+        raise ValueError("Укажите хотя бы один размер")
+
+    ordered_sizes: list[str] = []
+    size_stock: dict[str, int] = {}
+
+    for token in tokens:
+        if ":" in token:
+            size_value, qty_value = token.rsplit(":", 1)
+        elif "=" in token:
+            size_value, qty_value = token.rsplit("=", 1)
+        else:
+            size_value, qty_value = token, "1"
+
+        size = size_value.strip().upper()
+        if not size:
+            raise ValueError("У одного из размеров отсутствует название")
+
+        try:
+            quantity = int(qty_value.strip())
+        except ValueError as exc:
+            raise ValueError(f"Количество для размера {size} должно быть целым числом") from exc
+
+        if quantity <= 0:
+            raise ValueError(f"Количество для размера {size} должно быть больше нуля")
+
+        if size not in size_stock:
+            ordered_sizes.append(size)
+            size_stock[size] = 0
+        size_stock[size] += quantity
+
+    total_stock = sum(size_stock.values())
+    return ordered_sizes, size_stock, total_stock
+
+
+def format_size_stock(data: dict) -> str:
+    sizes = data.get("sizes") or []
+    size_stock = data.get("size_stock") or {}
+    if not sizes:
+        return "не указаны"
+    return ", ".join(f"{size} — {int(size_stock.get(size, 1))} шт." for size in sizes)
+
+
+async def send_product_preview(message: Message, state: FSMContext):
+    data = await state.get_data()
+    product_type = data.get("product_type", "stock")
+    cat_data = CATEGORIES.get(data.get("category_id"), {})
+    brand_name = display_brand_name(data.get("brand")) or "Без бренда"
+    description = (data.get("description") or "").strip() or "Не указано"
+    if len(description) > 280:
+        description = description[:277].rstrip() + "..."
+
+    caption = (
+        "👀 <b>Предпросмотр товара</b>\n\n"
+        f"📌 Раздел: <b>{'На заказ' if product_type == 'order' else 'Наличие'}</b>\n"
+        f"🏷 Бренд: <b>{brand_name}</b>\n"
+        f"📦 Название: <b>{data.get('name', 'Не указано')}</b>\n"
+        f"📁 Категория: {cat_data.get('icon', '')} {cat_data.get('name', 'Не указана')}\n"
+        f"💰 Цена: <b>{data.get('price_byn', 0):g} BYN</b>\n"
+        f"   ≈ {data.get('price_rub', 0):g} ₽ / ${data.get('price_usd', 0):g}\n"
+        f"📏 Размеры: {format_size_stock(data)}\n"
+    )
+    if product_type != "order":
+        caption += f"✨ Состояние: {data.get('condition') or 'Не указано'}\n"
+    caption += f"📝 Описание: {description}\n"
+    caption += f"🖼 Фотографий: {len(data.get('images') or [])}"
+    if product_type != "order" and data.get("extra_photos_url"):
+        caption += f"\n🔗 Доп. фото: {data['extra_photos_url']}"
+    caption += "\n\nПроверьте данные перед публикацией."
+
+    images = data.get("images") or []
+    try:
+        if images:
+            await message.answer_photo(
+                photo=images[0],
+                caption=caption,
+                reply_markup=get_product_preview_keyboard()
+            )
+        else:
+            await message.answer(caption, reply_markup=get_product_preview_keyboard())
+    except Exception:
+        await message.answer(caption, reply_markup=get_product_preview_keyboard())
+
+    await state.set_state(AddProduct.preview)
+
+
+async def return_to_preview_after_edit(message: Message, state: FSMContext) -> bool:
+    data = await state.get_data()
+    if not data.get("edit_return"):
+        return False
+    await state.update_data(edit_return=False)
+    await send_product_preview(message, state)
+    return True
+
+
+async def ask_product_images(message: Message, state: FSMContext, step_text: str = "Шаг 8 из 9"):
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="✅ Готово — предпросмотр", callback_data="save_product")],
+        [InlineKeyboardButton(text="❌ Отменить добавление", callback_data="admin_cancel")]
+    ])
+    await message.answer(
+        f"{step_text}: отправьте <b>фотографии товара</b> 📸\n\n"
+        f"• Можно отправить до {MAX_PRODUCT_IMAGES} фото\n"
+        f"• Можно отправлять по одной или альбомом\n"
+        "• После загрузки нажмите <b>Готово — предпросмотр</b>",
+        reply_markup=keyboard
+    )
+    await state.set_state(AddProduct.images)
+
+
+@router.callback_query(F.data.startswith("addtype_"))
+async def process_product_type(callback: CallbackQuery, state: FSMContext):
+    if callback.from_user.id not in ADMIN_IDS:
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+
+    product_type = callback.data.replace("addtype_", "")
+    if product_type not in {"stock", "order"}:
+        await callback.answer("❌ Неверный тип товара", show_alert=True)
+        return
+
+    await state.update_data(product_type=product_type)
+    await callback.message.edit_text(
+        f"✅ Раздел: <b>{'Наличие' if product_type == 'stock' else 'На заказ'}</b>\n\n"
+        "Шаг 2 из 9: отправьте <b>название бренда</b>.\n"
+        "Если бренда нет — напишите <code>нет</code>.",
+        reply_markup=get_add_product_cancel_keyboard()
+    )
+    await state.set_state(AddProduct.brand)
+    await callback.answer()
+
+
+@router.message(AddProduct.brand)
+async def process_brand_text(message: Message, state: FSMContext):
+    brand_text = (message.text or "").strip()
+    if not brand_text:
+        await message.answer("❌ Отправьте название бренда текстом или напишите <code>нет</code>.")
+        return
+
+    empty_brand_values = {"нет", "-", "без бренда"}
+    brand_value = None if brand_text.casefold() in empty_brand_values else brand_text
+    await state.update_data(brand=brand_value)
+
+    if await return_to_preview_after_edit(message, state):
+        return
+
+    await message.answer(
+        f"✅ Бренд: <b>{display_brand_name(brand_value) or 'Без бренда'}</b>\n\n"
+        "Шаг 3 из 9: отправьте <b>название или модель товара</b>:",
+        reply_markup=get_add_product_cancel_keyboard()
+    )
+    await state.set_state(AddProduct.name)
+
+
+@router.message(AddProduct.name)
+async def process_name(message: Message, state: FSMContext):
+    name = (message.text or "").strip()
+    if not name:
+        await message.answer("❌ Название товара не может быть пустым.")
+        return
+
+    await state.update_data(name=name)
+    if await return_to_preview_after_edit(message, state):
+        return
+
+    await message.answer(
+        f"✅ Название: <b>{name}</b>\n\n"
+        "Шаг 4 из 9: выберите <b>категорию</b>:",
         reply_markup=get_category_keyboard()
     )
     await state.set_state(AddProduct.category)
+
 
 @router.callback_query(F.data.startswith("addcat_"))
 async def process_category(callback: CallbackQuery, state: FSMContext):
@@ -366,216 +690,188 @@ async def process_category(callback: CallbackQuery, state: FSMContext):
         await callback.answer("⛔ Доступ запрещён", show_alert=True)
         return
 
-    category_id = int(callback.data.split("_")[1])
-    cat_data = CATEGORIES.get(category_id, {})
+    try:
+        category_id = int(callback.data.split("_", 1)[1])
+    except ValueError:
+        await callback.answer("❌ Неверная категория", show_alert=True)
+        return
+
+    cat_data = CATEGORIES.get(category_id)
+    if not cat_data:
+        await callback.answer("❌ Категория не найдена", show_alert=True)
+        return
 
     await state.update_data(category_id=category_id)
+    data = await state.get_data()
+    if data.get("edit_return"):
+        await state.update_data(edit_return=False)
+        await callback.answer("✅ Категория изменена")
+        await send_product_preview(callback.message, state)
+        return
 
     await callback.message.edit_text(
         f"✅ Категория: <b>{cat_data.get('icon', '')} {cat_data.get('name', '')}</b>\n\n"
-        "Шаг 2/10: Выберите бренд:",
-        reply_markup=get_brand_keyboard()
-    )
-    await state.set_state(AddProduct.brand)
-    await callback.answer()
-
-@router.callback_query(F.data.startswith("addbrand_"))
-async def process_brand(callback: CallbackQuery, state: FSMContext):
-    if callback.from_user.id not in ADMIN_IDS:
-        await callback.answer("⛔ Доступ запрещён", show_alert=True)
-        return
-
-    brand_key = callback.data.split("_")[1]
-    brand_name = BRANDS.get(brand_key, brand_key)
-
-    await state.update_data(brand=brand_key)
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-    ])
-
-    await callback.message.edit_text(
-        f"✅ Бренд: <b>{brand_name}</b>\n\n"
-        "Шаг 3/10: Отправьте <b>название товара</b>:",
-        reply_markup=keyboard
-    )
-    await state.set_state(AddProduct.name)
-    await callback.answer()
-
-@router.message(AddProduct.name)
-async def process_name(message: Message, state: FSMContext):
-    await state.update_data(name=message.text.strip())
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-    ])
-
-    await message.answer(
-        f"✅ Название: <b>{message.text.strip()}</b>\n\n"
-        "Шаг 4/10: Отправьте <b>описание товара</b>:",
-        reply_markup=keyboard
-    )
-    await state.set_state(AddProduct.description)
-
-@router.message(AddProduct.description)
-async def process_description(message: Message, state: FSMContext):
-    await state.update_data(description=message.text.strip())
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-    ])
-
-    await message.answer(
-        "✅ Описание сохранено\n\n"
-        "Шаг 5/10: Отправьте <b>цену в BYN</b> 🇧🇾\n"
-        "(например: 450 или 299.99):",
-        reply_markup=keyboard
+        "Шаг 5 из 9: отправьте <b>цену в BYN</b>.\n"
+        "Цены в RUB и USD рассчитаются автоматически.\n\n"
+        "Пример: <code>150</code> или <code>149.90</code>",
+        reply_markup=get_add_product_cancel_keyboard()
     )
     await state.set_state(AddProduct.price_byn)
+    await callback.answer()
+
 
 @router.message(AddProduct.price_byn)
 async def process_price_byn(message: Message, state: FSMContext):
     try:
-        price = float(message.text.strip().replace(',', '.'))
-        if price <= 0:
-            raise ValueError("Цена должна быть больше 0")
-
-        await state.update_data(price_byn=price)
-
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-        ])
-
-        await message.answer(
-            f"✅ Цена BYN: <b>{price} BYN</b>\n\n"
-            "Шаг 6/10: Отправьте <b>цену в RUB</b> 🇷🇺\n"
-            "(например: 12500):",
-            reply_markup=keyboard
-        )
-        await state.set_state(AddProduct.price_rub)
+        price_byn = float((message.text or "").strip().replace(",", "."))
+        if price_byn <= 0:
+            raise ValueError
     except ValueError:
         await message.answer(
-            "❌ Неправильный формат цены!\n\n"
-            "Отправьте число, например: <code>450</code> или <code>299.99</code>"
+            "❌ Неправильный формат цены.\n\n"
+            "Отправьте положительное число, например: <code>150</code> или <code>149.90</code>"
         )
+        return
 
-@router.message(AddProduct.price_rub)
-async def process_price_rub(message: Message, state: FSMContext):
-    try:
-        price = float(message.text.strip().replace(',', '.'))
-        if price <= 0:
-            raise ValueError("Цена должна быть больше 0")
+    price_rub, price_usd = calculate_product_prices(price_byn)
+    await state.update_data(price_byn=price_byn, price_rub=price_rub, price_usd=price_usd)
 
-        await state.update_data(price_rub=price)
+    if await return_to_preview_after_edit(message, state):
+        return
 
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-        ])
+    data = await state.get_data()
+    category_id = data.get("category_id", 1)
+    if category_id == 1:
+        example = "40:1, 41:2, 42:1"
+    elif category_id in {9, 10}:
+        example = "ONE SIZE:1"
+    else:
+        example = "S:1, M:2, L:1"
 
-        await message.answer(
-            f"✅ Цена RUB: <b>{price} ₽</b>\n\n"
-            "Шаг 7/10: Отправьте <b>цену в USD</b> 🇺🇸\n"
-            "(например: 145):",
-            reply_markup=keyboard
-        )
-        await state.set_state(AddProduct.price_usd)
-    except ValueError:
-        await message.answer(
-            "❌ Неправильный формат цены!\n\n"
-            "Отправьте число, например: <code>12500</code>"
-        )
+    await message.answer(
+        f"✅ Цена: <b>{price_byn:g} BYN</b>\n"
+        f"Автоматически: {price_rub:g} ₽ / ${price_usd:g}\n\n"
+        "Шаг 6 из 9: отправьте <b>размеры и количество</b>.\n\n"
+        "Формат: <code>РАЗМЕР:КОЛИЧЕСТВО</code>\n"
+        f"Пример: <code>{example}</code>\n\n"
+        "Размеры можно разделять запятыми или отправлять каждый с новой строки.",
+        reply_markup=get_add_product_cancel_keyboard()
+    )
+    await state.set_state(AddProduct.sizes)
 
-@router.message(AddProduct.price_usd)
-async def process_price_usd(message: Message, state: FSMContext):
-    try:
-        price = float(message.text.strip().replace(',', '.'))
-        if price <= 0:
-            raise ValueError("Цена должна быть больше 0")
-
-        await state.update_data(price_usd=price)
-
-        data = await state.get_data()
-        category_id = data.get('category_id', 1)
-
-        if category_id == 1:
-            size_example = "36, 37, 38, 39, 40, 41, 42, 43, 44, 45"
-            size_hint = "Обувь"
-        elif category_id in [9, 10]:
-            size_example = "ONE SIZE"
-            size_hint = "Один размер"
-        else:
-            size_example = "S, M, L, XL, XXL"
-            size_hint = "Одежда"
-
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-        ])
-
-        await message.answer(
-            f"✅ Цена USD: <b>${price}</b>\n\n"
-            f"Шаг 8/10: Отправьте <b>размеры через запятую</b>\n\n"
-            f"Тип: {size_hint}\n"
-            f"Пример: <code>{size_example}</code>",
-            reply_markup=keyboard
-        )
-        await state.set_state(AddProduct.sizes)
-    except ValueError:
-        await message.answer(
-            "❌ Неправильный формат цены!\n\n"
-            "Отправьте число, например: <code>145</code>"
-        )
 
 @router.message(AddProduct.sizes)
 async def process_sizes(message: Message, state: FSMContext):
-    sizes = [s.strip().upper() for s in message.text.split(',') if s.strip()]
-
-    if not sizes:
-        await message.answer("❌ Укажите хотя бы один размер!")
+    try:
+        sizes, size_stock, total_stock = parse_sizes_and_stock(message.text or "")
+    except ValueError as exc:
+        await message.answer(
+            f"❌ {exc}\n\n"
+            "Пример правильного формата:\n"
+            "<code>S:1, M:2, L:1</code>"
+        )
         return
 
-    await state.update_data(sizes=sizes)
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-    ])
+    await state.update_data(sizes=sizes, size_stock=size_stock, stock=total_stock)
+    if await return_to_preview_after_edit(message, state):
+        return
 
     await message.answer(
-        f"✅ Размеры: <b>{', '.join(sizes)}</b>\n\n"
-        "Шаг 9/10: Отправьте <b>количество на складе</b>\n"
-        "(например: 10):",
-        reply_markup=keyboard
+        f"✅ Размеры сохранены: <b>{format_size_stock({'sizes': sizes, 'size_stock': size_stock})}</b>\n\n"
+        "Шаг 7 из 9: отправьте <b>описание товара</b> или нажмите «Пропустить описание»:",
+        reply_markup=get_description_keyboard()
     )
-    await state.set_state(AddProduct.stock)
+    await state.set_state(AddProduct.description)
 
-@router.message(AddProduct.stock)
-async def process_stock(message: Message, state: FSMContext):
+
+async def continue_after_description(message: Message, state: FSMContext):
+    data = await state.get_data()
+    if data.get("product_type", "stock") == "order":
+        await state.update_data(condition=None, images=[])
+        await ask_product_images(message, state)
+        return
+
+    await message.answer(
+        "Шаг 8 из 9: выберите <b>состояние товара</b>:",
+        reply_markup=get_condition_keyboard()
+    )
+    await state.set_state(AddProduct.condition)
+
+
+@router.message(AddProduct.description)
+async def process_description(message: Message, state: FSMContext):
+    description = (message.text or "").strip()
+    if description.casefold() in {"нет", "-", "пропустить"}:
+        description = ""
+    await state.update_data(description=description)
+
+    if await return_to_preview_after_edit(message, state):
+        return
+
+    await continue_after_description(message, state)
+
+
+@router.callback_query(F.data == "add_description_skip")
+async def skip_product_description(callback: CallbackQuery, state: FSMContext):
+    await state.update_data(description="")
+    data = await state.get_data()
+    if data.get("edit_return"):
+        await state.update_data(edit_return=False)
+        await callback.answer("Описание очищено")
+        await send_product_preview(callback.message, state)
+        return
+
+    await callback.answer("Описание пропущено")
+    await continue_after_description(callback.message, state)
+
+
+@router.callback_query(F.data.startswith("addcondition_"))
+async def process_condition(callback: CallbackQuery, state: FSMContext):
+    if callback.from_user.id not in ADMIN_IDS:
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+
     try:
-        stock = int(message.text.strip())
-        if stock < 0:
-            raise ValueError("Количество не может быть отрицательным")
+        condition_index = int(callback.data.split("_", 1)[1])
+        condition = PRODUCT_CONDITIONS[condition_index]
+    except (IndexError, ValueError):
+        await callback.answer("❌ Неверное состояние", show_alert=True)
+        return
 
-        await state.update_data(stock=stock, images=[])
+    await state.update_data(condition=condition)
+    data = await state.get_data()
+    if data.get("edit_return"):
+        await state.update_data(edit_return=False)
+        await callback.answer("✅ Состояние изменено")
+        await send_product_preview(callback.message, state)
+        return
 
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="✅ Готово — сохранить товар", callback_data="save_product")],
-            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
-        ])
+    await state.update_data(images=[])
+    await callback.answer()
+    await ask_product_images(callback.message, state, step_text="Шаг 9 из 9")
 
-        await message.answer(
-            f"✅ На складе: <b>{stock} шт</b>\n\n"
-            "Шаг 10/10: Отправьте <b>фото товара</b> 📸\n\n"
-            "• Можно отправить несколько фото подряд\n"
-            "• После всех фото нажмите <b>Готово</b>",
-            reply_markup=keyboard
-        )
-        await state.set_state(AddProduct.images)
-    except ValueError:
-        await message.answer(
-            "❌ Неправильный формат!\n\n"
-            "Отправьте целое число, например: <code>10</code>"
-        )
 
 # ==================== ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ФОТО ====================
+
+async def upload_temp_telegram_photo_to_github(temp_url: str) -> Optional[str]:
+    """Скачивает временное Telegram-фото и загружает его на GitHub, возвращая постоянную ссылку."""
+    try:
+        await ensure_images_folder_exists()
+
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector) as http_session:
+            async with http_session.get(temp_url) as response:
+                if response.status != 200:
+                    print(f"❌ Не удалось скачать фото из Telegram: HTTP {response.status}")
+                    return None
+                image_data = await response.read()
+
+        return await upload_photo_to_github(image_data, 0)
+
+    except Exception as e:
+        print(f"❌ Ошибка upload_temp_telegram_photo_to_github: {e}")
+        return None
+
 
 @router.message(AddProduct.images, F.photo)
 async def process_image(message: Message, state: FSMContext):
@@ -584,37 +880,57 @@ async def process_image(message: Message, state: FSMContext):
 
     photo = message.photo[-1]
     file = await bot.get_file(photo.file_id)
-    file_url = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
+    temp_url = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
 
-    # Одиночное фото
+    # Одиночное фото — сразу переносим на GitHub, чтобы ссылка не сломалась
     if not media_group_id:
         data = await state.get_data()
         images = data.get('images', [])
-        images.append(file_url)
+
+        if len(images) >= MAX_PRODUCT_IMAGES:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="✅ Готово — далее", callback_data="save_product")],
+                [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+            ])
+            await message.answer(
+                f"⚠️ Уже сохранено максимум фото: {MAX_PRODUCT_IMAGES} из {MAX_PRODUCT_IMAGES}\n\n"
+                "Нажмите <b>Готово</b>",
+                reply_markup=keyboard
+            )
+            return
+
+        await message.answer("⏳ Загружаю фото на GitHub...")
+
+        permanent_url = await upload_temp_telegram_photo_to_github(temp_url)
+
+        if not permanent_url:
+            await message.answer("❌ Не удалось загрузить фото на GitHub. Попробуйте отправить фото ещё раз.")
+            return
+
+        images.append(permanent_url)
         await state.update_data(images=images)
 
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="✅ Готово — сохранить товар", callback_data="save_product")],
+            [InlineKeyboardButton(text="✅ Готово — далее", callback_data="save_product")],
             [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
         ])
 
         await message.answer(
-            f"✅ Фото {len(images)} добавлено!\n\n"
-            f"Всего фото: {len(images)}\n\n"
+            f"✅ Фото сохранено на GitHub!\n\n"
+            f"Всего фото: {len(images)} из {MAX_PRODUCT_IMAGES}\n\n"
             "Отправьте ещё фото или нажмите <b>Готово</b>",
             reply_markup=keyboard
         )
         return
 
-    # Альбом — буферизируем
+    # Альбом — сначала собираем временные ссылки, потом переносим каждую на GitHub
     buffer_key = f"{user_id}_{media_group_id}"
 
     if buffer_key not in album_buffers:
         album_buffers[buffer_key] = []
 
-    album_buffers[buffer_key].append(file_url)
+    album_buffers[buffer_key].append(temp_url)
 
-    # Если таймер уже запущен — просто добавили фото и выходим
     if buffer_key in album_locks:
         return
 
@@ -632,17 +948,45 @@ async def process_image(message: Message, state: FSMContext):
 
             data = await state.get_data()
             images = data.get('images', [])
-            images.extend(collected_urls)
+            remaining_slots = max(MAX_PRODUCT_IMAGES - len(images), 0)
+
+            if remaining_slots <= 0:
+                keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                    [InlineKeyboardButton(text="✅ Готово — далее", callback_data="save_product")],
+                    [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+                ])
+                await message.answer(
+                    f"⚠️ Уже сохранено максимум фото: {MAX_PRODUCT_IMAGES} из {MAX_PRODUCT_IMAGES}\n\n"
+                    "Нажмите <b>Готово</b>",
+                    reply_markup=keyboard
+                )
+                return
+
+            selected_urls = collected_urls[:remaining_slots]
+            await message.answer(f"⏳ Загружаю {len(selected_urls)} фото на GitHub...")
+
+            permanent_urls = []
+            for i, url in enumerate(selected_urls, start=1):
+                permanent_url = await upload_temp_telegram_photo_to_github(url)
+                if permanent_url:
+                    permanent_urls.append(permanent_url)
+                    print(f"  📸 {i}/{len(selected_urls)} фото товара загружено на GitHub")
+
+            if not permanent_urls:
+                await message.answer("❌ Не удалось загрузить фото на GitHub. Попробуйте отправить фото ещё раз.")
+                return
+
+            images.extend(permanent_urls)
             await state.update_data(images=images)
 
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="✅ Готово — сохранить товар", callback_data="save_product")],
+                [InlineKeyboardButton(text="✅ Готово — далее", callback_data="save_product")],
                 [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
             ])
 
             await message.answer(
-                f"✅ Добавлено {len(collected_urls)} фото!\n\n"
-                f"Всего фото: {len(images)}\n\n"
+                f"✅ Фото сохранены на GitHub!\n\n"
+                f"Всего фото: {len(images)} из {MAX_PRODUCT_IMAGES}\n\n"
                 "Отправьте ещё фото или нажмите <b>Готово</b>",
                 reply_markup=keyboard
             )
@@ -654,77 +998,250 @@ async def process_image(message: Message, state: FSMContext):
 
     asyncio.create_task(process_album_after_delay())
 
-
 @router.callback_query(F.data == "save_product")
 async def save_product(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
 
-    if not data.get('images'):
-        await callback.answer("❌ Добавьте хотя бы одно фото!", show_alert=True)
+    if not data.get("images"):
+        await callback.answer("❌ Добавьте хотя бы одно фото", show_alert=True)
         return
 
-    await callback.answer("⏳ Сохраняем товар...")
+    if data.get("edit_return"):
+        await state.update_data(edit_return=False)
+        await callback.answer("✅ Фотографии обновлены")
+        await send_product_preview(callback.message, state)
+        return
 
+    if data.get("product_type", "stock") != "order" and not data.get("extra_photos_asked"):
+        await state.update_data(extra_photos_asked=True)
+        await callback.message.answer(
+            "Дополнительный шаг: отправьте ссылку на пост с дополнительными фото.\n"
+            "Если ссылки нет — напишите <b>нет</b>.\n\n"
+            "Пример:\n<code>https://t.me/mestniystore/9587</code>",
+            reply_markup=get_add_product_cancel_keyboard()
+        )
+        await state.set_state(AddProduct.extra_photos_url)
+        await callback.answer()
+        return
+
+    await callback.answer("Открываю предпросмотр")
+    await send_product_preview(callback.message, state)
+
+
+@router.message(AddProduct.extra_photos_url)
+async def process_extra_photos_url(message: Message, state: FSMContext):
+    value = (message.text or "").strip()
+    extra_url = "" if value.casefold() in {"нет", "no", "не", "-", "удалить"} else value
+    await state.update_data(extra_photos_url=extra_url, extra_photos_asked=True)
+
+    if await return_to_preview_after_edit(message, state):
+        return
+
+    await send_product_preview(message, state)
+
+
+async def edit_callback_message(callback: CallbackQuery, text: str, reply_markup: InlineKeyboardMarkup):
     try:
+        if callback.message.photo:
+            await callback.message.edit_caption(caption=text, reply_markup=reply_markup)
+        else:
+            await callback.message.edit_text(text, reply_markup=reply_markup)
+    except Exception:
+        await callback.message.answer(text, reply_markup=reply_markup)
+
+
+@router.callback_query(F.data == "product_edit_menu")
+async def product_edit_menu(callback: CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    await edit_callback_message(
+        callback,
+        "✏️ <b>Что изменить?</b>\n\nПосле изменения вы снова увидите предпросмотр товара.",
+        get_product_edit_keyboard(data.get("product_type", "stock"))
+    )
+    await state.set_state(AddProduct.edit_field)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "product_preview_back")
+async def product_preview_back(callback: CallbackQuery, state: FSMContext):
+    await callback.answer()
+    await send_product_preview(callback.message, state)
+
+
+async def start_field_edit(callback: CallbackQuery, state: FSMContext, field: str):
+    await state.update_data(edit_return=True)
+
+    prompts = {
+        "brand": (AddProduct.brand, "Отправьте новое <b>название бренда</b> или напишите <code>нет</code>:", get_add_product_cancel_keyboard()),
+        "name": (AddProduct.name, "Отправьте новое <b>название товара</b>:", get_add_product_cancel_keyboard()),
+        "price": (AddProduct.price_byn, "Отправьте новую <b>цену в BYN</b>:", get_add_product_cancel_keyboard()),
+        "sizes": (AddProduct.sizes, "Отправьте новые <b>размеры и количество</b>.\nПример: <code>S:1, M:2, L:1</code>", get_add_product_cancel_keyboard()),
+        "description": (AddProduct.description, "Отправьте новое <b>описание</b> или нажмите «Пропустить описание»:", get_description_keyboard()),
+        "extra_photos": (AddProduct.extra_photos_url, "Отправьте новую ссылку на <b>дополнительные фото</b> или напишите <code>нет</code>:", get_add_product_cancel_keyboard()),
+    }
+    state_value, prompt, keyboard = prompts[field]
+    await callback.message.answer(prompt, reply_markup=keyboard)
+    await state.set_state(state_value)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "product_edit_brand")
+async def edit_new_product_brand(callback: CallbackQuery, state: FSMContext):
+    await start_field_edit(callback, state, "brand")
+
+
+@router.callback_query(F.data == "product_edit_name")
+async def edit_new_product_name(callback: CallbackQuery, state: FSMContext):
+    await start_field_edit(callback, state, "name")
+
+
+@router.callback_query(F.data == "product_edit_price")
+async def edit_new_product_price(callback: CallbackQuery, state: FSMContext):
+    await start_field_edit(callback, state, "price")
+
+
+@router.callback_query(F.data == "product_edit_sizes")
+async def edit_new_product_sizes(callback: CallbackQuery, state: FSMContext):
+    await start_field_edit(callback, state, "sizes")
+
+
+@router.callback_query(F.data == "product_edit_description")
+async def edit_new_product_description(callback: CallbackQuery, state: FSMContext):
+    await start_field_edit(callback, state, "description")
+
+
+@router.callback_query(F.data == "product_edit_extra_photos")
+async def edit_new_product_extra_photos(callback: CallbackQuery, state: FSMContext):
+    await start_field_edit(callback, state, "extra_photos")
+
+
+@router.callback_query(F.data == "product_edit_category")
+async def edit_new_product_category(callback: CallbackQuery, state: FSMContext):
+    await state.update_data(edit_return=True)
+    await callback.message.answer("Выберите новую <b>категорию</b>:", reply_markup=get_category_keyboard())
+    await state.set_state(AddProduct.category)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "product_edit_condition")
+async def edit_new_product_condition(callback: CallbackQuery, state: FSMContext):
+    await state.update_data(edit_return=True)
+    await callback.message.answer("Выберите новое <b>состояние товара</b>:", reply_markup=get_condition_keyboard())
+    await state.set_state(AddProduct.condition)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "product_edit_images")
+async def edit_new_product_images(callback: CallbackQuery, state: FSMContext):
+    await state.update_data(images=[], edit_return=True)
+    await callback.answer()
+    await ask_product_images(callback.message, state, step_text="Замена фото")
+
+
+@router.callback_query(F.data == "publish_product")
+async def publish_product(callback: CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    required_fields = ["category_id", "name", "price_byn", "sizes", "images"]
+    missing = [field for field in required_fields if not data.get(field)]
+    if missing:
+        await callback.answer("❌ Не заполнены обязательные поля", show_alert=True)
+        return
+
+    await callback.answer("⏳ Публикую товар...")
+    await finish_product_creation(callback.message, state, data, edit=bool(callback.message.photo))
+
+
+async def finish_product_creation(target_message, state: FSMContext, data: dict, edit: bool = False):
+    try:
+        images = (data.get("images") or [])[:MAX_PRODUCT_IMAGES]
+        product_type = data.get("product_type", "stock")
+        size_stock = data.get("size_stock") or {str(size): 1 for size in (data.get("sizes") or [])}
+        stock = int(data.get("stock") or sum(int(value) for value in size_stock.values()))
+
         prices = {
-            "BYN": data['price_byn'],
-            "RUB": data['price_rub'],
-            "USD": data['price_usd']
+            "BYN": data["price_byn"],
+            "RUB": data["price_rub"],
+            "USD": data["price_usd"],
+            "product_type": product_type,
+            "size_stock": size_stock,
         }
+        if product_type != "order" and data.get("condition"):
+            prices["condition"] = data["condition"]
+        if product_type != "order" and data.get("extra_photos_url"):
+            prices["extra_photos_url"] = data["extra_photos_url"]
 
         async with async_session() as session:
             product = Product(
-                category_id=data['category_id'],
-                brand=data.get('brand'),
-                name=data['name'],
-                description=data['description'],
-                price_byn=data['price_byn'],
+                category_id=data["category_id"],
+                brand=data.get("brand"),
+                name=data["name"],
+                description=data.get("description") or "",
+                price_byn=data["price_byn"],
                 prices=prices,
-                sizes=data['sizes'],
-                stock=data['stock'],
-                images=data['images']
+                sizes=data["sizes"],
+                stock=stock,
+                images=images,
             )
             session.add(product)
             await session.commit()
             product_id = product.id
 
-        brand_name = BRANDS.get(data.get('brand'), data.get('brand', ''))
-        cat_data = CATEGORIES.get(data['category_id'], {})
+        brand_name = display_brand_name(data.get("brand")) or "Без бренда"
+        cat_data = CATEGORIES.get(data["category_id"], {})
+        type_label = "На заказ" if product_type == "order" else "Наличие"
 
         text = (
-            f"✅ <b>Товар #{product_id} добавлен!</b>\n\n"
+            f"✅ <b>Товар #{product_id} опубликован!</b>\n\n"
+            f"📌 Раздел: <b>{type_label}</b>\n"
             f"📦 <b>{data['name']}</b>\n"
             f"🏷 Бренд: {brand_name}\n"
             f"📁 Категория: {cat_data.get('icon', '')} {cat_data.get('name', '')}\n"
-            f"💰 Цены:\n"
-            f"   • {data['price_byn']} BYN\n"
-            f"   • {data['price_rub']} ₽\n"
-            f"   • ${data['price_usd']}\n"
-            f"📏 Размеры: {', '.join(data['sizes'])}\n"
-            f"🏷 На складе: {data['stock']} шт\n"
-            f"🖼 Фото: {len(data['images'])} шт\n\n"
-            f"✨ Товар уже доступен в каталоге!"
+            f"💰 Цена: {data['price_byn']:g} BYN\n"
+            f"📏 Размеры: {format_size_stock(data)}\n"
         )
+        if product_type != "order":
+            text += (
+                f"📦 Всего в наличии: {stock} шт.\n"
+                f"✨ Состояние: {data.get('condition') or 'не указано'}\n"
+            )
+        text += f"🖼 Фото: {len(images)} шт.\n"
+        if product_type != "order" and data.get("extra_photos_url"):
+            text += f"🔗 Доп. фото: {data['extra_photos_url']}\n"
+        text += "\n✨ Товар уже доступен в каталоге."
 
-        await callback.message.edit_text(text, reply_markup=get_admin_keyboard())
+        try:
+            if edit and target_message.photo:
+                await target_message.edit_caption(caption=text, reply_markup=get_admin_keyboard())
+            elif edit:
+                await target_message.edit_text(text, reply_markup=get_admin_keyboard())
+            else:
+                await target_message.answer(text, reply_markup=get_admin_keyboard())
+        except Exception:
+            await target_message.answer(text, reply_markup=get_admin_keyboard())
+
         await state.clear()
-
         print(f"✅ Товар #{product_id} добавлен: {data['name']}")
 
-        await auto_push_to_github()
+        success = await auto_push_to_github()
+        if not success:
+            await target_message.answer(
+                "⚠️ Товар сохранён в базе, но каталог не удалось отправить на GitHub. "
+                "Повторите команду /export позже."
+            )
 
-    except Exception as e:
-        print(f"❌ Ошибка сохранения товара: {e}")
-        await callback.message.edit_text(
-            f"❌ Ошибка при сохранении товара!\n\n{str(e)}",
+    except Exception as exc:
+        print(f"❌ Ошибка сохранения товара: {exc}")
+        await target_message.answer(
+            f"❌ Ошибка при сохранении товара!\n\n<code>{str(exc)}</code>",
             reply_markup=get_admin_keyboard()
         )
         await state.clear()
 
+
 @router.message(AddProduct.images)
 async def process_images_invalid(message: Message, state: FSMContext):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="✅ Готово — сохранить товар", callback_data="save_product")],
+        [InlineKeyboardButton(text="✅ Готово — далее", callback_data="save_product")],
         [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
     ])
     await message.answer(
@@ -735,10 +1252,22 @@ async def process_images_invalid(message: Message, state: FSMContext):
 @router.callback_query(F.data == "admin_cancel")
 async def admin_cancel(callback: CallbackQuery, state: FSMContext):
     await state.clear()
-    await callback.message.edit_text(
-        "❌ Действие отменено",
-        reply_markup=get_admin_keyboard()
-    )
+    try:
+        if callback.message.photo:
+            await callback.message.edit_caption(
+                caption="❌ Действие отменено",
+                reply_markup=get_admin_keyboard()
+            )
+        else:
+            await callback.message.edit_text(
+                "❌ Действие отменено",
+                reply_markup=get_admin_keyboard()
+            )
+    except Exception:
+        await callback.message.answer(
+            "❌ Действие отменено",
+            reply_markup=get_admin_keyboard()
+        )
     await callback.answer()
 
 
@@ -754,9 +1283,14 @@ async def admin_commands(callback: CallbackQuery):
         "<code>/products</code> — список товаров\n"
         "<code>/delete ID</code> — удалить товар\n"
         "<code>/fix_product ID</code> — заменить фото товара\n"
-        "<code>/edit_stock ID</code> — изменить наличие\n"
+        "<code>/edit_stock ID КОЛИЧЕСТВО</code> — изменить наличие\n"
+        "<code>/remove_size ID РАЗМЕР</code> — удалить размер\n"
+        "<code>/edit_extra_photos ID ССЫЛКА</code> — изменить ссылку «Доп фото»\n"
         "<code>/discount ID BYN RUB USD</code> — поставить скидку ценами\n"
         "<code>/discount ID 0</code> — убрать скидку\n"
+        "<code>/add_update</code> — добавить обновление\n"
+        "<code>/updates</code> — список обновлений\n"
+        "<code>/delete_update ID</code> — удалить обновление\n"
         "<code>/export</code> — обновить каталог на GitHub"
     )
     await callback.message.answer(text, reply_markup=get_admin_keyboard())
@@ -785,11 +1319,17 @@ async def admin_products_btn(callback: CallbackQuery):
 
     text = f"📦 <b>Все товары ({len(products)}):</b>\n\n"
     for p in products[:20]:
-        status = "✅" if p.stock > 0 else "❌"
-        brand_name = BRANDS.get(p.brand, '') if p.brand else ''
+        product_type = (p.prices or {}).get("product_type", "stock")
+        is_order = product_type == "order"
+        status = "🛒" if is_order else ("✅" if p.stock > 0 else "❌")
+        type_label = "На заказ" if is_order else "Наличие"
+        brand_name = display_brand_name(p.brand)
+        details = f"   🏷 {brand_name} | 💰 {p.price_byn} BYN | 📌 {type_label}"
+        if not is_order:
+            details += f" | 📦 {p.stock} шт"
         text += (
             f"{status} <b>#{p.id}</b> {p.name}\n"
-            f"   🏷 {brand_name} | 💰 {p.price_byn} BYN | 📦 {p.stock} шт\n\n"
+            f"{details}\n\n"
         )
 
     if len(products) > 20:
@@ -816,11 +1356,17 @@ async def cmd_products(message: Message):
 
     text = f"📦 <b>Все товары ({len(products)}):</b>\n\n"
     for p in products[:20]:
-        status = "✅" if p.stock > 0 else "❌"
-        brand_name = BRANDS.get(p.brand, '') if p.brand else ''
+        product_type = (p.prices or {}).get("product_type", "stock")
+        is_order = product_type == "order"
+        status = "🛒" if is_order else ("✅" if p.stock > 0 else "❌")
+        type_label = "На заказ" if is_order else "Наличие"
+        brand_name = display_brand_name(p.brand)
+        details = f"   🏷 {brand_name} | 💰 {p.price_byn} BYN | 📌 {type_label}"
+        if not is_order:
+            details += f" | 📦 {p.stock} шт"
         text += (
             f"{status} <b>#{p.id}</b> {p.name}\n"
-            f"   🏷 {brand_name} | 💰 {p.price_byn} BYN | 📦 {p.stock} шт\n\n"
+            f"{details}\n\n"
         )
 
     text += "\n🗑 Удалить: <code>/delete ID</code>"
@@ -870,8 +1416,557 @@ async def cmd_delete_product(message: Message):
 
     await auto_push_to_github()
 
-# ==================== ADMIN: СТАТИСТИКА ====================
 
+# ==================== ADMIN: ОБНОВЛЕНИЯ ====================
+
+UPDATES_FILENAME = "updates.json"
+
+def get_updates_path() -> Path:
+    return Path(__file__).resolve().parent / UPDATES_FILENAME
+
+def load_updates_sync():
+    path = get_updates_path()
+    if not path.exists():
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, list) else []
+    except Exception as e:
+        print(f"⚠️ Не удалось прочитать updates.json: {e}")
+        return []
+
+def save_updates_sync(updates):
+    path = get_updates_path()
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(updates, f, ensure_ascii=False, indent=2)
+
+def next_update_id(updates):
+    ids = []
+    for item in updates:
+        try:
+            ids.append(int(item.get("id", 0)))
+        except Exception:
+            pass
+    return (max(ids) + 1) if ids else 1
+
+async def upload_update_photo_to_github(image_data: bytes, update_id: int) -> Optional[str]:
+    try:
+        unique_name = f"update_{update_id}_{uuid.uuid4().hex[:8]}.jpg"
+        github_path = f"images/{unique_name}"
+        content_base64 = base64.b64encode(image_data).decode("utf-8")
+
+        api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{github_path}"
+        headers = {
+            "Authorization": f"token {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+        payload = {
+            "message": f"📰 Фото обновления #{update_id}",
+            "content": content_base64,
+            "branch": GITHUB_BRANCH
+        }
+
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector) as session:
+            async with session.put(api_url, headers=headers, json=payload) as response:
+                if response.status in [200, 201]:
+                    permanent_url = f"https://liknine.github.io/mestniybot/images/{unique_name}"
+                    print(f"✅ Фото обновления загружено: {permanent_url}")
+                    await asyncio.sleep(0.5)
+                    return permanent_url
+                error = await response.text()
+                print(f"❌ Ошибка загрузки фото обновления: {error}")
+                return None
+    except Exception as e:
+        print(f"❌ Ошибка upload_update_photo_to_github: {e}")
+        return None
+
+async def push_updates_to_github():
+    try:
+        updates = load_updates_sync()
+        json_content = json.dumps(updates, ensure_ascii=False, indent=2)
+        content_base64 = base64.b64encode(json_content.encode("utf-8")).decode("utf-8")
+
+        api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{UPDATES_FILENAME}"
+        headers = {
+            "Authorization": f"token {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector) as session:
+            async with session.get(api_url, headers=headers) as response:
+                if response.status == 200:
+                    sha = (await response.json()).get("sha")
+                else:
+                    sha = None
+
+            payload = {
+                "message": f"📰 Обновление новостей ({len(updates)} шт)",
+                "content": content_base64,
+                "branch": GITHUB_BRANCH
+            }
+            if sha:
+                payload["sha"] = sha
+
+            async with session.put(api_url, headers=headers, json=payload) as response:
+                if response.status in [200, 201]:
+                    print("✅ updates.json загружен на GitHub")
+                    return True
+                error = await response.text()
+                print(f"❌ Ошибка GitHub API для updates.json: {error}")
+                return False
+    except Exception as e:
+        print(f"❌ Ошибка push_updates_to_github: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+def format_updates_list(updates):
+    if not updates:
+        return "📰 <b>Обновлений пока нет</b>\n\nДобавить: <code>/add_update</code>"
+
+    text = f"📰 <b>Обновления ({len(updates)}):</b>\n\n"
+    for item in updates[:20]:
+        text += (
+            f"#{item.get('id')} — <b>{item.get('title', 'Без названия')}</b>\n"
+            f"🔗 {item.get('post_url', '')}\n\n"
+        )
+    text += "➕ Добавить: <code>/add_update</code>\n"
+    text += "🗑 Удалить: <code>/delete_update ID</code>"
+    return text
+
+@router.callback_query(F.data == "admin_add_update")
+async def admin_add_update_btn(callback: CallbackQuery, state: FSMContext):
+    if callback.from_user.id not in ADMIN_IDS:
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+
+    await state.clear()
+    await state.set_state(AddUpdate.title)
+    await callback.message.answer(
+        "➕ <b>Добавление обновления</b>\n\n"
+        "Шаг 1: отправьте <b>название обновления</b>.\n\n"
+        "Например: <code>Новый дроп Stone Island</code>",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+        ])
+    )
+    await callback.answer()
+
+@router.message(Command("add_update"))
+async def cmd_add_update(message: Message, state: FSMContext):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    await state.clear()
+    await state.set_state(AddUpdate.title)
+    await message.answer(
+        "➕ <b>Добавление обновления</b>\n\n"
+        "Шаг 1: отправьте <b>название обновления</b>.\n\n"
+        "Например: <code>Новый дроп Stone Island</code>",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+        ])
+    )
+
+@router.message(AddUpdate.title)
+async def process_update_title(message: Message, state: FSMContext):
+    title = (message.text or "").strip()
+    if not title:
+        await message.answer("❌ Название не может быть пустым. Отправьте название обновления.")
+        return
+
+    await state.update_data(title=title)
+    await state.set_state(AddUpdate.photo)
+    await message.answer(
+        f"✅ Название: <b>{title}</b>\n\n"
+        "Шаг 2: отправьте <b>одно фото</b> для карточки обновления.",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+        ])
+    )
+
+@router.message(AddUpdate.photo, F.photo)
+async def process_update_photo(message: Message, state: FSMContext):
+    updates = load_updates_sync()
+    update_id = next_update_id(updates)
+
+    await message.answer("⏳ Загружаю фото обновления на GitHub...")
+
+    photo = message.photo[-1]
+    file = await bot.get_file(photo.file_id)
+    temp_url = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
+
+    try:
+        connector = aiohttp.TCPConnector(ssl=False)
+        async with aiohttp.ClientSession(connector=connector) as http_session:
+            async with http_session.get(temp_url) as response:
+                if response.status != 200:
+                    await message.answer("❌ Не удалось скачать фото из Telegram. Попробуйте ещё раз.")
+                    return
+                image_data = await response.read()
+
+        permanent_url = await upload_update_photo_to_github(image_data, update_id)
+        if not permanent_url:
+            await message.answer("❌ Не удалось загрузить фото на GitHub. Попробуйте ещё раз.")
+            return
+
+        await state.update_data(update_id=update_id, image=permanent_url)
+        await state.set_state(AddUpdate.post_url)
+        await message.answer(
+            "✅ Фото сохранено!\n\n"
+            "Шаг 3: отправьте <b>ссылку на пост</b> из канала.\n\n"
+            "Например:\n"
+            "<code>https://t.me/mestniybaryga/9587</code>",
+            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="❌ Отмена", callback_data="admin_cancel")]
+            ])
+        )
+    except Exception as e:
+        print(f"❌ Ошибка process_update_photo: {e}")
+        await message.answer(f"❌ Ошибка обработки фото: {e}")
+
+@router.message(AddUpdate.photo)
+async def process_update_photo_invalid(message: Message, state: FSMContext):
+    await message.answer("⚠️ Нужно отправить именно <b>фото</b> для карточки обновления.")
+
+@router.message(AddUpdate.post_url)
+async def process_update_url(message: Message, state: FSMContext):
+    post_url = (message.text or "").strip()
+
+    if not (post_url.startswith("https://t.me/") or post_url.startswith("http://t.me/")):
+        await message.answer(
+            "❌ Нужна ссылка на пост Telegram.\n\n"
+            "Например:\n"
+            "<code>https://t.me/mestniybaryga/9587</code>"
+        )
+        return
+
+    data = await state.get_data()
+    updates = load_updates_sync()
+
+    update = {
+        "id": data.get("update_id") or next_update_id(updates),
+        "title": data.get("title", "Обновление"),
+        "image": data.get("image", ""),
+        "post_url": post_url,
+        "created_at": datetime.now().isoformat(timespec="seconds")
+    }
+
+    updates.insert(0, update)
+    save_updates_sync(updates)
+    await state.clear()
+
+    success = await push_updates_to_github()
+
+    text = (
+        f"✅ <b>Обновление добавлено!</b>\n\n"
+        f"📰 #{update['id']} — <b>{update['title']}</b>\n"
+        f"🔗 {update['post_url']}\n"
+        f"🖼 Фото: {update['image']}\n\n"
+    )
+    if success:
+        text += "🌐 Загружено на GitHub. В приложении появится через 1–2 минуты."
+    else:
+        text += "⚠️ Локально сохранено, но не удалось загрузить на GitHub. Попробуйте позже: <code>/updates</code>"
+
+    await message.answer(text, disable_web_page_preview=True, reply_markup=get_admin_keyboard())
+
+@router.callback_query(F.data == "admin_updates")
+async def admin_updates_btn(callback: CallbackQuery):
+    if callback.from_user.id not in ADMIN_IDS:
+        await callback.answer("⛔ Доступ запрещён", show_alert=True)
+        return
+
+    await callback.message.answer(format_updates_list(load_updates_sync()), disable_web_page_preview=True, reply_markup=get_admin_keyboard())
+    await callback.answer()
+
+@router.message(Command("updates"))
+async def cmd_updates(message: Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    await message.answer(format_updates_list(load_updates_sync()), disable_web_page_preview=True, reply_markup=get_admin_keyboard())
+
+@router.message(Command("delete_update"))
+async def cmd_delete_update(message: Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    try:
+        parts = message.text.split()
+        if len(parts) < 2:
+            raise ValueError("Не указан ID")
+        update_id = int(parts[1])
+    except Exception:
+        await message.answer(
+            "❓ <b>Как удалить обновление:</b>\n\n"
+            "<code>/delete_update ID</code>\n\n"
+            "Например: <code>/delete_update 2</code>\n\n"
+            "Список: /updates"
+        )
+        return
+
+    updates = load_updates_sync()
+    target = next((item for item in updates if int(item.get("id", 0)) == update_id), None)
+
+    if not target:
+        await message.answer(f"❌ Обновление #{update_id} не найдено")
+        return
+
+    updates = [item for item in updates if int(item.get("id", 0)) != update_id]
+    save_updates_sync(updates)
+    success = await push_updates_to_github()
+
+    text = f"✅ Обновление удалено!\n\n#{update_id} — <b>{target.get('title', '')}</b>"
+    if not success:
+        text += "\n\n⚠️ Локально удалено, но не удалось обновить GitHub."
+    await message.answer(text, reply_markup=get_admin_keyboard())
+
+
+# ==================== ADMIN: СТАТИСТИКА ====================
+# ==================== ADMIN: STOCK / DISCOUNT ====================
+
+@router.message(Command("edit_stock"))
+async def edit_stock_cmd(message: Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    args = message.text.split()[1:]
+
+    if len(args) != 2:
+        await message.answer(
+            "Использование:\n"
+            "/edit_stock ID НАЛИЧИЕ\n\n"
+            "Пример:\n"
+            "/edit_stock 12 5"
+        )
+        return
+
+    try:
+        product_id = int(args[0])
+        new_stock = int(args[1])
+    except ValueError:
+        await message.answer("ID и количество должны быть целыми числами.")
+        return
+
+    if new_stock < 0:
+        await message.answer("Количество должно быть целым числом от 0 и выше.")
+        return
+
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+
+        if not product:
+            await message.answer(f"Товар с ID {product_id} не найден.")
+            return
+
+        product.stock = new_stock
+        await session.commit()
+
+    success = await auto_push_to_github()
+
+    if success:
+        await message.answer(f"✅ Наличие товара ID {product_id} изменено на {new_stock} и отправлено на GitHub.")
+    else:
+        await message.answer(f"⚠️ Наличие товара ID {product_id} изменено, но GitHub export не удался.")
+
+
+@router.message(Command("remove_size"))
+async def remove_size_cmd(message: Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    parts = (message.text or "").split(maxsplit=2)
+    if len(parts) != 3:
+        await message.answer(
+            "Использование:\n"
+            "/remove_size ID РАЗМЕР\n\n"
+            "Пример:\n"
+            "/remove_size 12 XL"
+        )
+        return
+
+    try:
+        product_id = int(parts[1])
+    except ValueError:
+        await message.answer("ID должен быть целым числом.")
+        return
+
+    size_to_remove = parts[2].strip()
+    if not size_to_remove:
+        await message.answer("Укажите размер, который нужно удалить.")
+        return
+
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+
+        if not product:
+            await message.answer(f"Товар с ID {product_id} не найден.")
+            return
+
+        current_sizes = product.sizes if isinstance(product.sizes, list) else []
+        normalized_size = size_to_remove.casefold()
+        new_sizes = [
+            size for size in current_sizes
+            if str(size).strip().casefold() != normalized_size
+        ]
+
+        if len(new_sizes) == len(current_sizes):
+            await message.answer(f"Размер «{size_to_remove}» у товара ID {product_id} не найден.")
+            return
+
+        product.sizes = new_sizes
+        await session.commit()
+
+    success = await auto_push_to_github()
+
+    sizes_text = ", ".join(str(size) for size in new_sizes) if new_sizes else "пустой список"
+    if success:
+        await message.answer(
+            f"✅ Размер «{size_to_remove}» удалён у товара ID {product_id}.\n"
+            f"Текущие размеры: {sizes_text}\n"
+            "Каталог отправлен на GitHub."
+        )
+    else:
+        await message.answer(
+            f"⚠️ Размер «{size_to_remove}» удалён у товара ID {product_id}, "
+            "но GitHub export не удался."
+        )
+
+
+@router.message(Command("edit_extra_photos"))
+async def edit_extra_photos_cmd(message: Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    parts = (message.text or "").split(maxsplit=2)
+    if len(parts) != 3:
+        await message.answer(
+            "Использование:\n"
+            "/edit_extra_photos ID ССЫЛКА\n\n"
+            "Удалить ссылку:\n"
+            "/edit_extra_photos ID нет\n\n"
+            "Пример:\n"
+            "/edit_extra_photos 12 https://t.me/mestniybaryga/9843"
+        )
+        return
+
+    try:
+        product_id = int(parts[1])
+    except ValueError:
+        await message.answer("ID должен быть целым числом.")
+        return
+
+    value = parts[2].strip()
+    if not value:
+        await message.answer("Укажите ссылку или значение для удаления: нет, 0, -, *, remove, удалить.")
+        return
+
+    remove_values = {"нет", "0", "-", "*", "remove", "удалить"}
+    should_remove = value.casefold() in remove_values
+
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+
+        if not product:
+            await message.answer(f"Товар с ID {product_id} не найден.")
+            return
+
+        prices = dict(product.prices or {})
+        if should_remove:
+            prices.pop("extra_photos_url", None)
+        else:
+            prices["extra_photos_url"] = value
+
+        product.prices = prices
+        await session.commit()
+
+    success = await auto_push_to_github()
+
+    action_text = "удалена" if should_remove else "обновлена"
+    if success:
+        await message.answer(f"✅ Ссылка «Доп фото» у товара ID {product_id} {action_text} и отправлена на GitHub.")
+    else:
+        await message.answer(f"⚠️ Ссылка «Доп фото» у товара ID {product_id} {action_text}, но GitHub export не удался.")
+
+
+@router.message(Command("discount"))
+async def discount_cmd(message: Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+
+    args = message.text.split()[1:]
+
+    if len(args) not in (2, 4):
+        await message.answer(
+            "Использование:\n"
+            "/discount ID BYN RUB USD — поставить скидку\n"
+            "/discount ID 0 — убрать скидку\n\n"
+            "Примеры:\n"
+            "/discount 12 100 3000 30\n"
+            "/discount 12 0"
+        )
+        return
+
+    try:
+        product_id = int(args[0])
+    except ValueError:
+        await message.answer("ID должен быть числом.")
+        return
+
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+
+        if not product:
+            await message.answer(f"Товар с ID {product_id} не найден.")
+            return
+
+        if len(args) == 2 and args[1] == "0":
+            product.old_price_byn = None
+            product.old_price_rub = None
+            product.old_price_usd = None
+            await session.commit()
+
+            success = await auto_push_to_github()
+
+            if success:
+                await message.answer(f"✅ Скидка у товара ID {product_id} убрана и изменения отправлены на GitHub.")
+            else:
+                await message.answer(f"⚠️ Скидка у товара ID {product_id} убрана, но GitHub export не удался.")
+            return
+
+        if len(args) == 4:
+            try:
+                old_byn = float(args[1])
+                old_rub = float(args[2])
+                old_usd = float(args[3])
+            except ValueError:
+                await message.answer("Цены должны быть числами.")
+                return
+
+            product.old_price_byn = old_byn
+            product.old_price_rub = old_rub
+            product.old_price_usd = old_usd
+            await session.commit()
+
+            success = await auto_push_to_github()
+
+            if success:
+                await message.answer(f"✅ Скидка у товара ID {product_id} установлена и отправлена на GitHub.")
+            else:
+                await message.answer(f"⚠️ Скидка у товара ID {product_id} установлена, но GitHub export не удался.")
+            return
+
+        await message.answer(
+            "Неверный формат.\n"
+            "Используй:\n"
+            "/discount ID BYN RUB USD\n"
+            "или:\n"
+            "/discount ID 0"
+        )
 @router.callback_query(F.data == "admin_stats")
 async def admin_stats(callback: CallbackQuery):
     if callback.from_user.id not in ADMIN_IDS:
@@ -1024,23 +2119,64 @@ async def show_my_orders(callback: CallbackQuery):
 
     await callback.answer()
 
+
+# ==================== START MENU BUTTONS ====================
+
+@router.callback_query(F.data == "delivery_info")
+async def delivery_info(callback: CallbackQuery):
+    text = (
+        "• <b>Личная встреча:</b> г. Лида 🌇\n\n"
+        "• <b>Доставка:</b> По всем странам СНГ, через:\n"
+        "Белпочта ( по Беларуси )\n"
+        "Европочта ( по Беларуси )\n"
+        "Маршрутка ( по Беларуси )\n"
+        "Такси ( по городу Лида )\n"
+        "CDEK ( между странами СНГ )\n\n"
+        "По всем интересующим вопросам обращаться сюда:\n"
+        "<b>@manager_of_mestniy</b>"
+    )
+    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
+    await callback.answer()
+
+
+@router.callback_query(F.data == "custom_order_info")
+async def custom_order_info(callback: CallbackQuery):
+    text = (
+        "Мы, с нашей командой, можем привезти вам абсолютно любой товар, из разных стран, "
+        "вам необходимо найти любую фотку в интернете, нужного товара, затем скинуть её нашему менеджеру, "
+        "и обязательно скажите нужный размер, он вам расскажет обо всём: "
+        "Какая будет итоговая цена | сроки доставки, и ответит на все ваши вопросы!\n\n"
+        "<b>Как связаться с менеджером?</b>\n\n"
+        "Открывай приложение → Внизу выбирай раздел каталог → Заказать товар по предзаказу\n\n"
+        "<b>Канал по предзаказам:</b>\n"
+        "<b><a href='https://t.me/mestniypodzakaz'>https://t.me/mestniypodzakaz</a></b>"
+    )
+    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
+    await callback.answer()
+
+
+@router.callback_query(F.data == "reviews_info")
+async def reviews_info(callback: CallbackQuery):
+    text = "<b><a href='https://t.me/mestniyotzivyy'>ГЛЯНУТЬ ОТЗЫВЫ ТУТ *ТЫКАЙ</a></b>"
+    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
+    await callback.answer()
+
 # ==================== ИНФОРМАЦИЯ ====================
 
 @router.callback_query(F.data == "info")
 async def show_info(callback: CallbackQuery):
     text = (
-        "• Личная встреча: г. Лида 🌇\n\n"
-        "• Отзывы: Более 720!\n"
-        "<a href='https://t.me/mestniyotzivyy'>ГЛЯНУТЬ ОТЗЫВЫ ТУТ (ТЫКАЙ)</a>\n\n"
-        "• Доставка: По всем странам СНГ, через:\n\n"
-        "<blockquote>Белпочта ( по Беларуси )\n"
+        "• <b>Личная встреча:</b> г. Лида 🌇\n\n"
+        "• <b>Доставка:</b> По всем странам СНГ, через:\n"
+        "Белпочта ( по Беларуси )\n"
         "Европочта ( по Беларуси )\n"
         "Маршрутка ( по Беларуси )\n"
         "Такси ( по городу Лида )\n"
-        "CDEK ( между странами СНГ )</blockquote>\n\n"
-        "По всем интересующим вопросам обращаться сюда: @manager_of_mestniy"
+        "CDEK ( между странами СНГ )\n\n"
+        "По всем интересующим вопросам обращаться сюда:\n"
+        "<b>@manager_of_mestniy</b>"
     )
-    await callback.message.answer(text, disable_web_page_preview=True)
+    await callback.message.answer(text, disable_web_page_preview=True, reply_markup=get_main_keyboard())
     await callback.answer()
 
 # ==================== ОБРАБОТКА ЗАКАЗОВ ОТ WEBAPP ====================
@@ -1164,8 +2300,11 @@ async def api_get_products(request):
                 "price_byn": p.price_byn,
                 "prices": p.prices,
                 "sizes": p.sizes,
+                "size_stock": (p.prices or {}).get("size_stock") or {str(size): 1 for size in (p.sizes or [])},
                 "stock": p.stock,
-                "images": p.images
+                "condition": (p.prices or {}).get("condition"),
+                "extra_photos_url": (p.prices or {}).get("extra_photos_url"),
+                "images": (p.images or [])[:MAX_PRODUCT_IMAGES]
             })
 
         return web.json_response(data)
@@ -1180,12 +2319,16 @@ async def api_get_brands(request):
 async def api_get_rates(request):
     return web.json_response(CURRENCIES)
 
+async def api_get_updates(request):
+    return web.json_response(load_updates_sync())
+
 async def start_api_server():
     app = web.Application(middlewares=[cors_middleware])
     app.router.add_get("/api/products", api_get_products)
     app.router.add_get("/api/categories", api_get_categories)
     app.router.add_get("/api/brands", api_get_brands)
     app.router.add_get("/api/rates", api_get_rates)
+    app.router.add_get("/api/updates", api_get_updates)
 
     runner = web.AppRunner(app)
     await runner.setup()
@@ -1227,9 +2370,9 @@ async def cmd_export_products(message: Message):
 
 import base64
 
-GITHUB_TOKEN = "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"
-GITHUB_REPO = "liknine/mestniybot"
-GITHUB_BRANCH = "main"
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "").strip()
+GITHUB_REPO = os.getenv("GITHUB_REPO", "liknine/mestniybot")
+GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
 
 async def export_products_to_file():
     async with async_session() as session:
@@ -1247,11 +2390,16 @@ async def export_products_to_file():
             "price_byn": p.price_byn,
             "prices": p.prices,
             "sizes": p.sizes,
+            "size_stock": (p.prices or {}).get("size_stock") or {str(size): 1 for size in (p.sizes or [])},
             "stock": p.stock,
-            "images": p.images
+            "product_type": (p.prices or {}).get("product_type", "stock"),
+            "section": (p.prices or {}).get("product_type", "stock"),
+            "condition": (p.prices or {}).get("condition"),
+            "extra_photos_url": (p.prices or {}).get("extra_photos_url"),
+            "images": (p.images or [])[:MAX_PRODUCT_IMAGES]
         })
 
-    webapp_path = "/home/botuser/mestniy_bot/products.json"
+    webapp_path = Path(__file__).resolve().parent / "products.json"
 
     with open(webapp_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
@@ -1407,7 +2555,7 @@ async def cmd_fix_product(message: Message, state: FSMContext):
         await message.answer(f"❌ Товар #{product_id} не найден\n\nПосмотреть все товары: /products")
         return
 
-    brand_name = BRANDS.get(product.brand, '') if product.brand else ''
+    brand_name = display_brand_name(product.brand)
     cat_data = CATEGORIES.get(product.category_id, {})
 
     await state.update_data(fix_product_id=product_id)
@@ -1643,19 +2791,33 @@ async def main():
     await init_db()
     await get_exchange_rates()
 
-    await bot.set_my_commands([
-        BotCommand(command="start", description="🚀 Запустить бота"),
-        BotCommand(command="add_product", description="➕ Добавить товар"),
-        BotCommand(command="products", description="📦 Список товаров"),
-        BotCommand(command="delete", description="🗑 Удалить товар"),
-        BotCommand(command="export", description="📤 Экспорт на GitHub"),
-        BotCommand(command="fix_product", description="🔧 Починить фото товара"),
-    ])
+    try:
+        await bot.set_my_commands([
+            BotCommand(command="start", description="🚀 Запустить бота"),
+            BotCommand(command="add_product", description="➕ Добавить товар"),
+            BotCommand(command="products", description="📦 Список товаров"),
+            BotCommand(command="delete", description="🗑 Удалить товар"),
+            BotCommand(command="export", description="📤 Экспорт на GitHub"),
+            BotCommand(command="fix_product", description="🔧 Починить фото товара"),
+            BotCommand(command="edit_stock", description="📦 Изменить наличие"),
+            BotCommand(command="remove_size", description="📏 Удалить размер"),
+            BotCommand(command="edit_extra_photos", description="🔗 Изменить доп фото"),
+            BotCommand(command="add_update", description="📰 Добавить обновление"),
+            BotCommand(command="updates", description="📰 Список обновлений"),
+            BotCommand(command="delete_update", description="🗑 Удалить обновление"),
+        ])
+    except Exception as e:
+        print(f"⚠️ Не удалось обновить команды Telegram: {e}")
 
-    await start_api_server()
+    try:
+        await start_api_server()
+    except OSError as e:
+        print(f"⚠️ API сервер не запущен, порт занят или недоступен: {e}")
+        print("🤖 Продолжаем запуск бота без API-сервера")
+
 
     print("🤖 Бот запущен!")
-    print("📝 Команды: /add_product, /products, /delete ID, /export, /fix_product ID")
+    print("📝 Команды: /add_product, /products, /delete ID, /export, /fix_product ID, /edit_stock ID КОЛИЧЕСТВО, /remove_size ID РАЗМЕР, /edit_extra_photos ID ССЫЛКА, /add_update, /updates, /delete_update ID")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

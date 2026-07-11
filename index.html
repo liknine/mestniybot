@@ -1,333 +1,151 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MESTNIY | STORE</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="style.css?v=size_badge_cards_1">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#ffffff" name="theme-color"/>
+<title>MESTNIY STORE</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Roboto+Condensed:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="style.css?v=mestniy_frontend_v25_live_1" rel="stylesheet"/>
 </head>
 <body>
-    <div class="app">
-        <div class="app-error" id="appError" hidden></div>
-
-        <section class="page page-active" id="homePage" data-page="home">
-            <header class="home-header">
-                <div class="home-topbar">
-                    <h1 class="welcome-title">Добро пожаловать в MESTNIY | STORE</h1>
-                    <button class="icon-button menu-button" id="menuButton" type="button" aria-label="Меню">
-                        <i data-lucide="menu"></i>
-                    </button>
-                </div>
-
-                <label class="search-field">
-                    <i data-lucide="search"></i>
-                    <input id="homeSearchInput" type="search" placeholder="Введите название товара..." autocomplete="off">
-                </label>
-
-                <div class="home-controls">
-                    <button class="filter-button" id="homeSizeButton" type="button">
-                        <span>Выбрать размер</span>
-                        <strong id="homeSizeLabel">Все</strong>
-                    </button>
-                    <button class="filter-button" id="homeTypeButton" type="button">
-                        <span>Выбрать тип товара</span>
-                        <strong id="homeTypeLabel">Все</strong>
-                    </button>
-                </div>
-
-                <div class="currency-switch" aria-label="Валюта">
-                    <button class="currency-option active" data-currency="BYN" type="button">BYN</button>
-                    <button class="currency-option" data-currency="RUB" type="button">RUB</button>
-                    <button class="currency-option" data-currency="USD" type="button">USD</button>
-                </div>
-            </header>
-
-            <div class="loading" id="loading">
-                <div class="loading-spinner"></div>
-            </div>
-            <main class="products-grid" id="homeProductsGrid"></main>
-            <div class="empty-state" id="homeEmpty" hidden>
-                <i data-lucide="package-search"></i>
-                <p>Ничего не найдено</p>
-            </div>
-        </section>
-
-        <section class="page" id="catalogPage" data-page="catalog">
-            <div class="page-head">
-                <h2>Каталог</h2>
-            </div>
-
-            <div class="catalog-screen" id="catalogStartScreen">
-                <button class="catalog-action-card" id="catalogTypeButton" type="button">
-                    <i data-lucide="layout-grid"></i>
-                    <span>Выбрать тип товара</span>
-                </button>
-                <button class="catalog-action-card" id="catalogBrandButton" type="button">
-                    <i data-lucide="tag"></i>
-                    <span>Выбрать бренд товара</span>
-                </button>
-                <button class="catalog-action-card preorder-card" id="preorderButton" type="button">
-                    <i data-lucide="message-circle"></i>
-                    <span>Заказать товар по предзаказу</span>
-                </button>
-            </div>
-
-            <div class="catalog-screen" id="catalogCategoriesScreen" hidden>
-                <button class="back-link" id="categoriesBack" type="button">
-                    <i data-lucide="chevron-left"></i>
-                    <span>Назад</span>
-                </button>
-                <div class="browse-grid" id="catalogCategoriesGrid"></div>
-            </div>
-
-            <div class="catalog-screen" id="catalogBrandsScreen" hidden>
-                <button class="back-link" id="brandsBack" type="button">
-                    <i data-lucide="chevron-left"></i>
-                    <span>Назад</span>
-                </button>
-                <div class="browse-grid" id="catalogBrandsGrid"></div>
-                <div class="empty-state compact" id="catalogBrandsEmpty" hidden>
-                    <p>Брендов под заказ пока нет</p>
-                </div>
-            </div>
-
-            <div class="catalog-screen" id="catalogProductsScreen" hidden>
-                <button class="back-link" id="catalogProductsBack" type="button">
-                    <i data-lucide="chevron-left"></i>
-                    <span>Назад</span>
-                </button>
-                <div class="breadcrumb" id="catalogBreadcrumb">Каталог</div>
-                <div class="manager-note">
-                    <p>Если вы не нашли из предложенных нами товаров, нужный для вас, то обратитесь к нашему менеджеру, он вам поможет определиться с выбором!</p>
-                    <button class="manager-button" id="catalogManagerButton" type="button">
-                        <i data-lucide="message-circle"></i>
-                        <span>Написать нашему менеджеру</span>
-                    </button>
-                </div>
-                <main class="products-grid" id="catalogProductsGrid"></main>
-                <div class="empty-state compact" id="catalogProductsEmpty" hidden>
-                    <p>Товаров под заказ не найдено</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="page" id="cartPage" data-page="cart">
-            <div class="page-head with-action">
-                <h2>Корзина</h2>
-                <button class="ghost-action" id="clearCartBtn" type="button">Очистить</button>
-            </div>
-            <div class="cart-items" id="cartItems"></div>
-            <div class="empty-state page-empty" id="cartEmpty">
-                <i data-lucide="shopping-bag"></i>
-                <p>Корзина пуста</p>
-                <span>Добавьте товары для оформления заказа</span>
-            </div>
-            <div class="cart-footer" id="cartFooter" hidden>
-                <div class="cart-summary">
-                    <div class="cart-row">
-                        <span>Товары</span>
-                        <strong id="cartSubtotal">0 BYN</strong>
-                    </div>
-                    <div class="cart-row cart-total">
-                        <span>Итого</span>
-                        <strong id="cartTotal">0 BYN</strong>
-                    </div>
-                </div>
-                <button class="primary-button" id="checkoutBtn" type="button">Оформить заказ</button>
-            </div>
-        </section>
-
-        <section class="page" id="favoritesPage" data-page="favorites">
-            <div class="page-head">
-                <h2>Избранное</h2>
-            </div>
-            <main class="products-grid" id="favoritesGrid"></main>
-            <div class="empty-state page-empty" id="favoritesEmpty">
-                <i data-lucide="heart"></i>
-                <p>Пока пусто</p>
-                <span>Добавляйте товары в избранное</span>
-            </div>
-        </section>
-
-        <section class="page" id="infoPage" data-page="info">
-            <div class="info-screen" id="infoMainScreen">
-                <div class="profile-card">
-                    <div class="profile-avatar" id="profileAvatar">
-                        <i data-lucide="user"></i>
-                    </div>
-                    <div class="profile-copy">
-                        <h2 id="profileName">Пользователь</h2>
-                        <p id="profileUsername">Telegram User</p>
-                    </div>
-                </div>
-
-                <div class="info-actions">
-                    <button class="info-action" id="supportBtn" type="button">
-                        <i data-lucide="message-circle"></i>
-                        <span>Служба поддержки</span>
-                    </button>
-                    <button class="info-action" id="updatesBtn" type="button">
-                        <i data-lucide="sparkles"></i>
-                        <span>Наши обновления</span>
-                    </button>
-                    <button class="info-action" id="socialBtn" type="button">
-                        <i data-lucide="share-2"></i>
-                        <span>Наши другие соц. сети</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="info-screen" id="updatesScreen" hidden>
-                <button class="back-link" id="updatesBack" type="button">
-                    <i data-lucide="chevron-left"></i>
-                    <span>Назад</span>
-                </button>
-                <div class="page-head inline">
-                    <h2>Наши обновления</h2>
-                </div>
-                <div class="updates-list" id="updatesList"></div>
-                <div class="empty-state compact" id="updatesEmpty">
-                    <p>Обновлений пока нет</p>
-                </div>
-            </div>
-
-            <div class="info-screen" id="socialScreen" hidden>
-                <button class="back-link" id="socialBack" type="button">
-                    <i data-lucide="chevron-left"></i>
-                    <span>Назад</span>
-                </button>
-                <div class="page-head inline">
-                    <h2>Соц. сети</h2>
-                </div>
-                <div class="social-grid" id="socialGrid">
-                    <button class="social-card youtube" data-link="https://youtube.com/@mestniy.baryga?si=aVwjhLuqbkTvMo4D" type="button">
-                        <span>YouTube</span>
-                    </button>
-                    <button class="social-card vk" data-link="https://vk.ru/mestniystoree" type="button">
-                        <span>VK</span>
-                    </button>
-                    <button class="social-card instagram" data-link="https://www.instagram.com/_mestniy_store_?igsh=MW43YTNrY3NmZjV5dA%3D%3D&amp;utm_source=qr" type="button">
-                        <span>Instagram</span>
-                    </button>
-                    <button class="social-card tiktok" data-link="https://www.tiktok.com/@_mestniy_store_?_r=1&amp;_t=ZS-97JQpc2lg7I" type="button">
-                        <span>TikTok</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <aside class="side-panel" id="sidePanel" aria-hidden="true">
-        <button class="side-overlay" id="sideOverlay" type="button" aria-label="Закрыть меню"></button>
-        <div class="side-sheet">
-            <button class="side-close" id="sideClose" type="button" aria-label="Закрыть">
-                <i data-lucide="x"></i>
-            </button>
-            <button class="side-link" id="sideSupport" type="button">
-                <i data-lucide="message-circle"></i>
-                <span>Обратиться в поддержку</span>
-            </button>
-        </div>
-    </aside>
-
-    <div class="choice-modal" id="choiceModal" aria-hidden="true">
-        <button class="choice-overlay" id="choiceOverlay" type="button" aria-label="Закрыть"></button>
-        <div class="choice-sheet">
-            <div class="choice-head">
-                <h3 id="choiceTitle">Выбор</h3>
-                <button class="icon-button" id="choiceClose" type="button" aria-label="Закрыть">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-            <div class="choice-grid" id="choiceGrid"></div>
-        </div>
-    </div>
-
-    <div class="product-modal" id="productModal" aria-hidden="true">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="icon-button" id="modalBack" type="button" aria-label="Назад">
-                    <i data-lucide="chevron-left"></i>
-                </button>
-                <button class="icon-button modal-favorite" id="modalFavorite" type="button" aria-label="В избранное">
-                    <i data-lucide="heart"></i>
-                </button>
-            </div>
-
-            <div class="product-scroll">
-                <div class="gallery">
-                    <div class="gallery-track" id="galleryTrack"></div>
-                    <div class="gallery-dots" id="galleryDots"></div>
-                </div>
-                <div class="product-info">
-                    <div class="order-badge-large" id="productOrderBadge" hidden>Позиция под заказ!</div>
-                    <h2 class="product-title" id="productTitle"></h2>
-                    <div class="product-brand" id="productBrand"></div>
-                    <div class="product-price-main" id="productPriceMain"></div>
-                    <div class="product-stock" id="productStock"></div>
-                    <div class="available-sizes" id="availableSizes"></div>
-                    <div class="product-condition" id="productCondition" hidden></div>
-
-                    <section class="detail-section">
-                        <h3>Размер</h3>
-                        <div class="size-warning" id="sizeWarning">* выберите размер</div>
-                        <div class="sizes-grid" id="sizesGrid"></div>
-                    </section>
-
-                    <section class="detail-section">
-                        <h3>Описание</h3>
-                        <p class="description-text" id="productDescription"></p>
-                    </section>
-                    <button class="admin-delete-button" id="adminDeleteProductBtn" type="button" hidden>🗑 Удалить товар</button>
-<section class="related-section" id="relatedSection" hidden>
-                        <h3>Смотрите также</h3>
-                        <div class="related-grid" id="relatedGrid"></div>
-                    </section>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="add-to-cart-btn" id="addToCartBtn" type="button">
-                    <span>В корзину</span>
-                    <strong id="btnPrice">0 BYN</strong>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <nav class="bottom-nav">
-        <button class="nav-btn active" data-page="home" id="navHome" type="button">
-            <i data-lucide="home"></i>
-            <span>Главная</span>
-        </button>
-        <button class="nav-btn" data-page="catalog" id="navCatalog" type="button">
-            <i data-lucide="grid-2x2"></i>
-            <span>Каталог</span>
-        </button>
-        <button class="nav-btn" data-page="cart" id="navCart" type="button">
-            <i data-lucide="shopping-bag"></i>
-            <span class="nav-badge" id="cartBadge">0</span>
-            <span>Корзина</span>
-        </button>
-        <button class="nav-btn" data-page="favorites" id="navFavorites" type="button">
-            <i data-lucide="heart"></i>
-            <span>Избранное</span>
-        </button>
-        <button class="nav-btn" data-page="info" id="navInfo" type="button">
-            <i data-lucide="settings"></i>
-            <span>Информация</span>
-        </button>
-    </nav>
-
-    <div class="toast" id="toast">
-        <i data-lucide="check-circle"></i>
-        <span id="toastText">Готово</span>
-    </div>
-
-    <script src="app.js?v=size_badge_cards_1"></script>
+<div class="app-loader" id="appLoader">ЗАГРУЗКА КАТАЛОГА</div><div class="app" id="app">
+<section class="screen active" id="home">
+<img alt="MESTNIY STORE" class="home-bg" src="assets/home-hero.webp"/>
+<div class="home-shade"></div>
+<div class="home-inner">
+<div class="home-title">MESTNIY STORE</div>
+<div class="home-news" id="homeNews"></div>
+<button class="home-cta" data-go="catalog"><span>ПЕРЕЙТИ В КАТАЛОГ</span><svg aria-hidden="true" class="home-cta-arrow" focusable="false" viewbox="0 0 132 10"><path d="M1 5H126L122 1M126 5L122 9"></path></svg></button>
+</div>
+</section>
+<section class="screen" id="catalog">
+<header class="top-header">
+<button class="icon-btn" data-drawer="menu"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
+<div class="brand">MESTNIY STORE</div>
+<div class="header-actions"><button class="icon-btn" data-search=""><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div>
+</header>
+<div class="search-panel"><input id="searchInput" placeholder="Поиск по каталогу"/></div>
+<main class="content">
+<button class="news-chip" data-go="news"><i></i>МОИ НОВОСТИ</button>
+<div class="toolbar"><button data-drawer="filter" id="filterBtn">ФИЛЬТРЫ  +</button><button id="sortBtn">ЦЕНА <span>↑</span></button></div>
+<div class="product-grid" id="catalogGrid"></div>
+</main>
+</section>
+<section class="screen" id="product">
+<header class="top-header compact"><button class="icon-btn" data-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="brand">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn" data-search=""><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<div class="detail-media"><img alt="" id="detailImage"/></div>
+<div class="detail-body"><div class="detail-line"></div><div class="detail-title" id="detailTitle"></div><div class="detail-desc" id="detailDesc"></div><div class="section-label">ВЫБЕРИТЕ РАЗМЕР:</div><div class="size-row" id="sizeRow"></div><div class="detail-price" id="detailPrice"></div><button class="underlined-cta" id="detailAdd">ДОБАВИТЬ В КОРЗИНУ</button></div>
+</section>
+<section class="screen" id="favorites">
+<header class="top-header"><button class="icon-btn" data-drawer="menu"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="brand">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<div class="tabs"><button class="tab" data-go="cart">МОЯ КОРЗИНА</button><button class="tab active">ИЗБРАННОЕ <span data-fav-tab-count="">00</span></button></div>
+<main class="content"><div class="product-grid" id="favoritesGrid"></div></main>
+</section>
+<section class="screen" id="cart">
+<header class="top-header"><button class="icon-btn" data-drawer="menu"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="brand">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<div class="tabs"><button class="tab active">МОЯ КОРЗИНА</button><button class="tab" data-go="favorites">ИЗБРАННОЕ</button></div>
+<main class="content"><div id="cartList"></div><div class="summary" id="cartSummary"></div></main>
+</section>
+<section class="screen" id="checkout">
+<header class="top-header"><button class="icon-btn" data-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 5-7 7 7 7"></path></svg></button><div class="brand">ОФОРМЛЕНИЕ</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<main class="content checkout-content" id="checkoutBody"></main>
+</section>
+<section class="screen" id="orderSuccess">
+<header class="top-header"><div class="icon-btn"></div><div class="brand">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn" data-go="profile"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"></path></svg></button></div></header>
+<main class="content" id="orderSuccessBody"></main>
+</section>
+<section class="screen" id="profile">
+<header class="top-header"><button class="icon-btn" data-drawer="menu"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="brand">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<main class="content">
+<button class="news-chip" data-go="news"><i></i>МОИ НОВОСТИ</button>
+<div class="profile-card">
+<div class="profile-identity"><img alt="MESTNIY MANAGER" class="avatar" id="profileAvatar" src="assets/profile-fallback.webp"/><div class="profile-copy"><div class="profile-name" id="profileUsername">ПОЛЬЗОВАТЕЛЬ</div><div class="profile-sub">Покупатель</div></div></div>
+<div class="stats"><div class="stat"><strong id="profileOrderCount">0</strong>Покупок</div><div class="stat"><strong id="profileFavCount">0</strong>Избранное</div><div class="stat"><strong id="profileCartCount">0</strong>В корзине</div></div>
+</div>
+<section class="purchase-section">
+<button class="purchase-title-row" data-go="orders"><span class="row-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m3 7 9-4 9 4-9 4-9-4Zm0 0v10l9 4 9-4V7M12 11v10"></path></svg></span><span>МОИ ПОКУПКИ</span><span class="purchase-state" id="purchaseCountLabel">0 ПОКУПОК</span></button>
+<div id="latestOrderPreview"></div>
+</section>
+<button class="profile-row" data-go="favorites"><span class="row-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"></path></svg></span>ИЗБРАННОЕ<span class="arrow">›</span></button>
+<button class="profile-row" data-go="bonuses"><span class="row-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"></path><path d="M9 7v12M15 7v12"></path></svg></span>МОИ БОНУСЫ<span class="profile-row-value" id="profileBonusBalance">1 250</span><span class="arrow">›</span></button>
+</main>
+</section>
+<section class="screen" id="orders">
+<header class="top-header"><button class="icon-btn" data-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 5-7 7 7 7"></path></svg></button><div class="brand">МОИ ПОКУПКИ</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<main class="content">
+<div class="orders-intro"><p>История заказов</p><strong id="ordersCount">0</strong></div>
+<div class="orders-filters">
+<button class="orders-filter active" data-order-filter="all">ВСЕ</button>
+<button class="orders-filter" data-order-filter="active">АКТИВНЫЕ</button>
+<button class="orders-filter" data-order-filter="completed">ЗАВЕРШЕННЫЕ</button>
+<button class="orders-filter" data-order-filter="canceled">ОТМЕНЕННЫЕ</button>
+</div>
+<div class="orders-list" id="ordersList"></div>
+</main>
+</section>
+<section class="screen" id="orderDetail">
+<header class="top-header"><button class="icon-btn" data-order-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 5-7 7 7 7"></path></svg></button><div class="brand" id="orderDetailHeader">ЗАКАЗ</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<main class="content" id="orderDetailBody"></main>
+</section>
+<section class="screen" id="bonuses">
+<header class="top-header"><button class="icon-btn" data-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 5-7 7 7 7"></path></svg></button><div class="brand">МОИ БОНУСЫ</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
+<main class="content bonus-content">
+<section class="bonus-hero">
+<div class="bonus-kicker">Доступно сейчас</div>
+<div class="bonus-balance"><b id="bonusBalanceNumber">1 250</b><span>БОНУСОВ</span></div>
+<p class="bonus-status" id="bonusStatusText">Бонусы можно применить при оформлении заказа одной кнопкой.</p>
+</section>
+<section class="bonus-block">
+<div class="bonus-block-head"><h2 class="bonus-block-title">КАК НАЧИСЛЯЮТСЯ</h2><span class="bonus-block-count">ПОСЛЕ ЗАВЕРШЕНИЯ</span></div>
+<div class="bonus-tier-list">
+<div class="bonus-tier"><span>ПОКУПКА ДО 150 BYN</span><strong>1%</strong></div>
+<div class="bonus-tier"><span>ОТ 151 ДО 300 BYN</span><strong>2%</strong></div>
+<div class="bonus-tier"><span>ОТ 301 ДО 900 BYN</span><strong>3%</strong></div>
+<div class="bonus-tier"><span>ОТ 901 BYN И ВЫШЕ</span><strong>3,5%</strong></div>
+</div>
+</section>
+<section class="bonus-block">
+<div class="bonus-block-head"><h2 class="bonus-block-title">КАК РАБОТАЮТ</h2></div>
+<div class="bonus-guide"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h14M12 5v14"></path></svg><span>Бонусы начисляются один раз после того, как заказ получает статус «Завершен».</span></div>
+<div class="bonus-guide"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"></path></svg><span>При оформлении заказа применяются все доступные бонусы одной кнопкой, без выбора части суммы.</span></div>
+<div class="bonus-guide"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m7 12 3 3 7-7"></path></svg><span>Если заказ отменен, использованные бонусы автоматически возвращаются на баланс.</span></div>
+</section>
+<section class="bonus-block">
+<div class="bonus-block-head"><h2 class="bonus-block-title">ИСТОРИЯ БОНУСОВ</h2><span class="bonus-block-count" id="bonusHistoryCount">0 ОПЕРАЦИЙ</span></div>
+<div class="bonus-history" id="bonusHistory"></div>
+</section>
+</main>
+</section>
+<section class="screen news-screen" id="news">
+<header class="top-header"><button class="icon-btn" data-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 5-7 7 7 7"></path></svg></button><div class="brand">НОВОСТИ</div><div></div></header>
+<main class="content">
+<div class="news-overview"><p>Новые поступления, скидки и обновления MESTNIY STORE</p><span id="newsCount">0 НОВОСТЕЙ</span></div>
+<div class="news-list" id="newsList"></div>
+</main>
+</section>
+<section class="screen news-screen" id="newsDetail">
+<header class="top-header"><button class="icon-btn" data-news-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m15 5-7 7 7 7"></path></svg></button><div class="brand">НОВОСТЬ</div><div></div></header>
+<main class="news-detail-page" id="newsDetailBody"></main>
+</section>
+<nav class="bottom-nav" hidden="" id="bottomNav">
+<button class="nav-item" data-screen="catalog"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"></path></svg><span>КАТАЛОГ</span></button>
+<button class="nav-item" data-screen="favorites"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"></path></svg><span>ИЗБРАННОЕ</span></button>
+<button class="nav-item" data-screen="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg><span>КОРЗИНА</span><b class="count-badge" id="cartBadge">0</b></button>
+<button class="nav-item" data-screen="profile"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9a7 7 0 0 1 14 0"></path></svg><span>ПРОФИЛЬ</span></button>
+</nav>
+</div>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<div class="overlay" id="drawerOverlay">
+<aside class="drawer">
+<div class="drawer-head"><div class="drawer-title" id="drawerTitle">МЕНЮ</div><button class="icon-btn" data-close-drawer=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"></path></svg></button></div>
+<div id="drawerBody"></div>
+</aside>
+</div>
+<script defer="" src="app.js?v=mestniy_frontend_v25_live_1"></script>
 </body>
 </html>
