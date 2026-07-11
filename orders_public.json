@@ -2,16 +2,16 @@
   {
     "id": 5,
     "user_id": "1639462053",
-    "status": "accepted",
+    "status": "completed",
     "total": 150.0,
     "currency": "BYN",
     "delivery": "Европочта",
     "place": "Данные переданы менеджеру",
     "client_request_id": "web-1639462053-1783779222745-ehp97e",
     "created_at": "2026-07-11T17:13:42.973172",
-    "updated_at": "2026-07-11T17:13:42.970725",
+    "updated_at": "2026-07-11T17:13:55.889593",
     "bonuses": 0.0,
-    "bonus_earned": 0.0,
+    "bonus_earned": 1.0,
     "bonus_returned": 0.0,
     "items": [
       {
