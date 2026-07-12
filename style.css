@@ -2044,3 +2044,49 @@
     object-position:center 64%!important;
   }
 }
+
+/* home composition v8 test — raise visual center without shrinking news */
+#home .home-bg{
+  inset:auto!important;
+  top:0!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:220vw!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:translateX(-50%)!important;
+  transform-origin:center top!important;
+}
+#home .home-shade{
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.03) 28%,rgba(0,0,0,.04) 55%,rgba(0,0,0,.38) 73%,rgba(0,0,0,.82) 100%),
+    linear-gradient(90deg,rgba(0,0,0,.07),transparent 48%,rgba(0,0,0,.06));
+}
+@media(max-width:370px){
+  #home .home-bg{width:226vw!important}
+}
+
+/* home composition v8 — lift the exhibition above the news without changing card sizes */
+#home .home-bg{
+  inset:auto 0 auto 0!important;
+  top:-8%!important;
+  width:100%!important;
+  height:108%!important;
+  min-height:0!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  transform:none!important;
+  transform-origin:center center!important;
+  animation:none!important;
+}
+@media(max-height:720px){
+  #home .home-bg{
+    top:-10%!important;
+    height:110%!important;
+  }
+}
