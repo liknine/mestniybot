@@ -12,7 +12,9 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_home_editorial_v1';
+const BUILD_VERSION='mestniy_admin_product_delete_v1';
+const ADMIN_IDS=[1639462053,8465820993];
+const BOT_USERNAME='testmestniybot';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
 const CATEGORY_LABELS={
   outerwear:'ВЕРХНЯЯ ОДЕЖДА',sweatshirts:'КОФТЫ / СВИТЕРА',tshirts:'ФУТБОЛКИ / ПОЛО',
@@ -332,6 +334,36 @@ function cacheTelegramProfile(profile){
   if(!profile?.id)return;
   try{localStorage.setItem(profileStorageKey(profile.id),JSON.stringify(profile))}catch(_e){}
 }
+function isAdminUser(){
+  return ADMIN_IDS.includes(Number(state.profile?.id));
+}
+function updateAdminProductTools(product){
+  const tools=document.getElementById('adminProductTools');
+  const idLabel=document.getElementById('adminProductId');
+  const deleteButton=document.querySelector('[data-admin-delete-product]');
+  if(!tools)return;
+  const visible=Boolean(product&&isAdminUser());
+  tools.hidden=!visible;
+  if(!visible)return;
+  const productId=String(product.id||'').trim();
+  if(idLabel)idLabel.textContent='#'+productId;
+  if(deleteButton){
+    deleteButton.dataset.productId=productId;
+    deleteButton.textContent='УДАЛИТЬ ТОВАР #'+productId;
+  }
+}
+function openDeleteCommand(productId){
+  if(!isAdminUser())return;
+  const cleanId=String(productId||'').trim();
+  if(!cleanId)return;
+  const command='/delete '+cleanId;
+  const link='https://t.me/'+BOT_USERNAME+'?text='+encodeURIComponent(command);
+  try{
+    if(window.Telegram?.WebApp?.openTelegramLink){window.Telegram.WebApp.openTelegramLink(link);return}
+  }catch(_e){}
+  window.open(link,'_blank','noopener');
+}
+
 function renderTelegramProfile(profile){
   const username=document.getElementById('profileUsername');
   if(username)username.textContent=profile.username?`@${profile.username}`:(profile.firstName||'ПОЛЬЗОВАТЕЛЬ');
@@ -347,6 +379,7 @@ function applyTelegramProfile(){
   const profile=getTelegramProfile();state.profile=profile;
   cacheTelegramProfile(profile);
   renderTelegramProfile(profile);
+  if(state.screen==='product')updateAdminProductTools(PRODUCTS[state.selectedProduct]);
   console.info('MESTNIY PROFILE',{id:String(profile.id||''),username:profile.username||'',avatar:Boolean(profile.photoUrl),initData:Boolean(tg?.initData)});
   return profile;
 }
@@ -864,6 +897,7 @@ function openProduct(index){
   sizeRow.style.setProperty('--size-opacity','0');
   sizeRow.style.setProperty('--size-width','0px');
   const add=document.getElementById('detailAdd');add.disabled=soldOut;add.textContent=soldOut?'НЕТ В НАЛИЧИИ':'ДОБАВИТЬ В КОРЗИНУ';
+  updateAdminProductTools(p);
   showScreen('product');
   if(state.selectedSize)requestAnimationFrame(()=>{const selected=sizeRow.querySelector('.size-btn.active');if(selected)moveSizeIndicator(selected,true)});
 }
@@ -1015,6 +1049,7 @@ document.addEventListener('click',e=>{
   const filterChoiceButton=e.target.closest('[data-filter-key]');if(filterChoiceButton){if(!state.filterDraft)state.filterDraft={...state.filters};const key=filterChoiceButton.dataset.filterKey;state.filterDraft[key]=filterChoiceButton.dataset.filterValue;if(key==='category')state.filterDraft.size='all';renderFilterDrawer();return}
   if(e.target.closest('[data-filter-reset]')){state.filterDraft=defaultFilters();renderFilterDrawer();return}
   if(e.target.closest('[data-apply-filter]')){state.filters=normalizePriceRange(state.filterDraft||state.filters);state.filterDraft=null;closeDrawer();renderCatalog();showToast('Фильтры применены');return}
+  const adminDelete=e.target.closest('[data-admin-delete-product]');if(adminDelete){if(!isAdminUser())return;openDeleteCommand(adminDelete.dataset.productId||PRODUCTS[state.selectedProduct]?.id);return}
   if(e.target.id==='detailAdd'){if(!state.selectedSize){alert('Сначала выберите размер');return}addToCart(state.selectedProduct,state.selectedSize);showScreen('cart');return}
   if(e.target.id==='checkoutBtn'){showScreen('checkout');return}
   if(e.target.id==='confirmOrderBtn'){createPrototypeOrder();return}

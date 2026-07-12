@@ -2173,3 +2173,47 @@
 @media(min-height:900px){
   #home{--home-bottom-stack:310px}
 }
+
+
+/* Admin-only product controls inside the product card */
+.admin-product-tools{
+  margin-top:34px;
+  padding-top:18px;
+  border-top:1px solid rgba(0,0,0,.16);
+}
+.admin-product-tools[hidden]{display:none!important}
+.admin-product-meta{
+  margin-bottom:12px;
+  color:#616161;
+  font-family:var(--mono,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);
+  font-size:11px;
+  line-height:1.4;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.admin-product-meta code{
+  color:#111;
+  font:inherit;
+  font-weight:700;
+}
+.admin-delete-product{
+  width:100%;
+  min-height:50px;
+  padding:13px 16px;
+  border:1px solid #b42323;
+  border-radius:0;
+  background:transparent;
+  color:#b42323;
+  font-family:var(--mono,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background-color .18s ease,color .18s ease,transform .18s ease;
+}
+.admin-delete-product:active{
+  background:#b42323;
+  color:#fff;
+  transform:scale(.985);
+}
