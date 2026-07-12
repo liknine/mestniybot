@@ -1686,41 +1686,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 155,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Dunk High НОВЫЕ",
-    "description": "Абсолютно новые, очень классный цвет. Оригинал. В комплекте с коробкой, и дополнительными шнурками. Размер по бирке: 42. Длина по стельке: 26.5 CM.",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 8900.0,
-      "USD": 112.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10255"
-    },
-    "sizes": [
-      "42"
-    ],
-    "size_stock": {
-      "42": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/10255",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_155_758e0e41.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_a5fa9779.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_b7c1b9a7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_04f5ca5d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_155_e443bf5b.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 156,
     "category_id": 8,
     "brand": "Evisu",
