@@ -2353,41 +2353,6 @@
     "created_at": "2026-07-06T18:25:50.093290"
   },
   {
-    "id": 178,
-    "category_id": 5,
-    "brand": "OFF - WHITE",
-    "name": "Футболка Off - White",
-    "description": "Очень классное, состояние как у новой. Плотный материал, и плотный прорезиненный логотип. Необычный дизайн за счет маленького логотипа спереди у горла, и большого логотипа на спине. Оригинал. Модель на CLG, что довольно редко для данного бренда!",
-    "price_byn": 140.0,
-    "prices": {
-      "BYN": 140.0,
-      "RUB": 4400.0,
-      "USD": 52.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10429"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10429",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_178_342b2ade.jpg",
-      "https://liknine.github.io/mestniybot/images/product_178_3c68bd48.jpg",
-      "https://liknine.github.io/mestniybot/images/product_178_9e32942f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_178_1d2e6977.jpg",
-      "https://liknine.github.io/mestniybot/images/product_178_91c5b278.jpg"
-    ],
-    "created_at": "2026-07-06T18:46:50.015585"
-  },
-  {
     "id": 179,
     "category_id": 6,
     "brand": "Stone Island",
