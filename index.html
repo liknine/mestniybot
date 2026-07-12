@@ -10,7 +10,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Roboto+Condensed:wght@500;600&amp;display=swap" rel="stylesheet"/>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="style.css?v=mestniy_admin_product_delete_v1" rel="stylesheet"/>
+<link href="style.css?v=mestniy_bonus_currency_info_v1" rel="stylesheet"/>
 </head>
 <body>
 <div class="app-loader" id="appLoader">ЗАГРУЗКА КАТАЛОГА</div><div class="app" id="app">
@@ -52,7 +52,7 @@
 <section class="screen" id="product">
 <header class="top-header compact"><button class="icon-btn" data-back=""><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="brand" data-go="catalog" role="button" tabindex="0" aria-label="Перейти в каталог">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn" data-search=""><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
 <div class="detail-gallery" id="detailGallery"><div class="detail-track" id="detailTrack"></div><div class="detail-dots" id="detailDots" aria-label="Фотографии товара"></div></div>
-<div class="detail-body"><div class="detail-line"></div><div class="detail-title" id="detailTitle"></div><div class="detail-desc" id="detailDesc"></div><div class="section-label" id="detailSizeLabel">ВЫБЕРИТЕ РАЗМЕР:</div><div class="size-row" id="sizeRow"></div><div class="detail-price" id="detailPrice"></div><button class="underlined-cta" id="detailAdd">ДОБАВИТЬ В КОРЗИНУ</button><section class="admin-product-tools" id="adminProductTools" hidden><div class="admin-product-meta">ID ТОВАРА: <code id="adminProductId"></code></div><button class="admin-delete-product" type="button" data-admin-delete-product>УДАЛИТЬ ТОВАР</button></section></div>
+<div class="detail-body"><div class="detail-line"></div><div class="detail-title" id="detailTitle"></div><div class="detail-desc" id="detailDesc"></div><div class="section-label" id="detailSizeLabel">ВЫБЕРИТЕ РАЗМЕР:</div><div class="size-row" id="sizeRow"></div><div class="detail-price" id="detailPrice"></div><button class="underlined-cta" id="detailAdd">ДОБАВИТЬ В КОРЗИНУ</button></div>
 </section>
 <section class="screen" id="favorites">
 <header class="top-header"><button class="icon-btn" data-drawer="menu"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="brand" data-go="catalog" role="button" tabindex="0" aria-label="Перейти в каталог">MESTNIY STORE</div><div class="header-actions"><button class="icon-btn" data-go="cart"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2"></path></svg></button></div></header>
@@ -116,14 +116,15 @@
 <section class="bonus-block">
 <div class="bonus-block-head"><h2 class="bonus-block-title">КАК НАЧИСЛЯЮТСЯ</h2><span class="bonus-block-count">ПОСЛЕ ЗАВЕРШЕНИЯ</span></div>
 <div class="bonus-tier-list">
-<div class="bonus-tier"><span>ПОКУПКА ДО 150 BYN</span><strong>1%</strong></div>
-<div class="bonus-tier"><span>ОТ 151 ДО 300 BYN</span><strong>2%</strong></div>
-<div class="bonus-tier"><span>ОТ 301 ДО 900 BYN</span><strong>3%</strong></div>
-<div class="bonus-tier"><span>ОТ 901 BYN И ВЫШЕ</span><strong>3,5%</strong></div>
+<div class="bonus-tier"><span class="bonus-tier-range"><b>ПОКУПКА ДО 150 BYN</b><small>≈ ДО 4 700 ₽ · ДО 56 USDT</small></span><strong>1%</strong></div>
+<div class="bonus-tier"><span class="bonus-tier-range"><b>ОТ 151 ДО 300 BYN</b><small>≈ ОТ 4 750 ДО 8 950 ₽ · ОТ 57 ДО 112 USDT</small></span><strong>2%</strong></div>
+<div class="bonus-tier"><span class="bonus-tier-range"><b>ОТ 301 ДО 900 BYN</b><small>≈ ОТ 9 000 ДО 25 700 ₽ · ОТ 113 ДО 337 USDT</small></span><strong>3%</strong></div>
+<div class="bonus-tier"><span class="bonus-tier-range"><b>ОТ 901 BYN И ВЫШЕ</b><small>≈ ВЫШЕ 25 700 ₽ · ВЫШЕ 337 USDT</small></span><strong>3,5%</strong></div>
 </div>
 </section>
 <section class="bonus-block">
 <div class="bonus-block-head"><h2 class="bonus-block-title">КАК РАБОТАЮТ</h2></div>
+<div class="bonus-guide bonus-guide-primary"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16v10H4z"></path><path d="M8 12h8"></path></svg><span><strong>1 БОНУС = 1 BYN СКИДКИ.</strong> Проценты 1–3,5% показывают, сколько бонусов начисляется с суммы покупки.</span></div>
 <div class="bonus-guide"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h14M12 5v14"></path></svg><span>Бонусы начисляются один раз после того, как заказ получает статус «Завершен».</span></div>
 <div class="bonus-guide"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 12h16M7 8h10M7 16h10"></path></svg><span>Стоимость пересылки не входит в сумму, с которой начисляются бонусы.</span></div>
 <div class="bonus-guide"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"></path></svg><span>При оформлении заказа применяются все доступные бонусы одной кнопкой, без выбора части суммы.</span></div>
@@ -160,6 +161,6 @@
 <div id="drawerBody"></div>
 </aside>
 </div>
-<script defer="" src="app.js?v=mestniy_admin_product_delete_v1"></script>
+<script defer="" src="app.js?v=mestniy_sizes_on_photo_v1"></script>
 </body>
 </html>

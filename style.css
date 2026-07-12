@@ -294,8 +294,13 @@
     .bonus-block-title{margin:0;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
     .bonus-block-count{color:var(--muted);font-size:10px;text-transform:uppercase}
     .bonus-tier-list{border-top:1px solid var(--line)}
-    .bonus-tier{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:54px;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase}
-    .bonus-tier strong{font-size:13px;font-weight:600;white-space:nowrap}
+    .bonus-tier{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:70px;padding:12px 0;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase}
+    .bonus-tier>strong{font-size:13px;font-weight:600;white-space:nowrap}
+    .bonus-tier-range{display:grid;gap:4px;min-width:0;line-height:1.35}
+    .bonus-tier-range b{font-size:11px;font-weight:500}
+    .bonus-tier-range small{font-size:9px;font-weight:400;line-height:1.45;color:var(--muted);letter-spacing:.01em}
+    .bonus-guide-primary{color:#111}
+    .bonus-guide-primary strong{font-weight:600}
     .bonus-guide{display:grid;grid-template-columns:18px minmax(0,1fr);gap:13px;padding:16px 0;border-bottom:1px solid var(--line);font-size:10px;line-height:1.55;text-transform:uppercase;color:#333}
     .bonus-guide:last-child{border-bottom:0;padding-bottom:0}
     .bonus-guide svg{width:17px;height:17px;fill:none;stroke:#111;stroke-width:1.05;stroke-linecap:square;stroke-linejoin:miter}
@@ -2172,48 +2177,4 @@
 }
 @media(min-height:900px){
   #home{--home-bottom-stack:310px}
-}
-
-
-/* Admin-only product controls inside the product card */
-.admin-product-tools{
-  margin-top:34px;
-  padding-top:18px;
-  border-top:1px solid rgba(0,0,0,.16);
-}
-.admin-product-tools[hidden]{display:none!important}
-.admin-product-meta{
-  margin-bottom:12px;
-  color:#616161;
-  font-family:var(--mono,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);
-  font-size:11px;
-  line-height:1.4;
-  letter-spacing:.09em;
-  text-transform:uppercase;
-}
-.admin-product-meta code{
-  color:#111;
-  font:inherit;
-  font-weight:700;
-}
-.admin-delete-product{
-  width:100%;
-  min-height:50px;
-  padding:13px 16px;
-  border:1px solid #b42323;
-  border-radius:0;
-  background:transparent;
-  color:#b42323;
-  font-family:var(--mono,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace);
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:background-color .18s ease,color .18s ease,transform .18s ease;
-}
-.admin-delete-product:active{
-  background:#b42323;
-  color:#fff;
-  transform:scale(.985);
 }
