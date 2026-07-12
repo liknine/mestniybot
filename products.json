@@ -1229,41 +1229,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 133,
-    "category_id": 6,
-    "brand": "Ma.Strum",
-    "name": "Худи Ma.Strum",
-    "description": "Плотное худи. Отлично сидит на теле. Отличное состояние, есть минимальные следы носок! Размер по бирке: S. Фактический размер: M. Оригинал.",
-    "price_byn": 240.0,
-    "prices": {
-      "BYN": 240.0,
-      "RUB": 7200.0,
-      "USD": 89.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9884"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9884",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_133_0fd3ec26.jpg",
-      "https://liknine.github.io/mestniybot/images/product_133_7919f211.jpg",
-      "https://liknine.github.io/mestniybot/images/product_133_ea189339.jpg",
-      "https://liknine.github.io/mestniybot/images/product_133_9f3fffce.jpg",
-      "https://liknine.github.io/mestniybot/images/product_133_c8c6b2a4.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 134,
     "category_id": 5,
     "brand": "Polo Ralph Lauren",
