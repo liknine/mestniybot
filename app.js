@@ -549,8 +549,8 @@ function productCard(p,index,mode='catalog'){
   const favorite=state.favorites.has(String(p.id)),soldOut=productSoldOut(p);
   const action=soldOut?'НЕТ В НАЛИЧИИ':mode==='favorites'?'УБРАТЬ ИЗ ИЗБРАННОГО':'ДОБАВИТЬ В КОРЗИНУ';
   const sizes=availableSizes(p);
-  const sizeLabel=sizes.length?`<p class="product-sizes">РАЗМЕРЫ: ${sizes.map(escapeHtml).join(', ')}</p>`:'';
-  return `<article class="product-card" data-card="${index}"><div class="product-image"><img src="${p.image}" alt="${p.name}">${hasDiscount(p)?`<span class="discount-mark">−${discountPercent(p)}%</span>`:''}<button class="favorite-dot ${favorite?'on':''}" data-fav="${escapeHtml(p.id)}" aria-label="Избранное">${iconHeart(favorite)}</button></div><div class="product-meta"><p class="product-code">${p.code}</p><p class="product-desc">${p.brand}</p>${sizeLabel}${priceMarkup(p)}<button class="product-action" data-action="${mode==='favorites'?'unfav':'add'}" data-id="${index}" ${soldOut?'disabled':''}>${action}</button></div></article>`
+  const sizeBadge=sizes.length?`<span class="product-size-badge" aria-label="Доступные размеры: ${sizes.map(escapeHtml).join(', ')}">${sizes.map(escapeHtml).join(' · ')}</span>`:'';
+  return `<article class="product-card" data-card="${index}"><div class="product-image"><img src="${p.image}" alt="${p.name}">${hasDiscount(p)?`<span class="discount-mark">−${discountPercent(p)}%</span>`:''}${sizeBadge}<button class="favorite-dot ${favorite?'on':''}" data-fav="${escapeHtml(p.id)}" aria-label="Избранное">${iconHeart(favorite)}</button></div><div class="product-meta"><p class="product-code">${p.code}</p><p class="product-desc">${p.brand}</p>${priceMarkup(p)}<button class="product-action" data-action="${mode==='favorites'?'unfav':'add'}" data-id="${index}" ${soldOut?'disabled':''}>${action}</button></div></article>`
 }
 function defaultFilters(){return {category:'all',brand:'all',size:'all',priceMin:'',priceMax:''}}
 function productCategory(p){
