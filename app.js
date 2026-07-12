@@ -12,7 +12,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_admin_product_delete_v1';
+const BUILD_VERSION='mestniy_percent_bonuses_v1';
 const ADMIN_IDS=[1639462053,8465820993];
 const BOT_USERNAME='testmestniybot';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
@@ -156,18 +156,31 @@ function normalizePublicOrder(order){
     return {productId:snapshot.id,snapshot,size:String(item?.size||'—'),qty:Math.max(1,Number(item?.qty??item?.quantity??1)||1),unitPrice,oldUnitPrice};
   }):[];
   const createdTimestamp=Date.parse(order?.created_at||order?.createdAt||'')||Date.now();
+  const subtotal=items.reduce((sum,item)=>sum+item.unitPrice*item.qty,0);
+  const rawTotal=Number(order?.total);
+  const rawBonuses=Math.max(0,Number(order?.bonuses)||0);
+  const explicitPercent=Math.max(0,Number(order?.bonus_percent??order?.bonusPercent)||0);
+  const bonusMode=String(order?.bonus_mode??order?.bonusMode??(explicitPercent>0?'percent':'legacy_amount'));
+  const bonusPercent=bonusMode==='percent'?Math.min(100,explicitPercent||rawBonuses):0;
+  const explicitDiscount=Math.max(0,Number(order?.bonus_discount_amount??order?.bonusDiscountAmount)||0);
+  const bonusDiscountAmount=bonusMode==='percent'
+    ? (explicitDiscount||subtotal*bonusPercent/100)
+    : rawBonuses;
   return {
     id:String(order?.id??'—'),
     date:orderDateLabel(order?.created_at||order?.createdAt),
     createdTimestamp,
     status:normalizeOrderStatus(order?.status),
     items,
-    total:Number(order?.total)||items.reduce((sum,item)=>sum+item.unitPrice*item.qty,0),
+    total:Number.isFinite(rawTotal)?rawTotal:Math.max(0,subtotal-bonusDiscountAmount),
     delivery:String(order?.delivery||'Доставка'),
     place:String(order?.place||'Данные переданы менеджеру'),
     clientRequestId:String(order?.client_request_id||order?.clientRequestId||''),
     pending:false,
-    bonuses:Number(order?.bonuses)||0,
+    bonuses:rawBonuses,
+    bonusMode,
+    bonusPercent,
+    bonusDiscountAmount,
     bonusEarned:Number(order?.bonus_earned??order?.bonusEarned)||0,
     bonusReturned:Number(order?.bonus_returned??order?.bonusReturned)||0
   };
@@ -426,12 +439,14 @@ function toggleHomeNews(force){
 }
 function buildOrderPayload(clientRequestId){
   const c=state.checkout;
-  const bonuses=c.bonuses?Math.max(0,Math.min(Number(state.bonusBalance)||0,cartSubtotal())):0;
+  const subtotal=cartSubtotal();
+  const bonusPercent=c.bonuses?Math.max(0,Math.min(Number(state.bonusBalance)||0,100)):0;
+  const bonusDiscountAmount=subtotal*bonusPercent/100;
   return {
     items:state.cart.map(item=>({productId:item.id,size:item.size,qty:item.qty})),
-    total:Math.max(0,cartSubtotal()-bonuses),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':c.delivery==='cdek'?'CDEK':null,
+    total:Math.max(0,subtotal-bonusDiscountAmount),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':c.delivery==='cdek'?'CDEK':null,
     deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{postalIndex:c.postalIndex}:c.delivery==='cdek'?{branch:c.cdekPoint}:null,
-    customer:{fullName:c.name,firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses,clientRequestId
+    customer:{fullName:c.name,firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses:bonusPercent,bonusMode:'percent',bonusPercent,bonusDiscountAmount,clientRequestId
   };
 }
 function sendOrderToBot(payload){
@@ -741,10 +756,11 @@ function checkoutItemsMarkup(){
 function renderCheckoutSummary(){
   const box=document.getElementById('checkoutSummary');if(!box)return;
   const subtotal=cartSubtotal(),displaySubtotal=cartDisplaySubtotal(),original=cartDisplayOriginalSubtotal(),discount=cartDisplayDiscountTotal();
-  const applied=Math.max(0,Math.min(Number(state.checkout.bonuses)||0,state.bonusBalance,subtotal));
+  const applied=Math.max(0,Math.min(Number(state.checkout.bonuses)||0,state.bonusBalance,100));
   state.checkout.bonuses=applied;
-  const displayedBonus=convertByn(applied,state.currency);
-  box.innerHTML=`<div class="summary-row"><span>${discount?'СТОИМОСТЬ ТОВАРОВ':`ТОВАРЫ (${state.cart.reduce((s,x)=>s+x.qty,0)})`}</span><span>${formatCurrency(discount?original:displaySubtotal)}</span></div>${discount?`<div class="summary-row discount"><span>СКИДКА</span><span>− ${formatCurrency(discount)}</span></div>`:''}${applied?`<div class="summary-row"><span>БОНУСЫ</span><span>− ${formatCurrency(displayedBonus)}</span></div>`:''}<div class="summary-row"><span>ДОСТАВКА</span><span>ПО ТАРИФАМ СЛУЖБЫ</span></div><div class="summary-row total"><span>К ОПЛАТЕ</span><span>${formatCurrency(Math.max(0,displaySubtotal-displayedBonus))}</span></div>`;
+  const bonusDiscountByn=subtotal*applied/100;
+  const displayedBonusDiscount=convertByn(bonusDiscountByn,state.currency);
+  box.innerHTML=`<div class="summary-row"><span>${discount?'СТОИМОСТЬ ТОВАРОВ':`ТОВАРЫ (${state.cart.reduce((s,x)=>s+x.qty,0)})`}</span><span>${formatCurrency(discount?original:displaySubtotal)}</span></div>${discount?`<div class="summary-row discount"><span>СКИДКА</span><span>− ${formatCurrency(discount)}</span></div>`:''}${applied?`<div class="summary-row"><span>БОНУСНАЯ СКИДКА ${formatBonus(applied)}%</span><span>− ${formatCurrency(displayedBonusDiscount)}</span></div>`:''}<div class="summary-row"><span>ДОСТАВКА</span><span>ПО ТАРИФАМ СЛУЖБЫ</span></div><div class="summary-row total"><span>К ОПЛАТЕ</span><span>${formatCurrency(Math.max(0,displaySubtotal-displayedBonusDiscount))}</span></div>`;
 }
 function renderCheckout(){
   if(!state.cart.length){showScreen('cart',false);return}
@@ -762,11 +778,11 @@ function renderCheckout(){
     recipientSection=`<section class="checkout-section"><p class="checkout-note" style="margin:0">Выберите Европочту, Белпочту или CDEK для оформления заявки. Самовывоз и доставка маршруткой согласовываются с менеджером.</p></section>`;
   }
   syncBonusBalance();
-  const maxBonus=Math.min(state.bonusBalance,cartSubtotal());
+  const maxBonus=Math.min(state.bonusBalance,100);
   c.bonuses=Math.max(0,Math.min(Number(c.bonuses)||0,maxBonus));
   const bonusesApplied=Number(c.bonuses)>0;
   const bonusSection=state.bonusBalance>0
-    ? `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><p class="checkout-note">К заказу применяются все доступные бонусы одной кнопкой. Выбрать только часть бонусов нельзя. Стоимость пересылки не входит в начисление бонусов.</p><button class="bonus-toggle ${bonusesApplied?'active':''}" data-bonus-toggle>${bonusesApplied?'БОНУСЫ ПРИМЕНЕНЫ':'ИСПОЛЬЗОВАТЬ ВСЕ БОНУСЫ'}</button><div class="bonus-availability"><span>ДОСТУПНО: ${formatBonus(state.bonusBalance)}</span><span>${bonusesApplied?`БУДЕТ ИСПОЛЬЗОВАНО: ${formatBonus(maxBonus)}`:'НЕ ПРИМЕНЕНЫ'}</span></div></section>`
+    ? `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><p class="checkout-note">1 бонус = 1% скидки на всю сумму товаров. Одной кнопкой применяется доступный баланс, но не более 100%. Стоимость пересылки не входит в начисление бонусов.</p><button class="bonus-toggle ${bonusesApplied?'active':''}" data-bonus-toggle>${bonusesApplied?`СКИДКА ${formatBonus(maxBonus)}% ПРИМЕНЕНА`:`ПРИМЕНИТЬ СКИДКУ ${formatBonus(maxBonus)}%`}</button><div class="bonus-availability"><span>БАЛАНС: ${formatBonus(state.bonusBalance)} БОНУСОВ</span><span>${bonusesApplied?`ИСПОЛЬЗУЕТСЯ: ${formatBonus(maxBonus)}%`:'НЕ ПРИМЕНЕНЫ'}</span></div></section>`
     : `<section class="checkout-section"><h2 class="checkout-title">ИСПОЛЬЗОВАТЬ БОНУСЫ</h2><button class="bonus-toggle" disabled>У ВАС ПОКА НЕТ БОНУСОВ</button><p class="checkout-note" style="margin:14px 0 0">Бонусы появятся после завершенных покупок или ручного начисления администратором. Стоимость пересылки не входит в начисление бонусов.</p></section>`;
   const canSubmit=['europost','belpost','cdek'].includes(c.delivery);
   document.getElementById('checkoutBody').innerHTML=`
@@ -800,6 +816,7 @@ function createPrototypeOrder(){
   const clientRequestId=`web-${state.profile?.id||'user'}-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
   const payload=buildOrderPayload(clientRequestId);
   const bonuses=Number(payload.bonuses)||0;
+  const bonusDiscountAmount=Number(payload.bonusDiscountAmount)||0;
   const createdTimestamp=Date.now();
   const orderDate=orderDateLabel(createdTimestamp);
   const previousCart=state.cart.map(item=>({...item}));
@@ -807,7 +824,7 @@ function createPrototypeOrder(){
   const newOrder={
     id:'—',date:orderDate,createdTimestamp,status:'accepted',pending:true,clientRequestId,
     items:state.cart.map(item=>{const p=productById(item.id);return {productId:p?.id,product:productIndexById(p?.id),snapshot:orderItemSnapshot(p),size:item.size,qty:item.qty,unitPrice:p?productPrice(p):0,oldUnitPrice:p?(Number(p.price)||productPrice(p)):0}}),
-    total:Math.max(0,cartSubtotal()-bonuses),delivery:checkoutDeliveryLabel(state.checkout.delivery),place:'Данные переданы менеджеру',bonuses,bonusEarned:0
+    total:Math.max(0,cartSubtotal()-bonusDiscountAmount),delivery:checkoutDeliveryLabel(state.checkout.delivery),place:'Данные переданы менеджеру',bonuses,bonusMode:'percent',bonusPercent:bonuses,bonusDiscountAmount,bonusEarned:0
   };
   // Сохраняем заявку до sendData: Telegram может сразу закрыть Mini App после отправки.
   state.pendingOrders.unshift(newOrder);
@@ -838,7 +855,7 @@ function renderOrderSuccess(){
   const box=document.getElementById('orderSuccessBody');if(!box||!order)return;
   const expected=calculateOrderBonus(order);
   const title=order.pending?'ЗАКАЗ ПРИНЯТ':`ЗАКАЗ №${order.id}<br>ПРИНЯТ`;
-  box.innerHTML=`<div class="success-wrap"><div class="success-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div><div class="success-kicker">ЗАЯВКА СОЗДАНА</div><h1 class="success-title">${title}</h1><p class="success-copy">Заказ уже появился в разделе «Мои покупки». Все изменения статуса будут отображаться там и приходить сообщением от бота.</p><div class="success-card"><div class="success-row"><span>СТАТУС</span><strong>${ORDER_STATUS[order.status]}</strong></div><div class="success-row"><span>ПОЛУЧЕНИЕ</span><strong>${order.delivery}</strong></div>${order.bonuses?`<div class="success-row"><span>ИСПОЛЬЗОВАНО БОНУСОВ</span><strong>${formatBonus(order.bonuses)}</strong></div>`:''}<div class="success-row"><span>К ОПЛАТЕ</span><strong>${money(orderTotal(order))}</strong></div></div><div class="bonus-order-note">После статуса «Завершен» за эту покупку будет начислено ${formatBonus(expected)}.</div><div class="success-actions"><button class="black-btn" data-success-orders>МОИ ПОКУПКИ</button><button class="outline-btn" data-go="catalog">ВЕРНУТЬСЯ В КАТАЛОГ</button></div></div>`;
+  box.innerHTML=`<div class="success-wrap"><div class="success-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div><div class="success-kicker">ЗАЯВКА СОЗДАНА</div><h1 class="success-title">${title}</h1><p class="success-copy">Заказ уже появился в разделе «Мои покупки». Все изменения статуса будут отображаться там и приходить сообщением от бота.</p><div class="success-card"><div class="success-row"><span>СТАТУС</span><strong>${ORDER_STATUS[order.status]}</strong></div><div class="success-row"><span>ПОЛУЧЕНИЕ</span><strong>${order.delivery}</strong></div>${order.bonusPercent?`<div class="success-row"><span>БОНУСНАЯ СКИДКА</span><strong>${formatBonus(order.bonusPercent)}%</strong></div>`:''}<div class="success-row"><span>К ОПЛАТЕ</span><strong>${money(orderTotal(order))}</strong></div></div><div class="bonus-order-note">После статуса «Завершен» за эту покупку будет начислено ${formatBonus(expected)} бонуса.</div><div class="success-actions"><button class="black-btn" data-success-orders>МОИ ПОКУПКИ</button><button class="outline-btn" data-go="catalog">ВЕРНУТЬСЯ В КАТАЛОГ</button></div></div>`;
 }
 function productGalleryImages(product){
   const images=[...(product?.images||[]),product?.image]
@@ -914,8 +931,8 @@ function toggleFav(productId){const id=String(productId);const added=!state.favo
 function updateCounts(){const qty=state.cart.reduce((s,x)=>s+x.qty,0);const badge=document.getElementById('cartBadge');badge.textContent=qty;badge.classList.toggle('show',qty>0);const fav=document.getElementById('profileFavCount');if(fav)fav.textContent=state.favorites.size;const cart=document.getElementById('profileCartCount');if(cart)cart.textContent=qty;}
 function formatBonus(value){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(Math.max(0,Number(value)||0))}
 function syncBonusBalance(){state.bonusBalance=Math.max(0,Number(state.bonusBalance)||0);return state.bonusBalance}
-function bonusRateForAmount(amount){const value=Math.max(0,Number(amount)||0);return BONUS_RULES.find(rule=>value<=rule.max)?.rate||3.5}
-function calculateOrderBonus(order){const base=Math.max(0,orderTotal(order));return Math.floor(base*bonusRateForAmount(base)/100)}
+function bonusRateForAmount(amount){const value=Math.max(0,Number(amount)||0);if(value<=0)return 0;return BONUS_RULES.find(rule=>value<=rule.max)?.rate||3.5}
+function calculateOrderBonus(order){return bonusRateForAmount(Math.max(0,orderTotal(order)))}
 function bonusTransactionMeta(item){
   if(item.orderId)return `ЗАКАЗ №${item.orderId} · ${item.date}`;
   return `${item.subtitle||'ОПЕРАЦИЯ В БОНУСНОЙ СИСТЕМЕ'} · ${item.date}`;
@@ -925,7 +942,7 @@ function renderBonuses(){
   const formatted=formatBonus(state.bonusBalance);
   const balance=document.getElementById('bonusBalanceNumber');if(balance)balance.textContent=formatted;
   const profileBalance=document.getElementById('profileBonusBalance');if(profileBalance)profileBalance.textContent=formatted;
-  const status=document.getElementById('bonusStatusText');if(status)status.textContent=state.bonusBalance>0?'Бонусы можно применить при оформлении заказа одной кнопкой.':'У вас пока нет бонусов. Они появятся после завершенной покупки или ручного начисления.';
+  const status=document.getElementById('bonusStatusText');if(status)status.textContent=state.bonusBalance>0?'Ваш баланс равен доступной скидке: 1 бонус = 1%.':'У вас пока нет бонусов. Они появятся после завершенной покупки или ручного начисления.';
   const count=document.getElementById('bonusHistoryCount');if(count)count.textContent=`${state.bonusTransactions.length} ${state.bonusTransactions.length===1?'ОПЕРАЦИЯ':state.bonusTransactions.length>1&&state.bonusTransactions.length<5?'ОПЕРАЦИИ':'ОПЕРАЦИЙ'}`;
   const history=document.getElementById('bonusHistory');if(!history)return;
   if(!state.bonusTransactions.length){history.innerHTML=emptyStateMarkup({type:'bonus',title:'БОНУСОВ ПОКА НЕТ',text:'Здесь появятся начисления за завершённые покупки, использование и ручные начисления.',action:'ПЕРЕЙТИ В КАТАЛОГ',go:'catalog',className:'inline'});return}
@@ -950,7 +967,10 @@ function orderSubtotal(order){return order.items.reduce((sum,item)=>sum+orderUni
 function orderOriginalSubtotal(order){return order.items.reduce((sum,item)=>sum+orderOldUnitPrice(item,productForOrderItem(item))*item.qty,0)}
 function orderDiscountTotal(order){return Math.max(0,orderOriginalSubtotal(order)-orderSubtotal(order))}
 function orderPriceMarkup(item,p,extraClass=''){const current=orderUnitPrice(item,p)*item.qty,old=orderOldUnitPrice(item,p)*item.qty;return `<span class="price-stack ${extraClass}"><span class="price-current">${money(current)}</span>${old>current?`<span class="price-old">${money(old)}</span>`:''}</span>`}
-function orderTotal(order){const actual=Number(order?.total);return Number.isFinite(actual)?actual:orderSubtotal(order)-Number(order.bonuses||0)}
+function orderUsesPercentBonuses(order){return String(order?.bonusMode||'legacy_amount')==='percent'}
+function orderBonusPercent(order){return orderUsesPercentBonuses(order)?Math.max(0,Math.min(100,Number(order?.bonusPercent??order?.bonuses)||0)):0}
+function orderBonusDiscountAmount(order){if(orderUsesPercentBonuses(order)){const explicit=Number(order?.bonusDiscountAmount);return Number.isFinite(explicit)&&explicit>=0?explicit:orderSubtotal(order)*orderBonusPercent(order)/100}return Math.max(0,Number(order?.bonuses)||0)}
+function orderTotal(order){const actual=Number(order?.total);return Number.isFinite(actual)?actual:Math.max(0,orderSubtotal(order)-orderBonusDiscountAmount(order))}
 function statusClass(status){return status==='completed'?'is-completed':status==='canceled'?'is-canceled':status==='accepted'?'is-accepted':''}
 function orderItemMarkup(item,detail=false){
   const p=productForOrderItem(item);
@@ -976,12 +996,21 @@ function renderOrderDetail(){
   const timeline=order.status==='canceled'?`<div class="order-canceled-note">Заказ отменён. Если при оформлении использовались бонусы, они возвращаются на баланс пользователя.</div>`:`<section class="order-progress"><h3 class="order-progress-title">СТАТУС ЗАКАЗА</h3>${ORDER_STEPS.map((step,index)=>`<div class="progress-step ${index<=currentIndex?'done':''}"><span class="progress-dot"></span><div class="progress-copy"><strong>${step.label}</strong><span>${step.text}</span></div></div>`).join('')}</section>`;
   const subtotal=orderSubtotal(order),originalSubtotal=orderOriginalSubtotal(order),discountTotal=orderDiscountTotal(order);
   const expectedBonus=calculateOrderBonus(order);
+  const percentMode=orderUsesPercentBonuses(order);
+  const usedPercent=orderBonusPercent(order);
+  const bonusDiscount=orderBonusDiscountAmount(order);
+  const usedLabel=percentMode?`${formatBonus(usedPercent)} бонусов = ${formatBonus(usedPercent)}%`:formatBonus(order.bonuses);
   const bonusRows=order.status==='completed'
-    ? `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${formatBonus(order.bonuses)}</span></div>`:''}<div class="order-info-row total"><span>НАЧИСЛЕНО</span><span>+ ${formatBonus(order.bonusEarned||expectedBonus)}</span></div>`
+    ? `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${usedLabel}</span></div>`:''}<div class="order-info-row total"><span>НАЧИСЛЕНО</span><span>+ ${formatBonus(order.bonusEarned||expectedBonus)}</span></div>`
     : order.status==='canceled'
-      ? `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${formatBonus(order.bonuses)}</span></div><div class="order-info-row total"><span>ВОЗВРАЩЕНО</span><span>+ ${formatBonus(order.bonusReturned||order.bonuses)}</span></div>`:'<div class="bonus-order-note">В этом заказе бонусы не использовались.</div>'}`
-      : `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${formatBonus(order.bonuses)}</span></div>`:''}<div class="order-info-row total"><span>ПОСЛЕ ЗАВЕРШЕНИЯ</span><span>+ ${formatBonus(expectedBonus)}</span></div>`;
-  document.getElementById('orderDetailBody').innerHTML=`<section class="order-detail-hero"><div class="order-detail-kicker">ТЕКУЩИЙ СТАТУС</div><div class="order-detail-status">${ORDER_STATUS[order.status]||'Принят'}</div><div class="order-detail-meta"><span>№${order.id}</span><span>${order.date}</span></div></section>${timeline}<section class="order-detail-section"><h3 class="order-detail-title">ТОВАРЫ</h3>${order.items.map(item=>orderItemMarkup(item,true)).join('')}</section><section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧЕНИЕ</h3><div class="order-info-row"><span>СПОСОБ</span><span>${order.delivery}</span></div><div class="order-info-row"><span>МЕСТО</span><span>${order.place}</span></div></section>${order.recipient?`<section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧАТЕЛЬ</h3><div class="order-info-row"><span>ИМЯ</span><span>${escapeHtml(order.recipient)}</span></div><div class="order-info-row"><span>ТЕЛЕФОН</span><span>${escapeHtml(order.phone)}</span></div>${order.comment?`<div class="order-info-row"><span>КОММЕНТАРИЙ</span><span>${escapeHtml(order.comment)}</span></div>`:''}</section>`:''}<section class="order-detail-section"><h3 class="order-detail-title">БОНУСЫ</h3>${bonusRows}</section><section class="order-detail-section"><h3 class="order-detail-title">ИТОГО</h3><div class="order-info-row"><span>${discountTotal?'СТОИМОСТЬ ТОВАРОВ':'ТОВАРЫ'}</span><span>${money(discountTotal?originalSubtotal:subtotal)}</span></div>${discountTotal?`<div class="order-info-row"><span>СКИДКА</span><span>− ${money(discountTotal)}</span></div>`:''}${order.bonuses?`<div class="order-info-row"><span>БОНУСЫ</span><span>− ${money(order.bonuses)}</span></div>`:''}<div class="order-info-row total"><span>К ОПЛАТЕ</span><span>${money(orderTotal(order))}</span></div></section>`;
+      ? `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${usedLabel}</span></div><div class="order-info-row total"><span>ВОЗВРАЩЕНО</span><span>+ ${formatBonus(order.bonusReturned||order.bonuses)}</span></div>`:'<div class="bonus-order-note">В этом заказе бонусы не использовались.</div>'}`
+      : `${order.bonuses?`<div class="order-info-row"><span>ИСПОЛЬЗОВАНО</span><span>− ${usedLabel}</span></div>`:''}<div class="order-info-row total"><span>ПОСЛЕ ЗАВЕРШЕНИЯ</span><span>+ ${formatBonus(expectedBonus)}</span></div>`;
+  const bonusTotalRow=order.bonuses
+    ? (percentMode
+      ? `<div class="order-info-row"><span>БОНУСНАЯ СКИДКА ${formatBonus(usedPercent)}%</span><span>− ${money(bonusDiscount)}</span></div>`
+      : `<div class="order-info-row"><span>БОНУСЫ</span><span>− ${money(bonusDiscount)}</span></div>`)
+    : '';
+  document.getElementById('orderDetailBody').innerHTML=`<section class="order-detail-hero"><div class="order-detail-kicker">ТЕКУЩИЙ СТАТУС</div><div class="order-detail-status">${ORDER_STATUS[order.status]||'Принят'}</div><div class="order-detail-meta"><span>№${order.id}</span><span>${order.date}</span></div></section>${timeline}<section class="order-detail-section"><h3 class="order-detail-title">ТОВАРЫ</h3>${order.items.map(item=>orderItemMarkup(item,true)).join('')}</section><section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧЕНИЕ</h3><div class="order-info-row"><span>СПОСОБ</span><span>${order.delivery}</span></div><div class="order-info-row"><span>МЕСТО</span><span>${order.place}</span></div></section>${order.recipient?`<section class="order-detail-section"><h3 class="order-detail-title">ПОЛУЧАТЕЛЬ</h3><div class="order-info-row"><span>ИМЯ</span><span>${escapeHtml(order.recipient)}</span></div><div class="order-info-row"><span>ТЕЛЕФОН</span><span>${escapeHtml(order.phone)}</span></div>${order.comment?`<div class="order-info-row"><span>КОММЕНТАРИЙ</span><span>${escapeHtml(order.comment)}</span></div>`:''}</section>`:''}<section class="order-detail-section"><h3 class="order-detail-title">БОНУСЫ</h3>${bonusRows}</section><section class="order-detail-section"><h3 class="order-detail-title">ИТОГО</h3><div class="order-info-row"><span>${discountTotal?'СТОИМОСТЬ ТОВАРОВ':'ТОВАРЫ'}</span><span>${money(discountTotal?originalSubtotal:subtotal)}</span></div>${discountTotal?`<div class="order-info-row"><span>СКИДКА</span><span>− ${money(discountTotal)}</span></div>`:''}${bonusTotalRow}<div class="order-info-row total"><span>К ОПЛАТЕ</span><span>${money(orderTotal(order))}</span></div></section>`;
 }
 function renderProfileSummary(){
   updateCounts();
@@ -1056,7 +1085,7 @@ document.addEventListener('click',e=>{
   const successOrders=e.target.closest('[data-success-orders]');if(successOrders){state.orderFilter='all';document.querySelectorAll('[data-order-filter]').forEach((b,i)=>b.classList.toggle('active',i===0));showScreen('orders');return}
   const delivery=e.target.closest('[data-delivery]');if(delivery){const type=delivery.dataset.delivery;if(type==='pickup'){openManager('pickup');return}state.checkout.delivery=type;state.checkout.bonuses=0;renderCheckout();return}
   if(e.target.closest('[data-open-shuttle-manager]')){openManager('shuttle');return}
-  if(e.target.closest('[data-bonus-toggle]')){state.checkout.bonuses=state.checkout.bonuses?0:Math.min(state.bonusBalance,cartSubtotal());renderCheckout();return}
+  if(e.target.closest('[data-bonus-toggle]')){state.checkout.bonuses=state.checkout.bonuses?0:Math.min(state.bonusBalance,100);renderCheckout();return}
   const newsBack=e.target.closest('[data-news-back]');if(newsBack){showScreen('news',false);return}
   const newsAction=e.target.closest('[data-news-action]');if(newsAction){runNewsAction();return}
   const newsItem=e.target.closest('[data-news-id]');if(newsItem){openNews(newsItem.dataset.newsId);return}

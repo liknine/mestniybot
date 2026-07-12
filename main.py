@@ -301,7 +301,11 @@ class Order(Base):
     comment: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(50), default="accepted")
     stock_decremented: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Для новых заказов 1 bonus = 1% скидки. Старые заказы остаются legacy_amount.
     bonuses_used: Mapped[float] = mapped_column(Float, default=0)
+    bonus_mode: Mapped[str] = mapped_column(String(30), default="legacy_amount")
+    bonus_percent: Mapped[float] = mapped_column(Float, default=0)
+    bonus_discount_amount: Mapped[float] = mapped_column(Float, default=0)
     bonus_earned: Mapped[float] = mapped_column(Float, default=0)
     bonus_returned: Mapped[float] = mapped_column(Float, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
@@ -346,6 +350,12 @@ async def init_db():
             await conn.execute(text("ALTER TABLE orders ADD COLUMN updated_at DATETIME"))
         if "bonuses_used" not in order_columns:
             await conn.execute(text("ALTER TABLE orders ADD COLUMN bonuses_used FLOAT NOT NULL DEFAULT 0"))
+        if "bonus_mode" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN bonus_mode VARCHAR(30) NOT NULL DEFAULT 'legacy_amount'"))
+        if "bonus_percent" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN bonus_percent FLOAT NOT NULL DEFAULT 0"))
+        if "bonus_discount_amount" not in order_columns:
+            await conn.execute(text("ALTER TABLE orders ADD COLUMN bonus_discount_amount FLOAT NOT NULL DEFAULT 0"))
         if "bonus_earned" not in order_columns:
             await conn.execute(text("ALTER TABLE orders ADD COLUMN bonus_earned FLOAT NOT NULL DEFAULT 0"))
         if "bonus_returned" not in order_columns:
@@ -934,15 +944,17 @@ def compact_text(value: str, limit: int = 42) -> str:
 
 def bonus_rate_for_amount(amount: float) -> float:
     value = max(0.0, float(amount or 0))
+    if value <= 0:
+        return 0.0
     for maximum, rate in BONUS_RULES:
         if value <= maximum:
             return rate
     return 3.5
 
 
-def calculate_bonus_earned(amount: float) -> int:
-    value = max(0.0, float(amount or 0))
-    return int(value * bonus_rate_for_amount(value) / 100)
+def calculate_bonus_earned(amount: float) -> float:
+    """Возвращает количество бонусных пунктов: 1 бонус = 1% скидки."""
+    return round(bonus_rate_for_amount(amount), 2)
 
 
 def format_bonus_value(value: float) -> str:
@@ -955,6 +967,32 @@ def format_bonus_value(value: float) -> str:
 def bonus_user_label(user: User) -> str:
     username = f"@{user.username}" if user.username else "без username"
     return f"{username} · {format_bonus_value(user.bonus_balance)} бонусов"
+
+
+def order_uses_percent_bonuses(order: Order) -> bool:
+    return str(getattr(order, "bonus_mode", "legacy_amount") or "legacy_amount") == "percent"
+
+
+def order_bonus_percent(order: Order) -> float:
+    if not order_uses_percent_bonuses(order):
+        return 0.0
+    explicit = float(getattr(order, "bonus_percent", 0) or 0)
+    fallback = float(order.bonuses_used or 0)
+    return round(max(0.0, min(100.0, explicit or fallback)), 2)
+
+
+def order_bonus_discount_amount(order: Order) -> float:
+    if order_uses_percent_bonuses(order):
+        explicit = float(getattr(order, "bonus_discount_amount", 0) or 0)
+        if explicit > 0:
+            return round(explicit, 2)
+        subtotal = sum(
+            float(item.get("unit_price") or item.get("unitPrice") or item.get("price") or 0)
+            * max(1, int(item.get("qty") or item.get("quantity") or 1))
+            for item in (order.items or [])
+        )
+        return round(subtotal * order_bonus_percent(order) / 100, 2)
+    return round(max(0.0, float(order.bonuses_used or 0)), 2)
 
 
 async def add_bonus_transaction(
@@ -1265,6 +1303,7 @@ async def admin_bonuses_menu(callback: CallbackQuery, state: FSMContext):
     total_balance = sum(float(user.bonus_balance or 0) for user in users)
     await callback.message.answer(
         "<b>Бонусы</b>\n\n"
+        "1 бонус = 1% скидки на сумму товаров.\n\n"
         f"Пользователей: <code>{len(users)}</code>\n"
         f"Бонусов на балансах: <b>{format_bonus_value(total_balance)}</b>\n"
         f"Операций: <code>{transactions_count}</code>",
@@ -1306,7 +1345,7 @@ async def admin_bonus_find_user(message: Message, state: FSMContext):
         "<b>Пользователь найден</b>\n\n"
         f"{html.escape(bonus_user_label(user))}\n"
         f"ID: <code>{user.telegram_id}</code>\n\n"
-        "Введите количество бонусов для начисления.",
+        "Введите количество бонусов для начисления.\n1 бонус = 1% скидки.",
         reply_markup=get_admin_cancel_keyboard("panel:bonuses"),
     )
 
@@ -2011,7 +2050,7 @@ async def admin_user_bonus_start(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer(
         f"<b>{html.escape(user_display_name(user))}</b>\n"
         f"Текущий баланс: <b>{format_bonus_value(user.bonus_balance)}</b>\n\n"
-        "Введите количество бонусов для начисления.",
+        "Введите количество бонусов для начисления.\n1 бонус = 1% скидки.",
         reply_markup=get_admin_cancel_keyboard("panel:users"),
     )
     await callback.answer()
@@ -4667,8 +4706,15 @@ def order_admin_text(order: Order, notice: str | None = None) -> str:
     blocks.append(f"<b>Доставка</b>\n" + "\n".join(delivery_lines))
     blocks.append(f"<b>Товары</b>\n\n{item_lines}")
     totals = []
-    if float(order.bonuses_used or 0) > 0:
-        totals.append(f"Бонусы: −{format_bonus_value(order.bonuses_used)}")
+    bonus_percent = order_bonus_percent(order)
+    bonus_discount = order_bonus_discount_amount(order)
+    if bonus_percent > 0:
+        totals.append(
+            f"Бонусная скидка: −{format_bonus_value(bonus_percent)}% "
+            f"(−{bonus_discount:g} BYN)"
+        )
+    elif float(order.bonuses_used or 0) > 0:
+        totals.append(f"Бонусы: −{format_bonus_value(order.bonuses_used)} BYN")
     totals.append(f"<b>Итого: {float(order.total or 0):g} BYN</b>")
     if float(order.bonus_earned or 0) > 0:
         totals.append(f"Начислено после завершения: +{format_bonus_value(order.bonus_earned)}")
@@ -5238,8 +5284,15 @@ def user_order_confirmation_text(order: Order) -> str:
     for index, item in enumerate(order.items or [], 1):
         lines.append(order_item_text(item, index))
         lines.append("")
-    if float(order.bonuses_used or 0) > 0:
-        lines.append(f"Бонусы: <b>−{format_bonus_value(order.bonuses_used)}</b>")
+    bonus_percent = order_bonus_percent(order)
+    bonus_discount = order_bonus_discount_amount(order)
+    if bonus_percent > 0:
+        lines.append(
+            f"Бонусная скидка: <b>−{format_bonus_value(bonus_percent)}%</b> "
+            f"(−{bonus_discount:g} BYN)"
+        )
+    elif float(order.bonuses_used or 0) > 0:
+        lines.append(f"Бонусы: <b>−{format_bonus_value(order.bonuses_used)} BYN</b>")
     lines.extend([
         f"<b>Итого: {float(order.total or 0):g} BYN</b>",
         f"Получение: <b>{html.escape(order_delivery_label(order))}</b>",
@@ -5283,8 +5336,10 @@ async def handle_webapp_data(message: Message):
                 requested_bonuses = max(0.0, float(data.get("bonuses") or 0))
             except (TypeError, ValueError):
                 requested_bonuses = 0.0
-            bonuses_used = round(min(float(user.bonus_balance or 0), subtotal), 2) if requested_bonuses > 0 else 0.0
-            total = round(max(0.0, subtotal - bonuses_used), 2)
+            available_bonus_percent = round(min(float(user.bonus_balance or 0), 100.0), 2)
+            bonus_percent = available_bonus_percent if requested_bonuses > 0 and subtotal > 0 else 0.0
+            bonus_discount_amount = round(subtotal * bonus_percent / 100, 2)
+            total = round(max(0.0, subtotal - bonus_discount_amount), 2)
 
             order = Order(
                 user_id=user_id,
@@ -5298,20 +5353,23 @@ async def handle_webapp_data(message: Message):
                 comment=comment,
                 status="accepted",
                 stock_decremented=False,
-                bonuses_used=bonuses_used,
+                bonuses_used=bonus_percent,
+                bonus_mode="percent",
+                bonus_percent=bonus_percent,
+                bonus_discount_amount=bonus_discount_amount,
                 bonus_earned=0,
                 bonus_returned=0,
                 updated_at=datetime.now(),
             )
             session.add(order)
             await session.flush()
-            if bonuses_used > 0:
+            if bonus_percent > 0:
                 await add_bonus_transaction(
                     session,
                     user,
-                    -bonuses_used,
+                    -bonus_percent,
                     kind="order_spend",
-                    title="Использовано в заказе",
+                    title="Использовано как процентная скидка",
                     operation_key=f"order:{order.id}:spend",
                     order_id=order.id,
                 )
@@ -5487,6 +5545,9 @@ async def export_public_orders_to_file():
             "created_at": order.created_at.isoformat() if order.created_at else None,
             "updated_at": order.updated_at.isoformat() if order.updated_at else (order.created_at.isoformat() if order.created_at else None),
             "bonuses": float(order.bonuses_used or 0),
+            "bonus_mode": str(order.bonus_mode or "legacy_amount"),
+            "bonus_percent": float(order.bonus_percent or 0),
+            "bonus_discount_amount": float(order.bonus_discount_amount or 0),
             "bonus_earned": float(order.bonus_earned or 0),
             "bonus_returned": float(order.bonus_returned or 0),
             "items": [public_order_item(item) for item in (order.items or [])],
