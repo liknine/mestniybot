@@ -1073,15 +1073,49 @@ def product_normal_price(product: Product) -> float:
     return float(product.price_byn or 0)
 
 
+def product_currency_prices(product: Product, normal: bool = False) -> dict[str, float]:
+    """Return manually entered currency prices; conversion is only a legacy fallback."""
+    prices = dict(product.prices or {})
+    if normal and product_has_discount(product):
+        source = dict(prices.get("old_prices") or {})
+        byn = float(source.get("BYN") or prices.get("old_price") or product.price_byn or 0)
+    else:
+        source = prices
+        byn = float(product.price_byn or source.get("BYN") or 0)
+
+    fallback_rub, fallback_usd = calculate_product_prices(byn)
+    try:
+        rub = float(source.get("RUB"))
+        if rub <= 0:
+            raise ValueError
+    except (TypeError, ValueError):
+        rub = fallback_rub
+    try:
+        usd = float(source.get("USD"))
+        if usd <= 0:
+            raise ValueError
+    except (TypeError, ValueError):
+        usd = fallback_usd
+    return {"BYN": byn, "RUB": rub, "USD": usd}
+
+
 def product_admin_text(product: Product) -> str:
     brand = display_brand_name(product.brand) or "Без бренда"
     category = CATEGORIES.get(product.category_id, {})
     size_stock = product_size_stock(product)
     sizes_text = ", ".join(f"{size}: {qty}" for size, qty in size_stock.items()) or "не указаны"
-    current_price = float(product.price_byn or 0)
-    price_text = f"{current_price:g} BYN"
+    current_prices = product_currency_prices(product)
+    price_text = (
+        f"{current_prices['BYN']:g} BYN · "
+        f"{current_prices['RUB']:g} RUB · "
+        f"{current_prices['USD']:g} USD"
+    )
     if product_has_discount(product):
-        price_text = f"<s>{product_normal_price(product):g} BYN</s> → <b>{current_price:g} BYN</b>"
+        normal_prices = product_currency_prices(product, normal=True)
+        price_text = (
+            f"<s>{normal_prices['BYN']:g} BYN · {normal_prices['RUB']:g} RUB · {normal_prices['USD']:g} USD</s>"
+            f" → <b>{current_prices['BYN']:g} BYN · {current_prices['RUB']:g} RUB · {current_prices['USD']:g} USD</b>"
+        )
     created_text = product.created_at.strftime("%d.%m.%Y %H:%M") if product.created_at else "не указана"
     return (
         f"📦 <b>Товар #{product.id}</b>\n\n"
@@ -1285,7 +1319,7 @@ async def admin_discounts_menu(callback: CallbackQuery, state: FSMContext):
         return
     await state.clear()
     await callback.message.answer(
-        "🏷 <b>Скидки</b>\n\nСкидка задаётся новой ценой в BYN. Старая цена сохранится и будет зачёркнута в каталоге.",
+        "🏷 <b>Скидки</b>\n\nСкидка задаётся вручную в трёх валютах: BYN, затем RUB и USD. Старые цены сохранятся и будут зачёркнуты в каталоге.",
         reply_markup=get_discounts_panel_keyboard(),
     )
     await callback.answer()
@@ -2240,7 +2274,7 @@ async def admin_product_edit_field(callback: CallbackQuery, state: FSMContext):
     prompts = {
         "name": "Отправьте новое название товара:",
         "brand": "Отправьте новый бренд. Чтобы убрать бренд, напишите <code>нет</code>:",
-        "price": "Отправьте новую обычную цену в BYN. Если у товара была скидка, она будет удалена:",
+        "price": "Отправьте новую обычную цену в BYN. Затем бот запросит RUB и USD. Если у товара была скидка, она будет удалена:",
         "sizes": "Отправьте размеры и остатки. Пример: <code>S:1, M:2, L:1</code>",
         "description": "Отправьте новое описание. Чтобы очистить, напишите <code>нет</code>:",
         "extra": "Отправьте новую ссылку на дополнительные фото. Чтобы удалить, напишите <code>нет</code>:",
@@ -2249,7 +2283,10 @@ async def admin_product_edit_field(callback: CallbackQuery, state: FSMContext):
         await callback.answer("Это поле пока недоступно", show_alert=True)
         return
     await state.clear()
-    await state.update_data(edit_product_id=product_id, edit_product_field=field)
+    edit_data = {"edit_product_id": product_id, "edit_product_field": field}
+    if field == "price":
+        edit_data["edit_price_stage"] = "BYN"
+    await state.update_data(**edit_data)
     await state.set_state(AdminPanelFlow.product_edit_value)
     await callback.message.answer(prompts[field], reply_markup=get_admin_cancel_keyboard(f"pe:{product_id}"))
     await callback.answer()
@@ -2263,6 +2300,59 @@ async def admin_product_edit_value(message: Message, state: FSMContext):
     product_id = int(data.get("edit_product_id"))
     field = data.get("edit_product_field")
     value = (message.text or "").strip()
+
+    if field == "price":
+        stage = str(data.get("edit_price_stage") or "BYN").upper()
+        try:
+            amount = float(value.replace(",", "."))
+            if amount <= 0:
+                raise ValueError
+        except ValueError:
+            await message.answer(f"❌ Цена в {stage} должна быть положительным числом. Попробуйте ещё раз.")
+            return
+
+        if stage == "BYN":
+            await state.update_data(edit_price_byn=amount, edit_price_stage="RUB")
+            await message.answer(
+                f"✅ BYN: <b>{amount:g}</b>\n\nТеперь отправьте обычную цену в <b>RUB</b>:",
+                reply_markup=get_admin_cancel_keyboard(f"pe:{product_id}"),
+            )
+            return
+        if stage == "RUB":
+            await state.update_data(edit_price_rub=amount, edit_price_stage="USD")
+            await message.answer(
+                f"✅ RUB: <b>{amount:g}</b>\n\nТеперь отправьте обычную цену в <b>USD</b>:",
+                reply_markup=get_admin_cancel_keyboard(f"pe:{product_id}"),
+            )
+            return
+
+        price_byn = float(data.get("edit_price_byn") or 0)
+        price_rub = float(data.get("edit_price_rub") or 0)
+        price_usd = amount
+        if price_byn <= 0 or price_rub <= 0:
+            await state.clear()
+            await message.answer("❌ Черновик цен потерян. Откройте редактирование цены ещё раз.")
+            return
+
+        async with async_session() as session:
+            product = await session.get(Product, product_id)
+            if not product:
+                await message.answer("Товар не найден")
+                await state.clear()
+                return
+            prices = dict(product.prices or {})
+            product.price_byn = price_byn
+            prices.update({"BYN": price_byn, "RUB": price_rub, "USD": price_usd})
+            prices.pop("old_price", None)
+            prices.pop("old_prices", None)
+            product.prices = prices
+            await session.commit()
+        await state.clear()
+        success = await auto_push_to_github()
+        notice = "✅ Цены сохранены" + (" и отправлены в каталог." if success else ", но GitHub пока не обновился.")
+        await send_product_admin_card(message, product, notice)
+        return
+
     async with async_session() as session:
         product = await session.get(Product, product_id)
         if not product:
@@ -2277,15 +2367,6 @@ async def admin_product_edit_value(message: Message, state: FSMContext):
                 product.name = value
             elif field == "brand":
                 product.brand = None if value.casefold() in {"нет", "-", "убрать"} else value
-            elif field == "price":
-                price_byn = float(value.replace(",", "."))
-                if price_byn <= 0:
-                    raise ValueError("Цена должна быть больше нуля")
-                product.price_byn = price_byn
-                price_rub, price_usd = calculate_product_prices(price_byn)
-                prices.update({"BYN": price_byn, "RUB": price_rub, "USD": price_usd})
-                prices.pop("old_price", None)
-                prices.pop("old_prices", None)
             elif field == "sizes":
                 sizes, size_stock, total_stock = parse_sizes_and_stock(value)
                 product.sizes = sizes
@@ -2425,23 +2506,34 @@ async def admin_product_delete_execute(callback: CallbackQuery):
     await callback.answer()
 
 
-async def set_product_discount(product_id: int, new_price: float) -> tuple[bool, str]:
+async def set_product_discount(
+    product_id: int,
+    new_price_byn: float,
+    new_price_rub: float,
+    new_price_usd: float,
+) -> tuple[bool, str]:
     async with async_session() as session:
         product = await session.get(Product, product_id)
         if not product:
             return False, "Товар не найден"
-        normal_price = product_normal_price(product)
-        if new_price <= 0:
-            return False, "Цена должна быть больше нуля"
-        if new_price >= normal_price:
-            return False, f"Скидочная цена должна быть ниже обычной ({normal_price:g} BYN)"
+
+        new_prices = {"BYN": new_price_byn, "RUB": new_price_rub, "USD": new_price_usd}
+        if any(value <= 0 for value in new_prices.values()):
+            return False, "Все скидочные цены должны быть больше нуля"
+
+        normal_prices = product_currency_prices(product, normal=True)
+        for currency, value in new_prices.items():
+            if value >= normal_prices[currency]:
+                return False, (
+                    f"Скидочная цена в {currency} должна быть ниже обычной "
+                    f"({normal_prices[currency]:g} {currency})"
+                )
+
         prices = dict(product.prices or {})
-        prices["old_price"] = normal_price
-        old_rub, old_usd = calculate_product_prices(normal_price)
-        prices["old_prices"] = {"BYN": normal_price, "RUB": old_rub, "USD": old_usd}
-        product.price_byn = new_price
-        new_rub, new_usd = calculate_product_prices(new_price)
-        prices.update({"BYN": new_price, "RUB": new_rub, "USD": new_usd})
+        prices["old_price"] = normal_prices["BYN"]
+        prices["old_prices"] = dict(normal_prices)
+        product.price_byn = new_price_byn
+        prices.update(new_prices)
         product.prices = prices
         await session.commit()
     return True, "Скидка сохранена"
@@ -2454,11 +2546,11 @@ async def remove_product_discount(product_id: int) -> tuple[bool, str]:
             return False, "Товар не найден"
         if not product_has_discount(product):
             return False, "У товара нет скидки"
+
         prices = dict(product.prices or {})
-        normal_price = float(prices.get("old_price"))
-        product.price_byn = normal_price
-        normal_rub, normal_usd = calculate_product_prices(normal_price)
-        prices.update({"BYN": normal_price, "RUB": normal_rub, "USD": normal_usd})
+        normal_prices = product_currency_prices(product, normal=True)
+        product.price_byn = normal_prices["BYN"]
+        prices.update(normal_prices)
         prices.pop("old_price", None)
         prices.pop("old_prices", None)
         product.prices = prices
@@ -2486,11 +2578,13 @@ async def admin_discount_view(callback: CallbackQuery):
     if not product or not product_has_discount(product):
         await callback.answer("Скидка не найдена", show_alert=True)
         return
+    normal_prices = product_currency_prices(product, normal=True)
+    current_prices = product_currency_prices(product)
     text = (
         f"🏷 <b>Скидка товара #{product.id}</b>\n\n"
         f"<b>{product.name}</b>\n"
-        f"Обычная цена: <s>{product_normal_price(product):g} BYN</s>\n"
-        f"Цена со скидкой: <b>{float(product.price_byn or 0):g} BYN</b>"
+        f"Обычные цены: <s>{normal_prices['BYN']:g} BYN · {normal_prices['RUB']:g} RUB · {normal_prices['USD']:g} USD</s>\n"
+        f"Цены со скидкой: <b>{current_prices['BYN']:g} BYN · {current_prices['RUB']:g} RUB · {current_prices['USD']:g} USD</b>"
     )
     first_image = next((str(url).strip() for url in (product.images or []) if str(url).strip()), None)
     if first_image:
@@ -2515,14 +2609,20 @@ async def admin_discount_set_start(callback: CallbackQuery, state: FSMContext):
     if not product:
         await callback.answer("Товар не найден", show_alert=True)
         return
+
+    normal_prices = product_currency_prices(product, normal=True)
+    current_prices = product_currency_prices(product)
     await state.clear()
-    await state.update_data(discount_product_id=product_id)
+    await state.update_data(discount_product_id=product_id, discount_stage="BYN")
     await state.set_state(AdminPanelFlow.discount_value)
     rows = [[InlineKeyboardButton(text="❌ Отмена", callback_data="panel:discounts")]]
     if product_has_discount(product):
         rows.insert(0, [InlineKeyboardButton(text="🧹 Удалить текущую скидку", callback_data=f"dr:{product_id}")])
     await callback.message.answer(
-        f"🏷 <b>Скидка для товара #{product_id}</b>\n\nОбычная цена: {product_normal_price(product):g} BYN\nТекущая цена: {float(product.price_byn or 0):g} BYN\n\nОтправьте новую скидочную цену в BYN:",
+        f"🏷 <b>Скидка для товара #{product_id}</b>\n\n"
+        f"Обычные цены: {normal_prices['BYN']:g} BYN · {normal_prices['RUB']:g} RUB · {normal_prices['USD']:g} USD\n"
+        f"Текущие цены: {current_prices['BYN']:g} BYN · {current_prices['RUB']:g} RUB · {current_prices['USD']:g} USD\n\n"
+        "Шаг 1 из 3: отправьте новую скидочную цену в <b>BYN</b>:",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=rows),
     )
     await callback.answer()
@@ -2534,12 +2634,58 @@ async def admin_discount_value(message: Message, state: FSMContext):
         return
     data = await state.get_data()
     product_id = int(data.get("discount_product_id"))
+    stage = str(data.get("discount_stage") or "BYN").upper()
     try:
-        new_price = float((message.text or "").strip().replace(",", "."))
+        amount = float((message.text or "").strip().replace(",", "."))
+        if amount <= 0:
+            raise ValueError
     except ValueError:
-        await message.answer("❌ Отправьте цену числом, например: <code>120</code>")
+        await message.answer(f"❌ Скидочная цена в {stage} должна быть положительным числом.")
         return
-    ok, result = await set_product_discount(product_id, new_price)
+
+    async with async_session() as session:
+        product = await session.get(Product, product_id)
+    if not product:
+        await state.clear()
+        await message.answer("❌ Товар не найден")
+        return
+    normal_prices = product_currency_prices(product, normal=True)
+    if amount >= normal_prices[stage]:
+        await message.answer(
+            f"❌ Цена со скидкой в {stage} должна быть ниже обычной "
+            f"({normal_prices[stage]:g} {stage})."
+        )
+        return
+
+    if stage == "BYN":
+        await state.update_data(discount_price_byn=amount, discount_stage="RUB")
+        await message.answer(
+            f"✅ BYN: <b>{amount:g}</b>\n\nШаг 2 из 3: отправьте скидочную цену в <b>RUB</b>:",
+            reply_markup=get_admin_cancel_keyboard("panel:discounts"),
+        )
+        return
+    if stage == "RUB":
+        await state.update_data(discount_price_rub=amount, discount_stage="USD")
+        await message.answer(
+            f"✅ RUB: <b>{amount:g}</b>\n\nШаг 3 из 3: отправьте скидочную цену в <b>USD</b>:",
+            reply_markup=get_admin_cancel_keyboard("panel:discounts"),
+        )
+        return
+
+    new_price_byn = float(data.get("discount_price_byn") or 0)
+    new_price_rub = float(data.get("discount_price_rub") or 0)
+    new_price_usd = amount
+    if new_price_byn <= 0 or new_price_rub <= 0:
+        await state.clear()
+        await message.answer("❌ Черновик скидочных цен потерян. Начните заново.")
+        return
+
+    ok, result = await set_product_discount(
+        product_id,
+        new_price_byn,
+        new_price_rub,
+        new_price_usd,
+    )
     if not ok:
         await message.answer(f"❌ {result}")
         return
@@ -2948,7 +3094,7 @@ async def admin_add_product_btn(callback: CallbackQuery, state: FSMContext):
     await state.update_data(product_type="stock", draft_owner_id=callback.from_user.id)
     await callback.message.answer(
         "➕ <b>Новый товар</b>\n\n"
-        "Шаг 1 из 8: отправьте <b>название бренда</b>.\n"
+        "Шаг 1 из 10: отправьте <b>название бренда</b>.\n"
         "Если бренда нет — напишите <code>нет</code>.",
         reply_markup=get_add_product_cancel_keyboard()
     )
@@ -2967,7 +3113,7 @@ async def cmd_add_product(message: Message, state: FSMContext):
     await state.update_data(product_type="stock", draft_owner_id=message.from_user.id)
     await message.answer(
         "➕ <b>Новый товар</b>\n\n"
-        "Шаг 1 из 8: отправьте <b>название бренда</b>.\n"
+        "Шаг 1 из 10: отправьте <b>название бренда</b>.\n"
         "Если бренда нет — напишите <code>нет</code>.",
         reply_markup=get_add_product_cancel_keyboard()
     )
@@ -3102,7 +3248,7 @@ async def send_product_preview(message: Message, state: FSMContext):
         f"🏷 Бренд: <b>{brand_name}</b>\n"
         f"📦 Название: <b>{data.get('name', 'Не указано')}</b>\n"
         f"📁 Категория: {cat_data.get('icon', '')} {cat_data.get('name', 'Не указана')}\n"
-        f"💰 Цена: <b>{data.get('price_byn', 0):g} BYN</b>\n"
+        f"💰 Цена: <b>{data.get('price_byn', 0):g} BYN · {data.get('price_rub', 0):g} RUB · {data.get('price_usd', 0):g} USD</b>\n"
         f"📏 Размеры: {format_size_stock(data)}\n"
     )
     if product_type != "order":
@@ -3138,7 +3284,7 @@ async def return_to_preview_after_edit(message: Message, state: FSMContext) -> b
     return True
 
 
-async def ask_product_images(message: Message, state: FSMContext, step_text: str = "Шаг 8 из 8"):
+async def ask_product_images(message: Message, state: FSMContext, step_text: str = "Шаг 10 из 10"):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="✅ Готово — предпросмотр", callback_data="save_product")],
         [InlineKeyboardButton(text="❌ Отменить добавление", callback_data="admin_cancel")]
@@ -3167,7 +3313,7 @@ async def process_product_type(callback: CallbackQuery, state: FSMContext):
     await state.update_data(product_type=product_type)
     await callback.message.edit_text(
         f"✅ Раздел: <b>{'Наличие' if product_type == 'stock' else 'На заказ'}</b>\n\n"
-        "Шаг 2 из 9: отправьте <b>название бренда</b>.\n"
+        "Шаг 2 из 10: отправьте <b>название бренда</b>.\n"
         "Если бренда нет — напишите <code>нет</code>.",
         reply_markup=get_add_product_cancel_keyboard()
     )
@@ -3191,7 +3337,7 @@ async def process_brand_text(message: Message, state: FSMContext):
 
     await message.answer(
         f"✅ Бренд: <b>{display_brand_name(brand_value) or 'Без бренда'}</b>\n\n"
-        "Шаг 2 из 8: отправьте <b>название или модель товара</b>:",
+        "Шаг 2 из 10: отправьте <b>название или модель товара</b>:",
         reply_markup=get_add_product_cancel_keyboard()
     )
     await state.set_state(AddProduct.name)
@@ -3210,7 +3356,7 @@ async def process_name(message: Message, state: FSMContext):
 
     await message.answer(
         f"✅ Название: <b>{name}</b>\n\n"
-        "Шаг 3 из 8: выберите <b>категорию</b>:",
+        "Шаг 3 из 10: выберите <b>категорию</b>:",
         reply_markup=get_category_keyboard()
     )
     await state.set_state(AddProduct.category)
@@ -3243,7 +3389,7 @@ async def process_category(callback: CallbackQuery, state: FSMContext):
 
     await callback.message.edit_text(
         f"✅ Категория: <b>{cat_data.get('icon', '')} {cat_data.get('name', '')}</b>\n\n"
-        "Шаг 4 из 8: отправьте <b>цену в BYN</b>.\n\n"
+        "Шаг 4 из 10: отправьте <b>цену в BYN</b>.\n\n"
         "Пример: <code>150</code> или <code>149.90</code>",
         reply_markup=get_add_product_cancel_keyboard()
     )
@@ -3259,13 +3405,58 @@ async def process_price_byn(message: Message, state: FSMContext):
             raise ValueError
     except ValueError:
         await message.answer(
-            "❌ Неправильный формат цены.\n\n"
+            "❌ Неправильный формат цены в BYN.\n\n"
             "Отправьте положительное число, например: <code>150</code> или <code>149.90</code>"
         )
         return
 
-    price_rub, price_usd = calculate_product_prices(price_byn)
-    await state.update_data(price_byn=price_byn, price_rub=price_rub, price_usd=price_usd)
+    await state.update_data(price_byn=price_byn)
+    await message.answer(
+        f"✅ BYN: <b>{price_byn:g}</b>\n\n"
+        "Шаг 5 из 10: отправьте <b>цену в RUB</b>.\n\n"
+        "Пример: <code>4500</code>",
+        reply_markup=get_add_product_cancel_keyboard(),
+    )
+    await state.set_state(AddProduct.price_rub)
+
+
+@router.message(AddProduct.price_rub)
+async def process_price_rub(message: Message, state: FSMContext):
+    try:
+        price_rub = float((message.text or "").strip().replace(",", "."))
+        if price_rub <= 0:
+            raise ValueError
+    except ValueError:
+        await message.answer(
+            "❌ Неправильный формат цены в RUB.\n\n"
+            "Отправьте положительное число, например: <code>4500</code>"
+        )
+        return
+
+    await state.update_data(price_rub=price_rub)
+    await message.answer(
+        f"✅ RUB: <b>{price_rub:g}</b>\n\n"
+        "Шаг 6 из 10: отправьте <b>цену в USD</b>.\n\n"
+        "Пример: <code>55</code> или <code>54.90</code>",
+        reply_markup=get_add_product_cancel_keyboard(),
+    )
+    await state.set_state(AddProduct.price_usd)
+
+
+@router.message(AddProduct.price_usd)
+async def process_price_usd(message: Message, state: FSMContext):
+    try:
+        price_usd = float((message.text or "").strip().replace(",", "."))
+        if price_usd <= 0:
+            raise ValueError
+    except ValueError:
+        await message.answer(
+            "❌ Неправильный формат цены в USD.\n\n"
+            "Отправьте положительное число, например: <code>55</code> или <code>54.90</code>"
+        )
+        return
+
+    await state.update_data(price_usd=price_usd)
 
     if await return_to_preview_after_edit(message, state):
         return
@@ -3280,12 +3471,12 @@ async def process_price_byn(message: Message, state: FSMContext):
         example = "S:1, M:2, L:1"
 
     await message.answer(
-        f"✅ Цена: <b>{price_byn:g} BYN</b>\n\n"
-        "Шаг 5 из 8: отправьте <b>размеры и количество</b>.\n\n"
+        f"✅ Цены сохранены: <b>{data.get('price_byn', 0):g} BYN · {data.get('price_rub', 0):g} RUB · {price_usd:g} USD</b>\n\n"
+        "Шаг 7 из 10: отправьте <b>размеры и количество</b>.\n\n"
         "Формат: <code>РАЗМЕР:КОЛИЧЕСТВО</code>\n"
         f"Пример: <code>{example}</code>\n\n"
         "Размеры можно разделять запятыми или отправлять каждый с новой строки.",
-        reply_markup=get_add_product_cancel_keyboard()
+        reply_markup=get_add_product_cancel_keyboard(),
     )
     await state.set_state(AddProduct.sizes)
 
@@ -3308,7 +3499,7 @@ async def process_sizes(message: Message, state: FSMContext):
 
     await message.answer(
         f"✅ Размеры сохранены: <b>{format_size_stock({'sizes': sizes, 'size_stock': size_stock})}</b>\n\n"
-        "Шаг 6 из 8: отправьте <b>описание товара</b> или нажмите «Пропустить описание»:",
+        "Шаг 8 из 10: отправьте <b>описание товара</b> или нажмите «Пропустить описание»:",
         reply_markup=get_description_keyboard()
     )
     await state.set_state(AddProduct.description)
@@ -3322,7 +3513,7 @@ async def continue_after_description(message: Message, state: FSMContext):
         return
 
     await message.answer(
-        "Шаг 7 из 8: выберите <b>состояние товара</b>:",
+        "Шаг 9 из 10: выберите <b>состояние товара</b>:",
         reply_markup=get_condition_keyboard()
     )
     await state.set_state(AddProduct.condition)
@@ -3378,7 +3569,7 @@ async def process_condition(callback: CallbackQuery, state: FSMContext):
 
     await state.update_data(images=[])
     await callback.answer()
-    await ask_product_images(callback.message, state, step_text="Шаг 8 из 8")
+    await ask_product_images(callback.message, state, step_text="Шаг 10 из 10")
 
 
 # ==================== ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ФОТО ====================
@@ -3628,7 +3819,7 @@ async def start_field_edit(callback: CallbackQuery, state: FSMContext, field: st
     prompts = {
         "brand": (AddProduct.brand, "Отправьте новое <b>название бренда</b> или напишите <code>нет</code>:", get_add_product_cancel_keyboard()),
         "name": (AddProduct.name, "Отправьте новое <b>название товара</b>:", get_add_product_cancel_keyboard()),
-        "price": (AddProduct.price_byn, "Отправьте новую <b>цену в BYN</b>:", get_add_product_cancel_keyboard()),
+        "price": (AddProduct.price_byn, "Отправьте новую <b>цену в BYN</b>. Затем бот запросит RUB и USD:", get_add_product_cancel_keyboard()),
         "sizes": (AddProduct.sizes, "Отправьте новые <b>размеры и количество</b>.\nПример: <code>S:1, M:2, L:1</code>", get_add_product_cancel_keyboard()),
         "description": (AddProduct.description, "Отправьте новое <b>описание</b> или нажмите «Пропустить описание»:", get_description_keyboard()),
         "extra_photos": (AddProduct.extra_photos_url, "Отправьте новую ссылку на <b>дополнительные фото</b> или напишите <code>нет</code>:", get_add_product_cancel_keyboard()),
@@ -3698,7 +3889,7 @@ async def edit_new_product_images(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data == "publish_product")
 async def publish_product(callback: CallbackQuery, state: FSMContext):
     data = await restore_product_draft_state(callback.from_user.id, state)
-    required_fields = ["category_id", "name", "price_byn", "sizes", "images"]
+    required_fields = ["category_id", "name", "price_byn", "price_rub", "price_usd", "sizes", "images"]
     missing = [field for field in required_fields if not data.get(field)]
     if missing:
         await callback.answer("❌ Не заполнены обязательные поля", show_alert=True)
@@ -3753,7 +3944,7 @@ async def finish_product_creation(target_message, state: FSMContext, data: dict,
             f"📦 <b>{data['name']}</b>\n"
             f"🏷 Бренд: {brand_name}\n"
             f"📁 Категория: {cat_data.get('icon', '')} {cat_data.get('name', '')}\n"
-            f"💰 Цена: {data['price_byn']:g} BYN\n"
+            f"💰 Цена: {data['price_byn']:g} BYN · {data['price_rub']:g} RUB · {data['price_usd']:g} USD\n"
             f"📏 Размеры: {format_size_stock(data)}\n"
         )
         if product_type != "order":
