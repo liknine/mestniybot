@@ -78,5 +78,19 @@
         "created_at": "2026-07-12T21:48:57.962720"
       }
     ]
+  },
+  {
+    "user_id": "5495267063",
+    "balance": 2.0,
+    "transactions": [
+      {
+        "id": 8,
+        "type": "manual",
+        "amount": 2.0,
+        "title": "Начислено администратором",
+        "order_id": null,
+        "created_at": "2026-07-13T14:47:44.749820"
+      }
+    ]
   }
 ]
