@@ -2720,5 +2720,39 @@
       "https://liknine.github.io/mestniybot/images/product_191_298433b0.jpg"
     ],
     "created_at": "2026-07-13T12:46:56.407493"
+  },
+  {
+    "id": 192,
+    "category_id": 1,
+    "brand": "New Balance",
+    "name": "Кроссовки New Balance 408 НОВЫЕ",
+    "description": "Абсолютно новые. Очень классная модель, отлично ставят на ноге. Без коробки. Оригинал.\nРазмер:\n37.5 / Длина по стельке: 23.5 СМ",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500.0,
+      "USD": 119.0,
+      "product_type": "stock",
+      "size_stock": {
+        "37.5": 1
+      },
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10522"
+    },
+    "sizes": [
+      "37.5"
+    ],
+    "size_stock": {
+      "37.5": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10522",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_fd1aab4f.jpg"
+    ],
+    "created_at": "2026-07-13T13:31:32.085293"
   }
 ]
