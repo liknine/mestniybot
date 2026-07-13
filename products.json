@@ -2758,5 +2758,39 @@
       "https://liknine.github.io/mestniybot/images/product_192_9d284660.jpg"
     ],
     "created_at": "2026-07-13T13:31:32.085293"
+  },
+  {
+    "id": 193,
+    "category_id": 1,
+    "brand": "New Balance",
+    "name": "Кроссовки New Balance RC42 НОВЫЕ",
+    "description": "Абсолютно новые. Очень классная пара. Приятный материал. Классно сидят на ноге. Оригинал. Без коробки, в комплекте с дополнительными шнурками.\nРазмер:\n42 / Длина по стельке: 26.5 СМ",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500.0,
+      "USD": 119.0,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10527"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10527",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_becef9b1.jpg"
+    ],
+    "created_at": "2026-07-13T13:54:07.819471"
   }
 ]
