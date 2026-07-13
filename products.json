@@ -2682,5 +2682,39 @@
       "https://liknine.github.io/mestniybot/images/product_190_ee18872e.jpg"
     ],
     "created_at": "2026-07-13T12:41:44.040158"
+  },
+  {
+    "id": 191,
+    "category_id": 1,
+    "brand": "New Balance",
+    "name": "Кроссовки New Balance 530 НОВЫЕ",
+    "description": "Абсолютно новые. Оригинал. Отлично сидят на ноге. Очень классная модель. Без коробки.\nРазмер:\n42.5 / Длина по стельке: 27 СМ",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "size_stock": {
+        "42.5": 1
+      },
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10517"
+    },
+    "sizes": [
+      "42.5"
+    ],
+    "size_stock": {
+      "42.5": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10517",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_964549d6.jpg"
+    ],
+    "created_at": "2026-07-13T12:46:56.407493"
   }
 ]
