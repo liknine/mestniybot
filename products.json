@@ -2606,5 +2606,39 @@
       "https://liknine.github.io/mestniybot/images/product_188_1fbb25df.jpg"
     ],
     "created_at": "2026-07-13T10:20:36.093108"
+  },
+  {
+    "id": 189,
+    "category_id": 1,
+    "brand": "New Balance",
+    "name": "Кроссовки New Balance 574 НОВЫЕ",
+    "description": "Абсолютно новые. Оригинал. Без коробки. Очень удобные, классно сидят на ноге.\nРазмер:\n42 / Длина по стельке: 26.5",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300.0,
+      "USD": 131.0,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Новое",
+      "extra_photos_url": "https://t.me/mestniystore/10507"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/10507",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5fcdc584.jpg"
+    ],
+    "created_at": "2026-07-13T12:35:15.675997"
   }
 ]
