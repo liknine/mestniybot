@@ -1,5 +1,35 @@
 [
   {
+    "id": 8,
+    "user_id": "855433545",
+    "status": "accepted",
+    "total": 350.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-855433545-1783933103469-zskkp8",
+    "created_at": "2026-07-13T11:58:24.369530",
+    "updated_at": "2026-07-13T11:58:24.358306",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 188,
+        "brand": "New Balance",
+        "name": "Кроссовки New Balance 408 НОВЫЕ",
+        "size": "42",
+        "qty": 1,
+        "unit_price": 350.0,
+        "old_unit_price": 350.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_188_0f02e881.jpg"
+      }
+    ]
+  },
+  {
     "id": 7,
     "user_id": "6679851290",
     "status": "completed",
@@ -11,6 +41,9 @@
     "created_at": "2026-07-11T18:28:08.373283",
     "updated_at": "2026-07-11T18:49:39.057855",
     "bonuses": 0.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 1.0,
     "bonus_returned": 0.0,
     "items": [
@@ -38,6 +71,9 @@
     "created_at": "2026-07-11T17:16:33.746230",
     "updated_at": "2026-07-11T17:16:57.420202",
     "bonuses": 1.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 1.0,
     "bonus_returned": 0.0,
     "items": [
@@ -65,6 +101,9 @@
     "created_at": "2026-07-11T17:13:42.973172",
     "updated_at": "2026-07-11T17:13:55.889593",
     "bonuses": 0.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 1.0,
     "bonus_returned": 0.0,
     "items": [
@@ -92,6 +131,9 @@
     "created_at": "2026-07-11T16:51:16.574635",
     "updated_at": "2026-07-11T16:52:27.238355",
     "bonuses": 0.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 0.0,
     "bonus_returned": 0.0,
     "items": [
@@ -119,6 +161,9 @@
     "created_at": "2026-07-11T16:49:48.023168",
     "updated_at": "2026-07-11T16:58:33.994609",
     "bonuses": 0.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 0.0,
     "bonus_returned": 0.0,
     "items": [
@@ -156,6 +201,9 @@
     "created_at": "2026-07-11T16:36:23.948359",
     "updated_at": "2026-07-11T16:36:50.744761",
     "bonuses": 0.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 0.0,
     "bonus_returned": 0.0,
     "items": [
@@ -183,6 +231,9 @@
     "created_at": "2026-07-11T16:22:34.200341",
     "updated_at": "2026-07-11T16:23:19.522943",
     "bonuses": 0.0,
+    "bonus_mode": "legacy_amount",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
     "bonus_earned": 0.0,
     "bonus_returned": 0.0,
     "items": [
