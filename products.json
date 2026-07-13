@@ -2875,5 +2875,39 @@
       "https://liknine.github.io/mestniybot/images/product_195_80bc0bd4.jpg"
     ],
     "created_at": "2026-07-13T14:13:03.751131"
+  },
+  {
+    "id": 196,
+    "category_id": 8,
+    "brand": "Stone Island",
+    "name": "Карго шорты Stone Island Junior",
+    "description": "Отличное состояние. Оригинал. Продажа с патчем. Без нюансов. Нету верхней бирки. Коллекция: 78. Размер по бирке: 14/170. Фактический размер: S.",
+    "price_byn": 185.0,
+    "prices": {
+      "BYN": 185.0,
+      "RUB": 5700.0,
+      "USD": 69.0,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10542"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10542",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_6bc158c9.jpg"
+    ],
+    "created_at": "2026-07-13T14:20:58.492624"
   }
 ]
