@@ -2989,43 +2989,5 @@
       "https://liknine.github.io/mestniybot/images/product_198_cf0f793d.jpg"
     ],
     "created_at": "2026-07-14T03:54:49.906746"
-  },
-  {
-    "id": 199,
-    "category_id": 5,
-    "brand": "Ma.Strum",
-    "name": "Футболка Ma.Strum",
-    "description": "Отличное состояние, есть минимальные следы носок. Классная модель, красивый принт, отлично сидит на теле. Оригинал. Без нюансов.",
-    "price_byn": 100.0,
-    "prices": {
-      "BYN": 100.0,
-      "RUB": 3300.0,
-      "USD": 37.0,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://telegram.me/mestniystore/10557"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://telegram.me/mestniystore/10557",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_199_4059b6f7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_9eb79c36.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_020e6a20.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_7f3d1b2a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_72be5f3c.jpg"
-    ],
-    "created_at": "2026-07-14T04:02:47.076161"
   }
 ]
