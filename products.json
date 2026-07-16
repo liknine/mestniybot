@@ -70,41 +70,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 94,
-    "category_id": 10,
-    "brand": "Stone Island",
-    "name": "Перчатки Stone Island Reflective",
-    "description": "Очень удобные, внутри утеплены, рефлективные! Есть следы носок, размер М. Оригинал.",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4500.0,
-      "USD": 56.0,
-      "product_type": "stock",
-      "condition": "Хорошее",
-      "extra_photos_url": "https://t.me/mestniystore/8740"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Хорошее",
-    "extra_photos_url": "https://t.me/mestniystore/8740",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_94_a1f015db.jpg",
-      "https://liknine.github.io/mestniybot/images/product_94_f4743b4a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_94_a885b2c8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_94_1beb4e32.jpg",
-      "https://liknine.github.io/mestniybot/images/product_94_c378ca23.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 95,
     "category_id": 8,
     "brand": "Weekend Offender",
