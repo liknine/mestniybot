@@ -1933,41 +1933,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 170,
-    "category_id": 8,
-    "brand": "Stone Island",
-    "name": "Шорты Stone Island",
-    "description": "Белоснежные, очень классные шорты от Stone Island. Отличное состояние. Оригинал. Продажа с оригинальным патчем. Коллекция: 70.",
-    "price_byn": 420.0,
-    "prices": {
-      "BYN": 420.0,
-      "RUB": 12300.0,
-      "USD": 157.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10361"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "size_stock": {
-      "XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10361",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_170_215c2128.jpg",
-      "https://liknine.github.io/mestniybot/images/product_170_036eba8b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_170_d6f03878.jpg",
-      "https://liknine.github.io/mestniybot/images/product_170_584cedf4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_170_292c4bf1.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 171,
     "category_id": 1,
     "brand": "Adidas",
