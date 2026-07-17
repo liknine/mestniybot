@@ -2245,41 +2245,6 @@
     "created_at": "2026-07-08T07:44:24.984872"
   },
   {
-    "id": 181,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Свитшот Stone Island",
-    "description": "Очень классный, плотный материал. Отлтчное состояние, есть минимальные следы носок. Оригинал. Продажа с оригинальным патчем. Коллекция: 79.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9700.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10447"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10447",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_181_5e2cf920.jpg",
-      "https://liknine.github.io/mestniybot/images/product_181_1f87bbc8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_181_569d6464.jpg",
-      "https://liknine.github.io/mestniybot/images/product_181_c19349cb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_181_29604302.jpg"
-    ],
-    "created_at": "2026-07-08T07:49:01.328931"
-  },
-  {
     "id": 182,
     "category_id": 8,
     "brand": "Nike",
