@@ -92,5 +92,19 @@
         "created_at": "2026-07-17T12:46:04.941041"
       }
     ]
+  },
+  {
+    "user_id": "819599519",
+    "balance": 1.0,
+    "transactions": [
+      {
+        "id": 9,
+        "type": "manual",
+        "amount": 1.0,
+        "title": "Начислено администратором",
+        "order_id": null,
+        "created_at": "2026-07-17T12:46:25.930985"
+      }
+    ]
   }
 ]
