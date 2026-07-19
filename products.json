@@ -879,41 +879,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 123,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Лонгслив Stone Island",
-    "description": "Плотный, классный, круто сидит на теле. База, с патчем на рукаве. Оригинал. Отличное состояние, без нюансов, есть небольшие следы носок. Размер по бирке: S. Фактический размер: S - M. Коллекция: 69.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9700.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9688"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9688",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_123_d11dcf49.jpg",
-      "https://liknine.github.io/mestniybot/images/product_123_223ff5f8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_123_868ed14a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_123_828d0ccc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_123_b35ab392.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 125,
     "category_id": 1,
     "brand": "Nike",
