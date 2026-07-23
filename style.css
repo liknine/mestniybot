@@ -2184,3 +2184,10 @@
 @media(min-height:900px){
   #home{--home-bottom-stack:310px}
 }
+
+/* MESTNIY_PRODUCT_NAV_V2: instant catalog return without entrance animation */
+.screen.active.restore-without-motion,
+.screen.active.restore-without-motion .product-card{
+  animation:none!important;
+}
+
