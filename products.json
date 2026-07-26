@@ -2905,5 +2905,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_e1f57b0d.jpg"
     ],
     "created_at": "2026-07-26T19:17:13.010747"
+  },
+  {
+    "id": 207,
+    "category_id": 5,
+    "brand": "Nike",
+    "name": "Футболка Nike Just Do It",
+    "description": "Отличное состояние, без нюансов. Оригинал. Размер по бирке: S. Фактический размер: S - M.",
+    "price_byn": 35.0,
+    "prices": {
+      "BYN": 35.0,
+      "RUB": 1400.0,
+      "USD": 13.0,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10645"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10645",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_124fd3bf.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_61fba2e9.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_3ba7fa52.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_1f09ec75.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_e94deaa6.jpg"
+    ],
+    "created_at": "2026-07-26T19:27:23.590934"
   }
 ]
