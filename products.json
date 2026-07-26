@@ -2601,5 +2601,39 @@
       "https://liknine.github.io/mestniybot/images/product_198_d20657ad.jpg"
     ],
     "created_at": "2026-07-26T16:23:06.835240"
+  },
+  {
+    "id": 199,
+    "category_id": 1,
+    "brand": "Tommy Jeans",
+    "name": "Кроссовки Tommy Jeans",
+    "description": "Состояние отличное, почти новые! Без нюансов. Оригинал. Без коробки. Отлично сидят на ноге.\nРазмер: \n41 / Длина по стельке: 26 СМ",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6100.0,
+      "USD": 74.0,
+      "product_type": "stock",
+      "size_stock": {
+        "41": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10579"
+    },
+    "sizes": [
+      "41"
+    ],
+    "size_stock": {
+      "41": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10579",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_1fc25566.jpg"
+    ],
+    "created_at": "2026-07-26T16:34:37.247487"
   }
 ]
