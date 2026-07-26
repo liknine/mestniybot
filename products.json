@@ -1441,41 +1441,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 153,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Зип - Худи Stone Island",
-    "description": "Отличное состояние. Без нюансов. Оригинал. Размер по бирке: M. Фактический размер: M - L. Коллекция: 76.",
-    "price_byn": 450.0,
-    "prices": {
-      "BYN": 450.0,
-      "RUB": 13200.0,
-      "USD": 168.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10230"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "size_stock": {
-      "M-L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10230",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_153_f1a0ee7e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_153_fd60f5c6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_153_a7c54395.jpg",
-      "https://liknine.github.io/mestniybot/images/product_153_27c51d0f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_153_95256e69.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 154,
     "category_id": 8,
     "brand": "Polar",
