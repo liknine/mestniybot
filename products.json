@@ -2867,5 +2867,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_3dffffab.jpg"
     ],
     "created_at": "2026-07-26T19:08:24.296455"
+  },
+  {
+    "id": 206,
+    "category_id": 5,
+    "brand": "Nike",
+    "name": "Футболка Nike",
+    "description": "Отличное состояние, без нюансов, очень крутой дизайн. Оригинал. Очень яркая. Размер по бирке: S. Фактический размер: S - M.",
+    "price_byn": 35.0,
+    "prices": {
+      "BYN": 35.0,
+      "RUB": 1400.0,
+      "USD": 13.0,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10640"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10640",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_8cb1a64b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_0f564789.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_bb0ea54a.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_37c23446.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_e1f57b0d.jpg"
+    ],
+    "created_at": "2026-07-26T19:17:13.010747"
   }
 ]
