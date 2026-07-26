@@ -2715,5 +2715,43 @@
       "https://liknine.github.io/mestniybot/images/product_201_5fca7dbb.jpg"
     ],
     "created_at": "2026-07-26T17:04:02.297821"
+  },
+  {
+    "id": 202,
+    "category_id": 2,
+    "brand": "Adidas",
+    "name": "Куртка Adidas Vintage",
+    "description": "Отличное состояние, есть небольшие следы носок. Без нюансов. Очень старая модель. Оригинал. Фактический размер: L - XL.",
+    "price_byn": 50.0,
+    "prices": {
+      "BYN": 50.0,
+      "RUB": 1900.0,
+      "USD": 18.0,
+      "product_type": "stock",
+      "size_stock": {
+        "L-XL": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10609"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "size_stock": {
+      "L-XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10609",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_dd1284e5.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c030db44.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_cbcf644d.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_9c710e75.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c1b685b8.jpg"
+    ],
+    "created_at": "2026-07-26T17:08:17.240905"
   }
 ]
