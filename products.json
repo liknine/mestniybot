@@ -2792,17 +2792,23 @@
     "brand": "Weekend Offender",
     "name": "Шорты Weekend Offender",
     "description": "Отличное состояние. Оригинал. Без нюансов. Круто сидят на теле. Хлопок. Размер по бирке: 14. Фактический размер: S.",
-    "price_byn": 110.0,
+    "price_byn": 85.0,
     "prices": {
-      "BYN": 110.0,
-      "RUB": 3500.0,
-      "USD": 41.0,
+      "BYN": 85.0,
+      "RUB": 2900.0,
+      "USD": 31.0,
       "product_type": "stock",
       "size_stock": {
         "S": 1
       },
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10594"
+      "extra_photos_url": "https://t.me/mestniystore/10594",
+      "old_price": 110.0,
+      "old_prices": {
+        "BYN": 110.0,
+        "RUB": 3500.0,
+        "USD": 41.0
+      }
     },
     "sizes": [
       "S"
