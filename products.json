@@ -2453,18 +2453,24 @@
     "brand": "New Balance",
     "name": "Кроссовки New Balance 408 НОВЫЕ",
     "description": "Абсолютно новая, оригинальная пара. Без коробки. Очень классная модель, отлично сидят на ноге.\nРазмер:\n42.5 / Длина по стельке: 27 СМ\n43 / Длина по стельке: 27.5 СМ",
-    "price_byn": 350.0,
+    "price_byn": 310.0,
     "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0,
+      "BYN": 310.0,
+      "RUB": 9200.0,
+      "USD": 116.0,
       "product_type": "stock",
       "size_stock": {
         "42.5": 1,
         "43": 1
       },
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10532"
+      "extra_photos_url": "https://t.me/mestniystore/10532",
+      "old_price": 350.0,
+      "old_prices": {
+        "BYN": 350.0,
+        "RUB": 10300.0,
+        "USD": 131.0
+      }
     },
     "sizes": [
       "42.5",
