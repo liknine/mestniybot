@@ -2184,14 +2184,20 @@
     "brand": "C.P. Company",
     "name": "Карго шорты C.P. Company",
     "description": "Очень классные, плотные. Оригинал, нету нижних бирок, но есть размерная бирка. Отличное состояние. Без нюансов.",
-    "price_byn": 180.0,
+    "price_byn": 145.0,
     "prices": {
-      "BYN": 180.0,
-      "RUB": 5500.0,
-      "USD": 67.0,
+      "BYN": 145.0,
+      "RUB": 4500.0,
+      "USD": 55.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10467"
+      "extra_photos_url": "https://t.me/mestniystore/10467",
+      "old_price": 180.0,
+      "old_prices": {
+        "BYN": 180.0,
+        "RUB": 5500.0,
+        "USD": 67.0
+      }
     },
     "sizes": [
       "M"
