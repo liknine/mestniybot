@@ -3443,5 +3443,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_e0588607.jpg"
     ],
     "created_at": "2026-07-27T14:42:58.428563"
+  },
+  {
+    "id": 217,
+    "category_id": 5,
+    "brand": "Lacoste",
+    "name": "Поло Lacoste",
+    "description": "Отличное состояние, без нюансов. Оригинал. Очень приятный, нежный цвет. Приятный материал. Размер по бирке: М. Фактический размер: М.",
+    "price_byn": 35.0,
+    "prices": {
+      "BYN": 35.0,
+      "RUB": 1400.0,
+      "USD": 13.0,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10741"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10741",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_fe676b50.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_469994b0.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_cebd901d.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_6aa85c74.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_b87e9b44.jpg"
+    ],
+    "created_at": "2026-07-27T14:47:40.772015"
   }
 ]
