@@ -1401,14 +1401,20 @@
     "brand": "Stone Island",
     "name": "Карго шорты Stone Island",
     "description": "Отличное состояние, есть следы носок. Оригинал. Отлично сидят на теле. Размер по бирке: W30 L34. Фактический размер: M. Коллекция: 58.",
-    "price_byn": 330.0,
+    "price_byn": 290.0,
     "prices": {
-      "BYN": 330.0,
-      "RUB": 9700.0,
-      "USD": 123.0,
+      "BYN": 290.0,
+      "RUB": 8600.0,
+      "USD": 108.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10205"
+      "extra_photos_url": "https://t.me/mestniystore/10205",
+      "old_price": 330.0,
+      "old_prices": {
+        "BYN": 330.0,
+        "RUB": 9700.0,
+        "USD": 123.0
+      }
     },
     "sizes": [
       "M"
