@@ -3367,5 +3367,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_24c8d837.jpg"
     ],
     "created_at": "2026-07-27T09:09:06.772838"
+  },
+  {
+    "id": 215,
+    "category_id": 6,
+    "brand": "Burberry",
+    "name": "Свитер Burberry",
+    "description": "Отличное состояние. Без нюансов. Оригинал. Все бирки на месте. Размер по бирке: 7. Фактический размер: L.",
+    "price_byn": 100.0,
+    "prices": {
+      "BYN": 100.0,
+      "RUB": 3300.0,
+      "USD": 37.0,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10731"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10731",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_f5121ff9.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_161dce86.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_8be15ca5.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_f6559c12.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_f0a51984.jpg"
+    ],
+    "created_at": "2026-07-27T14:31:48.473720"
   }
 ]
