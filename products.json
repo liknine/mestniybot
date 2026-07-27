@@ -1689,14 +1689,20 @@
     "brand": "Nike",
     "name": "Шорты Nike Tech Fleece Wash",
     "description": "Очень редкие модель шорт, в наше время таких почти нету. Отличное состояние, есть следы носок. Оригинал. Свежие коллекции. Есть небольшие потёртости по поясу.",
-    "price_byn": 180.0,
+    "price_byn": 155.0,
     "prices": {
-      "BYN": 180.0,
-      "RUB": 5500.0,
-      "USD": 67.0,
+      "BYN": 155.0,
+      "RUB": 4700.0,
+      "USD": 56.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10286"
+      "extra_photos_url": "https://t.me/mestniystore/10286",
+      "old_price": 180.0,
+      "old_prices": {
+        "BYN": 180.0,
+        "RUB": 5500.0,
+        "USD": 67.0
+      }
     },
     "sizes": [
       "L"
