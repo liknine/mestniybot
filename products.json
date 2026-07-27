@@ -3140,17 +3140,23 @@
     "brand": "Weekend Offender",
     "name": "Шорты Weekend Offender",
     "description": "Отличное состояние, есть минимальные следы носок. Без нюансов. Хлопок. Очень удобные, регулируется талия шнурками. Размер по бирке: XL. Фактический размер: L.",
-    "price_byn": 80.0,
+    "price_byn": 65.0,
     "prices": {
-      "BYN": 80.0,
-      "RUB": 2700.0,
-      "USD": 29.0,
+      "BYN": 65.0,
+      "RUB": 2300.0,
+      "USD": 24.0,
       "product_type": "stock",
       "size_stock": {
         "L": 1
       },
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10686"
+      "extra_photos_url": "https://t.me/mestniystore/10686",
+      "old_price": 80.0,
+      "old_prices": {
+        "BYN": 80.0,
+        "RUB": 2700.0,
+        "USD": 29.0
+      }
     },
     "sizes": [
       "L"
