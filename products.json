@@ -1166,14 +1166,20 @@
     "brand": "Raf Simons",
     "name": "Кроссовки Raf Simons Ultrasceptre",
     "description": "Состояние отличное, есть небольшие следы носок. Размер по бирке 40, но данная модель всегда большемерит. Фактический размер: \n40.5 - 41 ( 26.5 СМ по стельке )",
-    "price_byn": 600.0,
+    "price_byn": 530.0,
     "prices": {
-      "BYN": 600.0,
-      "RUB": 17300.0,
-      "USD": 224.0,
+      "BYN": 530.0,
+      "RUB": 15400.0,
+      "USD": 200.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10043"
+      "extra_photos_url": "https://t.me/mestniystore/10043",
+      "old_price": 600.0,
+      "old_prices": {
+        "BYN": 600.0,
+        "RUB": 17300.0,
+        "USD": 224.0
+      }
     },
     "sizes": [
       "40.5-41"
