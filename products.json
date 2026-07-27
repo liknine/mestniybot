@@ -1763,14 +1763,20 @@
     "brand": "Adidas",
     "name": "Кроссовки Adidas Rivalry Low 86 WG НОВЫЕ",
     "description": "Очень классные, абсолютно новая пара. Оригинал. В комплекте с коробкой, этикетками, сертификатом / пломбой Poizon! Очень приятный цвет, отлично сидят на ноге.\nРазмер:\n43 1/3 / 27.5 CM ( по стельке )",
-    "price_byn": 250.0,
+    "price_byn": 220.0,
     "prices": {
-      "BYN": 250.0,
-      "RUB": 7500.0,
-      "USD": 93.0,
+      "BYN": 220.0,
+      "RUB": 6600.0,
+      "USD": 82.0,
       "product_type": "stock",
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10378"
+      "extra_photos_url": "https://t.me/mestniystore/10378",
+      "old_price": 250.0,
+      "old_prices": {
+        "BYN": 250.0,
+        "RUB": 7500.0,
+        "USD": 93.0
+      }
     },
     "sizes": [
       "43"
