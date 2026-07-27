@@ -2582,17 +2582,23 @@
     "brand": "Tommy Hilfiger",
     "name": "Кроссовки Tommy Hilfiger НОВЫЕ",
     "description": "Состояние новых, буквально одна примерка. Оригинал. Без коробки. Отлично сидят на ноге, классная модель.\nРазмер:\n40 / Длина по стельке: 25 СМ",
-    "price_byn": 250.0,
+    "price_byn": 220.0,
     "prices": {
-      "BYN": 250.0,
-      "RUB": 7500.0,
-      "USD": 93.0,
+      "BYN": 220.0,
+      "RUB": 6600.0,
+      "USD": 82.0,
       "product_type": "stock",
       "size_stock": {
         "40": 1
       },
       "condition": "Новое",
-      "extra_photos_url": "https://telegram.me/mestniystore/10547"
+      "extra_photos_url": "https://telegram.me/mestniystore/10547",
+      "old_price": 250.0,
+      "old_prices": {
+        "BYN": 250.0,
+        "RUB": 7500.0,
+        "USD": 93.0
+      }
     },
     "sizes": [
       "40"
