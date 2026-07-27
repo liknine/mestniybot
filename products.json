@@ -1541,14 +1541,20 @@
     "brand": "Evisu",
     "name": "Шорты Evisu Denim",
     "description": "Очень редкая пара шорт. Оригинал. Довольно старые. Отличное состояние, есть следы носок. Размер по бирке: 34. Фактический размер: M.",
-    "price_byn": 180.0,
+    "price_byn": 140.0,
     "prices": {
-      "BYN": 180.0,
-      "RUB": 5500.0,
-      "USD": 67.0,
+      "BYN": 140.0,
+      "RUB": 4400.0,
+      "USD": 52.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10261"
+      "extra_photos_url": "https://t.me/mestniystore/10261",
+      "old_price": 180.0,
+      "old_prices": {
+        "BYN": 180.0,
+        "RUB": 5500.0,
+        "USD": 67.0
+      }
     },
     "sizes": [
       "M"
