@@ -2616,17 +2616,23 @@
     "brand": "Stone Island",
     "name": "Карго шорты Stone Island Junior",
     "description": "Отличное состояние. Оригинал. Продажа с патчем. Без нюансов. Нету верхней бирки. Коллекция: 78. Размер по бирке: 14/170. Фактический размер: S.",
-    "price_byn": 185.0,
+    "price_byn": 160.0,
     "prices": {
-      "BYN": 185.0,
-      "RUB": 5700.0,
-      "USD": 69.0,
+      "BYN": 160.0,
+      "RUB": 5000.0,
+      "USD": 59.0,
       "product_type": "stock",
       "size_stock": {
         "S": 1
       },
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10542"
+      "extra_photos_url": "https://t.me/mestniystore/10542",
+      "old_price": 185.0,
+      "old_prices": {
+        "BYN": 185.0,
+        "RUB": 5700.0,
+        "USD": 69.0
+      }
     },
     "sizes": [
       "S"
