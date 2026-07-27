@@ -2500,17 +2500,23 @@
     "brand": "New Balance",
     "name": "Кроссовки New Balance 530 НОВЫЕ",
     "description": "Абсолютно новые. Оригинал. Очень классная модель, нереально крутой дизайн. Без коробки. Отлично сидят на ноге.\nРазмер: \n43 / Длина по стельке: 27.5 СМ",
-    "price_byn": 400.0,
+    "price_byn": 355.0,
     "prices": {
-      "BYN": 400.0,
-      "RUB": 11700.0,
-      "USD": 149.0,
+      "BYN": 355.0,
+      "RUB": 10400.0,
+      "USD": 132.0,
       "product_type": "stock",
       "size_stock": {
         "43": 2
       },
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10537"
+      "extra_photos_url": "https://t.me/mestniystore/10537",
+      "old_price": 400.0,
+      "old_prices": {
+        "BYN": 400.0,
+        "RUB": 11700.0,
+        "USD": 149.0
+      }
     },
     "sizes": [
       "43"
