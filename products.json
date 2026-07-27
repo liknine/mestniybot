@@ -3557,5 +3557,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_91f3c6f1.jpg"
     ],
     "created_at": "2026-07-27T14:56:00.111823"
+  },
+  {
+    "id": 220,
+    "category_id": 7,
+    "brand": "Levi’s",
+    "name": "Джинсы Levi’s 514",
+    "description": "Отличное состояние, есть минимальные следы носок, в виде минимальных потёртостей на выходе калошин, которые совсем не видно, особенно при носке. Оригинал. Размер по бирке: W32 L34. Фактический размер: M - L.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600.0,
+      "USD": 28.0,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10756"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10756",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_7822730b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_a96fbc23.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_4c2cb2ee.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_ea1beaaf.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c465ebb3.jpg"
+    ],
+    "created_at": "2026-07-27T15:08:22.226436"
   }
 ]
