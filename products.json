@@ -670,14 +670,20 @@
     "brand": "Nike x Air Jordan",
     "name": "Кроссовки Nike x Air Jordan 1 Low НОВЫЕ",
     "description": "Абсолютно новые! Очень крутая коллаборация Nike и Air Jordan. Отлично сидят на ноге! Самое то, на предстоящую погоду! В комплекте с коробкой! Оригинал! \nДлина по стельке:\n41 = ( 26 CM )\n42 = ( 26.5 CM )\n42.5 = ( 27 CM )",
-    "price_byn": 270.0,
+    "price_byn": 240.0,
     "prices": {
-      "BYN": 270.0,
-      "RUB": 8000.0,
-      "USD": 101.0,
+      "BYN": 240.0,
+      "RUB": 7100.0,
+      "USD": 89.0,
       "product_type": "stock",
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9587"
+      "extra_photos_url": "https://t.me/mestniystore/9587",
+      "old_price": 270.0,
+      "old_prices": {
+        "BYN": 270.0,
+        "RUB": 8000.0,
+        "USD": 101.0
+      }
     },
     "sizes": [
       "41",
