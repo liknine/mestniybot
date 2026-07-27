@@ -3633,5 +3633,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_47320b24.jpg"
     ],
     "created_at": "2026-07-27T16:36:26.044128"
+  },
+  {
+    "id": 222,
+    "category_id": 5,
+    "brand": "Hugo Boss",
+    "name": "Футболка Hugo Boss",
+    "description": "Отличное состояние, есть минимальные следы носок, в виде микротрещин на принте, оно в самом низу принта, их почти нету, совсем не видно. Оригинал. Размер по бирке: XXL. Фактический размер: XL - XXL.",
+    "price_byn": 35.0,
+    "prices": {
+      "BYN": 35.0,
+      "RUB": 1400.0,
+      "USD": 13.0,
+      "product_type": "stock",
+      "size_stock": {
+        "XL-XXL": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10771"
+    },
+    "sizes": [
+      "XL-XXL"
+    ],
+    "size_stock": {
+      "XL-XXL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10771",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_110b92b9.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_5df9d56b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c0768cde.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_448d887e.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_d35ca601.jpg"
+    ],
+    "created_at": "2026-07-27T16:39:05.086770"
   }
 ]
