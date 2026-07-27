@@ -884,14 +884,20 @@
     "brand": "Adidas",
     "name": "Кроссовки Adidas London",
     "description": "Очень редкая пара в наше время. Отлично сохранилось состояние. В комплекте с коробкой. Оригинал. Отличное состояние, есть небольшие следы носок. Размер по бирке: 43 1/3. Длина по стельке: 27.5 СМ.",
-    "price_byn": 370.0,
+    "price_byn": 330.0,
     "prices": {
-      "BYN": 370.0,
-      "RUB": 10900.0,
-      "USD": 138.0,
+      "BYN": 330.0,
+      "RUB": 9700.0,
+      "USD": 122.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9789"
+      "extra_photos_url": "https://t.me/mestniystore/9789",
+      "old_price": 370.0,
+      "old_prices": {
+        "BYN": 370.0,
+        "RUB": 10900.0,
+        "USD": 138.0
+      }
     },
     "sizes": [
       "43"
