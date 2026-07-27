@@ -1968,41 +1968,6 @@
     "created_at": "2026-07-06T17:26:07.944565"
   },
   {
-    "id": 176,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Худи Stone Island",
-    "description": "Классное, базовое белое худи с патчем. Оригинал. Отличное состояние, есть минимальные следы носок. Продажа с оригинальным патчем. Коллекция: 64",
-    "price_byn": 370.0,
-    "prices": {
-      "BYN": 370.0,
-      "RUB": 10900.0,
-      "USD": 138.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10419"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10419",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_176_c93e8ebb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_176_81bbd748.jpg",
-      "https://liknine.github.io/mestniybot/images/product_176_35177c18.jpg",
-      "https://liknine.github.io/mestniybot/images/product_176_ba7a00ca.jpg",
-      "https://liknine.github.io/mestniybot/images/product_176_88cf642c.jpg"
-    ],
-    "created_at": "2026-07-06T18:07:54.236291"
-  },
-  {
     "id": 177,
     "category_id": 5,
     "brand": "Aape",
