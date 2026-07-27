@@ -1048,14 +1048,20 @@
     "brand": "Stone Island",
     "name": "Шорты Stone Island Junior НОВЫЕ",
     "description": "Необычные шорты, от Stone Island. Абсолютно новые, с этикеткой. Интересный логотип, не в виде патча, а в виде вышивки! Размер по бирке: 14/170. Фактический размер: XS - S. Коллекция: 78. Оригинал.",
-    "price_byn": 230.0,
+    "price_byn": 200.0,
     "prices": {
-      "BYN": 230.0,
-      "RUB": 7000.0,
-      "USD": 86.0,
+      "BYN": 200.0,
+      "RUB": 6100.0,
+      "USD": 74.0,
       "product_type": "stock",
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9844"
+      "extra_photos_url": "https://t.me/mestniystore/9844",
+      "old_price": 230.0,
+      "old_prices": {
+        "BYN": 230.0,
+        "RUB": 7000.0,
+        "USD": 86.0
+      }
     },
     "sizes": [
       "XS - S"
