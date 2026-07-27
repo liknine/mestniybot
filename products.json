@@ -2143,14 +2143,20 @@
     "brand": "Nike",
     "name": "Шорты Nike Just Do It",
     "description": "Плотные, широкие, очень классные шорты. Оригинал. Отличное состояние, есть следы носок. Помимо большо логотипа на калоши, есть маленький логотип на правом кармане. Размер по бирке: L. Фактический размер: L - XL.",
-    "price_byn": 110.0,
+    "price_byn": 90.0,
     "prices": {
-      "BYN": 110.0,
-      "RUB": 3500.0,
-      "USD": 41.0,
+      "BYN": 90.0,
+      "RUB": 3000.0,
+      "USD": 33.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10457"
+      "extra_photos_url": "https://t.me/mestniystore/10457",
+      "old_price": 110.0,
+      "old_prices": {
+        "BYN": 110.0,
+        "RUB": 3500.0,
+        "USD": 41.0
+      }
     },
     "sizes": [
       "L-XL"
