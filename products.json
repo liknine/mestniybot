@@ -3519,5 +3519,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_9e206094.jpg"
     ],
     "created_at": "2026-07-27T14:52:33.713785"
+  },
+  {
+    "id": 219,
+    "category_id": 7,
+    "brand": "Levi’s",
+    "name": "Джинсы Levi’s Premium 512",
+    "description": "Отличное состояние, очень приятный цвет. Без нюансов. Оригинал. Есть селведж, что очень дополняет данные джинсы при носке с подворотами. Размер по бирке: W32 L32. Фактический размер: M.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600.0,
+      "USD": 28.0,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10751"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10751",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_30df3640.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_1ad221e3.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_5b4c74e9.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_aa2e11ca.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_91f3c6f1.jpg"
+    ],
+    "created_at": "2026-07-27T14:56:00.111823"
   }
 ]
