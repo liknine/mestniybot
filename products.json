@@ -1506,14 +1506,20 @@
     "brand": "Polar",
     "name": "Шорты Polar Big Boy Denim",
     "description": "Отличное состояние, есть минимальные следы носок. Отлично сидят на теле. Оригинал. Размер по бирке: S. Фактический размер: M.",
-    "price_byn": 180.0,
+    "price_byn": 130.0,
     "prices": {
-      "BYN": 180.0,
-      "RUB": 5500.0,
-      "USD": 67.0,
+      "BYN": 130.0,
+      "RUB": 4100.0,
+      "USD": 48.0,
       "product_type": "stock",
       "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10240"
+      "extra_photos_url": "https://t.me/mestniystore/10240",
+      "old_price": 180.0,
+      "old_prices": {
+        "BYN": 180.0,
+        "RUB": 5500.0,
+        "USD": 67.0
+      }
     },
     "sizes": [
       "M"
