@@ -2626,17 +2626,23 @@
     "brand": "Tommy Jeans",
     "name": "Кроссовки Tommy Jeans",
     "description": "Состояние новых, буквально одна носка. Оригинал. Без коробки. Отлично сидят на, лёгкие.\nРазмер: \n41 / Длина по стельке: 26 СМ",
-    "price_byn": 150.0,
+    "price_byn": 130.0,
     "prices": {
-      "BYN": 150.0,
-      "RUB": 4700.0,
-      "USD": 56.0,
+      "BYN": 130.0,
+      "RUB": 4200.0,
+      "USD": 49.0,
       "product_type": "stock",
       "size_stock": {
         "41": 1
       },
       "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10574"
+      "extra_photos_url": "https://t.me/mestniystore/10574",
+      "old_price": 150.0,
+      "old_prices": {
+        "BYN": 150.0,
+        "RUB": 4700.0,
+        "USD": 56.0
+      }
     },
     "sizes": [
       "41"
