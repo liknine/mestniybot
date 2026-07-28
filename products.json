@@ -3747,5 +3747,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_b6d769bf.jpg"
     ],
     "created_at": "2026-07-27T17:09:16.083717"
+  },
+  {
+    "id": 225,
+    "category_id": 6,
+    "brand": "Stone Island",
+    "name": "Свитшот Stone Island",
+    "description": "Отличное состояние, без нюансов. Очень приятный материал. Оригинал, продажа с оригинальным патчем. Коллекция: 72. Размер по бирке: S. Фактический размер: S - M.",
+    "price_byn": 330.0,
+    "prices": {
+      "BYN": 330.0,
+      "RUB": 9700.0,
+      "USD": 123.0,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10798"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10798",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_de314b16.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_3b2fb3a3.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_e85cabe8.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_058b83a8.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_14359fe7.jpg"
+    ],
+    "created_at": "2026-07-28T05:32:50.422724"
   }
 ]
