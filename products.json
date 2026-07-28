@@ -3785,5 +3785,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_14359fe7.jpg"
     ],
     "created_at": "2026-07-28T05:32:50.422724"
+  },
+  {
+    "id": 226,
+    "category_id": 5,
+    "brand": "A Bathing Ape",
+    "name": "Футболка A Bathing Ape",
+    "description": "Отличное состояние, без нюансов. Оригинал. Все бирки на месте. Размер по бирке: L. Фактический размер: M - L.",
+    "price_byn": 90.0,
+    "prices": {
+      "BYN": 90.0,
+      "RUB": 3000.0,
+      "USD": 33.0,
+      "product_type": "stock",
+      "size_stock": {
+        "M - L": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10791"
+    },
+    "sizes": [
+      "M - L"
+    ],
+    "size_stock": {
+      "M - L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10791",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_c8f27cf2.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_baca20fb.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_166f201b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c9b32841.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_22e05db1.jpg"
+    ],
+    "created_at": "2026-07-28T21:02:01.627136"
   }
 ]
