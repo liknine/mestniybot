@@ -3978,5 +3978,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_1945406b.jpg"
     ],
     "created_at": "2026-07-31T05:53:36.777761"
+  },
+  {
+    "id": 234,
+    "category_id": 3,
+    "brand": "Stone Island",
+    "name": "Жилетка Stone Island Nylon 2009",
+    "description": "Пуховый жилет Stone Island из коллекции осень-зима 2009 года представляет собой классический образец технологичной верхней одежды бренда: фирменный нейлон с обработкой по технологии Down-TC, натуральный пуховый наполнитель и узнаваемый сетчатый патч с компасом. Отличное состояние, без нюансов. Прячется капюшон, застегивается горло. Размер по бирке: М. Фактический размер: S - M.",
+    "price_byn": 750.0,
+    "prices": {
+      "BYN": 750.0,
+      "RUB": 21500.0,
+      "USD": 280.0,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10843"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10843",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_5485f081.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_9afd3657.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_f0fc3ee7.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_797e556e.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_e0b5d8b6.jpg"
+    ],
+    "created_at": "2026-07-31T05:56:18.377612"
   }
 ]
