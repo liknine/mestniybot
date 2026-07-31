@@ -4016,5 +4016,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_e0b5d8b6.jpg"
     ],
     "created_at": "2026-07-31T05:56:18.377612"
+  },
+  {
+    "id": 235,
+    "category_id": 10,
+    "brand": "Burberry",
+    "name": "Шарф Burberry",
+    "description": "Отличное состояние, без нюансов. Оригинал. Размер: 138х24,5.",
+    "price_byn": 100.0,
+    "prices": {
+      "BYN": 100.0,
+      "RUB": 3300.0,
+      "USD": 37.0,
+      "product_type": "stock",
+      "size_stock": {
+        "ONE SIZE": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10853"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10853",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_f547dafe.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_76966b5b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_7231ce96.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_bede439b.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_2ee10e78.jpg"
+    ],
+    "created_at": "2026-07-31T07:45:23.248428"
   }
 ]
