@@ -3864,5 +3864,42 @@
       "https://liknine.github.io/mestniybot/images/product_0_e06ae6a7.jpg"
     ],
     "created_at": "2026-07-31T05:34:35.313976"
+  },
+  {
+    "id": 231,
+    "category_id": 5,
+    "brand": "Lyle&Scott",
+    "name": "Поло Lyle&Scott",
+    "description": "Отличное состояние, без нюансов. Очень классный дизайн, за счёт необычного цвета воротника, и манжетов рукавов. Размер по бирке: XXL. Фактический размер: XL - XXL.",
+    "price_byn": 40.0,
+    "prices": {
+      "BYN": 40.0,
+      "RUB": 1600.0,
+      "USD": 14.0,
+      "product_type": "stock",
+      "size_stock": {
+        "XL-XXL": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10823"
+    },
+    "sizes": [
+      "XL-XXL"
+    ],
+    "size_stock": {
+      "XL-XXL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10823",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_25e7f140.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_48aca3fb.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_6a8254f9.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_72686a05.jpg"
+    ],
+    "created_at": "2026-07-31T05:40:48.468433"
   }
 ]
