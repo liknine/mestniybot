@@ -3407,44 +3407,6 @@
     "created_at": "2026-07-27T14:31:48.473720"
   },
   {
-    "id": 216,
-    "category_id": 5,
-    "brand": "Sergio Tacchini",
-    "name": "Поло Sergio Tacchini",
-    "description": "Отличное состояние, без нюансов. Оригинал. Очень приятное сочетание цветов. Вышитый логотип. Размер по бирке: L. Фактический размер: M.",
-    "price_byn": 35.0,
-    "prices": {
-      "BYN": 35.0,
-      "RUB": 1400.0,
-      "USD": 13.0,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10736"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10736",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_0_a6db0bc8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_070b9d64.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_d380bdd6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_9966566f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_e0588607.jpg"
-    ],
-    "created_at": "2026-07-27T14:42:58.428563"
-  },
-  {
     "id": 217,
     "category_id": 5,
     "brand": "Lacoste",
