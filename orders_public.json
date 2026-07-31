@@ -1,5 +1,35 @@
 [
   {
+    "id": 9,
+    "user_id": "5195935027",
+    "status": "accepted",
+    "total": 65.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-5195935027-1785505385460-x9qsaf",
+    "created_at": "2026-07-31T13:43:06.005606",
+    "updated_at": "2026-07-31T13:43:06.004289",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 209,
+        "brand": "Weekend Offender",
+        "name": "Шорты Weekend Offender",
+        "size": "L",
+        "qty": 1,
+        "unit_price": 65.0,
+        "old_unit_price": 80.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_0_de9e6afd.jpg"
+      }
+    ]
+  },
+  {
     "id": 8,
     "user_id": "855433545",
     "status": "accepted",
