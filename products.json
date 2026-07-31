@@ -3861,5 +3861,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_e3e222de.jpg"
     ],
     "created_at": "2026-07-29T18:33:20.556945"
+  },
+  {
+    "id": 228,
+    "category_id": 7,
+    "brand": "Carhartt",
+    "name": "Джинсы Carhartt",
+    "description": "Отличное состояние, есть небольшие следы носок, без нюансов. Оригинал. Приятный цвет. Размер по бирке: 31. Фактический размер: S - M.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900.0,
+      "USD": 44.0,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10808"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10808",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_331192ae.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c5858639.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_8ca873e6.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_64dce605.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_6280f2c6.jpg"
+    ],
+    "created_at": "2026-07-31T05:20:58.250299"
   }
 ]
