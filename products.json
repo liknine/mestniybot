@@ -397,41 +397,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 107,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Свитшот Stone Island",
-    "description": "Плотный, классный свитшот, в темно синем цвете! База, с патчем на рукаве, все бирки на месте! Оригинал! Коллекция: 65. Состояние отличное. Есть следы носок.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9800.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9168"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9168",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_107_04d71644.jpg",
-      "https://liknine.github.io/mestniybot/images/product_107_659fe317.jpg",
-      "https://liknine.github.io/mestniybot/images/product_107_9d4348fb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_107_13a5f977.jpg",
-      "https://liknine.github.io/mestniybot/images/product_107_f791aa5b.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 108,
     "category_id": 9,
     "brand": "Weekend Offender",
