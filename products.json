@@ -4092,5 +4092,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_00191337.jpg"
     ],
     "created_at": "2026-07-31T07:50:22.715978"
+  },
+  {
+    "id": 237,
+    "category_id": 1,
+    "brand": "Nike",
+    "name": "Ботинки Nike SF Air Force 1 Mid",
+    "description": "Отличное состояние, как новые, почти не носились. Оригинал. Отличный вариант на предстоящую пору года. Размер: \n42 / 26.5 СМ ( по стельке )",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6100.0,
+      "USD": 74.0,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10863"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10863",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_293c42fa.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_c2090adb.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_fb8411a9.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_78d461dc.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_f353e06b.jpg"
+    ],
+    "created_at": "2026-07-31T07:58:19.208374"
   }
 ]
