@@ -3788,5 +3788,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_6280f2c6.jpg"
     ],
     "created_at": "2026-07-31T05:20:58.250299"
+  },
+  {
+    "id": 229,
+    "category_id": 5,
+    "brand": "Nike",
+    "name": "Футболка Nike",
+    "description": "Отличное состояние, без нюансов. Приятный красный цвет. Вышитый логотип. Оригинал. Размер по бирке: L. Фактический размер: L - XL.",
+    "price_byn": 35.0,
+    "prices": {
+      "BYN": 35.0,
+      "RUB": 1400.0,
+      "USD": 13.0,
+      "product_type": "stock",
+      "size_stock": {
+        "L-XL": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10813"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "size_stock": {
+      "L-XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10813",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_4c7972ef.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_e887b173.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_deeb64c7.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_9d78a8d6.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_aedcb9cb.jpg"
+    ],
+    "created_at": "2026-07-31T05:29:14.587535"
   }
 ]
