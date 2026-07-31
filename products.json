@@ -3940,5 +3940,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_b73f4449.jpg"
     ],
     "created_at": "2026-07-31T05:47:56.863934"
+  },
+  {
+    "id": 233,
+    "category_id": 7,
+    "brand": "Diesel",
+    "name": "Джинсы Diesel",
+    "description": "Отличное состояние, без нюансов. Плотная, классная джинса. Очень крутой дизайн, а именно, нарисованные надписи на правом заднем кармане, и нарисованные надписи на правом переднем кармане, но главное - это селведж, такая яркая прострочка, внутри джинс, отлично добавляет ваш стиль, если вы носите джинсы с подворотами. Размер по бирке: 27. Фактический размер: М.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 2800.0,
+      "USD": 31.0,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10838"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10838",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_9bc3578c.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_b5cc9d1e.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_55c31466.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_cbe75b7d.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_1945406b.jpg"
+    ],
+    "created_at": "2026-07-31T05:53:36.777761"
   }
 ]
