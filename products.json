@@ -4054,5 +4054,43 @@
       "https://liknine.github.io/mestniybot/images/product_0_2ee10e78.jpg"
     ],
     "created_at": "2026-07-31T07:45:23.248428"
+  },
+  {
+    "id": 236,
+    "category_id": 10,
+    "brand": "Kipling",
+    "name": "Сумка Kipling Nylon",
+    "description": "Отличное состояние, как новая. Очень красиво переливается за счёт материала Nylon. Продажа с брелоком обезьянки, сзади есть маленькая бирочка с названием бренда. Размер: \nВысота = 38\nШирина = 42",
+    "price_byn": 70.0,
+    "prices": {
+      "BYN": 70.0,
+      "RUB": 2500.0,
+      "USD": 26.0,
+      "product_type": "stock",
+      "size_stock": {
+        "UNI": 1
+      },
+      "condition": "Отличное",
+      "extra_photos_url": "https://t.me/mestniystore/10858"
+    },
+    "sizes": [
+      "UNI"
+    ],
+    "size_stock": {
+      "UNI": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10858",
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_decd1b56.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_b0eb0572.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_17d95a18.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_da77257e.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_00191337.jpg"
+    ],
+    "created_at": "2026-07-31T07:50:22.715978"
   }
 ]
