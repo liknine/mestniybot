@@ -3062,50 +3062,6 @@
     "created_at": "2026-07-26T23:18:26.638123"
   },
   {
-    "id": 209,
-    "category_id": 8,
-    "brand": "Weekend Offender",
-    "name": "Шорты Weekend Offender",
-    "description": "Отличное состояние, есть минимальные следы носок. Без нюансов. Хлопок. Очень удобные, регулируется талия шнурками. Размер по бирке: XL. Фактический размер: L.",
-    "price_byn": 65.0,
-    "prices": {
-      "BYN": 65.0,
-      "RUB": 2300.0,
-      "USD": 24.0,
-      "product_type": "stock",
-      "size_stock": {
-        "L": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10686",
-      "old_price": 80.0,
-      "old_prices": {
-        "BYN": 80.0,
-        "RUB": 2700.0,
-        "USD": 29.0
-      }
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10686",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_0_de9e6afd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_658b9ee7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_10273daa.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_0e2fffab.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_950b7fc0.jpg"
-    ],
-    "created_at": "2026-07-26T23:22:05.532177"
-  },
-  {
     "id": 210,
     "category_id": 5,
     "brand": "Sergio Tacchini",
