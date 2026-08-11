@@ -3759,23 +3759,20 @@
       "product_type": "stock",
       "size_stock": {
         "L": 1,
-        "M": 1,
-        "S": 1
+        "M": 1
       },
       "condition": "Отличное",
       "extra_photos_url": "https://t.me/mestniystore/10828"
     },
     "sizes": [
       "L",
-      "M",
-      "S"
+      "M"
     ],
     "size_stock": {
       "L": 1,
-      "M": 1,
-      "S": 1
+      "M": 1
     },
-    "stock": 3,
+    "stock": 2,
     "product_type": "stock",
     "section": "stock",
     "condition": "Отличное",
