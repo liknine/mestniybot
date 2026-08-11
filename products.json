@@ -3937,5 +3937,45 @@
       "https://liknine.github.io/mestniybot/images/product_0_f353e06b.jpg"
     ],
     "created_at": "2026-07-31 07:58:19.208374"
+  },
+  {
+    "id": 238,
+    "category_id": 6,
+    "brand": "jordan",
+    "name": "Худи Jordan",
+    "description": "Очень крутой дизайн! Помимо небольшого логотипа на груди, более светлым цветом, чем сама кофта, сделаны рисунки, спереди, и на спине. Кофта имеет два кармана спереди. Все бирки на месте. Размер по бирке: М. Фактический размер: M - L. Состояние: Отличное, без нюансов, присутствуют минимальные следы после носок.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 2900,
+      "USD": 31,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/11138"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11138",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_78827e9f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_880a7821.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e2f88fa7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8894ac9b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e5e8216f.jpg"
+    ],
+    "created_at": "2026-08-11 11:45:39.828096"
   }
 ]
