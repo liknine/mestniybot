@@ -3940,5 +3940,44 @@
       "https://liknine.github.io/mestniybot/images/product_0_f353e06b.jpg"
     ],
     "created_at": "2026-07-31 07:58:19.208374"
+  },
+  {
+    "id": 238,
+    "category_id": 5,
+    "brand": "fred_perry",
+    "name": "Футболка Fred Perry",
+    "description": "Крутой дизайн за счёт лампасов по рукавам, и вышитого логотипа на груди. Все бирки на месте. Размер по бирке: UK 12. Фактический размер: S - M. Состояние: Отличное, есть минимальные следы после носок, без нюансов.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600,
+      "USD": 28,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "UK 12",
+      "actual_size_raw": "S - M"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": null,
+    "images": [
+      "https://liknine.github.io/mestniybot/images/product_0_3d28a46a.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_1e4163b4.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_112bbbc4.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_3c854b31.jpg",
+      "https://liknine.github.io/mestniybot/images/product_0_471a83e3.jpg"
+    ],
+    "created_at": "2026-08-11 09:55:18.015430"
   }
 ]
