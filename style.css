@@ -70,7 +70,7 @@
     .favorite-dot svg{width:17px;height:17px;fill:none;stroke:#111;stroke-width:1.15}
     .favorite-dot.on svg{fill:#111}
     .bottom-nav[hidden]{display:none!important}
-    .bottom-nav{position:fixed;z-index:40;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:calc(var(--nav-h) + env(safe-area-inset-bottom));margin:0;background:rgba(255,255,255,.985);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:0 0 env(safe-area-inset-bottom);box-shadow:0 -8px 20px rgba(0,0,0,.035)}
+    .bottom-nav{position:fixed;z-index:40;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:calc(var(--nav-h) + env(safe-area-inset-bottom));margin:0;background:rgba(255,255,255,.985);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:0 0 env(safe-area-inset-bottom);box-shadow:0 -8px 20px rgba(0,0,0,.035)}
     .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:9px;text-transform:uppercase;position:relative}
     .nav-item::before{content:"";position:absolute;top:0;left:25%;right:25%;height:2px;background:transparent}
     .nav-item.active::before{background:#000}
@@ -774,8 +774,8 @@
     .toolbar button{border-bottom:1px solid #111!important;padding:8px 0 4px;white-space:nowrap}
     .toolbar button:hover{border-bottom-color:#111}
 
-    .bottom-nav{--nav-left:6.25%;isolation:isolate}
-    .bottom-nav::before{content:"";position:absolute;z-index:2;top:0;left:var(--nav-left);width:12.5%;height:2px;background:#111;transition:left .5s var(--motion-ease)}
+    .bottom-nav{--nav-left:5%;isolation:isolate}
+    .bottom-nav::before{content:"";position:absolute;z-index:2;top:0;left:var(--nav-left);width:10%;height:2px;background:#111;transition:left .5s var(--motion-ease)}
     .nav-item::before{display:none!important}
     .nav-item{z-index:1}
     .nav-item svg{transition:transform .36s var(--motion-ease),stroke-width .28s var(--motion-ease)}
@@ -2190,4 +2190,3 @@
 .screen.active.restore-without-motion .product-card{
   animation:none!important;
 }
-
