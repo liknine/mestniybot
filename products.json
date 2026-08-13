@@ -3977,5 +3977,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e5e8216f.jpg"
     ],
     "created_at": "2026-08-11 11:45:39.828096"
+  },
+  {
+    "id": 239,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Свитшот C.P. Company Junior",
+    "description": "Тестовое описание товара.",
+    "price_byn": 220.0,
+    "prices": {
+      "BYN": 220.0,
+      "RUB": 6700,
+      "USD": 82,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "14",
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/11126"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11126",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c7eb8685.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_30c54b3e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ecf45723.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4eabaa4d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_af9e8504.jpg"
+    ],
+    "created_at": "2026-08-13 20:32:49.486140"
   }
 ]
