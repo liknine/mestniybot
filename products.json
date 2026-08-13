@@ -3943,12 +3943,12 @@
     "category_id": 6,
     "brand": "jordan",
     "name": "Худи Jordan",
-    "description": ", поставь скидку 80",
-    "price_byn": 85.0,
+    "description": "Тест описание 2.",
+    "price_byn": 80.0,
     "prices": {
-      "BYN": 85.0,
-      "RUB": 2900,
-      "USD": 31,
+      "BYN": 80.0,
+      "RUB": 2800,
+      "USD": 29,
       "product_type": "stock",
       "size_stock": {
         "M-L": 1
@@ -3956,7 +3956,13 @@
       "condition": "Отличное",
       "tag_size": "M",
       "actual_size_raw": "M - L",
-      "extra_photos_url": "https://t.me/mestniystore/11138"
+      "extra_photos_url": "https://t.me/mestniystore/11138",
+      "old_price": 85.0,
+      "old_prices": {
+        "BYN": 85.0,
+        "RUB": 2900,
+        "USD": 31
+      }
     },
     "sizes": [
       "M-L"
