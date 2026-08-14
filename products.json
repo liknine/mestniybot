@@ -3835,5 +3835,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e83d868f.jpg"
     ],
     "created_at": "2026-08-14 20:20:22.525071"
+  },
+  {
+    "id": 241,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Свитшот C.P. Company Junior",
+    "description": "Крутой свитшот за счёт дизайна, помимо просто линзы на рукаве, как мы привыкли видеть, тут ещё принт на груди, также свитшот содержит карман на левом рукаве, на замочке, на этом кармане расположена линза. Размер по бирке: 14. Фактический размер: S - M. Состояние: Отличное, есть небольшие следы после носок, без нюансов.",
+    "price_byn": 220.0,
+    "prices": {
+      "BYN": 220.0,
+      "RUB": 6700,
+      "USD": 82,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "14",
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/11126"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11126",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_304c659b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c5643aa6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8a7cb169.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a7c4d86c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_788b6fae.jpg"
+    ],
+    "created_at": "2026-08-14 20:20:46.274036"
   }
 ]
