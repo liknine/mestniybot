@@ -4075,5 +4075,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3e8d26ef.jpg"
     ],
     "created_at": "2026-08-14 20:58:19.010669"
+  },
+  {
+    "id": 247,
+    "category_id": 5,
+    "brand": "weekend_offender",
+    "name": "Футболка Weekend Offender",
+    "description": "На фото представлена мужская футболка британского бренда Weekend Offender. Описание и характеристики: Бренд: Weekend Offender. Цвет: Чёрный. Размер: S (указан на бирке под воротником) Слоганы бренда: «ADMIT NOTHING» — под основным принтом; «TOO MUCH TOO YOUNG» — на внутренней тесьме горловины. Принт: На груди изображены три культовые ретро-формы футбольного клуба «Манчестер Юнайтед» (Manchester United) 1990-х годов, висящие на бельевой веревке: 1. Слева: Сине-белая гостевая форма Adidas (сезон 1990–1992). 2. По центру: Классическая красная домашняя форма. 3. Справа: Зелёно-жёлтая форма Umbro в стиле Newton Heath (сезон 1992–1994). Стиль / Субкультура: Футболка выполнена в эстетике Football Casuals (околофутбольная/террасная культура). Состояние: Отличное, есть небольшие следы после носок в виде небольших трещинок по принту.",
+    "price_byn": 65.0,
+    "prices": {
+      "BYN": 65.0,
+      "RUB": 2300,
+      "USD": 24,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/11041"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11041",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_66c46e0f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_33fe9595.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53d1ac31.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5958ad36.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_42fedb89.jpg"
+    ],
+    "created_at": "2026-08-14 20:58:52.456872"
   }
 ]
