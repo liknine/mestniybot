@@ -2910,44 +2910,6 @@
     "created_at": "2026-07-26T18:38:16.612838"
   },
   {
-    "id": 205,
-    "category_id": 2,
-    "brand": "Ma.Strum",
-    "name": "Куртка Ma.Strum",
-    "description": "Отличное состояние, без нюансов. Очень классный дизайн, спереди нейлон. Есть утяжки. Оригинал.",
-    "price_byn": 370.0,
-    "prices": {
-      "BYN": 370.0,
-      "RUB": 10900.0,
-      "USD": 138.0,
-      "product_type": "stock",
-      "size_stock": {
-        "XL": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10630"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "size_stock": {
-      "XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10630",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_0_583f180a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_a5d54d55.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_d839ba1a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_ac4a6c8f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_3dffffab.jpg"
-    ],
-    "created_at": "2026-07-26T19:08:24.296455"
-  },
-  {
     "id": 206,
     "category_id": 5,
     "brand": "Nike",
