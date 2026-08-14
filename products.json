@@ -327,41 +327,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 105,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Зип - Худи Stone Island",
-    "description": "Отличное состояние. Оригинал, бирки под CLG кодом срезаны. База, с патчем, как мы любим! Размер по бирке: S. Фактический размер: S - M. Оригинал.",
-    "price_byn": 450.0,
-    "prices": {
-      "BYN": 450.0,
-      "RUB": 13100.0,
-      "USD": 168.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9053"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9053",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_105_53aa4790.jpg",
-      "https://liknine.github.io/mestniybot/images/product_105_97157d34.jpg",
-      "https://liknine.github.io/mestniybot/images/product_105_cf07fb7b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_105_a49731d2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_105_aaeb1e76.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 106,
     "category_id": 2,
     "brand": "Levi’s",
