@@ -2150,41 +2150,6 @@
     "created_at": "2026-07-08T12:16:44.089311"
   },
   {
-    "id": 185,
-    "category_id": 6,
-    "brand": "C.P. Company",
-    "name": "Свитшот C.P. Company",
-    "description": "Очень классный, крутой дизайн за счёт прорезиненного логотипа за задней части горла. Оригинал. Отличное состояние. Дата изготовления: 07/2021.",
-    "price_byn": 220.0,
-    "prices": {
-      "BYN": 220.0,
-      "RUB": 6700.0,
-      "USD": 82.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10482"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10482",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_185_70ad00e1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_185_b300708a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_185_0d2901f6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_185_bdd7866b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_185_ab3fe30c.jpg"
-    ],
-    "created_at": "2026-07-08T12:57:08.024284"
-  },
-  {
     "id": 187,
     "category_id": 1,
     "brand": "Maison Margiela",
