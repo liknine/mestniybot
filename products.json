@@ -3977,51 +3977,5 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_687a1d14.jpg"
     ],
     "created_at": "2026-08-14 07:03:53.462987"
-  },
-  {
-    "id": 239,
-    "category_id": 5,
-    "brand": "carhartt",
-    "name": "Поло Carhartt",
-    "description": "тест",
-    "price_byn": 45.0,
-    "prices": {
-      "BYN": 45.0,
-      "RUB": 1800,
-      "USD": 16,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "M",
-      "actual_size_raw": "M",
-      "old_price": 50.0,
-      "old_prices": {
-        "BYN": 50.0,
-        "RUB": 2200,
-        "USD": 22
-      },
-      "extra_photos_url": "https://t.me/mestniystore/11158"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11158",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d6f6af62.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4a7f4f3e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4837f1cb.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3c009e2a.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c1da5743.jpg"
-    ],
-    "created_at": "2026-08-14 07:24:25.639078"
   }
 ]
