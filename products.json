@@ -3937,45 +3937,5 @@
       "https://liknine.github.io/mestniybot/images/product_0_f353e06b.jpg"
     ],
     "created_at": "2026-07-31 07:58:19.208374"
-  },
-  {
-    "id": 238,
-    "category_id": 7,
-    "brand": "carhartt",
-    "name": "Штаны Carhartt",
-    "description": "Приятные штаны от Carhartt. Очень приятный цвет, имеют кожаный логотип на заднем правом кармане, также имеют два кармана спереди, и два кармана сзади. Размер по бирке: 32х34. Все бирки на месте. Состояние: Отличное, без нюансов.",
-    "price_byn": 80.0,
-    "prices": {
-      "BYN": 80.0,
-      "RUB": 2700,
-      "USD": 29,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "32х34",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/11163"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11163",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_921743c3.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c7e460d2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7794a8d9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_956a402f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_687a1d14.jpg"
-    ],
-    "created_at": "2026-08-14 07:03:53.462987"
   }
 ]
