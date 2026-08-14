@@ -4035,5 +4035,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5cc214f4.jpg"
     ],
     "created_at": "2026-08-14 20:58:02.613479"
+  },
+  {
+    "id": 246,
+    "category_id": 7,
+    "brand": "levis",
+    "name": "Джинсы Levi’s 751",
+    "description": "Джинсы Levi’s (классический прямой крой) Цвет: Тёмно-синий / индиго (Dark Wash) Крой: Прямой (Straight Leg) Состояние: Отличное (без видимых потертостей, заломов и повреждений) Особенности модели: Фирменный кожаный/картонный патч Levi Strauss & Co. на поясе сзади. Фирменный красный ярлычок Red Tab на правом заднем кармане. Декоративная фигурная отстрочка («аркуата» / «галочка») на задних карманах. Классическая контрастная желто-оранжевая нить. Размер: W38 L30.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600,
+      "USD": 28,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/11056"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11056",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_974edd1c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_50d15640.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1f6b88db.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_570f107b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3e8d26ef.jpg"
+    ],
+    "created_at": "2026-08-14 20:58:19.010669"
   }
 ]
