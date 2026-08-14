@@ -3915,5 +3915,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0e93cbe6.jpg"
     ],
     "created_at": "2026-08-14 20:56:00.604639"
+  },
+  {
+    "id": 243,
+    "category_id": 5,
+    "brand": "weekend_offender",
+    "name": "Футболка Weekend Offender",
+    "description": "На фото представлена мужская футболка в стиле «колор-блок» (color-block) от известного британского бренда Weekend Offender. Надпись: На груди расположен логотип бренда и их фирменный слоган «ADMIT NOTHING». Цветовая гамма: Верхняя часть, рукава и спинка — белые; Разделитель — узкая черная горизонтальная полоса; Нижняя передняя панель — персикового / нежно-оранжевого оттенка. Крой и детали: Классический круглый вырез (crewneck), короткий рукав, внизу сбоку виден фирменный ярлычок. Состояние: Отличное, без нюансов.",
+    "price_byn": 65.0,
+    "prices": {
+      "BYN": 65.0,
+      "RUB": 2300,
+      "USD": 24,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11086"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11086",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e449a260.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_06b6b594.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_84a08729.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fb523d0a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_62a8f3a8.jpg"
+    ],
+    "created_at": "2026-08-14 20:57:18.822887"
   }
 ]
