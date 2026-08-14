@@ -3955,5 +3955,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_62a8f3a8.jpg"
     ],
     "created_at": "2026-08-14 20:57:18.822887"
+  },
+  {
+    "id": 244,
+    "category_id": 5,
+    "brand": "fred_perry",
+    "name": "Футболка Fred Perry",
+    "description": "Модель: Twin Tipped T-Shirt (футболка с двойной полоской). Цвет: Бордовый / винный (Burgundy) с белыми полосками. Детали: Фирменный вышитый логотип — лавровый венок (Laurel Wreath) белого цвета на левой стороне груди. Двойные белые полоски на воротнике и манжетах рукавов (Twin Tipping). Классический круглый вырез (Crew neck). Состояние: Отличное, без нюансов.",
+    "price_byn": 45.0,
+    "prices": {
+      "BYN": 45.0,
+      "RUB": 1700,
+      "USD": 16,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/11081"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11081",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_13bbbc8a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bb8329a6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_795482be.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08c9951e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f8480cb7.jpg"
+    ],
+    "created_at": "2026-08-14 20:57:44.301081"
   }
 ]
