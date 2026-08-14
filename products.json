@@ -1703,41 +1703,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 169,
-    "category_id": 6,
-    "brand": "Ellesse",
-    "name": "Олимпийка Ellesse Rimini",
-    "description": "Очень крутая. Отличное состояние. Оригинал. Очень классный дизайн, есть вышивка Rimini, на спине, ближе к горлу. Размер по бирке: XS. Фактический размер: S - M.",
-    "price_byn": 140.0,
-    "prices": {
-      "BYN": 140.0,
-      "RUB": 4500.0,
-      "USD": 52.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10356"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10356",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_169_4bfa1f3d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_169_349674ad.jpg",
-      "https://liknine.github.io/mestniybot/images/product_169_a45447ed.jpg",
-      "https://liknine.github.io/mestniybot/images/product_169_15a2a360.jpg",
-      "https://liknine.github.io/mestniybot/images/product_169_c65cbdb1.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 171,
     "category_id": 1,
     "brand": "Adidas",
