@@ -3995,5 +3995,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f8480cb7.jpg"
     ],
     "created_at": "2026-08-14 20:57:44.301081"
+  },
+  {
+    "id": 245,
+    "category_id": 5,
+    "brand": "fred_perry",
+    "name": "Футболка Fred Perry",
+    "description": "На фото представлена футболка бренда Fred Perry. Описание вещи: Тип: Футболка с коротким рукавом и круглым вырезом (crewneck). Цвет: Серый меланж. Детали: На груди слева вышит фирменный логотип — лавровый венок (Laurel Wreath). С внутренней стороны воротника расположена фирменная полосатая бейка (с красной и белой полосками). Состояние: Отличное, без нюансов.",
+    "price_byn": 45.0,
+    "prices": {
+      "BYN": 45.0,
+      "RUB": 1700,
+      "USD": 16,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/11076"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11076",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d3ea2c0b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_75d545aa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5e10fd0b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_770bb9c5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5cc214f4.jpg"
+    ],
+    "created_at": "2026-08-14 20:58:02.613479"
   }
 ]
