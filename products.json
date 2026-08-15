@@ -4199,5 +4199,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_44cf0518.jpg"
     ],
     "created_at": "2026-08-15 10:45:56.086617"
+  },
+  {
+    "id": 252,
+    "category_id": 6,
+    "brand": null,
+    "name": "Худи Thrasher Truck 1",
+    "description": "На изображении представлено черное худи (толстовка с капюшоном) от известного скейтбордического бренда Thrasher. Основные детали: Принт: На груди расположен классический логотип Thrasher, выполненный в «огненном» стиле. Дизайн: Худи имеет стандартный крой, регулируемый капюшон на шнурках и накладной карман-кенгуру спереди. Это классическая вещь в стиле streetwear, популярная как среди скейтеров, так и в современной уличной моде. Отличное состояние, без нюансов, только совсем незаметные минимальные трещинки по нижней части принта.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900,
+      "USD": 44,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/10997"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10997",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d50d8fff.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_509209ac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c2359459.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_df93347d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a6d19a6f.jpg"
+    ],
+    "created_at": "2026-08-15 10:47:26.292614"
   }
 ]
