@@ -4119,5 +4119,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3d829beb.jpg"
     ],
     "created_at": "2026-08-15 09:08:00.672538"
+  },
+  {
+    "id": 250,
+    "category_id": 1,
+    "brand": "new_balance",
+    "name": "Кроссовки New Balance 574",
+    "description": "Основные характеристики: Модель: New Balance 574 (одна из самых классических и популярных моделей бренда). Материалы: Комбинация замши и текстильной сетки (mesh). Подошва: С фирменной технологией амортизации ENCAP (видно на пятке). Детали: Бежево-серые шнурки и элементы задника, контрастный логотип «N» с окантовкой, белая межподошва и темная крапчатая подметка. Внутри обуви установлены формодержатели (колодки).",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500,
+      "USD": 119,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Новое",
+      "tag_size": "42 / 26.5 CM",
+      "actual_size_raw": "26.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/16"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/16",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4312f059.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bff67f2d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_037079f9.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_05fcbaab.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_40140d43.jpg"
+    ],
+    "created_at": "2026-08-15 09:09:38.681336"
   }
 ]
