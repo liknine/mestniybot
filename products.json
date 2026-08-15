@@ -4159,5 +4159,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_40140d43.jpg"
     ],
     "created_at": "2026-08-15 09:09:38.681336"
+  },
+  {
+    "id": 251,
+    "category_id": 7,
+    "brand": null,
+    "name": "Джинсы Evisu",
+    "description": "Очень хороший плотный материал, все пуговки, замочек, имеют фурнитуры. Дизайн имеет два высших логотипа на задней стороне джинс, а именно на карманах, также правый карман имеет маленькую бирочку с названием бренда, и картонку на поясе, которая почти полностью стёрлась. Спереди все проще, левый карман содержит небольшой вышитый логотип, а правый - множество карманов внутри себя. Размер по бирке: 34. Фактический размер: М. По состоянию всё отлично, нюансов нету, разве небольшие потёртости в самом низу джинс.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900,
+      "USD": 44,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "34",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11096"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11096",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0ebccd0b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_48885102.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_36ed05fa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_db9abf9a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_44cf0518.jpg"
+    ],
+    "created_at": "2026-08-15 10:45:56.086617"
   }
 ]
