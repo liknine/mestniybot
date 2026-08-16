@@ -403,41 +403,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 110,
-    "category_id": 5,
-    "brand": "Jordan",
-    "name": "Футболка Jordan НОВАЯ",
-    "description": "Нежный цвет, приятный материал, отлично сидит на теле, новая, буквально одна примерка! В комплекте с этикеткой. Размер по бирке: S. Фактический размер: S - M.",
-    "price_byn": 90.0,
-    "prices": {
-      "BYN": 90.0,
-      "RUB": 3000.0,
-      "USD": 33.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9244"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/9244",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_110_e53ed3a9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_110_c8fc1d67.jpg",
-      "https://liknine.github.io/mestniybot/images/product_110_afecd01f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_110_9a57e4ea.jpg",
-      "https://liknine.github.io/mestniybot/images/product_110_7b59390a.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 113,
     "category_id": 6,
     "brand": "Stone Island",
