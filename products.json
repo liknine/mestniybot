@@ -546,11 +546,11 @@
     "brand": "Weekend Offender",
     "name": "Овершот Weekend Offender НОВЫЙ",
     "description": "Классный, очень необычный дизайн, за счет вышитого принта спереди, и сзади. Абсолютно новый, с этикетками. Привезен прямиком из магазина. Размер: L.",
-    "price_byn": 200.0,
+    "price_byn": 170.0,
     "prices": {
-      "BYN": 200.0,
-      "RUB": 6000.0,
-      "USD": 74.0,
+      "BYN": 170.0,
+      "RUB": 5300,
+      "USD": 63,
       "product_type": "stock",
       "condition": "Новое",
       "extra_photos_url": "https://t.me/mestniystore/9592"
