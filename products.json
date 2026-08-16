@@ -4201,5 +4201,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_21b40d8f.jpg"
     ],
     "created_at": "2026-08-16 16:05:57.991641"
+  },
+  {
+    "id": 256,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Blazer Jumbo High",
+    "description": "На фото изображены кроссовки Nike Blazer Mid '77 Jumbo (в расцветке «White / University Red»). Гигантский Swoosh: Увеличенный красный кожаный логотип Nike, который заходит прямо на подошву — главная узнаваемая черта линейки Jumbo. Эластичный задник: Ребристый текстильный воротник в области лодыжки мягко облегает ногу и облегчает надевание. Объёмные шнурки: Утолщенные широкие шнурки («fat laces»), подчёркивающие массивный силуэт. Винтажные детали: Язычок с открытым пеноматериалом (exposed foam), контрастная зигзагообразная прошивка на носке и замшевая накладка спереди. Материалы: Верх выполнен из плотной белой кожи с текстильными и замшевыми вставками, подошва — из прочной резины винтажного кремового оттенка.",
+    "price_byn": 220.0,
+    "prices": {
+      "BYN": 220.0,
+      "RUB": 6700,
+      "USD": 82,
+      "product_type": "stock",
+      "size_stock": {
+        "41": 1
+      },
+      "condition": "Новое",
+      "tag_size": "41 / 26 СМ",
+      "actual_size_raw": "26 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/27"
+    },
+    "sizes": [
+      "41"
+    ],
+    "size_stock": {
+      "41": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/27",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5b4c0452.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_72ca2ff3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_31f0dae1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_023e46d5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a47b7bd0.jpg"
+    ],
+    "created_at": "2026-08-16 17:02:51.011097"
   }
 ]
