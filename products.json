@@ -4241,5 +4241,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a47b7bd0.jpg"
     ],
     "created_at": "2026-08-16 17:02:51.011097"
+  },
+  {
+    "id": 257,
+    "category_id": 1,
+    "brand": "adidas",
+    "name": "Кроссовки Adidas Spezial",
+    "description": "Модель: adidas Spezial (черно-белая расцветка / Core Black & Cloud White). Материал верха: Качественная черная замша с деталями из белой кожи (три фирменные полоски и задник). Подошва: Медовая резиновая подошва (Gum Sole) с амортизирующей технологией adiPRENE (надпись видна в нижней части подошвы). Детали: Серебристая/золотая надпись «SPEZIAL» вдоль верхней полоски. Состояние: Отлчиное, есть следы после носок, без нюансов.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4700,
+      "USD": 56,
+      "product_type": "stock",
+      "size_stock": {
+        "46": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "46 / 29.5 СМ",
+      "actual_size_raw": "29.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/32"
+    },
+    "sizes": [
+      "46"
+    ],
+    "size_stock": {
+      "46": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/32",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_25114340.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0aee4ea1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9eba0c81.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fbacd891.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2bac980b.jpg"
+    ],
+    "created_at": "2026-08-16 17:20:57.093789"
   }
 ]
