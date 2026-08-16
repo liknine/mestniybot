@@ -40,11 +40,11 @@
     "brand": "C.P. Company",
     "name": "Шапка C.P. Company Knit НОВАЯ",
     "description": "Вязанная, очень приятная тянущиеся шапка. Абсолютно новая, линза в плёнке, в комплекте с этиками, пакетом. Размер: UNI. Все бирки на месте.",
-    "price_byn": 360.0,
+    "price_byn": 350.0,
     "prices": {
-      "BYN": 360.0,
-      "RUB": 10400.0,
-      "USD": 135.0,
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
       "product_type": "stock",
       "condition": "Новое",
       "extra_photos_url": "https://t.me/mestniystore/8662"
