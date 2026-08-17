@@ -4564,5 +4564,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1844c9a2.jpg"
     ],
     "created_at": "2026-08-17 12:13:43.542927"
+  },
+  {
+    "id": 266,
+    "category_id": 1,
+    "brand": "new_balance",
+    "name": "Кроссовки New Balance RC42",
+    "description": "Цветовая гамма: Сочетание светло-синего текстиля/денима, тёмно-синих замшевых накладок, коричневой кожаной логотипной буквы «N» и белого винтажного язычка. Подошва: Низкопрофильная резиновая подошва (Gum sole) со светлой прослойкой. Детали: Объёмные плетёные шнурки тёмно-синего цвета, ретро-логотип NB на язычке.",
+    "price_byn": 300.0,
+    "prices": {
+      "BYN": 300.0,
+      "RUB": 8900,
+      "USD": 112,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Новое",
+      "tag_size": "42 / 26.5 СМ",
+      "actual_size_raw": "26.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/83"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/83",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_00ad2a1d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b5585a28.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4caf5744.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_66f31685.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d8aa9927.jpg"
+    ],
+    "created_at": "2026-08-17 12:38:54.065331"
   }
 ]
