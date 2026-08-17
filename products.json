@@ -4484,5 +4484,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3e40fb23.jpg"
     ],
     "created_at": "2026-08-17 11:46:59.982368"
+  },
+  {
+    "id": 264,
+    "category_id": 1,
+    "brand": "new_balance",
+    "name": "Кроссовки New Balance 408",
+    "description": "Модель: New Balance 408 (номер модели указан на боковой части кроссовка). Цветовая гамма: Молочно-бежевый (кремовый) основной цвет с акцентами сиреневого (лавандового) цвета на логотипе «N», серебристо-металлическими вставками, белой промежуточной подошвой и коричневым (gum) протектором. Материалы: Верх выполнен из дышащей сетки с накладками из искусственной/натуральной кожи.",
+    "price_byn": 280.0,
+    "prices": {
+      "BYN": 280.0,
+      "RUB": 8400,
+      "USD": 104,
+      "product_type": "stock",
+      "size_stock": {
+        "37.5": 1
+      },
+      "condition": "Новое",
+      "tag_size": "37.5 / 23 СМ",
+      "actual_size_raw": "23 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/72"
+    },
+    "sizes": [
+      "37.5"
+    ],
+    "size_stock": {
+      "37.5": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/72",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cee377df.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fad9f1bc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3fee2be2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f73ce8d4.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_be961f08.jpg"
+    ],
+    "created_at": "2026-08-17 12:03:46.155230"
   }
 ]
