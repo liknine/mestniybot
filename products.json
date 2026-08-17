@@ -4844,5 +4844,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a36556a5.jpg"
     ],
     "created_at": "2026-08-17 14:12:15.863582"
+  },
+  {
+    "id": 273,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Air Max 1",
+    "description": "Цветовая гамма: Сочетание оливково-зеленого (Olive), насыщенного коричневого (Velvet Brown / Chocolate) и бежево-хаки с черным акцентным логотипом Swoosh. Материалы: Верх выполнен из комбинации фактурной зернистой кожи (коричневый брызговик и оливковые накладки); Вставки на носке, язычке и воротнике — из плотного плетеного текстиля (canvas / мешковина); Черный «свуш» из гладкой кожи. Подошва: Контрастная белая межподошва с видимым амортизирующим баллоном Air в пяточной зоне и черной резиновой подметкой.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "42.5": 1
+      },
+      "condition": "Новые",
+      "tag_size": "42.5 / 27 СМ",
+      "actual_size_raw": "27 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/118"
+    },
+    "sizes": [
+      "42.5"
+    ],
+    "size_stock": {
+      "42.5": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новые",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/118",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a574c1cd.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_66ae5826.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_34b10e40.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3d92f96a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_93906df3.jpg"
+    ],
+    "created_at": "2026-08-17 14:48:10.193347"
   }
 ]
