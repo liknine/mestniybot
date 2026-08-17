@@ -4444,5 +4444,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c830301b.jpg"
     ],
     "created_at": "2026-08-17 11:36:06.163560"
+  },
+  {
+    "id": 263,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Shox R4",
+    "description": "Дизайн: Футуристичный силуэт конца 1990-х — начала 2000-х годов с перфорированным белым верхом и литыми боковыми панелями серебристого цвета с вышитым логотипом Swoosh. Технология: Фирменная система амортизации Nike Shox — четыре амортизационные колонны («пружины») в пяточной зоне. Детали: На язычке расположен логотип Shox (с красными акцентами).",
+    "price_byn": 420.0,
+    "prices": {
+      "BYN": 420.0,
+      "RUB": 12300,
+      "USD": 157,
+      "product_type": "stock",
+      "size_stock": {
+        "41": 1
+      },
+      "condition": "Новое",
+      "tag_size": "41 / 26 СМ",
+      "actual_size_raw": "26 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/67"
+    },
+    "sizes": [
+      "41"
+    ],
+    "size_stock": {
+      "41": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/67",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_97a6db17.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e34d244c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_420e99d9.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b1e45634.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3e40fb23.jpg"
+    ],
+    "created_at": "2026-08-17 11:46:59.982368"
   }
 ]
