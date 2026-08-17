@@ -4324,5 +4324,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_12b85a95.jpg"
     ],
     "created_at": "2026-08-17 08:38:52.161235"
+  },
+  {
+    "id": 260,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike SF Air Force 1 Mid",
+    "description": "Основные характеристики модели: Дизайн: Тактический (милитари) стиль на базе классических Air Force 1. Материалы: Комбинация натуральной фактурной кожи (в передней части и по бокам) и сверхпрочного баллистического нейлона (в пяточной зоне). Особенности: Двойная молния на пятке для быстрого и удобного надевания. Съемный фиксирующий ремешок на лодыжке. Подошва: Износстойкая резиновая подошва цвета Gum («медовая») со встроенной амортизацией Nike Air.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7500,
+      "USD": 93,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "42 / 26.5 СМ",
+      "actual_size_raw": "26.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/47"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/47",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_73695ee7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_19f1ca07.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a015dadf.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_625b93ca.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7b90a816.jpg"
+    ],
+    "created_at": "2026-08-17 11:14:54.385056"
   }
 ]
