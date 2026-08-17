@@ -4846,5 +4846,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a8831411.jpg"
     ],
     "created_at": "2026-08-17 21:50:48.265909"
+  },
+  {
+    "id": 275,
+    "category_id": 1,
+    "brand": "new_balance",
+    "name": "Кроссовки New Balance 530",
+    "description": "Cтильные и невероятно удобные кроссовки New Balance 530 в базовом сером цвете. Идеальная пара на каждый день, которая подходит практически под любой образ! Технология: Подошва с амортизацие ABZORB отлично гасит нагрузки при ходьбе и беге. Материалы: Легкая дышащая сетка со вставками из замши и синтетических материалов.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "43": 1
+      },
+      "condition": "Новое",
+      "tag_size": "43 / 27.5 СМ",
+      "actual_size_raw": "27.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/128"
+    },
+    "sizes": [
+      "43"
+    ],
+    "size_stock": {
+      "43": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/128",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fb8cfbe0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a087ab4d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4804f6c1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_da4a530c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d34b8131.jpg"
+    ],
+    "created_at": "2026-08-17 22:02:51.711567"
   }
 ]
