@@ -4764,5 +4764,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b935a6d4.jpg"
     ],
     "created_at": "2026-08-17 13:48:48.849813"
+  },
+  {
+    "id": 271,
+    "category_id": 1,
+    "brand": "adidas",
+    "name": "Кроссовки Adidas Rivalry Low 86",
+    "description": "Материалы: Премиальная гладкая кожа в основе верха; Замшевые вставки на носке; Текстурированный вельвет на фирменных трёх полосках, воротнике и язычке; Плотный сетчатый/текстильный язычок. Подошва: Состаренный желтоватый оттенк (эффект ретро/vintage), зелёный элемент подошвы с тиснённым логотипом adidas и трилистником (Trefoil). Детали: Двойная система шнуровки/акцентный жёлтый шнур, качественная прошивка по всему периметру.",
+    "price_byn": 250.0,
+    "prices": {
+      "BYN": 250.0,
+      "RUB": 7600,
+      "USD": 93,
+      "product_type": "stock",
+      "size_stock": {
+        "43": 1
+      },
+      "condition": "Новых",
+      "tag_size": "43 / 27.5 СМ",
+      "actual_size_raw": "27.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/108"
+    },
+    "sizes": [
+      "43"
+    ],
+    "size_stock": {
+      "43": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новых",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/108",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_aee058b6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08791918.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bc53daf7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3a1052fc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2ef8a5fc.jpg"
+    ],
+    "created_at": "2026-08-17 14:00:56.507287"
   }
 ]
