@@ -4524,5 +4524,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_be961f08.jpg"
     ],
     "created_at": "2026-08-17 12:03:46.155230"
+  },
+  {
+    "id": 265,
+    "category_id": 1,
+    "brand": "raf_simons",
+    "name": "Кроссовки Raf Simons Ultrasceptre",
+    "description": "Брендинг: Четкая надпись RAF SIMONS на внешней пластиковой плашке в области пятки. Фирменный логотип на язычках обоих кроссовок. Детали: Яркие зеленые глянцевые и матовые полосы/акценты вдоль боковин и на пятке.",
+    "price_byn": 600.0,
+    "prices": {
+      "BYN": 600.0,
+      "RUB": 17400,
+      "USD": 224,
+      "product_type": "stock",
+      "size_stock": {
+        "40": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "40 / 26 СМ",
+      "actual_size_raw": "26 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/77"
+    },
+    "sizes": [
+      "40"
+    ],
+    "size_stock": {
+      "40": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/77",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53032cda.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5ca60d29.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7f006a13.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a7d07661.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1844c9a2.jpg"
+    ],
+    "created_at": "2026-08-17 12:13:43.542927"
   }
 ]
