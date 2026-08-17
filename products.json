@@ -4284,5 +4284,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_59d415b3.jpg"
     ],
     "created_at": "2026-08-17 08:38:27.297606"
+  },
+  {
+    "id": 259,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Air Max 1",
+    "description": "На фотографии представлена пара классических кроссовок Nike Air Max 1. Материалы и текстуры: Замша: Тёмно-бордовый / шоколадно-коричневый замшевый брызговик (mudguard) и фирменный логотип Swoosh. Фактурная кожа (Tumbled Leather): Ярко-оранжевые / красно-оранжевые боковые и пяточные накладки. Текстиль (Mesh): Белый дышащий сетчатый материал на носке и язычке. Подошва: Белая межподошва с видимым амортизирующим баллоном Air в пяточной части и тёмной резиновой подмёткой.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "44": 1
+      },
+      "condition": "Новое",
+      "tag_size": "44 / 28 СМ",
+      "actual_size_raw": "28 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/42"
+    },
+    "sizes": [
+      "44"
+    ],
+    "size_stock": {
+      "44": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/42",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1b48e10f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_72d526f2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ceded979.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_374de5ab.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_12b85a95.jpg"
+    ],
+    "created_at": "2026-08-17 08:38:52.161235"
   }
 ]
