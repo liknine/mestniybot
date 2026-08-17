@@ -4404,5 +4404,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ea5cfd66.jpg"
     ],
     "created_at": "2026-08-17 11:23:37.086459"
+  },
+  {
+    "id": 262,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Air Force 1 Low",
+    "description": "Цветовая гамма: Основной белый цвет с тёмно-синим логотипом Swoosh, тёмно-синей резиновой подмёткой (outsole) и тёмно-синим верхним люверсом для шнурков. Материалы и детали: Верх выполнен из белой кожи. На боковых панелях (под логотипом) присутствуют полупрозрачные текстильные/сетчатые вставки с декоративной зигзагообразной строчкой. Белая межподошва с тиснением «AIR».",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "41": 1
+      },
+      "condition": "Новое",
+      "tag_size": "41 / 26 СМ",
+      "actual_size_raw": "26 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/62"
+    },
+    "sizes": [
+      "41"
+    ],
+    "size_stock": {
+      "41": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/62",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_835d49b8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a14a923b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ed950479.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3b2fa963.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c830301b.jpg"
+    ],
+    "created_at": "2026-08-17 11:36:06.163560"
   }
 ]
