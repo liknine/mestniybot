@@ -4684,5 +4684,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_949253ff.jpg"
     ],
     "created_at": "2026-08-17 13:29:26.569291"
+  },
+  {
+    "id": 269,
+    "category_id": 7,
+    "brand": "levis",
+    "name": "Джинсы Levi’s 501",
+    "description": "Есть два кармана сзади, на правом есть маленькая бирка с названием бренда, и два кармана спереди, правый содержит ещё один маленький кармашек. Размер по бирке: W34 L32. Состояние: Отличное, есть минимальные следы после носок, без нюансов.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600,
+      "USD": 28,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "W34 L32",
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11201"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11201",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_be5517a4.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bd541a2c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d4b490f6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_33118d4f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5530d96d.jpg"
+    ],
+    "created_at": "2026-08-17 13:30:01.187445"
   }
 ]
