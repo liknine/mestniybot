@@ -4886,5 +4886,51 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d34b8131.jpg"
     ],
     "created_at": "2026-08-17 22:02:51.711567"
+  },
+  {
+    "id": 276,
+    "category_id": 1,
+    "brand": "new_balance",
+    "name": "Кроссовки New Balance 408",
+    "description": "Основные детали: Модель: New Balance 408 (номер модели указан на боковой панели ближе к пятке). Цветовая гамма: Белая основа с серыми (серебристыми) элементами и тёмно-синей (Navy) отделкой вокруг логотипа, воротника и на деталях носка. Материалы: Комбинация дышащей текстильной сетки и синтетических/кожаных накладок.",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500,
+      "USD": 119,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1,
+        "42.5": 1,
+        "43": 1
+      },
+      "condition": "Новое",
+      "tag_size": "42 / 26.5 СМ 42.5 / 27 СМ 43 / 27.5 СМ",
+      "actual_size_raw": "26.5 CM, 27 CM, 27.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/133"
+    },
+    "sizes": [
+      "42",
+      "42.5",
+      "43"
+    ],
+    "size_stock": {
+      "42": 1,
+      "42.5": 1,
+      "43": 1
+    },
+    "stock": 3,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/133",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_009c5ba8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4849c07b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f7f41c49.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6835e418.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_13c087b7.jpg"
+    ],
+    "created_at": "2026-08-17 22:33:43.137762"
   }
 ]
