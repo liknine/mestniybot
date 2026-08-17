@@ -4604,5 +4604,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d8aa9927.jpg"
     ],
     "created_at": "2026-08-17 12:38:54.065331"
+  },
+  {
+    "id": 267,
+    "category_id": 1,
+    "brand": null,
+    "name": "Кроссовки Tommy Jeans",
+    "description": "Промежуточная подошва: Массивная, но легкая подошва из вспененного материала (предположительно EVA) с плавными геометрическими изгибами. Обеспечивает отличную амортизацию и снижает нагрузку на суставы при длительной ходьбе. Шнуровка: Классическая регулируемая шнуровка белого цвета поверх эластичного верха позволяет дополнительно зафиксировать подъем стопы. Тиснение на пятке: На задней части подошвы присутствует объемная надпись бренда «JEANS».",
+    "price_byn": 160.0,
+    "prices": {
+      "BYN": 160.0,
+      "RUB": 5000,
+      "USD": 59,
+      "product_type": "stock",
+      "size_stock": {
+        "41": 1
+      },
+      "condition": "Новое",
+      "tag_size": "41 / 26 СМ",
+      "actual_size_raw": "26 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/88"
+    },
+    "sizes": [
+      "41"
+    ],
+    "size_stock": {
+      "41": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/88",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cf75207d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_295464b7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e84ad36d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bab38998.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_331988c6.jpg"
+    ],
+    "created_at": "2026-08-17 12:59:07.241387"
   }
 ]
