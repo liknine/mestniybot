@@ -4644,5 +4644,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_331988c6.jpg"
     ],
     "created_at": "2026-08-17 12:59:07.241387"
+  },
+  {
+    "id": 268,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитшот Stone Island Pocket",
+    "description": "Классный дизайн, за счёт кармана на груди, который на заклёпке. Продажа с оригинальным патчем. Размер по бирке: М. Состояние: Отличное, без нюансов.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11206"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11206",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_22d53aad.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9592a7a4.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_059d8153.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f298d0c5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_949253ff.jpg"
+    ],
+    "created_at": "2026-08-17 13:29:26.569291"
   }
 ]
