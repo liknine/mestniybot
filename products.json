@@ -4804,5 +4804,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2ef8a5fc.jpg"
     ],
     "created_at": "2026-08-17 14:00:56.507287"
+  },
+  {
+    "id": 272,
+    "category_id": 1,
+    "brand": "new_balance",
+    "name": "Кроссовки New Balance 530",
+    "description": "Материалы: дышащая сетка (mesh) с накладками из синтетической кожи и металлизированных (серебристых) элементов. Технология: подошва с амортизацией ABZORB, обеспечивающая комфорт при ходьбе и беге.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "42.5": 1
+      },
+      "condition": "Новые",
+      "tag_size": "42.5 / 27 СМ",
+      "actual_size_raw": "27 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/113"
+    },
+    "sizes": [
+      "42.5"
+    ],
+    "size_stock": {
+      "42.5": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новые",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/113",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_60f44bc6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f41a4e46.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0279aacc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9a6ac2c0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a36556a5.jpg"
+    ],
+    "created_at": "2026-08-17 14:12:15.863582"
   }
 ]
