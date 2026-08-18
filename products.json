@@ -1326,49 +1326,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 157,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Air Force 1 НОВЫЕ",
-    "description": "Абсолютно новые. В комплекте с коробкой. Оригинал. Отлично сидят на ноге. \nРазмеры: \n41 / 25.5 СМ ( по стельке )\n42 / 26.5 СМ ( по стельке )",
-    "price_byn": 310.0,
-    "prices": {
-      "BYN": 310.0,
-      "RUB": 9200.0,
-      "USD": 116.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10266",
-      "old_price": 350.0,
-      "old_prices": {
-        "BYN": 350.0,
-        "RUB": 10300.0,
-        "USD": 131.0
-      }
-    },
-    "sizes": [
-      "41",
-      "42"
-    ],
-    "size_stock": {
-      "41": 1,
-      "42": 1
-    },
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/10266",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_157_925f719c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_157_e1ac753c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_157_b04c3862.jpg",
-      "https://liknine.github.io/mestniybot/images/product_157_90d84623.jpg",
-      "https://liknine.github.io/mestniybot/images/product_157_e8a30a2f.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 158,
     "category_id": 5,
     "brand": "C.P. Company",
