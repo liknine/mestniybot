@@ -909,47 +909,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 139,
-    "category_id": 1,
-    "brand": "Raf Simons",
-    "name": "Кроссовки Raf Simons Ultrasceptre",
-    "description": "Состояние отличное, есть небольшие следы носок. Размер по бирке 40, но данная модель всегда большемерит. Фактический размер: \n40.5 - 41 ( 26.5 СМ по стельке )",
-    "price_byn": 530.0,
-    "prices": {
-      "BYN": 530.0,
-      "RUB": 15400.0,
-      "USD": 200.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10043",
-      "old_price": 600.0,
-      "old_prices": {
-        "BYN": 600.0,
-        "RUB": 17300.0,
-        "USD": 224.0
-      }
-    },
-    "sizes": [
-      "40.5-41"
-    ],
-    "size_stock": {
-      "40.5-41": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10043",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_139_66d0fcf8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_139_e5a712b8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_139_3cbc519f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_139_983e27e1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_139_f0f16f3e.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 140,
     "category_id": 1,
     "brand": "Nike",
