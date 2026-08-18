@@ -909,47 +909,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 140,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Air Max 1 НОВЫЕ",
-    "description": "Очень классные, удобные, абсолютно новые. Оригинал. В комплекте с коробкой. Размер по бирке: 42.5 | 27 СМ ( по стельке )",
-    "price_byn": 310.0,
-    "prices": {
-      "BYN": 310.0,
-      "RUB": 9200.0,
-      "USD": 116.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10048",
-      "old_price": 350.0,
-      "old_prices": {
-        "BYN": 350.0,
-        "RUB": 10300.0,
-        "USD": 131.0
-      }
-    },
-    "sizes": [
-      "42.5"
-    ],
-    "size_stock": {
-      "42.5": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/10048",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_140_22046c25.jpg",
-      "https://liknine.github.io/mestniybot/images/product_140_d65763bf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_140_b4b84444.jpg",
-      "https://liknine.github.io/mestniybot/images/product_140_743fb8a9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_140_e4b1488d.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 141,
     "category_id": 1,
     "brand": "Adidas x Raf Simons",
