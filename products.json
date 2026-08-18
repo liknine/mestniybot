@@ -5011,45 +5011,5 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5b5d8473.jpg"
     ],
     "created_at": "2026-08-18 08:29:56.851427"
-  },
-  {
-    "id": 281,
-    "category_id": 5,
-    "brand": null,
-    "name": "Футболка Kenzo",
-    "description": "На изображении представлена серая футболка бренда KENZO, размер по бирке: L. На передней части футболки расположен крупный черно-белый принт в виде стилизованного глаза. Внутри зрачка/радужки глаза видны надписи \"KENZO\" и \"PARIS\". Вокруг глаза есть декоративные элементы, напоминающие ресницы или лучи. Футболка аккуратно разложена на фактурном сером фоне. Это классическая модель из коллекции с фирменным символом Kenzo. Состояние: Отличное, без нюансов.",
-    "price_byn": 75.0,
-    "prices": {
-      "BYN": 75.0,
-      "RUB": 2600,
-      "USD": 28,
-      "product_type": "stock",
-      "size_stock": {
-        "M-L": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L",
-      "actual_size_raw": "M - L",
-      "extra_photos_url": "https://t.me/mestniystore/11002"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "size_stock": {
-      "M-L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11002",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_71eea58c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8ca3dcda.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e6492fa6.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f1e1c68d.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e634c439.jpg"
-    ],
-    "created_at": "2026-08-18 15:33:02.231314"
   }
 ]
