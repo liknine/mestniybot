@@ -1,5 +1,35 @@
 [
   {
+    "id": 10,
+    "user_id": "5233066996",
+    "status": "accepted",
+    "total": 40.0,
+    "currency": "BYN",
+    "delivery": "Белпочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-5233066996-1787044609800-h8un0x",
+    "created_at": "2026-08-18T09:16:49.890218",
+    "updated_at": "2026-08-18T09:16:49.889492",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 231,
+        "brand": "Lyle&Scott",
+        "name": "Поло Lyle&Scott",
+        "size": "XL-XXL",
+        "qty": 1,
+        "unit_price": 40.0,
+        "old_unit_price": 40.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_231_723481aa.jpg"
+      }
+    ]
+  },
+  {
     "id": 9,
     "user_id": "5195935027",
     "status": "accepted",
