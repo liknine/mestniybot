@@ -2182,50 +2182,6 @@
     "created_at": "2026-07-26T16:23:06.835240"
   },
   {
-    "id": 199,
-    "category_id": 1,
-    "brand": "Tommy Jeans",
-    "name": "Кроссовки Tommy Jeans",
-    "description": "Состояние отличное, почти новые! Без нюансов. Оригинал. Без коробки. Отлично сидят на ноге.\nРазмер: \n41 / Длина по стельке: 26 СМ",
-    "price_byn": 180.0,
-    "prices": {
-      "BYN": 180.0,
-      "RUB": 5400.0,
-      "USD": 65.0,
-      "product_type": "stock",
-      "size_stock": {
-        "41": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10579",
-      "old_price": 200.0,
-      "old_prices": {
-        "BYN": 200.0,
-        "RUB": 6100.0,
-        "USD": 74.0
-      }
-    },
-    "sizes": [
-      "41"
-    ],
-    "size_stock": {
-      "41": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10579",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_199_ba911b8d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_f3bde3bc.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_7a0bd18c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_0018521c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_199_c0cf61b4.jpg"
-    ],
-    "created_at": "2026-07-26T16:34:37.247487"
-  },
-  {
     "id": 200,
     "category_id": 8,
     "brand": "Weekend Offender",
