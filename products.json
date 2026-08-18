@@ -2094,50 +2094,6 @@
     "created_at": "2026-07-13T14:20:58.492624"
   },
   {
-    "id": 197,
-    "category_id": 1,
-    "brand": "Tommy Hilfiger",
-    "name": "Кроссовки Tommy Hilfiger НОВЫЕ",
-    "description": "Состояние новых, буквально одна примерка. Оригинал. Без коробки. Отлично сидят на ноге, классная модель.\nРазмер:\n40 / Длина по стельке: 25 СМ",
-    "price_byn": 220.0,
-    "prices": {
-      "BYN": 220.0,
-      "RUB": 6600.0,
-      "USD": 82.0,
-      "product_type": "stock",
-      "size_stock": {
-        "40": 1
-      },
-      "condition": "Новое",
-      "extra_photos_url": "https://telegram.me/mestniystore/10547",
-      "old_price": 250.0,
-      "old_prices": {
-        "BYN": 250.0,
-        "RUB": 7500.0,
-        "USD": 93.0
-      }
-    },
-    "sizes": [
-      "40"
-    ],
-    "size_stock": {
-      "40": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://telegram.me/mestniystore/10547",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_197_fb1d844e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_197_40c5ed03.jpg",
-      "https://liknine.github.io/mestniybot/images/product_197_90ec028d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_197_23d7025c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_197_b45c2624.jpg"
-    ],
-    "created_at": "2026-07-14T03:50:46.072091"
-  },
-  {
     "id": 200,
     "category_id": 8,
     "brand": "Weekend Offender",
