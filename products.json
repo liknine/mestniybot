@@ -4980,10 +4980,10 @@
   },
   {
     "id": 279,
-    "category_id": 7,
-    "brand": "levis",
-    "name": "Джинсы Levi’s 501",
-    "description": "Есть два кармана сзади, на правом есть маленькая бирка с названием бренда, и два кармана спереди, правый содержит ещё один маленький кармашек. Размер по бирке: W34 L32. Состояние: Отличное, есть минимальные следы после носок, без нюансов",
+    "category_id": 5,
+    "brand": "fred_perry",
+    "name": "Футболка Fred Perry",
+    "description": "Крутой дизайн, да счёт клетки спереди, и вышитого логотипа на груди. Размер по бирке: М. Состояние: Отличное, есть минимальные следы после носок, в виде зашитой миленькой дырочки, без нюансов",
     "price_byn": 75.0,
     "prices": {
       "BYN": 75.0,
@@ -4994,9 +4994,9 @@
         "M": 1
       },
       "condition": "Отличное",
-      "tag_size": "W34 L32",
+      "tag_size": "M",
       "actual_size_raw": "М",
-      "extra_photos_url": "https://t.me/mestniystore/11201"
+      "extra_photos_url": "https://t.me/mestniystore/11211"
     },
     "sizes": [
       "M"
@@ -5008,14 +5008,14 @@
     "product_type": "stock",
     "section": "stock",
     "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11201",
+    "extra_photos_url": "https://t.me/mestniystore/11211",
     "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3882314c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0e216be9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_96f6473a.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a0a42263.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f02817d1.jpg"
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_758d820c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_977702d6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_645786ac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_424182b6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_43751088.jpg"
     ],
-    "created_at": "2026-08-18 08:20:29.039014"
+    "created_at": "2026-08-18 08:20:52.539755"
   }
 ]
