@@ -1075,47 +1075,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 143,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Air Max 90 НОВЫЕ",
-    "description": "Абсолютно новая пара. В комплекте с коробкой. Отлично сидят на ноге. Оригинал. Очень классный цвет. \nРазмер: 43 / 27.5 СМ( по стельке )",
-    "price_byn": 400.0,
-    "prices": {
-      "BYN": 400.0,
-      "RUB": 11600.0,
-      "USD": 149.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10174",
-      "old_price": 450.0,
-      "old_prices": {
-        "BYN": 450.0,
-        "RUB": 13100.0,
-        "USD": 168.0
-      }
-    },
-    "sizes": [
-      "43"
-    ],
-    "size_stock": {
-      "43": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/10174",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_143_762b5d40.jpg",
-      "https://liknine.github.io/mestniybot/images/product_143_5eeaeedd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_143_66cd9b66.jpg",
-      "https://liknine.github.io/mestniybot/images/product_143_e16ab2c3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_143_0c510c71.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 145,
     "category_id": 5,
     "brand": "C.P. Company",
