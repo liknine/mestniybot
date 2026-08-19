@@ -350,51 +350,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 117,
-    "category_id": 1,
-    "brand": "Nike x Air Jordan",
-    "name": "Кроссовки Nike x Air Jordan 1 Low НОВЫЕ",
-    "description": "Абсолютно новые! Очень крутая коллаборация Nike и Air Jordan. Отлично сидят на ноге! Самое то, на предстоящую погоду! В комплекте с коробкой! Оригинал! \nДлина по стельке:\n41 = ( 26 CM )\n42 = ( 26.5 CM )\n42.5 = ( 27 CM )",
-    "price_byn": 240.0,
-    "prices": {
-      "BYN": 240.0,
-      "RUB": 7100.0,
-      "USD": 89.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9587",
-      "old_price": 270.0,
-      "old_prices": {
-        "BYN": 270.0,
-        "RUB": 8000.0,
-        "USD": 101.0
-      }
-    },
-    "sizes": [
-      "41",
-      "42",
-      "42.5"
-    ],
-    "size_stock": {
-      "41": 1,
-      "42": 1,
-      "42.5": 1
-    },
-    "stock": 7,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/9587",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_117_59dc0c81.jpg",
-      "https://liknine.github.io/mestniybot/images/product_117_b2df4e3a.jpg",
-      "https://liknine.github.io/mestniybot/images/product_117_64c9da32.jpg",
-      "https://liknine.github.io/mestniybot/images/product_117_4646a602.jpg",
-      "https://liknine.github.io/mestniybot/images/product_117_7c74ad20.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 118,
     "category_id": 2,
     "brand": "Weekend Offender",
