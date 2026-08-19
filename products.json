@@ -1201,47 +1201,6 @@
     "created_at": "2026-07-06T17:14:34.387383"
   },
   {
-    "id": 175,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Blazer Jumbo НОВЫЕ",
-    "description": "Очень классные, приятная модель. Оригинал. Абсолютно новые, в комплекте с коробкой, пломбами Poizon. Размер по бирке:\n41 / 25.5 CM ( по стельке )",
-    "price_byn": 195.0,
-    "prices": {
-      "BYN": 195.0,
-      "RUB": 5800.0,
-      "USD": 72.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10404",
-      "old_price": 220.0,
-      "old_prices": {
-        "BYN": 220.0,
-        "RUB": 6600.0,
-        "USD": 82.0
-      }
-    },
-    "sizes": [
-      "41"
-    ],
-    "size_stock": {
-      "41": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/10404",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_175_b7a372e5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_175_bc40dd5f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_175_9a98a2ba.jpg",
-      "https://liknine.github.io/mestniybot/images/product_175_769cb6d5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_175_84fe3863.jpg"
-    ],
-    "created_at": "2026-07-06T17:26:07.944565"
-  },
-  {
     "id": 180,
     "category_id": 10,
     "brand": "Stone Island",
