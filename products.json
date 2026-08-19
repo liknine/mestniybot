@@ -1720,44 +1720,6 @@
     "created_at": "2026-07-26T19:27:23.590934"
   },
   {
-    "id": 208,
-    "category_id": 5,
-    "brand": "Tommy Jeans",
-    "name": "Футболка Tommy Jeans",
-    "description": "Отличное состояние, без нюансов. Оригинал. Есть маленький вышитый логотип на рукаве. Размер по бирке: L. Фактический размер: L.",
-    "price_byn": 35.0,
-    "prices": {
-      "BYN": 35.0,
-      "RUB": 1400.0,
-      "USD": 13.0,
-      "product_type": "stock",
-      "size_stock": {
-        "L": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10650"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10650",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_0_4c2ef5d9.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_82a4d00d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_fe2c5744.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_d2d088d7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_bfb1deed.jpg"
-    ],
-    "created_at": "2026-07-26T23:18:26.638123"
-  },
-  {
     "id": 210,
     "category_id": 5,
     "brand": "Sergio Tacchini",
