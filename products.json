@@ -2613,46 +2613,6 @@
     "created_at": "2026-08-14T20:58:52.456872"
   },
   {
-    "id": 248,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Худи C.P. Company",
-    "description": "На фотографии представлено мужское худи (анорак) от известного итальянского бренда C.P. Company. Вот ключевые детали и особенности этой модели: Бренд: C.P. Company (логотип бренда виден на пуллере/ленте молнии). Главная фишка: Капюшон со встроенными фирменными линзами-очками (Goggle Hood), которые являются визитной карточкой бренда. Крой: Модель «half-zip» (с молнией до середины груди), переходящей в высокий воротник-стойку, переходящий в капюшон. Карманы: Спереди расположен структурированный карман-кенгуру. Цвет: Классический черный. Стиль: Streetwear / Casual. Обычно такие модели изготавливаются из плотного хлопкового трикотажа (часто с диагональным плетением — diagonal raised fleece). Отличное состояние, без нюансов.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300,
-      "USD": 131,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": null,
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/10982"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10982",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2f4821b8.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_acb4eda2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8a7efbfc.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ae2d66b9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9365e57e.jpg"
-    ],
-    "created_at": "2026-08-14T21:00:40.593744"
-  },
-  {
     "id": 249,
     "category_id": 10,
     "brand": "nike",
