@@ -216,41 +216,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 103,
-    "category_id": 10,
-    "brand": "Armani Exchange",
-    "name": "Часы Armani Exchange НОВЫЕ",
-    "description": "Очень приятный строгий дизайн. Отлично сидят на руке. В комплекте с коробкой, этикетками, инструкциями, пакетиком. Все элементы в плёнке.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10300.0,
-      "USD": 131.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/8895"
-    },
-    "sizes": [
-      "UNI"
-    ],
-    "size_stock": {
-      "UNI": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/8895",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_103_ca63df09.jpg",
-      "https://liknine.github.io/mestniybot/images/product_103_9ea3bf35.jpg",
-      "https://liknine.github.io/mestniybot/images/product_103_00ad61f2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_103_cae0f35d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_103_b84f3643.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 106,
     "category_id": 2,
     "brand": "Levi’s",
