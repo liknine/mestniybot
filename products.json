@@ -1271,41 +1271,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 172,
-    "category_id": 6,
-    "brand": "Nike",
-    "name": "Зип - Худи Nike Tech Fleece",
-    "description": "Очень классная, приятный цвет, крутой дизайн. Состояние очень хорошее, есть следы носок, есть небольшие пятнышки, снизу кофты. Оригинал. Размер по бирке: XS. Фактический размер: XS - S.",
-    "price_byn": 110.0,
-    "prices": {
-      "BYN": 110.0,
-      "RUB": 3600.0,
-      "USD": 41.0,
-      "product_type": "stock",
-      "condition": "Очень хорошее",
-      "extra_photos_url": "https://t.me/mestniystore/10384"
-    },
-    "sizes": [
-      "XS-S"
-    ],
-    "size_stock": {
-      "XS-S": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Очень хорошее",
-    "extra_photos_url": "https://t.me/mestniystore/10384",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_172_7c6d7233.jpg",
-      "https://liknine.github.io/mestniybot/images/product_172_0bcf7e81.jpg",
-      "https://liknine.github.io/mestniybot/images/product_172_1e4defc4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_172_493a20f4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_172_ea9736d0.jpg"
-    ],
-    "created_at": "2026-07-06T17:08:55.124939"
-  },
-  {
     "id": 173,
     "category_id": 6,
     "brand": "C.P. Company",
