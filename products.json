@@ -722,47 +722,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 137,
-    "category_id": 1,
-    "brand": "Nike",
-    "name": "Кроссовки Nike Air Max 1 НОВЫЕ",
-    "description": "Абсолютно новая, классная, яркая пара. В комплекте идут с коробкой, отлично сидят на ноге. Самое то, на текущий сезон. Оригинал. Размеры:\n42 ( 26.5 СМ стелька )\n44 ( 28 СМ стелька )",
-    "price_byn": 310.0,
-    "prices": {
-      "BYN": 310.0,
-      "RUB": 9200.0,
-      "USD": 116.0,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/10022",
-      "old_price": 350.0,
-      "old_prices": {
-        "BYN": 350.0,
-        "RUB": 10300.0,
-        "USD": 131.0
-      }
-    },
-    "sizes": [
-      "44"
-    ],
-    "size_stock": {
-      "44": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/10022",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_137_ad130c35.jpg",
-      "https://liknine.github.io/mestniybot/images/product_137_8db19b9f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_137_d8269b0e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_137_521e2f03.jpg",
-      "https://liknine.github.io/mestniybot/images/product_137_2cb9f2a2.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 145,
     "category_id": 5,
     "brand": "C.P. Company",
