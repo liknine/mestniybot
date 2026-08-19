@@ -4201,5 +4201,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e7f731c3.jpg"
     ],
     "created_at": "2026-08-19 12:13:49.151827"
+  },
+  {
+    "id": 280,
+    "category_id": 10,
+    "brand": "supreme",
+    "name": "Сумка Supreme",
+    "description": "Базовая белая сумочка небольшого размера. Технология Cordura, сзади есть бирочка. Два основных отсека в сумке, в главном есть дополнительный отсек. Размер: Высота: 19.5 ; Ширина: 15.5. Состояние: Отличное, без нюансов.",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6200,
+      "USD": 74,
+      "product_type": "stock",
+      "size_stock": {
+        "ONE SIZE": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "19.5х15.5",
+      "actual_size_raw": "19.5х15.5",
+      "extra_photos_url": "https://t.me/mestniystore/11226"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11226",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_eaaad7a3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_73b74767.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_586931d3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b4b54d4b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_774f7277.jpg"
+    ],
+    "created_at": "2026-08-19 14:35:34.636879"
   }
 ]
