@@ -2613,46 +2613,6 @@
     "created_at": "2026-08-14T20:58:52.456872"
   },
   {
-    "id": 249,
-    "category_id": 10,
-    "brand": "nike",
-    "name": "Сумка Nike",
-    "description": "Крутой дизайн, необычная совсем. Есть два дополнительных кармана спереди помимо основного, а также один карман сзади. Все бирки на месте. Размер: 23,5 См ( высота ) ; 17 См ( ширина ). Состояние: Отличное, без нюансов, как новая.",
-    "price_byn": 75.0,
-    "prices": {
-      "BYN": 75.0,
-      "RUB": 2600,
-      "USD": 28,
-      "product_type": "stock",
-      "size_stock": {
-        "ONE SIZE": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "23,5х17 CM",
-      "actual_size_raw": "23,5х17 CM",
-      "extra_photos_url": "https://t.me/mestniystore/11111"
-    },
-    "sizes": [
-      "ONE SIZE"
-    ],
-    "size_stock": {
-      "ONE SIZE": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11111",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_39d5bfab.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d782c568.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7b4ec385.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_652b2010.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3d829beb.jpg"
-    ],
-    "created_at": "2026-08-15T09:08:00.672538"
-  },
-  {
     "id": 250,
     "category_id": 1,
     "brand": "new_balance",
