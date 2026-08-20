@@ -3678,5 +3678,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_076f28a8.jpg"
     ],
     "created_at": "2026-08-20 08:02:49.244931"
+  },
+  {
+    "id": 286,
+    "category_id": 5,
+    "brand": "burberry",
+    "name": "Футболка Burberry",
+    "description": "Очень классный дизайн за счёт вышитого / принта логотипа на груди, очень нравится. Размер по бирке: XS. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 175.0,
+    "prices": {
+      "BYN": 175.0,
+      "RUB": 5500,
+      "USD": 65,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XS",
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11261"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11261",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_32680625.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_522e9608.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b09ea0b3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6bb559f1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d99e95ce.jpg"
+    ],
+    "created_at": "2026-08-20 08:15:52.219597"
   }
 ]
