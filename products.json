@@ -3638,5 +3638,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7a8551bc.jpg"
     ],
     "created_at": "2026-08-20 07:50:47.752207"
+  },
+  {
+    "id": 285,
+    "category_id": 5,
+    "brand": "moncler",
+    "name": "Поло лонгслив Moncler",
+    "description": "Очень классный дизайн за счёт вставок на рукавах, воротнике. На горловине есть три пуговицы. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6200,
+      "USD": 74,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11256"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11256",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_669364af.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a69f696b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_86d86747.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0cc09540.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_076f28a8.jpg"
+    ],
+    "created_at": "2026-08-20 08:02:49.244931"
   }
 ]
