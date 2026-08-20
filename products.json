@@ -3758,5 +3758,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e871ca34.jpg"
     ],
     "created_at": "2026-08-20 08:29:12.882689"
+  },
+  {
+    "id": 288,
+    "category_id": 5,
+    "brand": "burberry",
+    "name": "Футболка Burberry",
+    "description": "Очень классный дизайн за счёт базового цвета основы футболки, и клетчатых рукавов. Размер по бирке: L. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 175.0,
+    "prices": {
+      "BYN": 175.0,
+      "RUB": 5500,
+      "USD": 65,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "М - L",
+      "extra_photos_url": "https://t.me/mestniystore/11281"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11281",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6c738239.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b4359458.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a76349a0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7cb0d16c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d1b38fef.jpg"
+    ],
+    "created_at": "2026-08-20 08:50:30.019101"
   }
 ]
