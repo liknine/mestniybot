@@ -3739,5 +3739,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_38f36df4.jpg"
     ],
     "created_at": "2026-08-21 22:15:14.444540"
+  },
+  {
+    "id": 291,
+    "category_id": 2,
+    "brand": "cp_company",
+    "name": "Куртка C.P. Company Chrome - R",
+    "description": "Фирменная линза : На кармане левого рукава размещен узнаваемый линзовый элемент бренда C.P. Company в плёнке. Карманы: Два объемных нагрудных кармана с клапанами на застежках-кнопках. Застежка: Полноразмерная центральная молния (с двумя бегунками / двусторонняя). Воротник: Классический отложной воротник. Вещь в отличном состоянии, без нюансов.",
+    "price_byn": 500.0,
+    "prices": {
+      "BYN": 500.0,
+      "RUB": 14500,
+      "USD": 187,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное! ( Линза в плёнке )",
+      "tag_size": null,
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/10921"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! ( Линза в плёнке )",
+    "extra_photos_url": "https://t.me/mestniystore/10921",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2a7806cc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cd3e706b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c60a5fee.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2cd26137.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_80e04e51.jpg"
+    ],
+    "created_at": "2026-08-21 22:16:51.745561"
   }
 ]
