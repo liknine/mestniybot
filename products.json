@@ -3779,5 +3779,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_80e04e51.jpg"
     ],
     "created_at": "2026-08-21 22:16:51.745561"
+  },
+  {
+    "id": 292,
+    "category_id": 2,
+    "brand": "cp_company",
+    "name": "Куртка C.P. Company Taylon P",
+    "description": "На фото изображён мужской анорак (куртка-пуловер с капюшоном) от известного итальянского бренда C.P. Company. Тип одежды: Анорак / ветровка-пуловер (надевается через голову, с молнией до середины груди). Цвет: Оливковый / хаки (Garment Dyed — фирменная технология окрашивания ткани в готовом виде). Фирменный элемент: На левом рукаве расположен карман с линзой (C.P. Company Lens) — визитной карточкой бренда. Отличное состояние, без нюансов.",
+    "price_byn": 600.0,
+    "prices": {
+      "BYN": 600.0,
+      "RUB": 17200,
+      "USD": 224,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "L",
+      "extra_photos_url": "https://t.me/mestniystore/10942"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10942",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e3e78776.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_810a1c54.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b3c89a5d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4d841625.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_19df7cfb.jpg"
+    ],
+    "created_at": "2026-08-21 22:17:27.717108"
   }
 ]
