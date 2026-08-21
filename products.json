@@ -3899,5 +3899,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6ef10cb7.jpg"
     ],
     "created_at": "2026-08-21 22:18:35.987459"
+  },
+  {
+    "id": 295,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитшот Stone Island",
+    "description": "На представленной фотографии изображён мужской свитшот (толстовка с круглым вырезом) бренда Stone Island. Цвет: Тёмно-синий (Navy / Dark Blue. Фасон: Классический свитшот с круглым вырезом (crewneck), эластичными манжетами и резинкой по нижнему краю. Детали: На левом рукаве расположен фирменный съёмный патч с компасом (Stone Island Compass Patch), пристёгнутый на две пуговицы. На внутренней стороне горловины пришит фирменный бирка с логотипом бренда. Окрашивание изделия выполнено в стиле Garment Dyed (окрашивание в готовом виде, что придаёт ткани глубокий и уникальный оттенок). Анатомический крой с вертикальными швами и вставками по бокам и на рукавах. Отличное состояние, без нюансов.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10300,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/10977"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10977",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_206237dc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f3cec5f4.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d263d4cc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0cef56c5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8d8d61a0.jpg"
+    ],
+    "created_at": "2026-08-21 22:19:06.554027"
   }
 ]
