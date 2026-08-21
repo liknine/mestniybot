@@ -3819,5 +3819,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_19df7cfb.jpg"
     ],
     "created_at": "2026-08-21 22:17:27.717108"
+  },
+  {
+    "id": 293,
+    "category_id": 7,
+    "brand": "stone_island",
+    "name": "Штаны Stone Island Junior Frost Finish",
+    "description": "На изображении представлены мужские спортивные брюки (джоггеры) бренда Stone Island. Тип: Спортивные брюки / джоггеры. Цвет и фактура: Тёмно-серый / графитовый цвет с эффектом потертости/винтажного выцветания (характерный эффект окрашивания Garment Dyed). Отличное состояние, без нюансов, срезана размерная бирка.",
+    "price_byn": 380.0,
+    "prices": {
+      "BYN": 380.0,
+      "RUB": 10600,
+      "USD": 142,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/10947"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10947",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f2740fcd.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d5c8fb65.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9d552335.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4dfb3799.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_46656c40.jpg"
+    ],
+    "created_at": "2026-08-21 22:17:52.492786"
   }
 ]
