@@ -3659,5 +3659,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7c54c9f9.jpg"
     ],
     "created_at": "2026-08-21 22:07:02.537376"
+  },
+  {
+    "id": 289,
+    "category_id": 6,
+    "brand": "ellesse",
+    "name": "Зип - Худи Ellesse",
+    "description": "Плотный материал. Есть два кармана спереди. Два шнурка для утяжки капюшона. Размер по бирке: М. Состояние: Отличное, без нюансов.",
+    "price_byn": 60.0,
+    "prices": {
+      "BYN": 60.0,
+      "RUB": 2100,
+      "USD": 22,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/10893"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10893",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_27d3ad1a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_de3e4a0c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d7fd827f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7ef7e4d3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a7575a37.jpg"
+    ],
+    "created_at": "2026-08-21 22:11:56.567955"
   }
 ]
