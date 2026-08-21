@@ -3384,46 +3384,6 @@
     "created_at": "2026-08-19T12:13:49.151827"
   },
   {
-    "id": 281,
-    "category_id": 6,
-    "brand": "nike",
-    "name": "Худи Nike",
-    "description": "Крутой дизайн, за счёт маленького логотипа спереди, и большого принта на всю спину. Размер по бирке: S. Состояние: Отличное, без нюансов.",
-    "price_byn": 75.0,
-    "prices": {
-      "BYN": 75.0,
-      "RUB": 2600,
-      "USD": 28,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "М",
-      "extra_photos_url": "https://t.me/mestniystore/11221"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11221",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_92780a60.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3c0b6ec8.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7884cfbd.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_494afa80.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8d4c26a8.jpg"
-    ],
-    "created_at": "2026-08-19T16:40:22.758916"
-  },
-  {
     "id": 282,
     "category_id": 6,
     "brand": "stone_island",
