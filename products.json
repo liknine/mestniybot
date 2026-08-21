@@ -3859,5 +3859,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_46656c40.jpg"
     ],
     "created_at": "2026-08-21 22:17:52.492786"
+  },
+  {
+    "id": 294,
+    "category_id": 7,
+    "brand": "stone_island",
+    "name": "Карго штаны Stone Island",
+    "description": "На фото изображены мужские спортивные брюки-карго от бренда Stone Island. Цвет: Оливковый / зеленый (хаки). Брендинг: На левом накладном кармане расположен фирменный патч с логотипом «роза ветров» (компас) на пуговицах. На внутреннем поясе виден ярлык бренда. Фасон: Брюки карго прямого/зауженного кроя (джоггеры) с эластичными манжетами снизу. Детали: Эластичный пояс со шнурком-завязкой; Накладные карманы карго с клапанами по бокам; Боковые прорезные карманы; Плотный хлопковый трикотаж (футер). Отличное состояние, без нюансов.",
+    "price_byn": 300.0,
+    "prices": {
+      "BYN": 300.0,
+      "RUB": 8900,
+      "USD": 112,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/10967"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/10967",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0c67dbc1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_984498a7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ca881722.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2db8a9df.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6ef10cb7.jpg"
+    ],
+    "created_at": "2026-08-21 22:18:35.987459"
   }
 ]
