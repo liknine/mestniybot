@@ -3699,5 +3699,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a7575a37.jpg"
     ],
     "created_at": "2026-08-21 22:11:56.567955"
+  },
+  {
+    "id": 290,
+    "category_id": 7,
+    "brand": "carhartt",
+    "name": "Карго штаны Carhartt",
+    "description": "Крутая карго модель. Два кармана спереди, два кармана сзади, и два боковых кармана. Размер по бирке: 34 х 32. Состояние: Очень хорошее, есть следы после носок, чуть потоптан выход штанов, без нюансов.",
+    "price_byn": 100.0,
+    "prices": {
+      "BYN": 100.0,
+      "RUB": 3300,
+      "USD": 37,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Очень хорошее",
+      "tag_size": "34 х 32",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/10903"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Очень хорошее",
+    "extra_photos_url": "https://t.me/mestniystore/10903",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_eeab6d23.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1f08a12d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1c867246.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e98e8d1a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_38f36df4.jpg"
+    ],
+    "created_at": "2026-08-21 22:15:14.444540"
   }
 ]
