@@ -2048,46 +2048,6 @@
     "created_at": "2026-08-14T20:20:22.525071"
   },
   {
-    "id": 242,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Свитшот C.P. Company",
-    "description": "Базовый свитшот из лёгкого материала, имеющий на левом рукаве карман с линзой, карман на молнии, с фурнитурой. Размер по бирке: XXL. Фактический размер: XL - XXL. Состояние: Отличное, без нюансов, есть небольшие следы от носок на линзе.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7500,
-      "USD": 93,
-      "product_type": "stock",
-      "size_stock": {
-        "XL-XXL": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "XXL",
-      "actual_size_raw": "XL - XXL",
-      "extra_photos_url": "https://t.me/mestniystore/11106"
-    },
-    "sizes": [
-      "XL-XXL"
-    ],
-    "size_stock": {
-      "XL-XXL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11106",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_72483e90.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c200b5e9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3e8b07c7.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fa695479.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0e93cbe6.jpg"
-    ],
-    "created_at": "2026-08-14T20:56:00.604639"
-  },
-  {
     "id": 244,
     "category_id": 5,
     "brand": "fred_perry",
