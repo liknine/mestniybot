@@ -3939,5 +3939,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8d8d61a0.jpg"
     ],
     "created_at": "2026-08-21 22:19:06.554027"
+  },
+  {
+    "id": 296,
+    "category_id": 1,
+    "brand": "adidas",
+    "name": "Кроссовки Adidas London",
+    "description": "пары: Замшевая крутая и редкая пара. Родные стельки. Много кожаных элементов. Состояние: Отличное, есть небольшие следы после носок, без нюансов.",
+    "price_byn": 380.0,
+    "prices": {
+      "BYN": 380.0,
+      "RUB": 11200,
+      "USD": 142,
+      "product_type": "stock",
+      "size_stock": {
+        "43": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "43 / 27.5 СМ",
+      "actual_size_raw": "27.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/153"
+    },
+    "sizes": [
+      "43"
+    ],
+    "size_stock": {
+      "43": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/153",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_07d8eaa3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7ba3e1a5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_62ddba35.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2ccf308b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3c75d3ac.jpg"
+    ],
+    "created_at": "2026-08-22 14:09:12.210578"
   }
 ]
