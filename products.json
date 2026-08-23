@@ -4018,5 +4018,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_65102a83.jpg"
     ],
     "created_at": "2026-08-23 16:07:53.470448"
+  },
+  {
+    "id": 304,
+    "category_id": 5,
+    "brand": "a_bathing_ape",
+    "name": "Футболка A Bathing Ape",
+    "description": "База, с принтом на груди, и бирочкой на левом рукаве. Размер по бирке: М. Состояние: Отличное, есть следы после носок, в виде потресконого логотипа. Оригинал.",
+    "price_byn": 75.0,
+    "prices": {
+      "BYN": 75.0,
+      "RUB": 2600,
+      "USD": 28,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное! ( потрескан логотип )",
+      "tag_size": "M",
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11363"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! ( потрескан логотип )",
+    "extra_photos_url": "https://t.me/mestniystore/11363",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0870c553.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_22a767b3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d347d2ff.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ebe42f40.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_716738f9.jpg"
+    ],
+    "created_at": "2026-08-23 16:25:05.706118"
   }
 ]
