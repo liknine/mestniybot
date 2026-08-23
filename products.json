@@ -3938,5 +3938,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_501548d8.jpg"
     ],
     "created_at": "2026-08-23 13:26:16.017191"
+  },
+  {
+    "id": 301,
+    "category_id": 5,
+    "brand": "supreme",
+    "name": "Футболка Supreme",
+    "description": "Очень классная, идеальный принт, также есть принт на левом рукаве. Крутой дизайн. Размер по бирке: L. Состояние: Отличное, без нюансов, Оригинал.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4700,
+      "USD": 56,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/11348"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11348",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5f58bc12.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3ee869b7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1c683bac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9b5a74e5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f272a578.jpg"
+    ],
+    "created_at": "2026-08-23 14:20:11.931112"
   }
 ]
