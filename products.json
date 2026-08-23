@@ -3978,5 +3978,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f272a578.jpg"
     ],
     "created_at": "2026-08-23 14:20:11.931112"
+  },
+  {
+    "id": 302,
+    "category_id": 6,
+    "brand": "off_white",
+    "name": "Зип - Худи Off - White",
+    "description": "Очень классный дизайн за счёт лампасов по рукавам. Есть два кармана спереди. Кропнутый фит. Размер по бирке: М. Состояние: Отличное, без нюансов.",
+    "price_byn": 300.0,
+    "prices": {
+      "BYN": 300.0,
+      "RUB": 9000,
+      "USD": 112,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11353"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11353",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3980a8b2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b281089c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0595c6e0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_76ec6e43.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_95976418.jpg"
+    ],
+    "created_at": "2026-08-23 14:20:34.762933"
   }
 ]
