@@ -3898,5 +3898,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53402856.jpg"
     ],
     "created_at": "2026-08-23 13:25:39.184191"
+  },
+  {
+    "id": 300,
+    "category_id": 5,
+    "brand": "weekend_offender",
+    "name": "Поло Weekend Offender",
+    "description": "Очень классная, есть две пуговицы на горловине, маленькая бирочка снизу справа. Состояние: Отличное, есть небольшие следы после носок, без нюансов, Оригинал.",
+    "price_byn": 65.0,
+    "prices": {
+      "BYN": 65.0,
+      "RUB": 2400,
+      "USD": 24,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/11343"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11343",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7ea234de.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f4a403ae.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_11291447.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d7b534b6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_501548d8.jpg"
+    ],
+    "created_at": "2026-08-23 13:26:16.017191"
   }
 ]
