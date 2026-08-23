@@ -2,19 +2,19 @@
   {
     "id": 11,
     "user_id": "616917795",
-    "status": "accepted",
+    "status": "completed",
     "total": 150.0,
     "currency": "BYN",
     "delivery": "Европочта",
     "place": "Данные переданы менеджеру",
     "client_request_id": "web-616917795-1787495646568-qv7li7",
     "created_at": "2026-08-23T14:34:06.755647",
-    "updated_at": "2026-08-23T14:34:06.754330",
+    "updated_at": "2026-08-23T14:45:08.075462",
     "bonuses": 0.0,
     "bonus_mode": "percent",
     "bonus_percent": 0.0,
     "bonus_discount_amount": 0.0,
-    "bonus_earned": 0.0,
+    "bonus_earned": 1.0,
     "bonus_returned": 0.0,
     "items": [
       {
