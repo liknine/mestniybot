@@ -3860,46 +3860,6 @@
     "created_at": "2026-08-23T07:49:16.581034"
   },
   {
-    "id": 299,
-    "category_id": 5,
-    "brand": null,
-    "name": "Футболка Emporio Armani",
-    "description": "Очень классная, плотный принт. Стёрлась верхняя бирка, но слегка виднеется, срезаны нижние бирки. Состояние: Отличное, есть небольшие следы после носок, без нюансов, Оригинал.",
-    "price_byn": 35.0,
-    "prices": {
-      "BYN": 35.0,
-      "RUB": 1500,
-      "USD": 13,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": null,
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/11333"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11333",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_51e5d9ad.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6dad2339.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_460fa6e2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7e47a1e5.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53402856.jpg"
-    ],
-    "created_at": "2026-08-23T13:25:39.184191"
-  },
-  {
     "id": 300,
     "category_id": 5,
     "brand": "weekend_offender",
