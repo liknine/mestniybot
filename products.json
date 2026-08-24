@@ -3340,46 +3340,6 @@
     "created_at": "2026-08-19T16:40:45.040240"
   },
   {
-    "id": 283,
-    "category_id": 6,
-    "brand": "off_white",
-    "name": "Худи Off - White",
-    "description": "Очень классный дизайн, логотип спереди и сзади, принты, которые совсем без трещин. Кропнутый фит. Размер по бирке: S. Состояние: Отличное, без нюансов.",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 9000,
-      "USD": 112,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "М",
-      "extra_photos_url": "https://t.me/mestniystore/11236"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11236",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_af918b48.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_52442de7.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_901d772f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ed02c2a3.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f5a5a752.jpg"
-    ],
-    "created_at": "2026-08-19T18:01:54.458247"
-  },
-  {
     "id": 284,
     "category_id": 5,
     "brand": "moncler",
