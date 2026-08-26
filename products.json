@@ -4065,5 +4065,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_96d1169f.jpg"
     ],
     "created_at": "2026-08-26 08:44:46.363286"
+  },
+  {
+    "id": 313,
+    "category_id": 5,
+    "brand": null,
+    "name": "Футболка Baby Milo",
+    "description": "Очень классная, красивый принт, есть небольшая бирочка на левом рукаве. Размер по бирке: S. Состояние: Отличное, есть совсем небольшие следы после носок, и совсем небольшие трещинки на принте, их пару штук, они незаметны, дальше без нюансов, Оригинал.",
+    "price_byn": 150.0,
+    "prices": {
+      "BYN": 150.0,
+      "RUB": 4700,
+      "USD": 56,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S",
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/11431"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11431",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_03ce2fac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08403c1c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e6e12235.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_860bbfd2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_368c8cc6.jpg"
+    ],
+    "created_at": "2026-08-26 08:52:21.794585"
   }
 ]
