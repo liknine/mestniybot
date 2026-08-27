@@ -1741,44 +1741,6 @@
     "created_at": "2026-07-31T05:29:14.587535"
   },
   {
-    "id": 232,
-    "category_id": 6,
-    "brand": "C.P. Company",
-    "name": "Худи C.P. Company Goggle",
-    "description": "Отличное состояние, без нюансов. Очень крутой дизайн, 2 линзы на капюшоне, вышитый логотип снизу кофты, спереди, а также, замок, идущий вдоль левого рукава по груди. Есть утяжка на капюшоне. Размер по бирке: L. Фактический размер: L.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9700.0,
-      "USD": 123.0,
-      "product_type": "stock",
-      "size_stock": {
-        "L": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10828"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10828",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_0_480f583b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_ca2f3fbd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_35a9501c.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_34fc1ca4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_b73f4449.jpg"
-    ],
-    "created_at": "2026-07-31T05:47:56.863934"
-  },
-  {
     "id": 233,
     "category_id": 7,
     "brand": "Diesel",
