@@ -3869,46 +3869,6 @@
     "created_at": "2026-08-25T22:33:33.991271"
   },
   {
-    "id": 311,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Худи Stone Island",
-    "description": "Очень классная. Крутой дизайн. Размер по бирке: S. Состояние: Отличное, есть совсем небольшие следы после носок, без нюансов, Оригинал.",
-    "price_byn": 400.0,
-    "prices": {
-      "BYN": 400.0,
-      "RUB": 11800,
-      "USD": 149,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/11421"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11421",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_65077147.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9dcea76b.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e70ab257.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f9129018.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5912738a.jpg"
-    ],
-    "created_at": "2026-08-26T08:42:38.880099"
-  },
-  {
     "id": 313,
     "category_id": 5,
     "brand": null,
