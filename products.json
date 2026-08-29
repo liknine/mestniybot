@@ -4189,5 +4189,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6acfbdde.jpg"
     ],
     "created_at": "2026-08-29 14:19:58.555207"
+  },
+  {
+    "id": 322,
+    "category_id": 9,
+    "brand": "lacoste",
+    "name": "Кепка Lacoste",
+    "description": "Очень классная, за счёт своего цвета, он не однотонный, а очень интересный. Логотип с левой стороны. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 100.0,
+    "prices": {
+      "BYN": 100.0,
+      "RUB": 3400,
+      "USD": 37,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": null,
+      "extra_photos_url": "https://t.me/mestniystore/11475"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11475",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5a34ae19.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b75088e7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f0d1ec50.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8261a9d0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fdc7ea2e.jpg"
+    ],
+    "created_at": "2026-08-29 20:00:29.607738"
   }
 ]
