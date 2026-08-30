@@ -4229,5 +4229,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fdc7ea2e.jpg"
     ],
     "created_at": "2026-08-29 20:00:29.607738"
+  },
+  {
+    "id": 323,
+    "category_id": 5,
+    "brand": "true_religion",
+    "name": "Футболка True Religion",
+    "description": "Крутой дизайн, большой принт, который почти совсем без трещин, буквально 2-3 трещинки, совсем незначительные. Размер по бирке: XXL. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 60.0,
+    "prices": {
+      "BYN": 60.0,
+      "RUB": 2200,
+      "USD": 22,
+      "product_type": "stock",
+      "size_stock": {
+        "XXL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XXL",
+      "actual_size_raw": "XXL",
+      "extra_photos_url": "https://t.me/mestniystore/11485"
+    },
+    "sizes": [
+      "XXL"
+    ],
+    "size_stock": {
+      "XXL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11485",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f6877702.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4a651ab7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d925641c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8280289f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ea856b7e.jpg"
+    ],
+    "created_at": "2026-08-30 07:35:09.742697"
   }
 ]
