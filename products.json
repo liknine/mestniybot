@@ -4269,5 +4269,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ea856b7e.jpg"
     ],
     "created_at": "2026-08-30 07:35:09.742697"
+  },
+  {
+    "id": 324,
+    "category_id": 5,
+    "brand": "lacoste",
+    "name": "Футболка Lacoste",
+    "description": "Базовая, с маленьким пришитым логотипом на левой части груди. Размер по бирке: М. Исправлялись два мелких нюанса, сзади, у горла. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 50.0,
+    "prices": {
+      "BYN": 50.0,
+      "RUB": 2000,
+      "USD": 18,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11490"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11490",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_762772db.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_33ebea13.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a54dacf5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_744253c0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ab497a32.jpg"
+    ],
+    "created_at": "2026-08-30 11:58:17.149064"
   }
 ]
