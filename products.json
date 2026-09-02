@@ -665,41 +665,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 151,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Свитшот Stone Island Junior",
-    "description": "Отличное состояние, есть небольшие следы носок. Необычный дизайн за счет вышитой надписи на груди + патч на рукаве. Оригинал. Размер по бирке: 12/156. Фактический размер: XS - S. Коллекция: 71.",
-    "price_byn": 185.0,
-    "prices": {
-      "BYN": 185.0,
-      "RUB": 5600.0,
-      "USD": 59.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10220"
-    },
-    "sizes": [
-      "XS-S"
-    ],
-    "size_stock": {
-      "XS-S": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10220",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_151_2c1df337.jpg",
-      "https://liknine.github.io/mestniybot/images/product_151_44c1b81b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_151_77857004.jpg",
-      "https://liknine.github.io/mestniybot/images/product_151_ad7bd167.jpg",
-      "https://liknine.github.io/mestniybot/images/product_151_54bf3417.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 154,
     "category_id": 8,
     "brand": "Polar",
