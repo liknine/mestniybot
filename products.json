@@ -1098,44 +1098,6 @@
     "created_at": "2026-07-26T17:04:02.297821"
   },
   {
-    "id": 203,
-    "category_id": 6,
-    "brand": "Nike",
-    "name": "Зип - Худи Nike",
-    "description": "Отличное состояние. Без нюансов. Замок работает без проблем. Оригинал. Размер по бирке: М. Фактический размер: L - XL.",
-    "price_byn": 60.0,
-    "prices": {
-      "BYN": 60.0,
-      "RUB": 2200.0,
-      "USD": 22.0,
-      "product_type": "stock",
-      "size_stock": {
-        "L-XL": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10614"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "size_stock": {
-      "L-XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10614",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_0_a0f58321.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_6393b5fa.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_ddef541f.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_33cd91bd.jpg",
-      "https://liknine.github.io/mestniybot/images/product_0_ecac7d16.jpg"
-    ],
-    "created_at": "2026-07-26T17:14:50.414884"
-  },
-  {
     "id": 206,
     "category_id": 5,
     "brand": "Nike",
