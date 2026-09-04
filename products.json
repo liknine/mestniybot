@@ -245,41 +245,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 109,
-    "category_id": 8,
-    "brand": "Nike",
-    "name": "Шорты Nike",
-    "description": "Базовые шорты с вышитым логотипом. Имеют два кармана спереди, а также шнурки для утягивания пояса. Размер по бирке: М. Фактический размер: S - M. Состояние: Отличное, без нюансов.",
-    "price_byn": 35.0,
-    "prices": {
-      "BYN": 35.0,
-      "RUB": 1200,
-      "USD": 13,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9219"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9219",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_109_85aaad69.jpg",
-      "https://liknine.github.io/mestniybot/images/product_109_0dfd3e70.jpg",
-      "https://liknine.github.io/mestniybot/images/product_109_098c4083.jpg",
-      "https://liknine.github.io/mestniybot/images/product_109_1b8d52d4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_109_6ffff9b6.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 114,
     "category_id": 10,
     "brand": "Lonsdale",
