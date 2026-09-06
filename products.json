@@ -3662,5 +3662,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_12efc4f7.jpg"
     ],
     "created_at": "2026-09-06 11:52:09.460605"
+  },
+  {
+    "id": 328,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Худи Stone Island",
+    "description": "Очень классный, мягкий, и плотный материал. Продажа с оригинальным патчем. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 420.0,
+    "prices": {
+      "BYN": 420.0,
+      "RUB": 12300,
+      "USD": 157,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11567"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11567",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_51b4675b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_60f0adab.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4d380ffa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1ea9d2e8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_004b4631.jpg"
+    ],
+    "created_at": "2026-09-06 11:52:31.684881"
   }
 ]
