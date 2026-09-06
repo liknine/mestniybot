@@ -3702,5 +3702,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_004b4631.jpg"
     ],
     "created_at": "2026-09-06 11:52:31.684881"
+  },
+  {
+    "id": 329,
+    "category_id": 2,
+    "brand": null,
+    "name": "Кожаная аляска куртка Dolce & Gabbana",
+    "description": "Тяжёлый люкс. Кожаная, Аляска. Снимается капюшон, можно носить без него. Все фурнитуры на месте. Размер по бирке: 48. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 500.0,
+    "prices": {
+      "BYN": 500.0,
+      "RUB": 14600,
+      "USD": 187,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "48",
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/11577"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11577",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_aa95dae7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_135a0f00.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0be9dc2c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_58e1cf2c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5ac69545.jpg"
+    ],
+    "created_at": "2026-09-06 11:53:14.044137"
   }
 ]
