@@ -3782,5 +3782,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ab0ea619.jpg"
     ],
     "created_at": "2026-09-06 16:38:37.491487"
+  },
+  {
+    "id": 331,
+    "category_id": 7,
+    "brand": "stone_island",
+    "name": "Штаны Stone Island Nylon Junior",
+    "description": "Очень классные, крутой материал, который очень сильно переливается, особенно на солнце. Продажа с оригинальным патчем, и магазинными этикетками. Есть боковой карман на левой калоши( на котором расположен патч ), два основных кармана спереди, и задний карман справа. Состояние: Новое, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Новое! ( с этикетками )",
+      "tag_size": null,
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/11602"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое! ( с этикетками )",
+    "extra_photos_url": "https://t.me/mestniystore/11602",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ce76bdd2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_24ad279d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9d3a5edd.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bfb3bf4d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3af528a4.jpg"
+    ],
+    "created_at": "2026-09-06 16:39:08.995001"
   }
 ]
