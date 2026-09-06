@@ -3862,5 +3862,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f7761295.jpg"
     ],
     "created_at": "2026-09-06 16:40:13.671342"
+  },
+  {
+    "id": 333,
+    "category_id": 5,
+    "brand": "burberry",
+    "name": "Футболка Burberry",
+    "description": "Состояние: Очень классная, база, с принтом на груди. Размер по бирке: S. Отличное, без нюансов. Оригинал.",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6200,
+      "USD": 74,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное! Очень классная, база, с принтом на груди. Размер по бирке: S. Отличное, без нюансов. Оригинал",
+      "tag_size": "S",
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/11632"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! Очень классная, база, с принтом на груди. Размер по бирке: S. Отличное, без нюансов. Оригинал",
+    "extra_photos_url": "https://t.me/mestniystore/11632",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4a850486.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d7082cff.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_aaaaca9b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1a72f53a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4668429b.jpg"
+    ],
+    "created_at": "2026-09-06 16:43:01.774286"
   }
 ]
