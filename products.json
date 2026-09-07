@@ -4182,5 +4182,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b4c36498.jpg"
     ],
     "created_at": "2026-09-07 14:26:20.865731"
+  },
+  {
+    "id": 341,
+    "category_id": 6,
+    "brand": "burberry",
+    "name": "Худи Burberry",
+    "description": "Очень классная, плюшевый логотип на груди. Есть карман на груди. Крутой дизайн. Плотная. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S",
+      "actual_size_raw": "L",
+      "extra_photos_url": "https://t.me/mestniystore/11717"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11717",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8bd72efd.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5f5813c6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5d386ea2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b63479f2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1b27aeb1.jpg"
+    ],
+    "created_at": "2026-09-07 14:26:41.317259"
   }
 ]
