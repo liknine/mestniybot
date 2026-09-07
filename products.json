@@ -4102,5 +4102,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c1337338.jpg"
     ],
     "created_at": "2026-09-07 14:25:25.329203"
+  },
+  {
+    "id": 339,
+    "category_id": 4,
+    "brand": "cp_company",
+    "name": "Овершот C.P. Company",
+    "description": "Базовая, идёт как лёгкая куртка. Размер по бирке: L. Состояние: Отличное, есть небольшие следы после носок, совсем небольшая утяжка на кармане, совсем незаметная, без нюансов. Оригинал.",
+    "price_byn": 330.0,
+    "prices": {
+      "BYN": 330.0,
+      "RUB": 9800,
+      "USD": 123,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11677"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11677",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a9085dcd.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_757d175e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8eb9760b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_29decb09.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08f889f7.jpg"
+    ],
+    "created_at": "2026-09-07 14:25:54.701235"
   }
 ]
