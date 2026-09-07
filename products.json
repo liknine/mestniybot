@@ -3982,5 +3982,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9a598ccf.jpg"
     ],
     "created_at": "2026-09-06 16:44:11.221877"
+  },
+  {
+    "id": 336,
+    "category_id": 2,
+    "brand": "stone_island",
+    "name": "Микропуховик Stone Island Loom Woven Down Chambers Stretch Nylon - TC",
+    "description": "Очень классная модель, яркая, в моментах цвет чуть светлее. С двумя карманами на груди. Продажа с оригинальным патчем. Размер по бирке: L. Состояние: Отличное, есть совсем небольшие следы после носок, в виде розоватых оттенков по некоторым швам, такого очень мало, зашитые минимальные нюансы около паспорта, внутри куртки, дальше без нюансов. Оригинал.",
+    "price_byn": 950.0,
+    "prices": {
+      "BYN": 950.0,
+      "RUB": 27200,
+      "USD": 355,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "L",
+      "extra_photos_url": "https://t.me/mestniystore/11627"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11627",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bb01bb2f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_646c6c03.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_38ca56be.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_edd91f89.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2e23a59d.jpg"
+    ],
+    "created_at": "2026-09-07 05:46:02.985336"
   }
 ]
