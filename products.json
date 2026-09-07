@@ -4022,5 +4022,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2e23a59d.jpg"
     ],
     "created_at": "2026-09-07 05:46:02.985336"
+  },
+  {
+    "id": 337,
+    "category_id": 4,
+    "brand": "stone_island",
+    "name": "Овершот Stone Island",
+    "description": "Состояние: Очень крутой, плотный материал, круто смотрится на теле. Размер по бирке: М. Отличное, без нюансов. Оригинал.",
+    "price_byn": 600.0,
+    "prices": {
+      "BYN": 600.0,
+      "RUB": 17400,
+      "USD": 224,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное! Очень крутой, плотный материал, круто смотрится на теле. Размер по бирке: М. Отличное, без нюансов. Оригинал",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11642"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! Очень крутой, плотный материал, круто смотрится на теле. Размер по бирке: М. Отличное, без нюансов. Оригинал",
+    "extra_photos_url": "https://t.me/mestniystore/11642",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b82949f3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4bbc54ac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_16d3c274.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_86b5f8a7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f8dfee21.jpg"
+    ],
+    "created_at": "2026-09-07 05:47:28.128385"
   }
 ]
