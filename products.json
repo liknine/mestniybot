@@ -4347,5 +4347,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d8c67338.jpg"
     ],
     "created_at": "2026-09-08 09:52:46.632202"
+  },
+  {
+    "id": 348,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Лонгслив C.P. Company",
+    "description": "Очень классный, темный базовый лонгслив. Принт на груди, как мы привыкли видеть. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6100,
+      "USD": 74,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "М",
+      "extra_photos_url": "https://t.me/mestniystore/11748"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11748",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9d11645a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b40ffd87.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7a10551a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9679565c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5d55e03f.jpg"
+    ],
+    "created_at": "2026-09-08 11:42:05.597107"
   }
 ]
