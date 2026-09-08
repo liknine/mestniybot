@@ -4427,5 +4427,48 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_be098c9f.jpg"
     ],
     "created_at": "2026-09-08 14:07:48.485380"
+  },
+  {
+    "id": 351,
+    "category_id": 1,
+    "brand": "adidas",
+    "name": "Кроссовки Adidas Tobacco",
+    "description": "пары: Кроссовки adidas Tobacco — это культовая винтажная модель из архивной линейки adidas Originals с низким профилем и непринужденным дизайном BrandShop. Материалы: Премиальный замшевый верх с коротким ворсом, замшевые фирменные три полоски и подошва из натуральной резины (гамсоль). Стиль: Повседневная классика в стиле casual, которая легко сочетается с джинсами и базовым гардеробом. Состояние: Абсолютно новые!",
+    "price_byn": 360.0,
+    "prices": {
+      "BYN": 360.0,
+      "RUB": 10700,
+      "USD": 134,
+      "product_type": "stock",
+      "size_stock": {
+        "42.5": 1,
+        "43": 1
+      },
+      "condition": "Новое",
+      "tag_size": null,
+      "actual_size_raw": "27 CM, 27.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/171"
+    },
+    "sizes": [
+      "42.5",
+      "43"
+    ],
+    "size_stock": {
+      "42.5": 1,
+      "43": 1
+    },
+    "stock": 2,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/171",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5bd7da45.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5dff9fe5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_54d571cf.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_eac10110.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4675eab3.jpg"
+    ],
+    "created_at": "2026-09-08 17:51:38.043818"
   }
 ]
