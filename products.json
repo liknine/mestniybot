@@ -4074,46 +4074,6 @@
     "created_at": "2026-09-07T16:26:14.439061"
   },
   {
-    "id": 344,
-    "category_id": 6,
-    "brand": "weekend_offender",
-    "name": "Свитшот Weekend Offender Leo Gregory",
-    "description": "Крутой дизайн, за счёт логотипа спереди, и принта сзади. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4800,
-      "USD": 56,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "M",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/11672"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11672",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_15ba554e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f1a1a854.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a3f3e504.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c8eb4848.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_19d84ee8.jpg"
-    ],
-    "created_at": "2026-09-07T16:26:59.706015"
-  },
-  {
     "id": 345,
     "category_id": 2,
     "brand": "cp_company",
