@@ -1,5 +1,35 @@
 [
   {
+    "id": 12,
+    "user_id": "954203498",
+    "status": "accepted",
+    "total": 85.0,
+    "currency": "BYN",
+    "delivery": "Белпочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-954203498-1788960329329-y5j6lk",
+    "created_at": "2026-09-09T13:25:29.476743",
+    "updated_at": "2026-09-09T13:25:29.475706",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 353,
+        "brand": "Polo Ralph Lauren",
+        "name": "Гольф Polo Ralph Lauren",
+        "size": "M-L",
+        "qty": 1,
+        "unit_price": 85.0,
+        "old_unit_price": 85.0,
+        "image": "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9e5e446a.jpg"
+      }
+    ]
+  },
+  {
     "id": 11,
     "user_id": "616917795",
     "status": "completed",
