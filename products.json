@@ -3719,46 +3719,6 @@
     "created_at": "2026-09-06T16:43:38.772286"
   },
   {
-    "id": 335,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Худи C.P. Company",
-    "description": "Состояние: Очень крутой, плотный материал, на капюшоне есть резиновый принт, на груди есть карман. Размер по бирке: М. Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 9000,
-      "USD": 112,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное! Очень крутой, плотный материал, на капюшоне есть резиновый принт, на груди есть карман. Размер по бирке: М. Отличное, есть небольшие следы после носок, без нюансов. Оригинал",
-      "tag_size": "M",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/11647"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное! Очень крутой, плотный материал, на капюшоне есть резиновый принт, на груди есть карман. Размер по бирке: М. Отличное, есть небольшие следы после носок, без нюансов. Оригинал",
-    "extra_photos_url": "https://t.me/mestniystore/11647",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_15969a99.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6a1a4c5e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_90e77d2e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b40118c9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9a598ccf.jpg"
-    ],
-    "created_at": "2026-09-06T16:44:11.221877"
-  },
-  {
     "id": 336,
     "category_id": 2,
     "brand": "stone_island",
