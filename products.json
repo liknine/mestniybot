@@ -735,41 +735,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 173,
-    "category_id": 6,
-    "brand": "C.P. Company",
-    "name": "Лонгслив C.P. Company",
-    "description": "Очень классный, базовый дизайн, тот сам, любимый принт, именно такого плана. Оригинал. Отличное состояние, есть небольшие следы носок. Дата изготовления: 06/2021.",
-    "price_byn": 200.0,
-    "prices": {
-      "BYN": 200.0,
-      "RUB": 6100.0,
-      "USD": 74.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10389"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10389",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_173_914ac2be.jpg",
-      "https://liknine.github.io/mestniybot/images/product_173_5aeb3697.jpg",
-      "https://liknine.github.io/mestniybot/images/product_173_8fc1b1d8.jpg",
-      "https://liknine.github.io/mestniybot/images/product_173_6a1aaeaf.jpg",
-      "https://liknine.github.io/mestniybot/images/product_173_86ae4571.jpg"
-    ],
-    "created_at": "2026-07-06T17:14:34.387383"
-  },
-  {
     "id": 182,
     "category_id": 8,
     "brand": "Nike",
