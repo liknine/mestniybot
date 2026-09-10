@@ -4360,5 +4360,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_beb65ce1.jpg"
     ],
     "created_at": "2026-09-10 13:47:51.909787"
+  },
+  {
+    "id": 359,
+    "category_id": 6,
+    "brand": "burberry",
+    "name": "Худи Burberry",
+    "description": "Очень интересный дизайн. Есть карман на груди, шнурки на капюшоне. Размер по бирке: XS. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XS",
+      "actual_size_raw": "L",
+      "extra_photos_url": "https://t.me/mestniystore/11712"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11712",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3634e30e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c4a80ebc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_be368daa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2c0cd377.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a5a4f95e.jpg"
+    ],
+    "created_at": "2026-09-10 13:48:37.951132"
   }
 ]
