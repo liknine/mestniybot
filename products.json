@@ -4280,5 +4280,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f04f068e.jpg"
     ],
     "created_at": "2026-09-10 10:56:39.174603"
+  },
+  {
+    "id": 356,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Air Force 1",
+    "description": "Цветовая гамма: Основная часть выполнена в глубоком черном цвете, который контрастирует с ярко-белыми элементами. Логотипы: Помимо стандартного большого белого «свуша» (Swoosh) сбоку, на передней части кроссовка (ближе к носку) вышит дополнительный маленький белый логотип. Подошва: Белая массивная межподошва с фирменной надписью «AIR» и черная подметка. Материалы: Верх выглядит как сочетание гладкой кожи и текстильных элементов.",
+    "price_byn": 320.0,
+    "prices": {
+      "BYN": 320.0,
+      "RUB": 9500,
+      "USD": 119,
+      "product_type": "stock",
+      "size_stock": {
+        "43": 1
+      },
+      "condition": "Новых",
+      "tag_size": null,
+      "actual_size_raw": "27.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/183"
+    },
+    "sizes": [
+      "43"
+    ],
+    "size_stock": {
+      "43": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новых",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/183",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5a18a60f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b07fb0e9.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a290b074.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ed6f5eae.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8a762c43.jpg"
+    ],
+    "created_at": "2026-09-10 10:57:06.278276"
   }
 ]
