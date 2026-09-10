@@ -4320,5 +4320,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8a762c43.jpg"
     ],
     "created_at": "2026-09-10 10:57:06.278276"
+  },
+  {
+    "id": 357,
+    "category_id": 1,
+    "brand": "nike",
+    "name": "Кроссовки Nike Air Max 90 Ultra 2.0",
+    "description": "Цветовая гамма: Комбинированные оттенки серого (светло-серый, мышиный, тёмно-серый) с белой подошвой. Материалы: Замшевые накладки волнообразной формы и вокруг носка. Кожаные элементы по бокам и на носке. Сетчатый текстиль (mesh) в области язычка и воротника для вентиляции. Пластиковые рельефные детали (вставки для шнуровки, логотип «Air Max» сбоку и логотип на пятке). Подошва: Белая классическая межподошва из пеноматериала с видимым блоком амортизации Air Max в районе пятки.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "42": 1
+      },
+      "condition": "Новое",
+      "tag_size": null,
+      "actual_size_raw": "26.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/188"
+    },
+    "sizes": [
+      "42"
+    ],
+    "size_stock": {
+      "42": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/188",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6f6a7ac8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cdfbfb90.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0dfd7b63.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1d5bffcf.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_86ab35bc.jpg"
+    ],
+    "created_at": "2026-09-10 13:44:45.785797"
   }
 ]
