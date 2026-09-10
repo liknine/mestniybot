@@ -4440,5 +4440,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6b4d98e9.jpg"
     ],
     "created_at": "2026-09-10 13:49:19.026248"
+  },
+  {
+    "id": 361,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Зип - Худи C.P. Company",
+    "description": "Базовая, есть два кармана на груди, и надпись на верхушке капюшона. Размер по бирке: XXL. Состояние: Отличное, есть небольшие после носок, в виде небольших царапин на линзе, зашитый момент у замочка, нету шнурков, дальше без нюансов. Оригинал.",
+    "price_byn": 330.0,
+    "prices": {
+      "BYN": 330.0,
+      "RUB": 9800,
+      "USD": 123,
+      "product_type": "stock",
+      "size_stock": {
+        "XL-XXL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XXL",
+      "actual_size_raw": "XL - XXL",
+      "extra_photos_url": "https://t.me/mestniystore/11702"
+    },
+    "sizes": [
+      "XL-XXL"
+    ],
+    "size_stock": {
+      "XL-XXL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11702",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7d63d6e0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0bde26f9.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ce0cf6c0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_40c30d61.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_37bca848.jpg"
+    ],
+    "created_at": "2026-09-10 13:49:43.875929"
   }
 ]
