@@ -4480,5 +4480,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_97412565.jpg"
     ],
     "created_at": "2026-09-13 12:46:35.082228"
+  },
+  {
+    "id": 367,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Зип - Худи Stone Island",
+    "description": "Продажа с оригинальным патчем. Есть два кармана спереди. Размер по бирке: L. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 500.0,
+    "prices": {
+      "BYN": 500.0,
+      "RUB": 14600,
+      "USD": 187,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "L",
+      "extra_photos_url": "https://t.me/mestniystore/11800"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11800",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_341289e6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a378fd40.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ede31e87.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_229cf6ba.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5e43f978.jpg"
+    ],
+    "created_at": "2026-09-13 12:46:58.255761"
   }
 ]
