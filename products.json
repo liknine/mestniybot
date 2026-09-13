@@ -4640,5 +4640,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_01255877.jpg"
     ],
     "created_at": "2026-09-13 12:48:21.600140"
+  },
+  {
+    "id": 371,
+    "category_id": 2,
+    "brand": "cp_company",
+    "name": "Куртка C.P. Company Nycra - R",
+    "description": "Очень классная, необычный дизайн за счёт материала, он как нейлон. Есть два кармана спереди, и карман на рукаве, на котором линза. Размер по бирке: 48. Состояние: Отличное, без нюансов, линза в плёнке. Оригинал.",
+    "price_byn": 600.0,
+    "prices": {
+      "BYN": 600.0,
+      "RUB": 17400,
+      "USD": 224,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное! ( Линза в плёнке )",
+      "tag_size": "48",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11821"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! ( Линза в плёнке )",
+    "extra_photos_url": "https://t.me/mestniystore/11821",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_701b859d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_351cd0fa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1b3c2e4a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ccf7a49b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_78f0fc30.jpg"
+    ],
+    "created_at": "2026-09-13 12:48:41.367877"
   }
 ]
