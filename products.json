@@ -3359,46 +3359,6 @@
     "created_at": "2026-09-01T08:11:45.625044"
   },
   {
-    "id": 327,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Худи С.P. Company Goggle",
-    "description": "Очень классный плотный материал, крутой дизайн за счёт двух линз на капюшоне и высокого горла. Есть два кармана на груди, закрытые замочками. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10400,
-      "USD": 131,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "M",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/11557"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11557",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8cba994f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ef910fab.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b3fea37f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bb01a6f4.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_12efc4f7.jpg"
-    ],
-    "created_at": "2026-09-06T11:52:09.460605"
-  },
-  {
     "id": 328,
     "category_id": 6,
     "brand": "stone_island",
