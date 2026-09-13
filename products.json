@@ -3759,46 +3759,6 @@
     "created_at": "2026-09-07T16:27:31.647238"
   },
   {
-    "id": 346,
-    "category_id": 6,
-    "brand": "polo_ralph_lauren",
-    "name": "Зип - Худи Polo Ralph Lauren",
-    "description": "Очень классная, вышитый логотип на груди. Есть шнурки на капюшоне, два кармана на груди. Все фурнитуры на месте. Размер по бирке: L. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4800,
-      "USD": 56,
-      "product_type": "stock",
-      "size_stock": {
-        "L-XL": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L",
-      "actual_size_raw": "L - XL",
-      "extra_photos_url": "https://t.me/mestniystore/11737"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "size_stock": {
-      "L-XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11737",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c794c36d.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e70939fb.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_af014d2a.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_99b2c3b8.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0561ec0a.jpg"
-    ],
-    "created_at": "2026-09-08T05:45:01.983846"
-  },
-  {
     "id": 347,
     "category_id": 6,
     "brand": "stone_island",
