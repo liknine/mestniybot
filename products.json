@@ -4760,5 +4760,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3c934cb0.jpg"
     ],
     "created_at": "2026-09-14 07:23:17.118958"
+  },
+  {
+    "id": 376,
+    "category_id": 10,
+    "brand": "jordan",
+    "name": "Сумка Jordan 23 Monogram",
+    "description": "Очень классный дизайн, за счёт монограмных 23 по всей сумке. Есть дополнительный передний карман, основной, и внутри основного есть дополнительный. Размер: Ширина: 31 ; Высота: 13.5 ; Толщина 7. Состояние: Идеальное, без нюансов. Оригинал.",
+    "price_byn": 170.0,
+    "prices": {
+      "BYN": 170.0,
+      "RUB": 5300,
+      "USD": 63,
+      "product_type": "stock",
+      "size_stock": {
+        "ONE SIZE": 1
+      },
+      "condition": "Идеальное",
+      "tag_size": "ONE SIZE",
+      "actual_size_raw": null,
+      "extra_photos_url": "https://t.me/mestniystore/11857"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Идеальное",
+    "extra_photos_url": "https://t.me/mestniystore/11857",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_309e74b8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3947664b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_669a4b0e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_226f47df.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_31c94c89.jpg"
+    ],
+    "created_at": "2026-09-14 08:32:48.987278"
   }
 ]
