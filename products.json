@@ -4840,5 +4840,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b7f2f462.jpg"
     ],
     "created_at": "2026-09-16 12:21:59.643028"
+  },
+  {
+    "id": 383,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Зип - Худи C.P. Company Goggle",
+    "description": "Очень приятный, плотный материал. Есть два кармана спереди. Размер по бирке: XL. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 420.0,
+    "prices": {
+      "BYN": 420.0,
+      "RUB": 12300,
+      "USD": 157,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XL",
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/11895"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11895",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ddad274a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b201f93d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1507540a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4385d54e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_213f3953.jpg"
+    ],
+    "created_at": "2026-09-16 13:17:41.467836"
   }
 ]
