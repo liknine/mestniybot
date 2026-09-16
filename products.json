@@ -4680,5 +4680,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b024aefc.jpg"
     ],
     "created_at": "2026-09-16 06:27:31.276842"
+  },
+  {
+    "id": 378,
+    "category_id": 2,
+    "brand": "tommy_hilfiger",
+    "name": "Пуховик Tommy Hilfiger",
+    "description": "Очень крутой, мягкий, сильно набит пухом. Размер по бирке: М. Спереди в разных цветах, есть два кармана спереди, внутри, на горле флис, есть вышитый логотип на левой части груди, и резиновый логотип на левом рукаве. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 300.0,
+    "prices": {
+      "BYN": 300.0,
+      "RUB": 9000,
+      "USD": 112,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/11869"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11869",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_12672597.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a0761752.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8f3b9b75.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_745b0417.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_79a9dddf.jpg"
+    ],
+    "created_at": "2026-09-16 06:28:30.554513"
   }
 ]
