@@ -4720,5 +4720,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_79a9dddf.jpg"
     ],
     "created_at": "2026-09-16 06:28:30.554513"
+  },
+  {
+    "id": 379,
+    "category_id": 5,
+    "brand": "weekend_offender",
+    "name": "Поло Weekend Offender",
+    "description": "Очень приятный цвет, база, с воротником. Резиновый принт на груди. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 65.0,
+    "prices": {
+      "BYN": 65.0,
+      "RUB": 2400,
+      "USD": 24,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S",
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/11874"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11874",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_54c05e0e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_315a88da.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9866acc8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_698f46d3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f13d16b3.jpg"
+    ],
+    "created_at": "2026-09-16 06:35:07.359878"
   }
 ]
