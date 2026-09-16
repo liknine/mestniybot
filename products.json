@@ -4880,5 +4880,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_213f3953.jpg"
     ],
     "created_at": "2026-09-16 13:17:41.467836"
+  },
+  {
+    "id": 384,
+    "category_id": 5,
+    "brand": "lonsdale",
+    "name": "Футболка Lonsdale",
+    "description": "Очень приятный, материал. Большой принт на груди, и маленький принт на забрей части шеи. Размер по бирке: XL. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 55.0,
+    "prices": {
+      "BYN": 55.0,
+      "RUB": 2100,
+      "USD": 20,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XL",
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/11900"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11900",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4b75d318.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e4f5a2e0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_adb97829.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_73260473.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_05780dc6.jpg"
+    ],
+    "created_at": "2026-09-16 13:32:51.195168"
   }
 ]
