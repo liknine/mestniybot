@@ -1,5 +1,35 @@
 [
   {
+    "id": 16,
+    "user_id": "1639462053",
+    "status": "accepted",
+    "total": 600.0,
+    "currency": "BYN",
+    "delivery": "CDEK",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-1639462053-1789761267294-xtpxef",
+    "created_at": "2026-09-18T19:54:27.464312",
+    "updated_at": "2026-09-18T19:54:27.463110",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 265,
+        "brand": "Raf Simons",
+        "name": "Кроссовки Raf Simons Ultrasceptre",
+        "size": "40",
+        "qty": 1,
+        "unit_price": 600.0,
+        "old_unit_price": 600.0,
+        "image": "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53032cda.jpg"
+      }
+    ]
+  },
+  {
     "id": 15,
     "user_id": "1639462053",
     "status": "accepted",
