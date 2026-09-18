@@ -10,9 +10,9 @@ const BONUS_RULES=[
   {max:Infinity,rate:3.5}
 ];
 const BONUS_TRANSACTIONS=[];
-const state={screen:'home',previous:'catalog',catalogSection:'clothing',catalogScrollY:0,favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'newest',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
+const state={screen:'home',previous:'catalog',catalogSection:'clothing',catalogScrollY:0,favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'daily',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_percent_bonuses_v1';
+const BUILD_VERSION='mestniy_daily_catalog_v1';
 const ADMIN_IDS=[1639462053,8465820993];
 const BOT_USERNAME='testmestniybot';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
@@ -674,10 +674,45 @@ function updateFilterButton(){
   button.innerHTML=count?`ФИЛЬТРЫ <span>(${count})</span>`:'ФИЛЬТРЫ&nbsp;&nbsp;+';
 }
 const SORT_OPTIONS={
+  daily:{label:'ПОРЯДОК НА СЕГОДНЯ',short:'СЕГОДНЯ'},
   newest:{label:'ПО НОВИЗНЕ',short:'НОВИЗНА'},
   price_desc:{label:'СНАЧАЛА ДОРОЖЕ',short:'ДОРОЖЕ'},
   price_asc:{label:'СНАЧАЛА ДЕШЕВЛЕ',short:'ДЕШЕВЛЕ'}
 };
+const DAILY_CATALOG_TIME_ZONE='Europe/Minsk';
+function catalogDayKey(now=new Date()){
+  try{
+    const parts=new Intl.DateTimeFormat('en-CA',{timeZone:DAILY_CATALOG_TIME_ZONE,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+    const values={};
+    for(const part of parts)if(part.type!=='literal')values[part.type]=part.value;
+    if(values.year&&values.month&&values.day)return `${values.year}-${values.month}-${values.day}`;
+  }catch(_e){}
+  const minsk=new Date(now.getTime()+3*60*60*1000);
+  return `${minsk.getUTCFullYear()}-${String(minsk.getUTCMonth()+1).padStart(2,'0')}-${String(minsk.getUTCDate()).padStart(2,'0')}`;
+}
+function stableCatalogHash(value){
+  const text=String(value??'');
+  let hash=2166136261;
+  for(let i=0;i<text.length;i++){
+    hash^=text.charCodeAt(i);
+    hash=Math.imul(hash,16777619);
+  }
+  hash+=hash<<13;hash^=hash>>>7;hash+=hash<<3;hash^=hash>>>17;hash+=hash<<5;
+  return hash>>>0;
+}
+function dailyCatalogSeed(section=state.catalogSection,now=new Date()){
+  return `${String(state.profile?.id||'guest')}|${catalogDayKey(now)}|${String(section||'all')}|`;
+}
+function dailyCatalogRank(product,seed=dailyCatalogSeed(product?.section)){
+  return stableCatalogHash(`${seed}${String(product?.id??product?.code??'')}`);
+}
+function compareDailyCatalogEntries(a,b,seed=dailyCatalogSeed()){
+  const aRank=dailyCatalogRank(a.p,seed),bRank=dailyCatalogRank(b.p,seed);
+  if(aRank!==bRank)return aRank-bRank;
+  const aId=String(a.p?.id??a.p?.code??''),bId=String(b.p?.id??b.p?.code??'');
+  return aId<bId?-1:aId>bId?1:0;
+}
+
 function updateSortButton(){
   const button=document.getElementById('sortBtn');if(!button)return;
   const option=SORT_OPTIONS[state.sortMode]||SORT_OPTIONS.newest;
@@ -739,7 +774,8 @@ function renderCatalog(){
     .filter(({p})=>state.filters.size==='all'||availableSizes(p).includes(state.filters.size))
     .filter(({p})=>matchesPriceRange(p,state.filters))
     .filter(({p})=>!q||`${p.code} ${p.brand} ${p.desc} ${p.name}`.toLowerCase().includes(q));
-  list.sort((a,b)=>state.sortMode==='price_asc'?productDisplayPrice(a.p)-productDisplayPrice(b.p):state.sortMode==='price_desc'?productDisplayPrice(b.p)-productDisplayPrice(a.p):(Number(b.p.sortKey)||0)-(Number(a.p.sortKey)||0));
+  const dailySeed=dailyCatalogSeed(state.catalogSection);
+  list.sort((a,b)=>state.sortMode==='price_asc'?productDisplayPrice(a.p)-productDisplayPrice(b.p):state.sortMode==='price_desc'?productDisplayPrice(b.p)-productDisplayPrice(a.p):state.sortMode==='newest'?(Number(b.p.sortKey)||0)-(Number(a.p.sortKey)||0):compareDailyCatalogEntries(a,b,dailySeed));
   updateSortButton();
   if(list.length){grid.innerHTML=list.map(x=>productCard(x.p,x.i)).join('');return}
   if(q){grid.innerHTML=emptyStateMarkup({type:'search',title:'НИЧЕГО НЕ НАЙДЕНО',text:`По запросу «${escapeHtml(input.value.trim())}» товаров нет. Попробуйте изменить запрос.`,action:'СБРОСИТЬ ПОИСК',actionAttr:'data-reset-search'});return}
@@ -1174,9 +1210,16 @@ async function initApp(){
     loadPersistedState();
     renderHomeNews();
     renderCurrencySwitch();updateFilterButton();syncBonusBalance();updateSortButton();renderCatalog();renderFavorites();renderCart();renderProfileSummary();renderOrders();renderBonuses();
+    let dailyCatalogDay=catalogDayKey();
     setTimeout(()=>refreshIdentityAndRemoteData(),180);
     setTimeout(()=>refreshIdentityAndRemoteData(),900);
     setInterval(()=>refreshIdentityAndRemoteData(),30000);
+    setInterval(()=>{
+      const nextDay=catalogDayKey();
+      if(nextDay===dailyCatalogDay)return;
+      dailyCatalogDay=nextDay;
+      if(state.sortMode==='daily'&&state.screen==='catalog')renderCatalog();
+    },60000);
   }catch(error){console.error('MESTNIY frontend init error',error);state.dataError='catalog-error';renderCatalog()}
   finally{loader?.classList.add('hidden');setTimeout(()=>loader?.remove(),350)}
 }
