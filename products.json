@@ -175,41 +175,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 106,
-    "category_id": 2,
-    "brand": "Levi’s",
-    "name": "Куртка Levi’s Denim",
-    "description": "Очень приятная курточка, классный дизайн, в стиле темной джинсы. Внутри клетчатая. Содержит два кармана на груди. Размер по бирке: XL. Все бирки на месте. Состояние: Отличное, без нюансов.",
-    "price_byn": 90.0,
-    "prices": {
-      "BYN": 90.0,
-      "RUB": 3100,
-      "USD": 33,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9058"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "size_stock": {
-      "XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9058",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_106_2fb42939.jpg",
-      "https://liknine.github.io/mestniybot/images/product_106_b3c72427.jpg",
-      "https://liknine.github.io/mestniybot/images/product_106_ac932d35.jpg",
-      "https://liknine.github.io/mestniybot/images/product_106_14241e95.jpg",
-      "https://liknine.github.io/mestniybot/images/product_106_2f00c2f7.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 108,
     "category_id": 9,
     "brand": "Weekend Offender",
