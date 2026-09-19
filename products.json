@@ -5092,5 +5092,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c7a7df06.jpg"
     ],
     "created_at": "2026-09-19 06:21:09.349083"
+  },
+  {
+    "id": 396,
+    "category_id": 5,
+    "brand": "fred_perry",
+    "name": "Футболка Fred Perry",
+    "description": "Очень классная, приятный материал. Крутой дизайн за счёт необычных манжетов на рукавах. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 50.0,
+    "prices": {
+      "BYN": 50.0,
+      "RUB": 2000,
+      "USD": 18,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": null,
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/11968"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/11968",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ccd76e54.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_88d72bdb.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4628cb6e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f54a2f77.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e8b54429.jpg"
+    ],
+    "created_at": "2026-09-19 07:33:07.934429"
   }
 ]
