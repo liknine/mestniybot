@@ -245,41 +245,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 115,
-    "category_id": 6,
-    "brand": "Lonsdale",
-    "name": "Свитшот Lonsdale",
-    "description": "Крутой дизайн, имеет вышитый логотип спереди на груди, две полоски идущие вдоль рукавов, два кармана спереди на груди. Размер по бирке: S. Состояние: Отличное, без нюансов.",
-    "price_byn": 140.0,
-    "prices": {
-      "BYN": 140.0,
-      "RUB": 4500.0,
-      "USD": 52.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/9537"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "size_stock": {
-      "M-L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/9537",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_115_0229141e.jpg",
-      "https://liknine.github.io/mestniybot/images/product_115_afd97a90.jpg",
-      "https://liknine.github.io/mestniybot/images/product_115_282c9bec.jpg",
-      "https://liknine.github.io/mestniybot/images/product_115_4ca0e5b1.jpg",
-      "https://liknine.github.io/mestniybot/images/product_115_d3d71437.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 120,
     "category_id": 8,
     "brand": "Mind Error",
