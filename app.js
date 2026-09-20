@@ -12,7 +12,7 @@ const BONUS_RULES=[
 const BONUS_TRANSACTIONS=[];
 const state={screen:'home',previous:'catalog',catalogSection:'clothing',catalogScrollY:0,favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'daily',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
 
-const BUILD_VERSION='mestniy_daily_catalog_v1';
+const BUILD_VERSION='mestniy_size_filter_v1';
 const ADMIN_IDS=[1639462053,8465820993];
 const BOT_USERNAME='testmestniybot';
 const BRAND_LABELS={"a_bathing_ape":"A Bathing Ape","aape":"Aape","acne_studios":"Acne Studios","acronym":"Acronym","adidas":"Adidas","alpha_industries":"Alpha Industries","alyx":"ALYX","amiri":"Amiri","aquascutum":"Aquascutum","arcteryx":"Arcteryx","armani_exchange":"Armani Exchange","asics":"ASICS","balenciaga":"Balenciaga","barbour":"Barbour","berghaus":"Berghaus","bershka":"Bershka","billabong":"Billabong","burberry":"Burberry","calvin_klein":"Calvin Klein","carhartt":"Carhartt","champion":"Champion","columbia":"Columbia","comme_des_fuckdown":"Comme des Fuckdown","comme_des_garcons":"Comme des Garçons","cp_company":"C.P. Company","diesel":"Diesel","dobermans":"Dobermans Aggressive","doctor_martens":"Doctor Martens","eastpak":"Eastpak","ellesse":"Ellesse","fila":"Fila","fred_perry":"Fred Perry","fucking_awesome":"Fucking Awesome","gap":"Gap","ggl":"GGL","gosha":"Гоша Рубчинский","gucci":"Gucci","haglofs":"Haglofs","hardcore":"Hardcore","hermes":"Hermes","jordan":"Jordan","lacoste":"Lacoste","levis":"Levi's","lonsdale":"Lonsdale","louis_vuitton":"Louis Vuitton","lyle_scott":"Lyle & Scott","maison_margiela":"Maison Margiela","mastrum":"Ma.Strum","mcm":"MCM","merrell":"Merrell","moncler":"Moncler","mowalola":"Mowalola","napapijri":"NAPAPIJRI","new_balance":"New Balance","nike":"Nike","no_name":"No Name","north_face":"The North Face","number_nine":"Number Nine","off_white":"Off-White","palace":"Palace","peaceful_hooligan":"Peaceful Hooligan","pitbull":"Pitbull Germany","polar":"Polar","polo_ralph_lauren":"Polo Ralph Lauren","prada":"Prada","puma":"Puma","raf_simons":"Raf Simons","reebok":"Reebok","rick_owens":"Rick Owen's","sergio_tacchini":"Sergio Tacchini","stone_island":"Stone Island","stussy":"Stussy","supreme":"Supreme","thor_steinar":"Thor Steinar","timberland":"Timberland","tommy_hilfiger":"Tommy Hilfiger","trapstar":"Trapstar","true_religion":"True Religion","tupac":"Tupac","vetements":"Vetements","vivienne_westwood":"Vivienne Westwood","weekend_offender":"WEEKEND OFFENDER","yeezy":"Yeezy","zara":"Zara"};
@@ -625,6 +625,25 @@ function emptyStateMarkup({type='box',title='ПОКА ПУСТО',text='',action
   return `<section class="empty-state ${className}"><span class="empty-state-icon">${emptyIcon(type)}</span><h2>${title}</h2>${text?`<p>${text}</p>`:''}${primary||second?`<div class="empty-state-actions">${primary}${second}</div>`:''}</section>`;
 }
 function availableSizes(p){const blocked=new Set(p?.unavailableSizes||[]);return (p?.sizes||[]).filter(size=>!blocked.has(size))}
+const CLOTHING_FILTER_ATOMIC_SIZES=new Set(['XXS','XS','S','M','L','XL','XXL','XXXL','4XL','5XL']);
+function normalizeCatalogFilterSize(value){return String(value??'').trim().toUpperCase().replace(/[–—]/g,'-').replace(/\s*-\s*/g,'-').replace(/\s*\/\s*/g,'/')}
+function catalogSizeAliases(size,section='clothing'){
+  const normalized=normalizeCatalogFilterSize(size);
+  if(!normalized)return [];
+  if(section!=='clothing')return [normalized];
+  const parts=normalized.split(/[-/]/).map(part=>part.trim()).filter(Boolean);
+  if(parts.length===2&&parts.every(part=>CLOTHING_FILTER_ATOMIC_SIZES.has(part)))return [normalized,...parts];
+  return [normalized];
+}
+function catalogSizeMatches(stockSize,selectedSize,section='clothing'){
+  const selected=normalizeCatalogFilterSize(selectedSize);
+  if(!selected||selected==='ALL')return true;
+  return catalogSizeAliases(stockSize,section).includes(selected);
+}
+function productMatchesCatalogSize(product,selectedSize){
+  if(!selectedSize||selectedSize==='all')return true;
+  return availableSizes(product).some(size=>catalogSizeMatches(size,selectedSize,product?.section));
+}
 function productSoldOut(p){return availableSizes(p).length===0}
 function productCard(p,index,mode='catalog'){
   const favorite=state.favorites.has(String(p.id)),soldOut=productSoldOut(p);
@@ -732,10 +751,12 @@ function filterChip({label,value,key}){
   return `<button class="filter-chip ${selected?'active':''}" data-filter-key="${key}" data-filter-value="${value}">${label}</button>`;
 }
 function categoryFilterSizes(category,filters=state.filterDraft||state.filters){
-  if(!category||category==='all'||category==='sale')return [];
-  const sizeOrder=['XXS','XS','S','S-M','M','M-L','L','L-XL','XL','XXL','XXXL','UNI','ONE SIZE'];
-  const source=PRODUCTS.filter(product=>product.section===state.catalogSection&&productCategory(product)===category);
-  return [...new Set(source.flatMap(product=>availableSizes(product)))].sort((a,b)=>{
+  const sizeOrder=['XXS','XS','S','S-M','M','M-L','L','L-XL','XL','XL-XXL','XXL','XXL-XXXL','XXXL','4XL','5XL','UNI','ONE SIZE'];
+  let source=PRODUCTS.filter(product=>product.section===state.catalogSection);
+  if(category==='sale')source=source.filter(product=>hasDiscount(product));
+  else if(category&&category!=='all')source=source.filter(product=>productCategory(product)===category);
+  const sizes=source.flatMap(product=>availableSizes(product).flatMap(size=>catalogSizeAliases(size,product.section)));
+  return [...new Set(sizes)].sort((a,b)=>{
     const na=Number(a),nb=Number(b);
     if(Number.isFinite(na)&&Number.isFinite(nb))return na-nb;
     const ai=sizeOrder.indexOf(String(a).toUpperCase()),bi=sizeOrder.indexOf(String(b).toUpperCase());
@@ -749,9 +770,9 @@ function renderFilterDrawer(){
   const sizes=categoryFilterSizes(selectedCategory,state.filterDraft);
   if(state.filterDraft.size!=='all'&&!sizes.includes(state.filterDraft.size))state.filterDraft.size='all';
   const categoryOptions=[['ВСЕ ТОВАРЫ','all'],...Object.entries(CATEGORY_LABELS).filter(([value])=>PRODUCTS.some(product=>product.section===state.catalogSection&&productCategory(product)===value)).map(([value,label])=>[label,value]),['ТОВАРЫ СО СКИДКОЙ','sale']];
-  const sizePanel=(selectedCategory==='all'||selectedCategory==='sale')
-    ? `<button type="button" class="category-size-warning" disabled>ВЫБЕРИТЕ КАТЕГОРИЮ ДЛЯ ВЫБОРА НЕОБХОДИМЫХ РАЗМЕРОВ!</button>`
-    : `<div class="filter-chips">${filterChip({label:'ВСЕ',value:'all',key:'size'})}${sizes.map(size=>filterChip({label:size,value:size,key:'size'})).join('')}</div>`;
+  const sizePanel=sizes.length
+    ? `<div class="filter-chips">${filterChip({label:'ВСЕ',value:'all',key:'size'})}${sizes.map(size=>filterChip({label:size,value:size,key:'size'})).join('')}</div>`
+    : '';
   const categories=`<div class="filter-section"><p class="filter-section-title">Категория</p>${categoryOptions.map(([label,value])=>filterChoice({label,value,key:'category'})).join('')}</div>
   <div class="filter-section"><p class="filter-section-title">Размер</p>${sizePanel}</div>
   <div class="filter-section"><p class="filter-section-title">Цена</p><div class="price-range"><label class="price-range-field"><span>ОТ</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="0" value="${state.filterDraft.priceMin||''}" data-price-filter="priceMin"><b>${state.currency}</b></div></label><label class="price-range-field"><span>ДО</span><div><input type="text" inputmode="numeric" autocomplete="off" placeholder="БЕЗ ОГРАНИЧЕНИЯ" value="${state.filterDraft.priceMax||''}" data-price-filter="priceMax"><b>${state.currency}</b></div></label></div></div>`;
@@ -771,7 +792,7 @@ function renderCatalog(){
     .filter(x=>!productSoldOut(x.p))
     .filter(({p})=>state.filters.category==='all'||(state.filters.category==='sale'?hasDiscount(p):productCategory(p)===state.filters.category))
     .filter(({p})=>state.filters.brand==='all'||p.brand===state.filters.brand)
-    .filter(({p})=>state.filters.size==='all'||availableSizes(p).includes(state.filters.size))
+    .filter(({p})=>productMatchesCatalogSize(p,state.filters.size))
     .filter(({p})=>matchesPriceRange(p,state.filters))
     .filter(({p})=>!q||`${p.code} ${p.brand} ${p.desc} ${p.name}`.toLowerCase().includes(q));
   const dailySeed=dailyCatalogSeed(state.catalogSection);
@@ -1146,7 +1167,7 @@ document.addEventListener('click',e=>{
   const rem=e.target.closest('[data-remove]');if(rem){state.cart.splice(Number(rem.dataset.remove),1);persistState();renderCart();return}
   const qty=e.target.closest('[data-qty]');if(qty){const item=state.cart[Number(qty.dataset.index)];if(item){item.qty=Math.max(1,item.qty+Number(qty.dataset.qty));persistState();renderCart()}return}
   const filterTab=e.target.closest('[data-filter-tab]');if(filterTab){state.filterTab=filterTab.dataset.filterTab;renderFilterDrawer();return}
-  const filterChoiceButton=e.target.closest('[data-filter-key]');if(filterChoiceButton){if(!state.filterDraft)state.filterDraft={...state.filters};const key=filterChoiceButton.dataset.filterKey;state.filterDraft[key]=filterChoiceButton.dataset.filterValue;if(key==='category')state.filterDraft.size='all';renderFilterDrawer();return}
+  const filterChoiceButton=e.target.closest('[data-filter-key]');if(filterChoiceButton){if(!state.filterDraft)state.filterDraft={...state.filters};const key=filterChoiceButton.dataset.filterKey;state.filterDraft[key]=filterChoiceButton.dataset.filterValue;renderFilterDrawer();return}
   if(e.target.closest('[data-filter-reset]')){state.filterDraft=defaultFilters();renderFilterDrawer();return}
   if(e.target.closest('[data-apply-filter]')){state.filters=normalizePriceRange(state.filterDraft||state.filters);state.filterDraft=null;closeDrawer();renderCatalog();showToast('Фильтры применены');return}
   const adminDelete=e.target.closest('[data-admin-delete-product]');if(adminDelete){if(!isAdminUser())return;openDeleteCommand(adminDelete.dataset.productId||PRODUCTS[state.selectedProduct]?.id);return}
