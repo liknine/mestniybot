@@ -4461,52 +4461,6 @@
     "created_at": "2026-09-17T16:05:24.678485"
   },
   {
-    "id": 389,
-    "category_id": 2,
-    "brand": "cp_company",
-    "name": "Куртка C.P. Company GD Shell Goggle",
-    "description": "Абсолютно новая, есть этикетки, в комплекте лежат запасные заклёпки, линзы в плёнках. Внутри утеплена, двойной капюшон. Некоторое время отталкивает воду, как гортекс. Размеры по бирке: 46 ( S ) ; 48 ( M ) ; 50 ( L ). Оригинал.",
-    "price_byn": 1050.0,
-    "prices": {
-      "BYN": 1050.0,
-      "RUB": 30000,
-      "USD": 393,
-      "product_type": "stock",
-      "size_stock": {
-        "S": 1,
-        "M": 1,
-        "L": 1
-      },
-      "condition": "Новое! ( с этикетками, доп. заклёпками, линзы в плёнке )",
-      "tag_size": "S, M, L",
-      "actual_size_raw": null,
-      "extra_photos_url": "https://t.me/mestniystore/11932"
-    },
-    "sizes": [
-      "S",
-      "M",
-      "L"
-    ],
-    "size_stock": {
-      "S": 1,
-      "M": 1,
-      "L": 1
-    },
-    "stock": 3,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое! ( с этикетками, доп. заклёпками, линзы в плёнке )",
-    "extra_photos_url": "https://t.me/mestniystore/11932",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0972c5ae.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_feea70e6.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7aaa04c9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5fd80652.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08363899.jpg"
-    ],
-    "created_at": "2026-09-18T06:26:40.323392"
-  },
-  {
     "id": 391,
     "category_id": 7,
     "brand": "stone_island",
