@@ -280,41 +280,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 118,
-    "category_id": 2,
-    "brand": "Weekend Offender",
-    "name": "Овершот Weekend Offender НОВЫЙ",
-    "description": "Абсолютно новый, с этикетками. Есть вышитый логотип спереди, сзади, а также два передних кармана. Снизу утягивается, есть встроенные шнурки для этого. Все бирки на месте. Состояние: Новое.",
-    "price_byn": 170.0,
-    "prices": {
-      "BYN": 170.0,
-      "RUB": 5300,
-      "USD": 63,
-      "product_type": "stock",
-      "condition": "Новое",
-      "extra_photos_url": "https://t.me/mestniystore/9592"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое",
-    "extra_photos_url": "https://t.me/mestniystore/9592",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_118_d1e45c3d.jpg",
-      "https://liknine.github.io/mestniybot/images/product_118_101ad61b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_118_eb9080be.jpg",
-      "https://liknine.github.io/mestniybot/images/product_118_46d7d342.jpg",
-      "https://liknine.github.io/mestniybot/images/product_118_3df48064.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 120,
     "category_id": 8,
     "brand": "Mind Error",
