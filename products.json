@@ -3862,46 +3862,6 @@
     "created_at": "2026-09-13T21:28:40.619914"
   },
   {
-    "id": 375,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Худи Stone Island Junior",
-    "description": "Очень приятный, плотный материал. Есть карман спереди. Продажа с оригинальным патчем. Размер по бирке: 14/170. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8400,
-      "USD": 104,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "14/170",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/11852"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11852",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_698eb9fd.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3d5ec320.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ce6a3b66.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9183d700.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3c934cb0.jpg"
-    ],
-    "created_at": "2026-09-14T07:23:17.118958"
-  },
-  {
     "id": 377,
     "category_id": 9,
     "brand": "cp_company",
