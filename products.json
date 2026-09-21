@@ -3707,46 +3707,6 @@
     "created_at": "2026-09-13T12:48:41.367877"
   },
   {
-    "id": 374,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Зип - Худи Stone Island",
-    "description": "Лёгкая кофта. Продажа с оригинальным патчем. Есть два кармана спереди. Размер по бирке: M. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
-    "price_byn": 500.0,
-    "prices": {
-      "BYN": 500.0,
-      "RUB": 14600,
-      "USD": 187,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "M",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/11847"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11847",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_751fcd28.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_24c97876.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f6a0c22b.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_204b223e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_28bb32b3.jpg"
-    ],
-    "created_at": "2026-09-13T21:28:40.619914"
-  },
-  {
     "id": 377,
     "category_id": 9,
     "brand": "cp_company",
