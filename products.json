@@ -3515,46 +3515,6 @@
     "created_at": "2026-09-17T13:03:27.402925"
   },
   {
-    "id": 388,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Свитшот C.P. Company",
-    "description": "Абсолютно новый, с этикетками, заклёпки. Базовый, есть карман на левом рукаве, на котором расположена линза. Размер по бирке: S. Состояние: Новое. Оригинал.",
-    "price_byn": 350.0,
-    "prices": {
-      "BYN": 350.0,
-      "RUB": 10400,
-      "USD": 131,
-      "product_type": "stock",
-      "size_stock": {
-        "S": 1
-      },
-      "condition": "Новое! ( с этикетками, доп. заклёпками )",
-      "tag_size": "S",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/11927"
-    },
-    "sizes": [
-      "S"
-    ],
-    "size_stock": {
-      "S": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Новое! ( с этикетками, доп. заклёпками )",
-    "extra_photos_url": "https://t.me/mestniystore/11927",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_70a94c6a.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c375ed79.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bfa56fab.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bfde766b.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_525229de.jpg"
-    ],
-    "created_at": "2026-09-17T16:05:24.678485"
-  },
-  {
     "id": 391,
     "category_id": 7,
     "brand": "stone_island",
