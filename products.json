@@ -3999,45 +3999,5 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_54faac2d.jpg"
     ],
     "created_at": "2026-09-24T10:06:12.736840"
-  },
-  {
-    "id": 404,
-    "category_id": 5,
-    "brand": "burberry",
-    "name": "Футболка Burberry",
-    "description": "Очень классная, приятный материал. Резиновый логотип. Размер по бирке: XS. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
-    "price_byn": 200.0,
-    "prices": {
-      "BYN": 200.0,
-      "RUB": 6200,
-      "USD": 74,
-      "product_type": "stock",
-      "size_stock": {
-        "XS": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "XS",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12024"
-    },
-    "sizes": [
-      "XS"
-    ],
-    "size_stock": {
-      "XS": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12024",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3a404264.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d02a65c2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_985c8c01.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4fa1e093.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3ad0eb9c.jpg"
-    ],
-    "created_at": "2026-09-25T11:30:36.917045"
   }
 ]
