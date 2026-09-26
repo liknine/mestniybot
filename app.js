@@ -132,6 +132,47 @@ async function fetchJsonOptional(path,fallback=[]){
     throw error;
   }
 }
+let catalogRefreshPending=null;
+let catalogRefreshedAt=0;
+function validateCatalogPayload(raw){
+  if(!Array.isArray(raw)||raw.some(item=>!item||typeof item!=='object'||!Number.isInteger(Number(item.id))||!Array.isArray(item.sizes)))throw new Error('Invalid catalog payload');
+  if(new Set(raw.map(item=>String(item.id))).size!==raw.length)throw new Error('Duplicate catalog IDs');
+  return raw;
+}
+async function fetchCatalog(){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),10000);
+  try{
+    const response=await fetch(`products.json?v=${Date.now()}`,{cache:'no-store',signal:controller.signal});
+    if(!response.ok)throw new Error(`Catalog: HTTP ${response.status}`);
+    return validateCatalogPayload(await response.json());
+  }finally{clearTimeout(timeout)}
+}
+async function refreshCatalogFromServer({force=false}={}){
+  // Detail buttons use array indices; update when returning to catalog so an
+  // open product or checkout cannot silently switch to a different item.
+  if(document.hidden||['product','checkout','cart'].includes(state.screen))return false;
+  if(catalogRefreshPending)return catalogRefreshPending;
+  if(!force&&Date.now()-catalogRefreshedAt<5000)return false;
+  catalogRefreshedAt=Date.now();
+  catalogRefreshPending=(async()=>{
+    try{
+      const raw=await fetchCatalog();
+      if(['product','checkout','cart'].includes(state.screen))return false;
+      const changed=JSON.stringify(PRODUCTS.map(item=>item.raw))!==JSON.stringify(raw);
+      if(!changed&&!state.dataError)return true;
+      const selectedId=PRODUCTS[state.selectedProduct]?.id;
+      PRODUCTS=raw.map(normalizeSourceProduct);
+      if(selectedId!==undefined)state.selectedProduct=productIndexById(selectedId);
+      state.dataError=null;
+      renderCatalog();renderFavorites();
+      updateCounts();
+      return true;
+    }catch(error){console.error('Catalog refresh failed',error);return false}
+    finally{catalogRefreshPending=null}
+  })();
+  return catalogRefreshPending;
+}
 function orderDateLabel(value){
   const date=new Date(value||Date.now());
   if(Number.isNaN(date.getTime()))return 'Дата не указана';
@@ -249,7 +290,7 @@ async function refreshBonusesFromServer({silent=true}={}){
 async function loadStoreData(){
   const userId=String(state.profile?.id||'');
   const results=await Promise.allSettled([
-    fetchJson('products.json'),
+    fetchCatalog(),
     fetchJson('updates.json'),
     userId?fetchJsonOptional('orders_public.json',[]):Promise.resolve([]),
     userId?fetchJsonOptional('bonuses_public.json',[]):Promise.resolve([]),
@@ -398,16 +439,18 @@ function applyTelegramProfile(){
   return profile;
 }
 async function refreshIdentityAndRemoteData(){
+  const catalogRefresh=refreshCatalogFromServer();
   const previousId=String(state.profile?.id||'');
   const profile=applyTelegramProfile();
   const currentId=String(profile?.id||'');
-  if(!currentId)return false;
+  if(!currentId)return catalogRefresh;
   if(previousId!==currentId){
     REMOTE_ORDERS=[];
     state.bonusBalance=0;
     state.bonusTransactions=[];
   }
   await Promise.allSettled([
+    catalogRefresh,
     refreshOrdersFromServer({silent:true}),
     refreshBonusesFromServer({silent:true})
   ]);
@@ -554,6 +597,7 @@ function showScreen(name, push=true){
 
   if(name==='home') renderHomeNews();
   if(name==='catalog'&&!returningToCatalog) renderCatalog();
+  if(name==='catalog')refreshCatalogFromServer();
   if(name==='favorites') renderFavorites();
   if(name==='cart') renderCart();
   if(name==='checkout') renderCheckout();
