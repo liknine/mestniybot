@@ -3973,7 +3973,7 @@
       "USD": 74,
       "product_type": "stock",
       "size_stock": {
-        "L": 1
+        "XL": 1
       },
       "condition": "Отличное",
       "tag_size": "L",
@@ -3981,10 +3981,10 @@
       "extra_photos_url": "https://t.me/mestniystore/12039"
     },
     "sizes": [
-      "L"
+      "XL"
     ],
     "size_stock": {
-      "L": 1
+      "XL": 1
     },
     "stock": 1,
     "product_type": "stock",
