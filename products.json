@@ -105,41 +105,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 98,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Худи Stone Island Patch Program",
-    "description": "Базовый худи в очень приятном светлом цвете. Простой дизайн, содержащий небольшой логотип на груди, карман спереди. Размер по бирке: S. Фактический размер: S - M. Состояние: Отличное, без нюансов.",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 9000,
-      "USD": 112,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/8774"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/8774",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_98_c9d110e2.jpg",
-      "https://liknine.github.io/mestniybot/images/product_98_958222e4.jpg",
-      "https://liknine.github.io/mestniybot/images/product_98_83524641.jpg",
-      "https://liknine.github.io/mestniybot/images/product_98_b84f6eb0.jpg",
-      "https://liknine.github.io/mestniybot/images/product_98_297da862.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 108,
     "category_id": 9,
     "brand": "Weekend Offender",
