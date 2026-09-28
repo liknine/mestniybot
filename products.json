@@ -3322,8 +3322,7 @@
       "product_type": "stock",
       "size_stock": {
         "M": 1,
-        "L": 1,
-        "XL": 1
+        "L": 1
       },
       "condition": "Новое! ( с этикетками, пакетами )",
       "tag_size": "M, L, XL",
@@ -3332,15 +3331,13 @@
     },
     "sizes": [
       "M",
-      "L",
-      "XL"
+      "L"
     ],
     "size_stock": {
       "M": 1,
-      "L": 1,
-      "XL": 1
+      "L": 1
     },
-    "stock": 3,
+    "stock": 2,
     "product_type": "stock",
     "section": "stock",
     "condition": "Новое! ( с этикетками, пакетами )",
