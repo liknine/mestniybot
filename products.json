@@ -3189,46 +3189,6 @@
     "created_at": "2026-09-13T12:48:41.367877"
   },
   {
-    "id": 377,
-    "category_id": 9,
-    "brand": "cp_company",
-    "name": "Шапка C.P. Company Goggle",
-    "description": "Очень классная, мягкий материал, который очень хорошо тянется. Размер по бирке: UNI. Ширина: 24.5 ; Высота: 19.5. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 330.0,
-    "prices": {
-      "BYN": 330.0,
-      "RUB": 9800,
-      "USD": 123,
-      "product_type": "stock",
-      "size_stock": {
-        "UNI": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "UNI",
-      "actual_size_raw": null,
-      "extra_photos_url": "https://t.me/mestniystore/11864"
-    },
-    "sizes": [
-      "UNI"
-    ],
-    "size_stock": {
-      "UNI": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11864",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_49856b05.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4b8141e3.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_78c8d486.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b2b23a78.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b024aefc.jpg"
-    ],
-    "created_at": "2026-09-16T06:27:31.276842"
-  },
-  {
     "id": 378,
     "category_id": 2,
     "brand": "tommy_hilfiger",
