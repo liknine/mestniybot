@@ -4048,5 +4048,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_77dcfb54.jpg"
     ],
     "created_at": "2026-10-01 09:32:42.122294"
+  },
+  {
+    "id": 418,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Худи Stone Island Off Dye",
+    "description": "Очень приятный материал, максимально красивый патч. Размер по бирке: М. Состояние: Отличное, без нюансов. Срезаны нижние бирки, кроме NFT и размерной. Оригинал.",
+    "price_byn": 950.0,
+    "prices": {
+      "BYN": 950.0,
+      "RUB": 27200,
+      "USD": 355,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/12122"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12122",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0fabe1ff.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_38784aad.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_61593b69.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0880bd2d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a16eb0be.jpg"
+    ],
+    "created_at": "2026-10-01 09:41:51.877763"
   }
 ]
