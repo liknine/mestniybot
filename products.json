@@ -4168,5 +4168,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d915b047.jpg"
     ],
     "created_at": "2026-10-01 10:51:30.914896"
+  },
+  {
+    "id": 421,
+    "category_id": 8,
+    "brand": "stone_island",
+    "name": "Шорты Stone Island Off Dye",
+    "description": "Очень приятный материал, яркий цвет. Родной, оригинальный патч. Есть два кармана спереди, карман сзади, боковой карман на замочке, где расположен патч. Размер по бирке: М. Состояние: Отличное! Есть небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 530.0,
+    "prices": {
+      "BYN": 530.0,
+      "RUB": 15400,
+      "USD": 198,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12132"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12132",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_85375179.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2432cfe6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3819c26d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_32fa8e9a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_132cdc19.jpg"
+    ],
+    "created_at": "2026-10-01 11:14:59.686928"
   }
 ]
