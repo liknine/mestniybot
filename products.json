@@ -4008,5 +4008,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a1f27e32.jpg"
     ],
     "created_at": "2026-10-01 09:04:27.648428"
+  },
+  {
+    "id": 417,
+    "category_id": 6,
+    "brand": "burberry",
+    "name": "Худи Burberry",
+    "description": "Классный, приятный материал. Вышитый логотип. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/12112"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12112",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_874357a4.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a54790e3.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6713922d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3d95199a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_77dcfb54.jpg"
+    ],
+    "created_at": "2026-10-01 09:32:42.122294"
   }
 ]
