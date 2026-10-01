@@ -3364,46 +3364,6 @@
     "created_at": "2026-09-19T06:21:09.349083"
   },
   {
-    "id": 398,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Свитшот C.P. Company",
-    "description": "Лёгкий свитшот. База, с карманом на левом рукаве, на котором расположена линза. Размер по бирке: L. Состояние: Отличное, есть небольшие следы после носок, потёрта линза, но не видно при носке, без нюансов. Оригинал.",
-    "price_byn": 250.0,
-    "prices": {
-      "BYN": 250.0,
-      "RUB": 7600,
-      "USD": 93,
-      "product_type": "stock",
-      "size_stock": {
-        "L": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L",
-      "actual_size_raw": "L",
-      "extra_photos_url": "https://t.me/mestniystore/11978"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11978",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2b186bcf.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3dd5368a.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8c79246f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b7512ed8.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a9b3f31c.jpg"
-    ],
-    "created_at": "2026-09-19T09:08:06.283659"
-  },
-  {
     "id": 399,
     "category_id": 2,
     "brand": "cp_company",
