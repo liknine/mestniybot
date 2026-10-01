@@ -4128,5 +4128,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_df472e03.jpg"
     ],
     "created_at": "2026-10-01 09:43:27.332066"
+  },
+  {
+    "id": 420,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитер Stone Island Shadow Project",
+    "description": "Очень приятный материал, максимально красивый цвет. Есть карман на груди. Размер по бирке: L. Состояние: Новое! С этикеткой. Оригинал.",
+    "price_byn": 800.0,
+    "prices": {
+      "BYN": 800.0,
+      "RUB": 23000,
+      "USD": 299,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Новое! ( с этикеткой )",
+      "tag_size": "L",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/12127"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое! ( с этикеткой )",
+    "extra_photos_url": "https://t.me/mestniystore/12127",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9a675ddc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_847fe724.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ddb0e11f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_68237054.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d915b047.jpg"
+    ],
+    "created_at": "2026-10-01 10:51:30.914896"
   }
 ]
