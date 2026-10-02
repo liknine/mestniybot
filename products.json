@@ -4090,46 +4090,6 @@
     "created_at": "2026-10-01T11:26:11.985737"
   },
   {
-    "id": 425,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Худи Stone Island",
-    "description": "Очень классный, приятный материал. Есть карман спереди. С оригинальным патчем. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 430.0,
-    "prices": {
-      "BYN": 430.0,
-      "RUB": 12600,
-      "USD": 161,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12152"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12152",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_eb02be2b.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0c5457cd.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3f70c3bd.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9af84589.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b65c8ca1.jpg"
-    ],
-    "created_at": "2026-10-01T11:52:19.997147"
-  },
-  {
     "id": 426,
     "category_id": 6,
     "brand": "stone_island",
