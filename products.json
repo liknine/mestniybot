@@ -4448,5 +4448,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b2ff686f.jpg"
     ],
     "created_at": "2026-10-02 07:32:49.489890"
+  },
+  {
+    "id": 433,
+    "category_id": 10,
+    "brand": "supreme",
+    "name": "Сумка Supreme",
+    "description": "Классная, приятная, необычный дизайн. Есть дополнительный карман сзади, маленькая бирочка Supreme сбоку, маленькая бирочка Cordura тоже сбоку. Внутри есть монограммные элементы ( около замка ). Высота: 17.5 ; Ширина: 14.5. Состояние: Новое! Оригинал.",
+    "price_byn": 270.0,
+    "prices": {
+      "BYN": 270.0,
+      "RUB": 8100,
+      "USD": 101,
+      "product_type": "stock",
+      "size_stock": {
+        "ONE SIZE": 1
+      },
+      "condition": "Новое",
+      "tag_size": "ONE SIZE ( 17.5x14.5 )",
+      "actual_size_raw": "17.5x14.5",
+      "extra_photos_url": "https://t.me/mestniystore/12177"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое",
+    "extra_photos_url": "https://t.me/mestniystore/12177",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_23d22199.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_57db6e5c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2cace372.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ef94eb75.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7f0bd4a5.jpg"
+    ],
+    "created_at": "2026-10-02 07:33:12.135513"
   }
 ]
