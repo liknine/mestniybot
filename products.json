@@ -4528,5 +4528,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bc7e6dce.jpg"
     ],
     "created_at": "2026-10-02 09:45:57.229918"
+  },
+  {
+    "id": 435,
+    "category_id": 4,
+    "brand": "cp_company",
+    "name": "Овершот C.P. Company",
+    "description": "Очень классный, приятный, плотный материал. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12187"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12187",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9ceaf460.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2b3354c0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8c94df14.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5499e017.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_41ba9951.jpg"
+    ],
+    "created_at": "2026-10-02 10:18:25.143884"
   }
 ]
