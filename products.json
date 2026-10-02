@@ -4453,5 +4453,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_dc8a0fa9.jpg"
     ],
     "created_at": "2026-10-02 12:04:01.615841"
+  },
+  {
+    "id": 437,
+    "category_id": 8,
+    "brand": "stone_island",
+    "name": "Шорты Stone Island Junior",
+    "description": "Абсолютно новые. Очень приятный цвет, необычный дизайн в виде вышитого логотипа на левой калоши. Размер по бирке: 14/170. Состояние: Новые, в комплекте с этикеткой. Оригинал.",
+    "price_byn": 230.0,
+    "prices": {
+      "BYN": 230.0,
+      "RUB": 7000,
+      "USD": 86,
+      "product_type": "stock",
+      "size_stock": {
+        "XS-S": 1
+      },
+      "condition": "Новое! ( В комплекте с этикеткой )",
+      "tag_size": "14/170",
+      "actual_size_raw": "XS - S",
+      "extra_photos_url": "https://t.me/mestniystore/12198"
+    },
+    "sizes": [
+      "XS-S"
+    ],
+    "size_stock": {
+      "XS-S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое! ( В комплекте с этикеткой )",
+    "extra_photos_url": "https://t.me/mestniystore/12198",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_89091e66.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2ab8b3be.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9270fc5e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a61385c6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fd4823c1.jpg"
+    ],
+    "created_at": "2026-10-02 12:12:41.989458"
   }
 ]
