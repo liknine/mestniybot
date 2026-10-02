@@ -4368,5 +4368,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_16df0b06.jpg"
     ],
     "created_at": "2026-10-02 07:27:00.029568"
+  },
+  {
+    "id": 431,
+    "category_id": 10,
+    "brand": "jordan",
+    "name": "Сумка Jordan",
+    "description": "Классная, приятная, необычный дизайн, за счёт монограмма. Есть дополнительный карман внутри. Размер: Ширина: 22.9 ; Высота: 17.8 ; Толщина: 8.9 ; Состояние: Новое! С этикетками. Оригинал.",
+    "price_byn": 200.0,
+    "prices": {
+      "BYN": 200.0,
+      "RUB": 6200,
+      "USD": 74,
+      "product_type": "stock",
+      "size_stock": {
+        "ONE SIZE": 1
+      },
+      "condition": "Новое! ( с этикетками )",
+      "tag_size": "ONE SIZE",
+      "actual_size_raw": null,
+      "extra_photos_url": "https://t.me/mestniystore/12092"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Новое! ( с этикетками )",
+    "extra_photos_url": "https://t.me/mestniystore/12092",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fa585734.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_92e404fa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c8dd587e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d712278b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a1b588ac.jpg"
+    ],
+    "created_at": "2026-10-02 07:32:20.745043"
   }
 ]
