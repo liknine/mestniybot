@@ -4538,5 +4538,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c6ddf659.jpg"
     ],
     "created_at": "2026-10-03 18:28:15.849592"
+  },
+  {
+    "id": 441,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитшот Stone Island Junior",
+    "description": "Очень классный классный, приятный, плотный. Есть карман спереди, на замочках. Продажа с оригинальным патчем. Размер по бирке: 14/170. Состояние: Отличное, есть совсем небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 260.0,
+    "prices": {
+      "BYN": 260.0,
+      "RUB": 7900,
+      "USD": 97,
+      "product_type": "stock",
+      "size_stock": {
+        "S-M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "14/170",
+      "actual_size_raw": "S - M",
+      "extra_photos_url": "https://t.me/mestniystore/12213"
+    },
+    "sizes": [
+      "S-M"
+    ],
+    "size_stock": {
+      "S-M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12213",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_413610ac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_19aa9d6a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_677e9f31.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_40d47678.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1b182053.jpg"
+    ],
+    "created_at": "2026-10-03 19:42:05.341424"
   }
 ]
