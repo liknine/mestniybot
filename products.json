@@ -4698,5 +4698,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fe3d9543.jpg"
     ],
     "created_at": "2026-10-05 10:03:09.503304"
+  },
+  {
+    "id": 447,
+    "category_id": 7,
+    "brand": "stone_island",
+    "name": "Карго штаны Stone Island",
+    "description": "Классные, плотные штаны. Есть два основных кармана спереди, два кармана сзади, и два боковых карго кармана, на левом из которых расположен патч. Продажа с оригинальным патчем. Размер по бирке: W36. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "L-XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "W36",
+      "actual_size_raw": "L - XL",
+      "extra_photos_url": "https://t.me/mestniystore/12234"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "size_stock": {
+      "L-XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12234",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_83c5f6f4.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e7531e54.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9c155a69.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8c938db6.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_99ac27d2.jpg"
+    ],
+    "created_at": "2026-10-05 10:22:37.558981"
   }
 ]
