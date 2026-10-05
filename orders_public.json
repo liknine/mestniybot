@@ -1,5 +1,35 @@
 [
   {
+    "id": 20,
+    "user_id": "1145824398",
+    "status": "accepted",
+    "total": 260.0,
+    "currency": "BYN",
+    "delivery": "Белпочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-1145824398-1791188764496-zte7k7",
+    "created_at": "2026-10-05T08:26:04.741717",
+    "updated_at": "2026-10-05T08:26:04.737674",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 443,
+        "brand": "Stone Island",
+        "name": "Свитшот Stone Island Junior",
+        "size": "S-M",
+        "qty": 1,
+        "unit_price": 260.0,
+        "old_unit_price": 260.0,
+        "image": "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c06f4e26.jpg"
+      }
+    ]
+  },
+  {
     "id": 19,
     "user_id": "6679851290",
     "status": "canceled",
