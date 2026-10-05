@@ -4618,5 +4618,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_55fcf89d.jpg"
     ],
     "created_at": "2026-10-04 10:17:04.971817"
+  },
+  {
+    "id": 444,
+    "category_id": 1,
+    "brand": "raf_simons",
+    "name": "Кроссовки Adidas x Raf Simons",
+    "description": "пары: Очень классные, яркие. Удобные на ноге. Отличное состояние, но есть совсем небольшие следы после носок, ничего критичного. Сделаны задники внутри, сделаны аккуратно, прошиты, выглядит достойно. Размер по бирке: 44. Оригинал.",
+    "price_byn": 470.0,
+    "prices": {
+      "BYN": 470.0,
+      "RUB": 13800,
+      "USD": 176,
+      "product_type": "stock",
+      "size_stock": {
+        "44": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "44",
+      "actual_size_raw": "28.5 CM",
+      "extra_photos_url": "https://t.me/mestniystoreshoes/198"
+    },
+    "sizes": [
+      "44"
+    ],
+    "size_stock": {
+      "44": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystoreshoes/198",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_96421dda.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_33aa06ed.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5c598caf.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f998b83f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d19dff4a.jpg"
+    ],
+    "created_at": "2026-10-05 07:48:04.560132"
   }
 ]
