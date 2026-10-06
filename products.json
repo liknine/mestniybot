@@ -4778,5 +4778,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_690dbef3.jpg"
     ],
     "created_at": "2026-10-05 10:33:51.809656"
+  },
+  {
+    "id": 449,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Лонгслив Stone Island Off Dye",
+    "description": "Приятный цвет, очень красивый узор. Продажа с родным оригинальным патчем. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 770.0,
+    "prices": {
+      "BYN": 770.0,
+      "RUB": 22200,
+      "USD": 288,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/12245"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12245",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6c62289b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_34113122.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c9a71ab8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4918bbaa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0728ccf4.jpg"
+    ],
+    "created_at": "2026-10-06 07:52:10.563166"
   }
 ]
