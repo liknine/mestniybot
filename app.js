@@ -10,7 +10,7 @@ const BONUS_RULES=[
   {max:Infinity,rate:3.5}
 ];
 const BONUS_TRANSACTIONS=[];
-const state={screen:'home',previous:'catalog',catalogSection:'clothing',catalogScrollY:0,favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'daily',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0}};
+const state={screen:'home',previous:'catalog',catalogSection:'clothing',catalogScrollY:0,favorites:new Set(),cart:[],pendingOrders:[],profile:null,selectedProduct:0,selectedSize:null,selectedOrder:0,selectedNews:0,orderFilter:'all',sortMode:'daily',currency:'BYN',filters:{category:'all',brand:'all',size:'all',priceMin:'',priceMax:''},filterDraft:null,filterTab:'categories',menuTab:'collections',bonusTransactions:[...BONUS_TRANSACTIONS],bonusBalance:0,lastCreatedOrder:null,checkout:{delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',belpostRegion:'',belpostCity:'',belpostAddress:'',comment:'',bonuses:0}};
 
 const BUILD_VERSION='mestniy_size_filter_v1';
 const ADMIN_IDS=[1639462053,8465820993];
@@ -481,6 +481,7 @@ function toggleHomeNews(force){
   shell.classList.toggle('is-open',next);
   button.setAttribute('aria-expanded',String(next));
 }
+const checkoutBelpostRegion=true;
 function buildOrderPayload(clientRequestId){
   const c=state.checkout;
   const subtotal=cartSubtotal();
@@ -489,7 +490,7 @@ function buildOrderPayload(clientRequestId){
   return {
     items:state.cart.map(item=>({productId:item.id,size:item.size,qty:item.qty})),
     total:Math.max(0,subtotal-bonusDiscountAmount),currency:'BYN',deliveryType:c.delivery,deliveryService:c.delivery==='europost'?'Европочта':c.delivery==='belpost'?'Белпочта':c.delivery==='cdek'?'CDEK':null,
-    deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{postalIndex:c.postalIndex}:c.delivery==='cdek'?{branch:c.cdekPoint}:null,
+    deliveryData:c.delivery==='europost'?{branch:c.europostBranch}:c.delivery==='belpost'?{postalIndex:c.postalIndex,region:c.belpostRegion,city:c.belpostCity,address:c.belpostAddress}:c.delivery==='cdek'?{branch:c.cdekPoint}:null,
     customer:{fullName:c.name,firstName:c.name,lastName:'',phone:c.phone},comment:c.comment,bonuses:bonusPercent,bonusMode:'percent',bonusPercent,bonusDiscountAmount,clientRequestId
   };
 }
@@ -904,7 +905,7 @@ function renderCheckout(){
   if(c.delivery==='europost'){
     recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutEuropostBranch">Город, отделение Европочты</label><input id="checkoutEuropostBranch" data-checkout-field="europostBranch" value="${escapeHtml(c.europostBranch)}" placeholder="Город, номер или адрес отделения"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='belpost'){
-    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutPostalIndex">Почтовый индекс</label><input id="checkoutPostalIndex" data-checkout-field="postalIndex" value="${escapeHtml(c.postalIndex)}" inputmode="numeric" maxlength="6" placeholder="220000"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
+    recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375"></div><div class="field"><label for="checkoutPostalIndex">Почтовый индекс</label><input id="checkoutPostalIndex" data-checkout-field="postalIndex" value="${escapeHtml(c.postalIndex)}" inputmode="numeric" maxlength="6" placeholder="220000"></div><div class="field"><label for="checkoutBelpostRegion">Область</label><input id="checkoutBelpostRegion" data-checkout-field="belpostRegion" value="${escapeHtml(c.belpostRegion)}" placeholder="Например, Минская область"></div><div class="field"><label for="checkoutBelpostCity">Город / населённый пункт</label><input id="checkoutBelpostCity" data-checkout-field="belpostCity" value="${escapeHtml(c.belpostCity)}" placeholder="Например, Минск"></div><div class="field"><label for="checkoutBelpostAddress">Улица, дом, квартира</label><input id="checkoutBelpostAddress" data-checkout-field="belpostAddress" value="${escapeHtml(c.belpostAddress)}" placeholder="ул. ..., д. ..., кв. ..."></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='cdek'){
     recipientSection=`<section class="checkout-section"><h2 class="checkout-title">ДАННЫЕ ПОЛУЧАТЕЛЯ</h2><div class="form-grid"><div class="field"><label for="checkoutName">ФИО</label><input id="checkoutName" data-checkout-field="name" value="${escapeHtml(c.name)}" placeholder="Фамилия Имя Отчество"></div><div class="field"><label for="checkoutPhone">Номер телефона</label><input id="checkoutPhone" data-checkout-field="phone" value="${escapeHtml(c.phone)}" inputmode="tel" placeholder="+375 / +7"></div><div class="field"><label for="checkoutCdekPoint">Город, пункт CDEK</label><input id="checkoutCdekPoint" data-checkout-field="cdekPoint" value="${escapeHtml(c.cdekPoint)}" placeholder="Город, адрес или код пункта CDEK"></div><div class="field"><label for="checkoutComment">Комментарий к заказу</label><textarea id="checkoutComment" data-checkout-field="comment" placeholder="Необязательно">${escapeHtml(c.comment)}</textarea></div></div></section>`;
   }else if(c.delivery==='shuttle'){
@@ -938,6 +939,9 @@ function validateCheckout(){
   if(c.phone.replace(/\D/g,'').length<7)return 'Укажите корректный номер телефона.';
   if(c.delivery==='europost'&&!c.europostBranch.trim())return 'Укажите отделение Европочты.';
   if(c.delivery==='belpost'&&c.postalIndex.replace(/\D/g,'').length!==6)return 'Укажите шестизначный почтовый индекс.';
+  if(c.delivery==='belpost'&&!c.belpostRegion.trim())return 'Укажите область для Белпочты.';
+  if(c.delivery==='belpost'&&!c.belpostCity.trim())return 'Укажите город или населённый пункт для Белпочты.';
+  if(c.delivery==='belpost'&&!c.belpostAddress.trim())return 'Укажите улицу, дом и квартиру для Белпочты.';
   
   if(c.delivery==='cdek'&&!c.cdekPoint.trim())return 'Укажите город и пункт CDEK.';
   return '';
@@ -966,7 +970,7 @@ function createPrototypeOrder(){
   state.lastCreatedOrder=newOrder;
   state.selectedOrder=0;
   state.cart=[];
-  state.checkout={delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',comment:'',bonuses:0};
+  state.checkout={delivery:'',name:'',phone:'',europostBranch:'',cdekPoint:'',address:'',postalIndex:'',belpostRegion:'',belpostCity:'',belpostAddress:'',comment:'',bonuses:0};
   mergeOrderCollections();
   persistState();
   if(!sendOrderToBot(payload)){
