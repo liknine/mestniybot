@@ -5018,5 +5018,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fea1f3eb.jpg"
     ],
     "created_at": "2026-10-06 10:16:31.430931"
+  },
+  {
+    "id": 455,
+    "category_id": 4,
+    "brand": "cp_company",
+    "name": "Овершот C.P. Company",
+    "description": "Классный материал, на замочке. Есть карман на груди. Размер по бирке: L. Состояние: Отличное, без нюансов, есть немножко царапин на линзе. Оригинал.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "M - L",
+      "extra_photos_url": "https://t.me/mestniystore/12275"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12275",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fbe1802d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_51b42315.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b451b1f7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2b24f914.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6fc20ab5.jpg"
+    ],
+    "created_at": "2026-10-06 10:21:23.689347"
   }
 ]
