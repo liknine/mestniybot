@@ -5138,5 +5138,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3ee81dd8.jpg"
     ],
     "created_at": "2026-10-06 17:25:12.174255"
+  },
+  {
+    "id": 461,
+    "category_id": 8,
+    "brand": "stone_island",
+    "name": "Карго шорты Stone Island",
+    "description": "Есть два основных кармана, карман сзади, и два боковых кармана. Размер по бирке: W31. Продажа без патча. Состояние: Отличное, есть небольшая потёртость цвета с правой верхней части шорт ( передней стороны ) и небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 170.0,
+    "prices": {
+      "BYN": 170.0,
+      "RUB": 5300,
+      "USD": 63,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное! Продажа без патча",
+      "tag_size": "W31",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12305"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! Продажа без патча",
+    "extra_photos_url": "https://t.me/mestniystore/12305",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_27596245.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b0c9084d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ff6f3ab1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f3446fd1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_db0538bc.jpg"
+    ],
+    "created_at": "2026-10-06 17:32:39.064707"
   }
 ]
