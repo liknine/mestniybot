@@ -3107,7 +3107,6 @@
       "product_type": "stock",
       "size_stock": {
         "S": 1,
-        "M": 1,
         "L": 1
       },
       "condition": "Новое! ( с этикетками, доп. заклёпками, линзы в плёнке )",
@@ -3117,15 +3116,13 @@
     },
     "sizes": [
       "S",
-      "M",
       "L"
     ],
     "size_stock": {
       "S": 1,
-      "M": 1,
       "L": 1
     },
-    "stock": 3,
+    "stock": 2,
     "product_type": "stock",
     "section": "stock",
     "condition": "Новое! ( с этикетками, доп. заклёпками, линзы в плёнке )",
