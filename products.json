@@ -5175,5 +5175,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_67a80afe.jpg"
     ],
     "created_at": "2026-10-07 15:33:03.097628"
+  },
+  {
+    "id": 462,
+    "category_id": 4,
+    "brand": "stone_island",
+    "name": "Овершот Stone Island",
+    "description": "Очень классный, крутой цвет, даже очень, цвет керамики. Продажа с оригинальным патчем. Все бирки на месте, фурнитуры тоже. Есть карман на груди. Размер по бирке: XL. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 580.0,
+    "prices": {
+      "BYN": 580.0,
+      "RUB": 16800,
+      "USD": 217,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XL",
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/12320"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12320",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f5f1fd86.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_783c964e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_92f71910.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e337ce59.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_482d51ae.jpg"
+    ],
+    "created_at": "2026-10-08 09:47:43.326494"
   }
 ]
