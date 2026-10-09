@@ -5255,5 +5255,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_667e7166.jpg"
     ],
     "created_at": "2026-10-09 18:20:42.080824"
+  },
+  {
+    "id": 465,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Свитшот C.P. Company",
+    "description": "Очень классный, белый цвет, приятный материал. Размер по бирке: М. Необычная линза. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "L-XL": 1
+      },
+      "condition": "Отличное! ( в комплекте с этикетками )",
+      "tag_size": "M",
+      "actual_size_raw": "L - XL",
+      "extra_photos_url": "https://t.me/mestniystore/12340"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "size_stock": {
+      "L-XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! ( в комплекте с этикетками )",
+    "extra_photos_url": "https://t.me/mestniystore/12340",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c246ad05.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5277fe48.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ae00ca2c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_aab522a2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_51f730d4.jpg"
+    ],
+    "created_at": "2026-10-09 18:21:46.340925"
   }
 ]
