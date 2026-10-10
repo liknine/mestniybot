@@ -5217,46 +5217,6 @@
     "created_at": "2026-10-08T10:19:30.593413"
   },
   {
-    "id": 464,
-    "category_id": 7,
-    "brand": "cp_company",
-    "name": "Карго штаны C.P. Company",
-    "description": "Классные, плотные, есть два кармана спереди, два кармана сзади, и два боковых кармана, маленькая бирочка с названием бренда сзади вверху справа. Линза в плёнке. Размер по бирке: 46. Состояние: Идеальное, без нюансов. Оригинал.",
-    "price_byn": 430.0,
-    "prices": {
-      "BYN": 430.0,
-      "RUB": 12600,
-      "USD": 161,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Идеальное! ( в комплекте с этикетками, линза в плёнке )",
-      "tag_size": "46",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12345"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Идеальное! ( в комплекте с этикетками, линза в плёнке )",
-    "extra_photos_url": "https://t.me/mestniystore/12345",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_48992759.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_baf8043f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_28d72bd7.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_30260d7e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_667e7166.jpg"
-    ],
-    "created_at": "2026-10-09T18:20:42.080824"
-  },
-  {
     "id": 465,
     "category_id": 6,
     "brand": "cp_company",
