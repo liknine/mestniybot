@@ -5455,5 +5455,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_75e2e56e.jpg"
     ],
     "created_at": "2026-10-11 10:49:19.596964"
+  },
+  {
+    "id": 472,
+    "category_id": 6,
+    "brand": "lacoste",
+    "name": "Свитшот Lacoste",
+    "description": "Классный, приятный материал и цвет. Размер по бирке: XXL. Состояние: Отличное, есть совсем небольшие следы после носок, без нюансов. Оригинал.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 2900,
+      "USD": 31,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XXL",
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/12380"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12380",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6ca67e00.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5048b8f9.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_50c57481.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_52ec1965.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4019de72.jpg"
+    ],
+    "created_at": "2026-10-11 12:52:28.432863"
   }
 ]
