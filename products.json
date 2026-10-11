@@ -5415,5 +5415,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_11baed7a.jpg"
     ],
     "created_at": "2026-10-11 10:41:24.372662"
+  },
+  {
+    "id": 471,
+    "category_id": 2,
+    "brand": "cp_company",
+    "name": "Куртка C.P. Company Big Lens",
+    "description": "Крутая и редкая модель, за счёт большой линзы, не такая как обычно. Винтаж. Размер по бирке: 50. Состояние: Отличное, есть небольшие следы после носок, в виде совсем незаметных, маленьких, в маленьком количестве потёртостей цвета. Оригинал.",
+    "price_byn": 650.0,
+    "prices": {
+      "BYN": 650.0,
+      "RUB": 18800,
+      "USD": 243,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "50",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12375"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12375",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_67632d30.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f834479e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_34e1bb89.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6a17f46c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_75e2e56e.jpg"
+    ],
+    "created_at": "2026-10-11 10:49:19.596964"
   }
 ]
