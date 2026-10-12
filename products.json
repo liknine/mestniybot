@@ -5575,5 +5575,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_642400f6.jpg"
     ],
     "created_at": "2026-10-12 07:51:19.545825"
+  },
+  {
+    "id": 475,
+    "category_id": 9,
+    "brand": "cp_company",
+    "name": "Шапка C.P. Company",
+    "description": "Белый цвет. С этикетками. Размер по бирке: UNI. Оригинал.",
+    "price_byn": 450.0,
+    "prices": {
+      "BYN": 450.0,
+      "RUB": 13200,
+      "USD": 168,
+      "product_type": "stock",
+      "size_stock": {
+        "UNI": 1
+      },
+      "condition": "Идеальное, с этикетками",
+      "tag_size": "UNI",
+      "actual_size_raw": "UNI",
+      "extra_photos_url": "https://t.me/mestniystore/12390"
+    },
+    "sizes": [
+      "UNI"
+    ],
+    "size_stock": {
+      "UNI": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Идеальное, с этикетками",
+    "extra_photos_url": "https://t.me/mestniystore/12390",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1589cf58.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_24331b2d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_da7ef47e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7115ce85.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4dfdf39f.jpg"
+    ],
+    "created_at": "2026-10-12 11:50:56.535887"
   }
 ]
