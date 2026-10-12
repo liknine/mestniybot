@@ -5615,5 +5615,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4dfdf39f.jpg"
     ],
     "created_at": "2026-10-12 11:50:56.535887"
+  },
+  {
+    "id": 476,
+    "category_id": 4,
+    "brand": "stone_island",
+    "name": "Овершот Stone Island",
+    "description": "Классный, плотный. С оригинальным патчем. Размер по бирке: М. Состояние: Отличное, есть небольшие следы после носок. Оригинал.",
+    "price_byn": 500.0,
+    "prices": {
+      "BYN": 500.0,
+      "RUB": 14600,
+      "USD": 187,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12395"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12395",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f872e187.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_387d33ed.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a28da177.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7f73fe98.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a9c77ea8.jpg"
+    ],
+    "created_at": "2026-10-12 12:02:05.918948"
   }
 ]
