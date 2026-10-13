@@ -5217,46 +5217,6 @@
     "created_at": "2026-10-10T14:24:22.484168"
   },
   {
-    "id": 469,
-    "category_id": 5,
-    "brand": "stone_island",
-    "name": "Поло Stone Island Patch Program",
-    "description": "Классная. Красивый дизайн, за счёт белого логотипа и пуговиц. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4800,
-      "USD": 56,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "M",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/12365"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12365",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_353636c7.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_de71826c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_765406a8.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bb8c692c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6ad75cc4.jpg"
-    ],
-    "created_at": "2026-10-10T16:58:37.537693"
-  },
-  {
     "id": 470,
     "category_id": 7,
     "brand": "stone_island",
