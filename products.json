@@ -5707,11 +5707,11 @@
     "brand": "cp_company",
     "name": "Пуховик C.P. Company Chrome - R Goggle",
     "description": "Очень классный, красиво переливается. С двумя линзами, как мы любим, их можно спрягать. Есть два кармана спереди. Оригинал.",
-    "price_byn": 1350.0,
+    "price_byn": 1400.0,
     "prices": {
-      "BYN": 1350.0,
-      "RUB": 38500,
-      "USD": 505,
+      "BYN": 1400.0,
+      "RUB": 39900.0,
+      "USD": 524.0,
       "product_type": "stock",
       "size_stock": {
         "M": 1,
