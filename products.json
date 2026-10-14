@@ -385,41 +385,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 166,
-    "category_id": 6,
-    "brand": "Stone Island",
-    "name": "Зипка Stone Island Patch Program",
-    "description": "Очень классная, плотная. Дизайн не тот, что мы привыкли везде видеть, вместо патча на рукаве, тут патч на груди, в виде прямоугольника, так называемый: Patch Program. Размер по бирке: L. Фактический размер: M - L. Оригинал. Коллекция: 57.",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 8900.0,
-      "USD": 112.0,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10336"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "size_stock": {
-      "M-L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10336",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_166_a1331dfb.jpg",
-      "https://liknine.github.io/mestniybot/images/product_166_a9dbe1b7.jpg",
-      "https://liknine.github.io/mestniybot/images/product_166_eca61577.jpg",
-      "https://liknine.github.io/mestniybot/images/product_166_9890b97b.jpg",
-      "https://liknine.github.io/mestniybot/images/product_166_d0279700.jpg"
-    ],
-    "created_at": "2026-07-06T07:44:23"
-  },
-  {
     "id": 167,
     "category_id": 8,
     "brand": "Bershka",
