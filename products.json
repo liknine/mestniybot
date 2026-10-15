@@ -5906,5 +5906,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ca18133f.jpg"
     ],
     "created_at": "2026-10-15 07:39:43.042247"
+  },
+  {
+    "id": 490,
+    "category_id": 2,
+    "brand": "stone_island",
+    "name": "Куртка Stone Island",
+    "description": "Приятный цвет и материал. Необычный дизайн за счёт замка, который идёт не по всей куртке, а на часть, одевается через верх. С оригинальным патчем. Размер по бирке: S. Состояние: Отличное, есть небольшие следы после носок. Оригинал.",
+    "price_byn": 550.0,
+    "prices": {
+      "BYN": 550.0,
+      "RUB": 16000,
+      "USD": 205,
+      "product_type": "stock",
+      "size_stock": {
+        "L-XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S",
+      "actual_size_raw": "L - XL",
+      "extra_photos_url": "https://t.me/mestniystore/12467"
+    },
+    "sizes": [
+      "L-XL"
+    ],
+    "size_stock": {
+      "L-XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12467",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5f16872a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08a5a046.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_04025ee1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_097f42b7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bd528639.jpg"
+    ],
+    "created_at": "2026-10-15 07:48:02.910415"
   }
 ]
