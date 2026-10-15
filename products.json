@@ -5925,11 +5925,11 @@
     "brand": "cp_company",
     "name": "Шапка C.P. Company Goggle",
     "description": "Приятная на ощуп, тянется. Размер по бирке: UNI. Чёрный цвет. Состояние: Отличное, есть царапины на линзах. Оригинал.",
-    "price_byn": 350.0,
+    "price_byn": 400.0,
     "prices": {
-      "BYN": 350.0,
-      "RUB": 10400,
-      "USD": 131,
+      "BYN": 400.0,
+      "RUB": 11800.0,
+      "USD": 131.0,
       "product_type": "stock",
       "size_stock": {
         "UNI": 1
