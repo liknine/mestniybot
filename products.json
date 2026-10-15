@@ -5826,5 +5826,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_67de7b2d.jpg"
     ],
     "created_at": "2026-10-14 16:36:02.054735"
+  },
+  {
+    "id": 488,
+    "category_id": 2,
+    "brand": "cp_company",
+    "name": "Пуховик C.P. Company Micro - M",
+    "description": "Классный, плотный материал. Снаружи выглядит как обычная куртка, но в этом и есть вся суть, так он будет лучше держать ветер, а внутри он утеплён пухом. Можно спрятать линзы. Размер по бирке: 52. Состояние: Отличное, есть небольшие следы после носок, совсем небольшие потёртости, незаметные. Оригинал.",
+    "price_byn": 1000.0,
+    "prices": {
+      "BYN": 1000.0,
+      "RUB": 28600,
+      "USD": 374,
+      "product_type": "stock",
+      "size_stock": {
+        "XL-XXL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "52",
+      "actual_size_raw": "XL - XXL",
+      "extra_photos_url": "https://t.me/mestniystore/12457"
+    },
+    "sizes": [
+      "XL-XXL"
+    ],
+    "size_stock": {
+      "XL-XXL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12457",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_041cf4ca.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53af4747.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_21cc1c7d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7dc22004.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_004aab14.jpg"
+    ],
+    "created_at": "2026-10-15 07:18:16.549807"
   }
 ]
