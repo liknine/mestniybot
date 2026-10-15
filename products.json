@@ -5307,11 +5307,11 @@
     "brand": "cp_company",
     "name": "Шапка C.P. Company",
     "description": "Белый цвет. С этикетками. Размер по бирке: UNI. Оригинал.",
-    "price_byn": 450.0,
+    "price_byn": 400.0,
     "prices": {
-      "BYN": 450.0,
-      "RUB": 13200,
-      "USD": 168,
+      "BYN": 400.0,
+      "RUB": 11800.0,
+      "USD": 149.0,
       "product_type": "stock",
       "size_stock": {
         "UNI": 1
@@ -5319,7 +5319,13 @@
       "condition": "Идеальное, с этикетками",
       "tag_size": "UNI",
       "actual_size_raw": "UNI",
-      "extra_photos_url": "https://t.me/mestniystore/12390"
+      "extra_photos_url": "https://t.me/mestniystore/12390",
+      "old_price": 450.0,
+      "old_prices": {
+        "BYN": 450.0,
+        "RUB": 13200.0,
+        "USD": 168.0
+      }
     },
     "sizes": [
       "UNI"
