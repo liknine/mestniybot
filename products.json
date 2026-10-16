@@ -5544,8 +5544,8 @@
       "USD": 524.0,
       "product_type": "stock",
       "size_stock": {
-        "M": 1,
-        "L": 1
+        "M-L": 1,
+        "L-XL": 1
       },
       "condition": "Идеальное! С этикетками, линзы в плёнке",
       "tag_size": "M, L",
@@ -5553,12 +5553,12 @@
       "extra_photos_url": "https://t.me/mestniystore/12442"
     },
     "sizes": [
-      "M",
-      "L"
+      "M-L",
+      "L-XL"
     ],
     "size_stock": {
-      "M": 1,
-      "L": 1
+      "M-L": 1,
+      "L-XL": 1
     },
     "stock": 2,
     "product_type": "stock",
