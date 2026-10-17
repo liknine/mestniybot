@@ -2711,7 +2711,7 @@
         "M-L": 1,
         "L-XL": 1
       },
-      "condition": "Новое! ( с этикетками, пакетами )",
+      "condition": "Отличное",
       "tag_size": "M, L, XL",
       "actual_size_raw": null,
       "extra_photos_url": "https://t.me/mestniystore/11916"
@@ -2727,7 +2727,7 @@
     "stock": 2,
     "product_type": "stock",
     "section": "stock",
-    "condition": "Новое! ( с этикетками, пакетами )",
+    "condition": "Отличное",
     "extra_photos_url": "https://t.me/mestniystore/11916",
     "images": [
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0788b97b.jpg",
