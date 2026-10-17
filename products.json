@@ -2708,8 +2708,8 @@
       "USD": 254,
       "product_type": "stock",
       "size_stock": {
-        "M": 1,
-        "L": 1
+        "M-L": 1,
+        "L-XL": 1
       },
       "condition": "Новое! ( с этикетками, пакетами )",
       "tag_size": "M, L, XL",
@@ -2717,12 +2717,12 @@
       "extra_photos_url": "https://t.me/mestniystore/11916"
     },
     "sizes": [
-      "M",
-      "L"
+      "M-L",
+      "L-XL"
     ],
     "size_stock": {
-      "M": 1,
-      "L": 1
+      "M-L": 1,
+      "L-XL": 1
     },
     "stock": 2,
     "product_type": "stock",
