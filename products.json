@@ -81,7 +81,7 @@
       "RUB": 1900.0,
       "USD": 20.0,
       "product_type": "stock",
-      "condition": "Новое",
+      "condition": "Отличное",
       "extra_photos_url": "https://t.me/mestniystore/8760"
     },
     "sizes": [
@@ -93,7 +93,7 @@
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
-    "condition": "Новое",
+    "condition": "Отличное",
     "extra_photos_url": "https://t.me/mestniystore/8760",
     "images": [
       "https://liknine.github.io/mestniybot/images/product_96_ffa6a1c3.jpg",
