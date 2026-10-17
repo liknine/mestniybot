@@ -3796,7 +3796,7 @@
       "size_stock": {
         "ONE SIZE": 1
       },
-      "condition": "Новое",
+      "condition": "Отличное",
       "tag_size": "ONE SIZE ( 17.5x14.5 )",
       "actual_size_raw": "17.5x14.5",
       "extra_photos_url": "https://t.me/mestniystore/12087"
@@ -3810,7 +3810,7 @@
     "stock": 1,
     "product_type": "stock",
     "section": "stock",
-    "condition": "Новое",
+    "condition": "Отличное",
     "extra_photos_url": "https://t.me/mestniystore/12087",
     "images": [
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_893e1515.jpg",
