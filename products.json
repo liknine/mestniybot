@@ -2871,7 +2871,7 @@
       "USD": 355,
       "product_type": "stock",
       "size_stock": {
-        "S": 1,
+        "M": 1,
         "L": 1
       },
       "condition": "Новое! ( с этикетками, доп. заклёпками, линзы в плёнке )",
@@ -2880,11 +2880,11 @@
       "extra_photos_url": "https://t.me/mestniystore/11996"
     },
     "sizes": [
-      "S",
+      "M",
       "L"
     ],
     "size_stock": {
-      "S": 1,
+      "M": 1,
       "L": 1
     },
     "stock": 2,
