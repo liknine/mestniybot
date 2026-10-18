@@ -1,5 +1,35 @@
 [
   {
+    "id": 23,
+    "user_id": "2066305254",
+    "status": "accepted",
+    "total": 170.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-2066305254-1792329074894-zv9yfw",
+    "created_at": "2026-10-18T13:11:15.022696",
+    "updated_at": "2026-10-18T13:11:15.020739",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 494,
+        "brand": "Ellesse",
+        "name": "Микропуховик Ellesse",
+        "size": "S-M",
+        "qty": 1,
+        "unit_price": 170.0,
+        "old_unit_price": 170.0,
+        "image": "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2476665b.jpg"
+      }
+    ]
+  },
+  {
     "id": 22,
     "user_id": "1154654023",
     "status": "accepted",
