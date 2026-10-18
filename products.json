@@ -5864,46 +5864,6 @@
     "created_at": "2026-10-16T08:15:28.710877"
   },
   {
-    "id": 494,
-    "category_id": 2,
-    "brand": "ellesse",
-    "name": "Микропуховик Ellesse",
-    "description": "Тёплый, приятный. Есть два кармана спереди, и маленькая нашивка внизу левого рукава. Размер по бирке: S. Состояние: Отличное, есть совсем минимальные следы после носок, без нюансов. Оригинал.",
-    "price_byn": 170.0,
-    "prices": {
-      "BYN": 170.0,
-      "RUB": 5300,
-      "USD": 63,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/12492"
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12492",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2476665b.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a871a5bf.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_58c0f8cf.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_55d9f2dc.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cfb0fd83.jpg"
-    ],
-    "created_at": "2026-10-16T08:23:54.254402"
-  },
-  {
     "id": 495,
     "category_id": 2,
     "brand": "jordan",
