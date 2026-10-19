@@ -1,5 +1,35 @@
 [
   {
+    "id": 24,
+    "user_id": "2066305254",
+    "status": "accepted",
+    "total": 140.0,
+    "currency": "BYN",
+    "delivery": "Европочта",
+    "place": "Данные переданы менеджеру",
+    "client_request_id": "web-2066305254-1792417136666-n5brwc",
+    "created_at": "2026-10-19T13:38:57.075092",
+    "updated_at": "2026-10-19T13:38:57.074062",
+    "bonuses": 0.0,
+    "bonus_mode": "percent",
+    "bonus_percent": 0.0,
+    "bonus_discount_amount": 0.0,
+    "bonus_earned": 0.0,
+    "bonus_returned": 0.0,
+    "items": [
+      {
+        "product_id": 114,
+        "brand": "Lonsdale",
+        "name": "Сумка Lonsdale",
+        "size": "ONE SIZE",
+        "qty": 1,
+        "unit_price": 140.0,
+        "old_unit_price": 140.0,
+        "image": "https://liknine.github.io/mestniybot/images/product_114_dd7da620.jpg"
+      }
+    ]
+  },
+  {
     "id": 23,
     "user_id": "2066305254",
     "status": "canceled",
