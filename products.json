@@ -471,16 +471,16 @@
       "USD": 69,
       "product_type": "stock",
       "size_stock": {
-        "S": 1
+        "XS-S": 1
       },
       "condition": "Отличное",
       "extra_photos_url": "https://t.me/mestniystore/10542"
     },
     "sizes": [
-      "S"
+      "XS-S"
     ],
     "size_stock": {
-      "S": 1
+      "XS-S": 1
     },
     "stock": 1,
     "product_type": "stock",
