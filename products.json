@@ -4450,11 +4450,11 @@
     "brand": "stone_island",
     "name": "Зип - Худи Stone Island Ghost Piece",
     "description": "Классный материал, на замочке. Есть два кармана спереди. Размер по бирке: S. Продажа с оригинальным родным патчем. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 920.0,
+    "price_byn": 800.0,
     "prices": {
-      "BYN": 920.0,
-      "RUB": 26400,
-      "USD": 344,
+      "BYN": 800.0,
+      "RUB": 23000.0,
+      "USD": 299.0,
       "product_type": "stock",
       "size_stock": {
         "S-M": 1
@@ -4462,7 +4462,13 @@
       "condition": "Отличное",
       "tag_size": "S",
       "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/12280"
+      "extra_photos_url": "https://t.me/mestniystore/12280",
+      "old_price": 920.0,
+      "old_prices": {
+        "BYN": 920.0,
+        "RUB": 26400.0,
+        "USD": 344.0
+      }
     },
     "sizes": [
       "S-M"
