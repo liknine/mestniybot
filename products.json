@@ -4976,11 +4976,11 @@
     "brand": "stone_island",
     "name": "Овершот Stone Island",
     "description": "Классный, плотный. С оригинальным патчем. Размер по бирке: М. Состояние: Отличное, есть небольшие следы после носок. Оригинал.",
-    "price_byn": 450.0,
+    "price_byn": 420.0,
     "prices": {
-      "BYN": 450.0,
-      "RUB": 12700.0,
-      "USD": 168.0,
+      "BYN": 420.0,
+      "RUB": 12300.0,
+      "USD": 157.0,
       "product_type": "stock",
       "size_stock": {
         "M": 1
@@ -4988,7 +4988,13 @@
       "condition": "Отличное",
       "tag_size": "M",
       "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12395"
+      "extra_photos_url": "https://t.me/mestniystore/12395",
+      "old_price": 450.0,
+      "old_prices": {
+        "BYN": 450.0,
+        "RUB": 12700.0,
+        "USD": 168.0
+      }
     },
     "sizes": [
       "M"
