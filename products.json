@@ -5540,11 +5540,11 @@
     "brand": "stone_island",
     "name": "Куртка Stone Island",
     "description": "Приятный цвет и материал. Необычный дизайн за счёт замка, который идёт не по всей куртке, а на часть, одевается через верх. С оригинальным патчем. Размер по бирке: S. Состояние: Отличное, есть небольшие следы после носок. Оригинал.",
-    "price_byn": 550.0,
+    "price_byn": 380.0,
     "prices": {
-      "BYN": 550.0,
-      "RUB": 16000,
-      "USD": 205,
+      "BYN": 380.0,
+      "RUB": 11200.0,
+      "USD": 142.0,
       "product_type": "stock",
       "size_stock": {
         "L-XL": 1
@@ -5552,7 +5552,13 @@
       "condition": "Отличное",
       "tag_size": "S",
       "actual_size_raw": "L - XL",
-      "extra_photos_url": "https://t.me/mestniystore/12467"
+      "extra_photos_url": "https://t.me/mestniystore/12467",
+      "old_price": 550.0,
+      "old_prices": {
+        "BYN": 550.0,
+        "RUB": 16000.0,
+        "USD": 205.0
+      }
     },
     "sizes": [
       "L-XL"
