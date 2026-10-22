@@ -4610,11 +4610,11 @@
     "brand": "stone_island",
     "name": "Свитшот Stone Island Tiger Camo",
     "description": "Классный материал, дизайн. Продажа с оригинальным патчем. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 790.0,
+    "price_byn": 700.0,
     "prices": {
-      "BYN": 790.0,
-      "RUB": 22700,
-      "USD": 295,
+      "BYN": 700.0,
+      "RUB": 20.2,
+      "USD": 262.0,
       "product_type": "stock",
       "size_stock": {
         "M": 1
@@ -4622,7 +4622,13 @@
       "condition": "Отличное",
       "tag_size": "S",
       "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12315"
+      "extra_photos_url": "https://t.me/mestniystore/12315",
+      "old_price": 790.0,
+      "old_prices": {
+        "BYN": 790.0,
+        "RUB": 22700.0,
+        "USD": 295.0
+      }
     },
     "sizes": [
       "M"
