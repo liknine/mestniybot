@@ -3312,11 +3312,11 @@
     "brand": "stone_island",
     "name": "Худи Stone Island Off Dye",
     "description": "Очень приятный материал, максимально красивый патч. Размер по бирке: М. Состояние: Отличное, без нюансов. Срезаны нижние бирки, кроме NFT и размерной. Оригинал.",
-    "price_byn": 950.0,
+    "price_byn": 880.0,
     "prices": {
-      "BYN": 950.0,
-      "RUB": 27200,
-      "USD": 355,
+      "BYN": 880.0,
+      "RUB": 25300.0,
+      "USD": 329.0,
       "product_type": "stock",
       "size_stock": {
         "M-L": 1
@@ -3324,7 +3324,13 @@
       "condition": "Отличное",
       "tag_size": "M",
       "actual_size_raw": "M - L",
-      "extra_photos_url": "https://t.me/mestniystore/12122"
+      "extra_photos_url": "https://t.me/mestniystore/12122",
+      "old_price": 950.0,
+      "old_prices": {
+        "BYN": 950.0,
+        "RUB": 27200.0,
+        "USD": 355.0
+      }
     },
     "sizes": [
       "M-L"
