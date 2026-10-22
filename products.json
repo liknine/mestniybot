@@ -4810,11 +4810,11 @@
     "brand": "cp_company",
     "name": "Куртка C.P. Company Big Lens",
     "description": "Крутая и редкая модель, за счёт большой линзы, не такая как обычно. Винтаж. Размер по бирке: 50. Состояние: Отличное, есть небольшие следы после носок, в виде совсем незаметных, маленьких, в маленьком количестве потёртостей цвета. Оригинал.",
-    "price_byn": 650.0,
+    "price_byn": 600.0,
     "prices": {
-      "BYN": 650.0,
-      "RUB": 18800,
-      "USD": 243,
+      "BYN": 600.0,
+      "RUB": 17400.0,
+      "USD": 224.0,
       "product_type": "stock",
       "size_stock": {
         "M": 1
@@ -4822,7 +4822,13 @@
       "condition": "Отличное",
       "tag_size": "50",
       "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12375"
+      "extra_photos_url": "https://t.me/mestniystore/12375",
+      "old_price": 650.0,
+      "old_prices": {
+        "BYN": 650.0,
+        "RUB": 18800.0,
+        "USD": 243.0
+      }
     },
     "sizes": [
       "M"
