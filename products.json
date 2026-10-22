@@ -4902,11 +4902,11 @@
     "brand": "cp_company",
     "name": "Свитер Зип - Худи C.P. Company",
     "description": "Шерсть, приятная на ощуп. Есть два кармана спереди, и карман на левом рукаве. Размер по бирке: 46. Состояние: Отличное, без нюансов, есть царапины на линзе. Оригинал.",
-    "price_byn": 200.0,
+    "price_byn": 175.0,
     "prices": {
-      "BYN": 200.0,
-      "RUB": 6200,
-      "USD": 74,
+      "BYN": 175.0,
+      "RUB": 5500.0,
+      "USD": 65.0,
       "product_type": "stock",
       "size_stock": {
         "XXS-XS": 1
@@ -4914,7 +4914,13 @@
       "condition": "Отличное",
       "tag_size": "46",
       "actual_size_raw": "XXS - XS",
-      "extra_photos_url": "https://t.me/mestniystore/12335"
+      "extra_photos_url": "https://t.me/mestniystore/12335",
+      "old_price": 200.0,
+      "old_prices": {
+        "BYN": 200.0,
+        "RUB": 6200.0,
+        "USD": 74.0
+      }
     },
     "sizes": [
       "XXS-XS"
