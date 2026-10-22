@@ -3432,11 +3432,11 @@
     "brand": "stone_island",
     "name": "Шорты Stone Island Off Dye",
     "description": "Очень приятный материал, яркий цвет. Родной, оригинальный патч. Есть два кармана спереди, карман сзади, боковой карман на замочке, где расположен патч. Размер по бирке: М. Состояние: Отличное! Есть небольшие следы после носок, без нюансов. Оригинал.",
-    "price_byn": 530.0,
+    "price_byn": 450.0,
     "prices": {
-      "BYN": 530.0,
-      "RUB": 15400,
-      "USD": 198,
+      "BYN": 450.0,
+      "RUB": 12300.0,
+      "USD": 168.0,
       "product_type": "stock",
       "size_stock": {
         "M": 1
@@ -3444,7 +3444,13 @@
       "condition": "Отличное",
       "tag_size": "M",
       "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12132"
+      "extra_photos_url": "https://t.me/mestniystore/12132",
+      "old_price": 530.0,
+      "old_prices": {
+        "BYN": 530.0,
+        "RUB": 15400.0,
+        "USD": 198.0
+      }
     },
     "sizes": [
       "M"
