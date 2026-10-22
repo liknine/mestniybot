@@ -4232,11 +4232,11 @@
     "brand": "stone_island",
     "name": "Штаны Stone Island Off Dye",
     "description": "Приятный цвет, очень красивый узор. Есть два основных кармана спереди, карман сзади, и боковой карман, на котором расположен патч. Продажа с родным оригинальным патчем. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 800.0,
+    "price_byn": 700.0,
     "prices": {
-      "BYN": 800.0,
-      "RUB": 23000,
-      "USD": 299,
+      "BYN": 700.0,
+      "RUB": 20200.0,
+      "USD": 262.0,
       "product_type": "stock",
       "size_stock": {
         "M-L": 1
@@ -4244,7 +4244,13 @@
       "condition": "Отличное",
       "tag_size": "M",
       "actual_size_raw": "M - L",
-      "extra_photos_url": "https://t.me/mestniystore/12250"
+      "extra_photos_url": "https://t.me/mestniystore/12250",
+      "old_price": 800.0,
+      "old_prices": {
+        "BYN": 800.0,
+        "RUB": 23000.0,
+        "USD": 299.0
+      }
     },
     "sizes": [
       "M-L"
