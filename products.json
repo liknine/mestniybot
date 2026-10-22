@@ -4730,11 +4730,11 @@
     "brand": "stone_island",
     "name": "Овершот Stone Island",
     "description": "Очень классный материал, упругий, цвет керамики. На груди есть карман. Продажа с оригинальным патчем. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 490.0,
+    "price_byn": 430.0,
     "prices": {
-      "BYN": 490.0,
-      "RUB": 14300,
-      "USD": 183,
+      "BYN": 430.0,
+      "RUB": 12600.0,
+      "USD": 161.0,
       "product_type": "stock",
       "size_stock": {
         "S-M": 1
@@ -4742,7 +4742,13 @@
       "condition": "Отличное",
       "tag_size": "S",
       "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/12360"
+      "extra_photos_url": "https://t.me/mestniystore/12360",
+      "old_price": 490.0,
+      "old_prices": {
+        "BYN": 490.0,
+        "RUB": 14300.0,
+        "USD": 183.0
+      }
     },
     "sizes": [
       "S-M"
