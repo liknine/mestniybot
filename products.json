@@ -5684,5 +5684,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ccaf49f8.jpg"
     ],
     "created_at": "2026-10-24 16:45:57.711095"
+  },
+  {
+    "id": 500,
+    "category_id": 2,
+    "brand": "jordan",
+    "name": "Пуховик Jordan Nylon",
+    "description": "Очень классный материал, переливается. Объёмный. Есть шнурки в капюшоне. Размер по бирке: M. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 350.0,
+    "prices": {
+      "BYN": 350.0,
+      "RUB": 10400,
+      "USD": 131,
+      "product_type": "stock",
+      "size_stock": {
+        "M-L": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M-L",
+      "extra_photos_url": "https://t.me/mestniystore/12540"
+    },
+    "sizes": [
+      "M-L"
+    ],
+    "size_stock": {
+      "M-L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12540",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b73fa613.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c6b9dae7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7a707986.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_28e766af.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_88ea412d.jpg"
+    ],
+    "created_at": "2026-10-24 16:52:58.518766"
   }
 ]
