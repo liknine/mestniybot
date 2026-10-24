@@ -5764,5 +5764,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f5a76c3d.jpg"
     ],
     "created_at": "2026-10-24 16:57:48.557857"
+  },
+  {
+    "id": 502,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Вязанный свитер Stone Island 2002",
+    "description": "Очень классный, приятный и тёплый материал. Модель 2002 года, таких уже почти нету! С родным, оригинальным патчем. Размер по бирке: XXL. Состояние: Отличное, есть минимальные следы после носок, без нюансов. Оригинал.",
+    "price_byn": 500.0,
+    "prices": {
+      "BYN": 500.0,
+      "RUB": 14600,
+      "USD": 187,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XXL",
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/12550"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12550",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fa7dcbf2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a65e06f8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ef737a65.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e9ba53be.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_775db1f6.jpg"
+    ],
+    "created_at": "2026-10-24 17:02:34.937040"
   }
 ]
