@@ -4767,52 +4767,6 @@
     "created_at": "2026-10-11T13:24:04.995609"
   },
   {
-    "id": 474,
-    "category_id": 6,
-    "brand": "cp_company",
-    "name": "Свитер Зип - Худи C.P. Company",
-    "description": "Шерсть, приятная на ощуп. Есть два кармана спереди, и карман на левом рукаве. Размер по бирке: 46. Состояние: Отличное, без нюансов, есть царапины на линзе. Оригинал.",
-    "price_byn": 175.0,
-    "prices": {
-      "BYN": 175.0,
-      "RUB": 5500.0,
-      "USD": 65.0,
-      "product_type": "stock",
-      "size_stock": {
-        "XXS-XS": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "46",
-      "actual_size_raw": "XXS - XS",
-      "extra_photos_url": "https://t.me/mestniystore/12335",
-      "old_price": 200.0,
-      "old_prices": {
-        "BYN": 200.0,
-        "RUB": 6200.0,
-        "USD": 74.0
-      }
-    },
-    "sizes": [
-      "XXS-XS"
-    ],
-    "size_stock": {
-      "XXS-XS": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12335",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1457a3fa.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_77325250.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7a933f8d.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_764d953c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_642400f6.jpg"
-    ],
-    "created_at": "2026-10-12T07:51:19.545825"
-  },
-  {
     "id": 475,
     "category_id": 9,
     "brand": "cp_company",
