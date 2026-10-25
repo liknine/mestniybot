@@ -462,44 +462,6 @@
     "created_at": "2026-07-13T14:20:58.492624"
   },
   {
-    "id": 200,
-    "category_id": 8,
-    "brand": "Weekend Offender",
-    "name": "Шорты Weekend Offender",
-    "description": "Отличное состояние. Оригинал. Без нюансов. Круто сидят на теле. Хлопок. Размер по бирке: 14. Фактический размер: S.",
-    "price_byn": 110.0,
-    "prices": {
-      "BYN": 110.0,
-      "RUB": 3500,
-      "USD": 41,
-      "product_type": "stock",
-      "size_stock": {
-        "S": 1
-      },
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10594"
-    },
-    "sizes": [
-      "S"
-    ],
-    "size_stock": {
-      "S": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10594",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_200_4c0c1f07.jpg",
-      "https://liknine.github.io/mestniybot/images/product_200_439ae5f3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_200_9284d440.jpg",
-      "https://liknine.github.io/mestniybot/images/product_200_9edd1d38.jpg",
-      "https://liknine.github.io/mestniybot/images/product_200_aa5106be.jpg"
-    ],
-    "created_at": "2026-07-26T16:38:33.117346"
-  },
-  {
     "id": 206,
     "category_id": 5,
     "brand": "Nike",
