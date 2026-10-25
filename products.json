@@ -4525,46 +4525,6 @@
     "created_at": "2026-10-14T16:02:12.318268"
   },
   {
-    "id": 487,
-    "category_id": 2,
-    "brand": "cp_company",
-    "name": "Пуховик C.P. Company D.D. Shell",
-    "description": "Очень крутой, необычный цвет, и дизайн. Есть два кармана спереди. Имеются утяжки. Приятный материал. Размер по бирке: XL. Есть два кармана спереди. Оригинал.",
-    "price_byn": 1200.0,
-    "prices": {
-      "BYN": 1200.0,
-      "RUB": 34300,
-      "USD": 449,
-      "product_type": "stock",
-      "size_stock": {
-        "XL": 1
-      },
-      "condition": "Идеальное! С этикетками",
-      "tag_size": "XL",
-      "actual_size_raw": "XL",
-      "extra_photos_url": "https://t.me/mestniystore/12452"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "size_stock": {
-      "XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Идеальное! С этикетками",
-    "extra_photos_url": "https://t.me/mestniystore/12452",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_507acb66.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_74248996.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_34fb1774.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1d3659ba.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_67de7b2d.jpg"
-    ],
-    "created_at": "2026-10-14T16:36:02.054735"
-  },
-  {
     "id": 489,
     "category_id": 6,
     "brand": "stone_island",
