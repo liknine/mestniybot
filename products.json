@@ -385,41 +385,6 @@
     "created_at": "2026-07-06T07:44:23"
   },
   {
-    "id": 182,
-    "category_id": 8,
-    "brand": "Nike",
-    "name": "Шорты Nike Just Do It",
-    "description": "Плотные, широкие, очень классные шорты. Оригинал. Отличное состояние, есть следы носок. Помимо большо логотипа на калоши, есть маленький логотип на правом кармане. Размер по бирке: L. Фактический размер: L - XL.",
-    "price_byn": 110.0,
-    "prices": {
-      "BYN": 110.0,
-      "RUB": 3500,
-      "USD": 41,
-      "product_type": "stock",
-      "condition": "Отличное",
-      "extra_photos_url": "https://t.me/mestniystore/10457"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "size_stock": {
-      "L-XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/10457",
-    "images": [
-      "https://liknine.github.io/mestniybot/images/product_182_e1ae68d5.jpg",
-      "https://liknine.github.io/mestniybot/images/product_182_ba368950.jpg",
-      "https://liknine.github.io/mestniybot/images/product_182_434327c6.jpg",
-      "https://liknine.github.io/mestniybot/images/product_182_2abf62c3.jpg",
-      "https://liknine.github.io/mestniybot/images/product_182_30ef914a.jpg"
-    ],
-    "created_at": "2026-07-08T08:20:00.096181"
-  },
-  {
     "id": 187,
     "category_id": 1,
     "brand": "Maison Margiela",
