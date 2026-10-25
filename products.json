@@ -3883,52 +3883,6 @@
     "created_at": "2026-10-06T17:25:12.174255"
   },
   {
-    "id": 461,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Свитшот Stone Island Tiger Camo",
-    "description": "Классный материал, дизайн. Продажа с оригинальным патчем. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 700.0,
-    "prices": {
-      "BYN": 700.0,
-      "RUB": 20200.0,
-      "USD": 262.0,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12315",
-      "old_price": 790.0,
-      "old_prices": {
-        "BYN": 790.0,
-        "RUB": 22700.0,
-        "USD": 295.0
-      }
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12315",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_88fe5847.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_baacce36.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f063b963.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d014d916.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_67a80afe.jpg"
-    ],
-    "created_at": "2026-10-07T15:33:03.097628"
-  },
-  {
     "id": 462,
     "category_id": 4,
     "brand": "stone_island",
