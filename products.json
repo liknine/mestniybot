@@ -4359,46 +4359,6 @@
     "created_at": "2026-10-13T11:29:39.953555"
   },
   {
-    "id": 484,
-    "category_id": 2,
-    "brand": "cp_company",
-    "name": "Куртка C.P. Company Shell",
-    "description": "Плотный материл, внутри на флисе. Есть два кармана спереди, и карман внутри. Размер по бирке: 50. Состояние: Отличное, есть следы небольшие после носок, без нюансов. Оригинал.",
-    "price_byn": 600.0,
-    "prices": {
-      "BYN": 600.0,
-      "RUB": 17400,
-      "USD": 224,
-      "product_type": "stock",
-      "size_stock": {
-        "M-L": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "50",
-      "actual_size_raw": "M - L",
-      "extra_photos_url": "https://t.me/mestniystore/12436"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "size_stock": {
-      "M-L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12436",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d9ac496c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9061ee77.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5cbfdbde.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_729f4e42.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_53f8a5d9.jpg"
-    ],
-    "created_at": "2026-10-13T12:00:06.524060"
-  },
-  {
     "id": 485,
     "category_id": 2,
     "brand": "cp_company",
