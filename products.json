@@ -3961,49 +3961,6 @@
     "created_at": "2026-10-12T14:04:06.732190"
   },
   {
-    "id": 485,
-    "category_id": 2,
-    "brand": "cp_company",
-    "name": "Пуховик C.P. Company Chrome - R Goggle",
-    "description": "Очень классный, красиво переливается. С двумя линзами, как мы любим, их можно спрягать. Есть два кармана спереди. Оригинал.",
-    "price_byn": 1400.0,
-    "prices": {
-      "BYN": 1400.0,
-      "RUB": 39900.0,
-      "USD": 524.0,
-      "product_type": "stock",
-      "size_stock": {
-        "M-L": 1,
-        "L-XL": 1
-      },
-      "condition": "Идеальное! С этикетками, линзы в плёнке",
-      "tag_size": "M, L",
-      "actual_size_raw": "M, L",
-      "extra_photos_url": "https://t.me/mestniystore/12442"
-    },
-    "sizes": [
-      "M-L",
-      "L-XL"
-    ],
-    "size_stock": {
-      "M-L": 1,
-      "L-XL": 1
-    },
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Идеальное! С этикетками, линзы в плёнке",
-    "extra_photos_url": "https://t.me/mestniystore/12442",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cdef7467.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6164d611.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0095c86a.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9cd158a0.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2292bd00.jpg"
-    ],
-    "created_at": "2026-10-14T15:42:56.212808"
-  },
-  {
     "id": 486,
     "category_id": 2,
     "brand": "cp_company",
