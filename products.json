@@ -5006,5 +5006,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_eb312996.jpg"
     ],
     "created_at": "2026-10-29 11:09:29.519070"
+  },
+  {
+    "id": 507,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитер Stone Island Maglione Uomo",
+    "description": "Очень классный материал, плотный и мягкий. Приятный тёмный цвет. С оригинальным патчем, этикеткой. Все бирки на месте. Размер по бирке: XXL. Состояние: Идеальное, без нюансов. Оригинал.",
+    "price_byn": 750.0,
+    "prices": {
+      "BYN": 750.0,
+      "RUB": 21600,
+      "USD": 280,
+      "product_type": "stock",
+      "size_stock": {
+        "XL-XXL": 1
+      },
+      "condition": "Идеальное! ( в комплекте с этикетками )",
+      "tag_size": "XXL",
+      "actual_size_raw": "XL-XXL",
+      "extra_photos_url": "https://t.me/mestniystore/12612"
+    },
+    "sizes": [
+      "XL-XXL"
+    ],
+    "size_stock": {
+      "XL-XXL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Идеальное! ( в комплекте с этикетками )",
+    "extra_photos_url": "https://t.me/mestniystore/12612",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_46c53318.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1695e871.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_80b938fa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7f5d30c2.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_08b9e854.jpg"
+    ],
+    "created_at": "2026-10-29 11:33:21.985636"
   }
 ]
