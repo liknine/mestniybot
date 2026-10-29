@@ -2283,46 +2283,6 @@
     "created_at": "2026-09-26T06:20:47.331957"
   },
   {
-    "id": 407,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Худи Stone Island Patch Program",
-    "description": "Базовый худи в очень приятном белом цвете. Простой дизайн, содержащий небольшой логотип на груди, карман спереди. Размер по бирке: S. Фактический размер: S - M. Состояние: Отличное, без нюансов.",
-    "price_byn": 300.0,
-    "prices": {
-      "BYN": 300.0,
-      "RUB": 8900,
-      "USD": 112,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/12044"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12044",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cf5a48e2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_04c18245.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_04940db5.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6cd7f28c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a7b5ecad.jpg"
-    ],
-    "created_at": "2026-09-28T11:22:00.331437"
-  },
-  {
     "id": 408,
     "category_id": 7,
     "brand": "carhartt",
