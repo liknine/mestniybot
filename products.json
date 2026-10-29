@@ -2078,49 +2078,6 @@
     "created_at": "2026-09-18T06:42:58.993464"
   },
   {
-    "id": 399,
-    "category_id": 2,
-    "brand": "cp_company",
-    "name": "Куртка C.P. Company GD Shell Goggle",
-    "description": "Описание вещи: В комплекте лежат запасные заклёпки, этикетки,!линзы в плёнках. Внутри утеплена, двойной капюшон. Некоторое время отталкивает воду, как гортекс. Размеры по бирке: 46 ( S ) ; 50 ( L ). Состояние: Идеальное. Оригинал.",
-    "price_byn": 950.0,
-    "prices": {
-      "BYN": 950.0,
-      "RUB": 27200,
-      "USD": 355,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1,
-        "L": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S, M, L",
-      "actual_size_raw": null,
-      "extra_photos_url": "https://t.me/mestniystore/11996"
-    },
-    "sizes": [
-      "M",
-      "L"
-    ],
-    "size_stock": {
-      "M": 1,
-      "L": 1
-    },
-    "stock": 2,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11996",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fb196f84.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9e47bd53.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6e0c156b.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b87b3240.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e3a56711.jpg"
-    ],
-    "created_at": "2026-09-20T15:58:50.277547"
-  },
-  {
     "id": 400,
     "category_id": 1,
     "brand": null,
