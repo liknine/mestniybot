@@ -3047,46 +3047,6 @@
     "created_at": "2026-10-02T10:18:25.143884"
   },
   {
-    "id": 436,
-    "category_id": 5,
-    "brand": "cp_company",
-    "name": "Футболка C.P. Company",
-    "description": "Приятная. Размер по бирке: L. Состояние: Отличное, есть следы после носок, минимально откололся верхний угол логотипа, совсем незаметно, без трещин, без нюансов. Оригинал.",
-    "price_byn": 135.0,
-    "prices": {
-      "BYN": 135.0,
-      "RUB": 4300,
-      "USD": 50,
-      "product_type": "stock",
-      "size_stock": {
-        "L": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L",
-      "actual_size_raw": "L",
-      "extra_photos_url": "https://t.me/mestniystore/12193"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12193",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_60f03134.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_05a2f5f0.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ad8df31f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ab85d0cf.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_dc8a0fa9.jpg"
-    ],
-    "created_at": "2026-10-02T12:04:01.615841"
-  },
-  {
     "id": 437,
     "category_id": 8,
     "brand": "stone_island",
