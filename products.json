@@ -4808,46 +4808,6 @@
     "created_at": "2026-10-25T07:16:21.292580"
   },
   {
-    "id": 504,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Худи Stone Island Dust Colour",
-    "description": "Очень классный дизайн, поскольку окрашивается в ручную на заводе бренда, то есть одинаковые кофты вы не встретите никогда, только похожие! Размер по бирке: XL. Продажа с оригинальным, родным патчем. Есть карман спереди, шнурок в капюшоне. Состояние: Отличное, без нюансов.",
-    "price_byn": 650.0,
-    "prices": {
-      "BYN": 650.0,
-      "RUB": 18800,
-      "USD": 243,
-      "product_type": "stock",
-      "size_stock": {
-        "XL": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "XL",
-      "actual_size_raw": "XL",
-      "extra_photos_url": "https://t.me/mestniystore/12596"
-    },
-    "sizes": [
-      "XL"
-    ],
-    "size_stock": {
-      "XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12596",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_173ba0f6.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_af00fbbc.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3cbf20ea.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d20a3154.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ad186884.jpg"
-    ],
-    "created_at": "2026-10-27T18:29:06.355855"
-  },
-  {
     "id": 505,
     "category_id": 6,
     "brand": "stone_island",
