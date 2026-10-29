@@ -2363,46 +2363,6 @@
     "created_at": "2026-09-28T11:29:58.109435"
   },
   {
-    "id": 409,
-    "category_id": 5,
-    "brand": "cp_company",
-    "name": "Футболка C.P. Company",
-    "description": "Очень приятный цвет, приятный логотип на груди, без трещин. Размер по бирке: XL. Состояние: Отлчиное, без нюансов.",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4800,
-      "USD": 56,
-      "product_type": "stock",
-      "size_stock": {
-        "L-XL": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "XL",
-      "actual_size_raw": "L - XL",
-      "extra_photos_url": "https://t.me/mestniystore/12054"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "size_stock": {
-      "L-XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12054",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4ee4e8dc.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cfa2770c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_05840fbe.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c1f458b9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f1c142c2.jpg"
-    ],
-    "created_at": "2026-09-28T11:39:09.623991"
-  },
-  {
     "id": 410,
     "category_id": 5,
     "brand": "prada",
