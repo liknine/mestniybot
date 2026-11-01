@@ -4227,5 +4227,48 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_93706ff3.jpg"
     ],
     "created_at": "2026-11-01 15:07:10.875751"
+  },
+  {
+    "id": 513,
+    "category_id": 3,
+    "brand": "cp_company",
+    "name": "Жилетка C.P. Company Nada Shell",
+    "description": "Очень крутая, приятный материал. Нереально крутой цвет. На технологии Primaloft. Состояние: Идеальное! Линза в плёнке, в комплекте с этикетками. Оригинал.",
+    "price_byn": 750.0,
+    "prices": {
+      "BYN": 750.0,
+      "RUB": 21600,
+      "USD": 280,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1,
+        "L": 1
+      },
+      "condition": "Идеальное! ( в комплекте с этикетками, линза в плёнке )",
+      "tag_size": null,
+      "actual_size_raw": "M, L",
+      "extra_photos_url": "https://t.me/mestniystore/12647"
+    },
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "size_stock": {
+      "M": 1,
+      "L": 1
+    },
+    "stock": 2,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Идеальное! ( в комплекте с этикетками, линза в плёнке )",
+    "extra_photos_url": "https://t.me/mestniystore/12647",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c7a6b207.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_abdaa5c7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8058cc6e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a835985a.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d53af32e.jpg"
+    ],
+    "created_at": "2026-11-01 15:21:58.093914"
   }
 ]
