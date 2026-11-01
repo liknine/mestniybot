@@ -4187,5 +4187,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2ef6ac48.jpg"
     ],
     "created_at": "2026-11-01 14:50:09.364276"
+  },
+  {
+    "id": 512,
+    "category_id": 5,
+    "brand": "prada",
+    "name": "Футболка Prada",
+    "description": "Базовая футболка. Имеет карман на груди, и логотип внизу футболки, с правой стороны, резиновый. Размер по бирке: S. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 140.0,
+    "prices": {
+      "BYN": 140.0,
+      "RUB": 4500,
+      "USD": 52,
+      "product_type": "stock",
+      "size_stock": {
+        "S": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S",
+      "actual_size_raw": "S",
+      "extra_photos_url": "https://t.me/mestniystore/12642"
+    },
+    "sizes": [
+      "S"
+    ],
+    "size_stock": {
+      "S": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12642",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1f9595fb.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f87f44fa.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_504d23db.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4aef427e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_93706ff3.jpg"
+    ],
+    "created_at": "2026-11-01 15:07:10.875751"
   }
 ]
