@@ -3035,52 +3035,6 @@
     "created_at": "2026-10-06T10:16:31.430931"
   },
   {
-    "id": 456,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Зип - Худи Stone Island Ghost Piece",
-    "description": "Классный материал, на замочке. Есть два кармана спереди. Размер по бирке: S. Продажа с оригинальным родным патчем. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 800.0,
-    "prices": {
-      "BYN": 800.0,
-      "RUB": 23000.0,
-      "USD": 299.0,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "S",
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/12280",
-      "old_price": 920.0,
-      "old_prices": {
-        "BYN": 920.0,
-        "RUB": 26400.0,
-        "USD": 344.0
-      }
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12280",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c109ec94.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f0ad0533.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fb9e54ef.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a72e4024.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e6d62dea.jpg"
-    ],
-    "created_at": "2026-10-06T12:20:08.955734"
-  },
-  {
     "id": 470,
     "category_id": 7,
     "brand": "stone_island",
