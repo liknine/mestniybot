@@ -3447,46 +3447,6 @@
     "created_at": "2026-10-20T06:21:35.556018"
   },
   {
-    "id": 499,
-    "category_id": 6,
-    "brand": "amiri",
-    "name": "Свитшот Amiri Bandana Applique",
-    "description": "Очень крутой дизайн, за счёт подёртостей, такой стиль. Размер по бирке: М, но по факту размер L - XL, идёт оверсайз фитом. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 770.0,
-    "prices": {
-      "BYN": 770.0,
-      "RUB": 22200,
-      "USD": 288,
-      "product_type": "stock",
-      "size_stock": {
-        "L-XL": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "М, но по факту размер L - XL, идёт оверсайз фитом",
-      "actual_size_raw": "L-XL",
-      "extra_photos_url": "https://t.me/mestniystore/12535"
-    },
-    "sizes": [
-      "L-XL"
-    ],
-    "size_stock": {
-      "L-XL": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12535",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7fbe3418.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_77fb36ff.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c279e704.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_efc94eb9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ccaf49f8.jpg"
-    ],
-    "created_at": "2026-10-24T16:45:57.711095"
-  },
-  {
     "id": 500,
     "category_id": 2,
     "brand": "jordan",
