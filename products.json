@@ -4310,5 +4310,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_755ceeed.jpg"
     ],
     "created_at": "2026-11-02 07:29:12.108388"
+  },
+  {
+    "id": 516,
+    "category_id": 2,
+    "brand": "cp_company",
+    "name": "Куртка C.P. Company Flatt Nylon",
+    "description": "Очень приятный материал, крутая модель, полностью рабочий замок. Есть карманы спереди. Можно спрятать капюшон. Размер по бирке: L. Состояние: Отличное, линза в плёнке, без нюансов. Оригинал.",
+    "price_byn": 700.0,
+    "prices": {
+      "BYN": 700.0,
+      "RUB": 20200,
+      "USD": 262,
+      "product_type": "stock",
+      "size_stock": {
+        "L": 1
+      },
+      "condition": "Отличное! ( линза в плёнке )",
+      "tag_size": "L",
+      "actual_size_raw": "L",
+      "extra_photos_url": "https://t.me/mestniystore/12662"
+    },
+    "sizes": [
+      "L"
+    ],
+    "size_stock": {
+      "L": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! ( линза в плёнке )",
+    "extra_photos_url": "https://t.me/mestniystore/12662",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4af95b9e.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1f53f273.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6360f49d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_02b22e19.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_a3050809.jpg"
+    ],
+    "created_at": "2026-11-02 07:30:47.950819"
   }
 ]
