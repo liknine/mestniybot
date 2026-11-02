@@ -3299,52 +3299,6 @@
     "created_at": "2026-10-12T12:02:05.918948"
   },
   {
-    "id": 478,
-    "category_id": 1,
-    "brand": "raf_simons",
-    "name": "Кроссовки Adidas x Raf Simons Ozweego Replicant",
-    "description": "пары: Приятная расцветка. Размер по бирке: 43. Состояние: Отличное, есть следы после носок, подёрты задники внутри, но заклеены. Оригинал.",
-    "price_byn": 380.0,
-    "prices": {
-      "BYN": 380.0,
-      "RUB": 11200.0,
-      "USD": 142.0,
-      "product_type": "stock",
-      "size_stock": {
-        "43": 1
-      },
-      "condition": "Очень хорошее",
-      "tag_size": "43",
-      "actual_size_raw": "27.5 CM",
-      "extra_photos_url": "https://t.me/mestniystoreshoes/208",
-      "old_price": 440.0,
-      "old_prices": {
-        "BYN": 440.0,
-        "RUB": 12900.0,
-        "USD": 164.0
-      }
-    },
-    "sizes": [
-      "43"
-    ],
-    "size_stock": {
-      "43": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Очень хорошее",
-    "extra_photos_url": "https://t.me/mestniystoreshoes/208",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2e4217a1.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_55f21cfa.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2a6a32be.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0f8c370f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1b447f70.jpg"
-    ],
-    "created_at": "2026-10-12T12:21:06.816004"
-  },
-  {
     "id": 480,
     "category_id": 9,
     "brand": "cp_company",
