@@ -1471,11 +1471,11 @@
     "brand": null,
     "name": "Футболка Palm Angels",
     "description": "Состояние: Очень классная, за счёт своего дизайна, есть логотип спереди, и сзади. Размер по бирке: S. Отличное, без нюансов. Оригинал.",
-    "price_byn": 200.0,
+    "price_byn": 175.0,
     "prices": {
-      "BYN": 200.0,
-      "RUB": 6200,
-      "USD": 74,
+      "BYN": 175.0,
+      "RUB": 5500.0,
+      "USD": 65.0,
       "product_type": "stock",
       "size_stock": {
         "M": 1
@@ -1483,7 +1483,13 @@
       "condition": "Отличное! Очень классная, за счёт своего дизайна, есть логотип спереди, и сзади. Размер по бирке: S. Отличное, без нюансов. Оригинал",
       "tag_size": "S",
       "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/11637"
+      "extra_photos_url": "https://t.me/mestniystore/11637",
+      "old_price": 200.0,
+      "old_prices": {
+        "BYN": 200.0,
+        "RUB": 6200.0,
+        "USD": 74.0
+      }
     },
     "sizes": [
       "M"
