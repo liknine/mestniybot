@@ -1253,11 +1253,11 @@
     "brand": null,
     "name": "Худи Cristian Dior",
     "description": "Очень классный классный дизайн, за счёт принта - сумки. Есть карман на груди. Размер по бирке: М. Состояние: Отличное, есть небольшие следы после носок, без нюансов. Оригинал.",
-    "price_byn": 600.0,
+    "price_byn": 500.0,
     "prices": {
-      "BYN": 600.0,
-      "RUB": 17400,
-      "USD": 224,
+      "BYN": 500.0,
+      "RUB": 14600.0,
+      "USD": 187.0,
       "product_type": "stock",
       "size_stock": {
         "XL": 1
@@ -1265,7 +1265,13 @@
       "condition": "Отличное",
       "tag_size": "M",
       "actual_size_raw": "XL",
-      "extra_photos_url": "https://t.me/mestniystore/11456"
+      "extra_photos_url": "https://t.me/mestniystore/11456",
+      "old_price": 600.0,
+      "old_prices": {
+        "BYN": 600.0,
+        "RUB": 17400.0,
+        "USD": 224.0
+      }
     },
     "sizes": [
       "XL"
