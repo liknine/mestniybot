@@ -2321,46 +2321,6 @@
     "created_at": "2026-09-28T11:29:58.109435"
   },
   {
-    "id": 410,
-    "category_id": 5,
-    "brand": "prada",
-    "name": "Футболка Prada",
-    "description": "Белая, базовая футболка. Приятный материал. Логотип на задней части горловины, со стороны спины. Размер по бирке: L. Состояние: Отлчиное, есть небольшие следы после носок, без нюансов. Оригинал.",
-    "price_byn": 150.0,
-    "prices": {
-      "BYN": 150.0,
-      "RUB": 4800,
-      "USD": 56,
-      "product_type": "stock",
-      "size_stock": {
-        "M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L",
-      "actual_size_raw": "M",
-      "extra_photos_url": "https://t.me/mestniystore/12060"
-    },
-    "sizes": [
-      "M"
-    ],
-    "size_stock": {
-      "M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12060",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b01fa521.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c08ac69e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_49db2a89.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6006c01f.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c14b012c.jpg"
-    ],
-    "created_at": "2026-09-30T07:22:32.868611"
-  },
-  {
     "id": 411,
     "category_id": 5,
     "brand": "burberry",
