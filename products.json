@@ -1088,46 +1088,6 @@
     "created_at": "2026-08-19T12:13:49.151827"
   },
   {
-    "id": 284,
-    "category_id": 5,
-    "brand": "moncler",
-    "name": "Футболка Moncler",
-    "description": "Описание вещи: Абсолютно новая. Очень приятный цвет и материал. Очень классный дизайн. Размер по бирке: L.  Состояние: Идеальное, с этикетками. Оригинал.",
-    "price_byn": 200.0,
-    "prices": {
-      "BYN": 200.0,
-      "RUB": 6200,
-      "USD": 74,
-      "product_type": "stock",
-      "size_stock": {
-        "M-L": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L",
-      "actual_size_raw": "М - L",
-      "extra_photos_url": "https://t.me/mestniystore/11251"
-    },
-    "sizes": [
-      "M-L"
-    ],
-    "size_stock": {
-      "M-L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11251",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7f04fd21.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c5f64cfe.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c7ed91df.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3282dfe5.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7a8551bc.jpg"
-    ],
-    "created_at": "2026-08-20T07:50:47.752207"
-  },
-  {
     "id": 298,
     "category_id": 6,
     "brand": "stone_island",
