@@ -4485,8 +4485,8 @@
     "price_byn": 400.0,
     "prices": {
       "BYN": 400.0,
-      "RUB": 10900,
-      "USD": 149,
+      "RUB": 11800.0,
+      "USD": 149.0,
       "product_type": "stock",
       "size_stock": {
         "UNI": 1
