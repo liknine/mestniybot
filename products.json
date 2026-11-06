@@ -4561,5 +4561,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_93367e60.jpg"
     ],
     "created_at": "2026-11-06 14:12:09.088304"
+  },
+  {
+    "id": 536,
+    "category_id": 10,
+    "brand": "barbour",
+    "name": "Шарф Barbour",
+    "description": "Приятный мягкий материал. Очень красивая, и приятная расцветка. Все бирки на месте. Размер: Длина: 165 ; Ширина: 26.5ч Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 85.0,
+    "prices": {
+      "BYN": 85.0,
+      "RUB": 900,
+      "USD": 31,
+      "product_type": "stock",
+      "size_stock": {
+        "ONE SIZE": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "ONE SIZE ( 165x24.5 )",
+      "actual_size_raw": "165x24.5",
+      "extra_photos_url": "https://t.me/mestniystore/12776"
+    },
+    "sizes": [
+      "ONE SIZE"
+    ],
+    "size_stock": {
+      "ONE SIZE": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12776",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_780d6c82.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4fa597e1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_83961e01.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_eb26b73d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ef4a2e55.jpg"
+    ],
+    "created_at": "2026-11-06 14:23:37.668091"
   }
 ]
