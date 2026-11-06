@@ -4201,5 +4201,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_df964456.jpg"
     ],
     "created_at": "2026-11-06 08:10:40.444402"
+  },
+  {
+    "id": 526,
+    "category_id": 9,
+    "brand": "cp_company",
+    "name": "Шапка C.P. Company Goggle",
+    "description": "Красивый цвет, тянется. Наша любимая модель, на двух линзах. Состояние: Отличное, срезаны нижние бирки, есть совсем мало, пару царапинок на линзах. Оригинал.",
+    "price_byn": 220.0,
+    "prices": {
+      "BYN": 220.0,
+      "RUB": 6700,
+      "USD": 82,
+      "product_type": "stock",
+      "size_stock": {
+        "UNI": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "UNI",
+      "actual_size_raw": "UNI",
+      "extra_photos_url": "https://t.me/mestniystore/12736"
+    },
+    "sizes": [
+      "UNI"
+    ],
+    "size_stock": {
+      "UNI": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12736",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c818787f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_050ffa0f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d7f45c5d.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_bacf4bb9.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ebff99da.jpg"
+    ],
+    "created_at": "2026-11-06 08:11:00.057905"
   }
 ]
