@@ -4481,5 +4481,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5f0c364b.jpg"
     ],
     "created_at": "2026-11-06 12:44:59.133955"
+  },
+  {
+    "id": 533,
+    "category_id": 6,
+    "brand": "carhartt",
+    "name": "Худи Carhartt",
+    "description": "Очень классный, приятный и плотный материал. Объёмный, капюшон со шнурком. Вышитый логотип, спереди есть карман. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 120.0,
+    "prices": {
+      "BYN": 120.0,
+      "RUB": 3900,
+      "USD": 44,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12756"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12756",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_47e0e1ec.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_876282ea.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_265f9174.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4cf98af0.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b1dc9bbf.jpg"
+    ],
+    "created_at": "2026-11-06 12:45:28.554414"
   }
 ]
