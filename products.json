@@ -4555,5 +4555,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_855949fa.jpg"
     ],
     "created_at": "2026-11-07 18:42:22.511559"
+  },
+  {
+    "id": 543,
+    "category_id": 7,
+    "brand": "stone_island",
+    "name": "Карго штаны Stone Island Stretch Broken Twill Old Effects",
+    "description": "Очень классный, приятный материал. Интересный дизайн, множество карманов, два сзади, боковые, два передних. С оригинальным патчем. Размер по бирке: W32. Состояние: Идеальное, в комплекте с этикеткой, без нюансов. Оригинал.",
+    "price_byn": 520.0,
+    "prices": {
+      "BYN": 520.0,
+      "RUB": 15200,
+      "USD": 194,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Идеальное! ( В комплекте с этикеткой )",
+      "tag_size": "W32",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12811"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Идеальное! ( В комплекте с этикеткой )",
+    "extra_photos_url": "https://t.me/mestniystore/12811",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_21863dd8.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0da9cd20.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6236a263.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b37b8199.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2e5fc6e0.jpg"
+    ],
+    "created_at": "2026-11-07 19:24:47.010026"
   }
 ]
