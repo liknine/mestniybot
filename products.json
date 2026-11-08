@@ -1008,46 +1008,6 @@
     "created_at": "2026-08-17T22:33:43.137762"
   },
   {
-    "id": 277,
-    "category_id": 1,
-    "brand": "raf_simons",
-    "name": "Кроссовки Raf Simons Ultrasceptre",
-    "description": "Бренд: Raf Simons (логотип расположен на бежевой пластиковой вставке в районе пятки, а также на язычке). Цветовая гамма: Светло-кремовый / белый основной цвет с серыми сетчатыми элементами и контрастными черными (или темно-синими) глянцевыми полосами по бокам. Материалы: Комбинация гладкой кожи, текстильной сетки и футуристичных пластиковых (TPU) накладок.",
-    "price_byn": 640.0,
-    "prices": {
-      "BYN": 640.0,
-      "RUB": 18500,
-      "USD": 239,
-      "product_type": "stock",
-      "size_stock": {
-        "40": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "40 / 26 СМ",
-      "actual_size_raw": "26 CM",
-      "extra_photos_url": "https://t.me/mestniystoreshoes/138"
-    },
-    "sizes": [
-      "40"
-    ],
-    "size_stock": {
-      "40": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystoreshoes/138",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b8731551.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_490ae2b2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4c0e8cea.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0b879434.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_80da3595.jpg"
-    ],
-    "created_at": "2026-08-18T07:59:22.276914"
-  },
-  {
     "id": 279,
     "category_id": 7,
     "brand": "nike",
