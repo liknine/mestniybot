@@ -4385,46 +4385,6 @@
     "created_at": "2026-11-07T19:24:47.010026"
   },
   {
-    "id": 544,
-    "category_id": 9,
-    "brand": "cp_company",
-    "name": "Шапка C.P. Company Embroidered Logo",
-    "description": "Очень классный, приятный материал. Не такая как все) У этой вышитый логотип спереди. Размер по бирке: UNI, в комплекте с этикетками. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 220.0,
-    "prices": {
-      "BYN": 220.0,
-      "RUB": 6700,
-      "USD": 82,
-      "product_type": "stock",
-      "size_stock": {
-        "UNI": 1
-      },
-      "condition": "Отличное! ( В комплекте с этикеткой )",
-      "tag_size": "UNI, в комплекте с этикетками",
-      "actual_size_raw": "UNI",
-      "extra_photos_url": "https://t.me/mestniystore/12816"
-    },
-    "sizes": [
-      "UNI"
-    ],
-    "size_stock": {
-      "UNI": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное! ( В комплекте с этикеткой )",
-    "extra_photos_url": "https://t.me/mestniystore/12816",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4a9eb210.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_3b614227.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5f72f249.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_7ac47cd7.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_57f933e4.jpg"
-    ],
-    "created_at": "2026-11-09T17:34:35.514575"
-  },
-  {
     "id": 546,
     "category_id": 6,
     "brand": "stone_island",
