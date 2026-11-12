@@ -4543,5 +4543,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8305ef3f.jpg"
     ],
     "created_at": "2026-11-12 11:03:54.327443"
+  },
+  {
+    "id": 551,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитер Stone Island",
+    "description": "Очень классный, приятный материал. Нереально красивый цвет, очень сочный. Размер по бирке: М. С оригинальным патчем. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 550.0,
+    "prices": {
+      "BYN": 550.0,
+      "RUB": 16000,
+      "USD": 205,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12853"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12853",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_0be06d5c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2a6e0b78.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e3a02a11.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2a56a05b.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_85db0956.jpg"
+    ],
+    "created_at": "2026-11-12 11:30:00.100568"
   }
 ]
