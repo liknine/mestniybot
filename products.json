@@ -1171,52 +1171,6 @@
     "created_at": "2026-08-27T10:07:37.462413"
   },
   {
-    "id": 319,
-    "category_id": 5,
-    "brand": "a_bathing_ape",
-    "name": "Футболка A Bathing Ape Pirate",
-    "description": "Очень классная, идеальный принт. Крутой дизайн. Нету нижних бирок. Состояние: Отличное, без нюансов, Оригинал.",
-    "price_byn": 125.0,
-    "prices": {
-      "BYN": 125.0,
-      "RUB": 4100.0,
-      "USD": 46.0,
-      "product_type": "stock",
-      "size_stock": {
-        "S-M": 1
-      },
-      "condition": "Отличное",
-      "tag_size": null,
-      "actual_size_raw": "S - M",
-      "extra_photos_url": "https://t.me/mestniystore/11338",
-      "old_price": 150.0,
-      "old_prices": {
-        "BYN": 150.0,
-        "RUB": 4700.0,
-        "USD": 56.0
-      }
-    },
-    "sizes": [
-      "S-M"
-    ],
-    "size_stock": {
-      "S-M": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/11338",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8d85d7b1.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e671b083.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_38d4a7fc.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6251b1a4.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_1c1604ba.jpg"
-    ],
-    "created_at": "2026-08-28T14:45:53.600086"
-  },
-  {
     "id": 322,
     "category_id": 9,
     "brand": "lacoste",
