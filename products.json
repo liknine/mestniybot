@@ -3760,52 +3760,6 @@
     "created_at": "2026-11-06T08:13:02.607388"
   },
   {
-    "id": 534,
-    "category_id": 9,
-    "brand": "cp_company",
-    "name": "Шапка C.P. Company Goggle",
-    "description": "Приятный тянущийся, мягкий материал. Размер по бирке UNI .Состояние: Отличное, линзы в плёнке, без нюансов. Оригинал.",
-    "price_byn": 370.0,
-    "prices": {
-      "BYN": 370.0,
-      "RUB": 10900.0,
-      "USD": 138.0,
-      "product_type": "stock",
-      "size_stock": {
-        "UNI": 1
-      },
-      "condition": "Отличное! ( линзы в плёнке )",
-      "tag_size": "UNI",
-      "actual_size_raw": "UNI",
-      "extra_photos_url": "https://t.me/mestniystore/12766",
-      "old_price": 400.0,
-      "old_prices": {
-        "BYN": 400.0,
-        "RUB": 11800.0,
-        "USD": 149.0
-      }
-    },
-    "sizes": [
-      "UNI"
-    ],
-    "size_stock": {
-      "UNI": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное! ( линзы в плёнке )",
-    "extra_photos_url": "https://t.me/mestniystore/12766",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_92d0132e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_82f42cae.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e190bf65.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b7eb2348.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_ea6b1e26.jpg"
-    ],
-    "created_at": "2026-11-06T13:04:36.285326"
-  },
-  {
     "id": 538,
     "category_id": 6,
     "brand": "stone_island",
