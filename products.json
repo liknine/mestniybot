@@ -2788,46 +2788,6 @@
     "created_at": "2026-10-25T07:16:21.292580"
   },
   {
-    "id": 505,
-    "category_id": 6,
-    "brand": "stone_island",
-    "name": "Свитшот Stone Island Waffle Herren",
-    "description": "Очень классный материал, плотный и мягкий. Приятный цвет. С оригинальным патчем, этикеткой. Все бирки на месте. Размер по бирке: L. Состояние: Идеальное, без нюансов. Оригинал.",
-    "price_byn": 700.0,
-    "prices": {
-      "BYN": 700.0,
-      "RUB": 20200,
-      "USD": 262,
-      "product_type": "stock",
-      "size_stock": {
-        "L": 1
-      },
-      "condition": "Идеальное! ( в комплекте с этикетками )",
-      "tag_size": "L",
-      "actual_size_raw": "L",
-      "extra_photos_url": "https://t.me/mestniystore/12607"
-    },
-    "sizes": [
-      "L"
-    ],
-    "size_stock": {
-      "L": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Идеальное! ( в комплекте с этикетками )",
-    "extra_photos_url": "https://t.me/mestniystore/12607",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_629d9ad2.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2acc2913.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e464816e.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fca1aa89.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_50607b07.jpg"
-    ],
-    "created_at": "2026-10-29T11:09:06.649584"
-  },
-  {
     "id": 509,
     "category_id": 6,
     "brand": "stone_island",
