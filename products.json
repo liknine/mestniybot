@@ -3194,52 +3194,6 @@
     "created_at": "2026-11-02T08:15:50.332637"
   },
   {
-    "id": 520,
-    "category_id": 2,
-    "brand": "jordan",
-    "name": "Пуховик Jordan Nylon",
-    "description": "Очень классная модель, круто сидит на теле, красиво переливается на солнце, яркий. Есть два кармана спереди, шнурок в капюшоне, возможность высоко застегнуть горло, дополнительный карман внутри. Состояние: Отличное, без нюансов. Оригинал.",
-    "price_byn": 280.0,
-    "prices": {
-      "BYN": 280.0,
-      "RUB": 8400,
-      "USD": 104,
-      "product_type": "stock",
-      "size_stock": {
-        "M-L": 1,
-        "L-XL": 1,
-        "XL-XXL": 1
-      },
-      "condition": "Отличное",
-      "tag_size": "L, XL, XXL",
-      "actual_size_raw": "M-L, L-XL, XL-XXL",
-      "extra_photos_url": "https://t.me/mestniystore/12673"
-    },
-    "sizes": [
-      "M-L",
-      "L-XL",
-      "XL-XXL"
-    ],
-    "size_stock": {
-      "M-L": 1,
-      "L-XL": 1,
-      "XL-XXL": 1
-    },
-    "stock": 3,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Отличное",
-    "extra_photos_url": "https://t.me/mestniystore/12673",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4a6da69d.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8a7f0e1d.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f7a7c9a6.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_6f912223.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_925c719d.jpg"
-    ],
-    "created_at": "2026-11-02T19:35:29.058616"
-  },
-  {
     "id": 521,
     "category_id": 5,
     "brand": "moncler",
