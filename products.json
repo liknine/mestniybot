@@ -1708,46 +1708,6 @@
     "created_at": "2026-09-18T06:42:58.993464"
   },
   {
-    "id": 400,
-    "category_id": 1,
-    "brand": null,
-    "name": "Кроссовки Versace Jeans Couture",
-    "description": "пары: Крупный контрастный принт «VERSACE JEANS COUTURE» белого цвета на внешней боковой панели; Фирменный тканевый патч с логотипом на язычке; Нанесение логотипа на задней части (пятке). Подошва: Довольно массивная, многослойная межподошва из амортизирующей пены (EVA) с темно-серой акцентной полосой; Глянцевая пластиковая вставка (клипса/стабилизатор) в пяточной зоне для дополнительной фиксации стопы и износостойкости; Резиновая подметка с протектором (шипы/вафельный рисунок) для хорошего сцепления. Состояние: Очень хорошее, есть следы после носок, на складке тоже есть моментики, фото в комментариях.",
-    "price_byn": 320.0,
-    "prices": {
-      "BYN": 320.0,
-      "RUB": 9500,
-      "USD": 119,
-      "product_type": "stock",
-      "size_stock": {
-        "44": 1
-      },
-      "condition": "Очень хорошее",
-      "tag_size": null,
-      "actual_size_raw": "29 CM",
-      "extra_photos_url": "https://t.me/mestniystoreshoes/193"
-    },
-    "sizes": [
-      "44"
-    ],
-    "size_stock": {
-      "44": 1
-    },
-    "stock": 1,
-    "product_type": "stock",
-    "section": "stock",
-    "condition": "Очень хорошее",
-    "extra_photos_url": "https://t.me/mestniystoreshoes/193",
-    "images": [
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_662e0bf9.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_49cb221c.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_80b8a525.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5dae4fc4.jpg",
-      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_8e69bbb8.jpg"
-    ],
-    "created_at": "2026-09-21T11:27:55.401109"
-  },
-  {
     "id": 401,
     "category_id": 5,
     "brand": "burberry",
