@@ -3915,5 +3915,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_18219c57.jpg"
     ],
     "created_at": "2026-11-27 11:03:32.582823"
+  },
+  {
+    "id": 562,
+    "category_id": 6,
+    "brand": "stone_island",
+    "name": "Свитер Stone Island Shadow Project",
+    "description": "Приятный материал, тёплый. Размер по бирке: L. Состояние: Отличное, без нюансов. Под CLG кодом срезаны бирки. Оригинал.",
+    "price_byn": 650.0,
+    "prices": {
+      "BYN": 650.0,
+      "RUB": 19300,
+      "USD": 243,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "L",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12926"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12926",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b9509f4f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_4a2cb1ac.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_5e0e3beb.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_50ac564f.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_315f73a4.jpg"
+    ],
+    "created_at": "2026-11-27 11:12:34.531978"
   }
 ]
