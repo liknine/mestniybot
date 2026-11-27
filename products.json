@@ -3875,5 +3875,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_fe8f28d6.jpg"
     ],
     "created_at": "2026-11-27 11:01:50.141624"
+  },
+  {
+    "id": 561,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "1/4 Зип C.P. Company",
+    "description": "Приятный материал, плотный. На высоком горле. Все бирки на месте. Размер по бирке: М. Состояние: Отличное, без нюансов. Оригинал.",
+    "price_byn": 280.0,
+    "prices": {
+      "BYN": 280.0,
+      "RUB": 8400,
+      "USD": 104,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное! ( линза в плёнке )",
+      "tag_size": "M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12921"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное! ( линза в плёнке )",
+    "extra_photos_url": "https://t.me/mestniystore/12921",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_2783d5f5.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_e5b9c0a1.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d7d34160.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_74ea7ffd.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_18219c57.jpg"
+    ],
+    "created_at": "2026-11-27 11:03:32.582823"
   }
 ]
