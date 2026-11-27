@@ -4035,5 +4035,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_9968f22f.jpg"
     ],
     "created_at": "2026-11-27 12:59:58.361969"
+  },
+  {
+    "id": 565,
+    "category_id": 6,
+    "brand": "cp_company",
+    "name": "Зип - Худи C.P. Company",
+    "description": "Приятный цвет, плотный и классный материал. Размер по бирке: XL. Состояние: Отличное, есть царапины на линзах, без нюансов. Оригинал.",
+    "price_byn": 400.0,
+    "prices": {
+      "BYN": 400.0,
+      "RUB": 11800,
+      "USD": 149,
+      "product_type": "stock",
+      "size_stock": {
+        "XL": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "XL",
+      "actual_size_raw": "XL",
+      "extra_photos_url": "https://t.me/mestniystore/12946"
+    },
+    "sizes": [
+      "XL"
+    ],
+    "size_stock": {
+      "XL": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12946",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b10d1af7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f2d4c75c.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_27b1d6cc.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_659c3c54.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_d6ecdaaa.jpg"
+    ],
+    "created_at": "2026-11-27 13:26:42.528446"
   }
 ]
