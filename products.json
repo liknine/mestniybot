@@ -4235,5 +4235,45 @@
       "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_74cdaa1f.jpg"
     ],
     "created_at": "2026-11-28 07:03:26.643358"
+  },
+  {
+    "id": 570,
+    "category_id": 2,
+    "brand": "stone_island",
+    "name": "Пуховик Stone Island Garment Dyed Crinkle Reps R - Nylon",
+    "description": "Очень классный, приятный и красивый материал, приятный цвет. Есть множество карманов и утяжек. С оригинальным патчем. Размер по бирке: S, но большемерит на M. Классно сидит на теле. Состояние: Отличное, без каких - либо нюансов. Оригинал.",
+    "price_byn": 1350.0,
+    "prices": {
+      "BYN": 1350.0,
+      "RUB": 38500,
+      "USD": 505,
+      "product_type": "stock",
+      "size_stock": {
+        "M": 1
+      },
+      "condition": "Отличное",
+      "tag_size": "S, но большемерит на M",
+      "actual_size_raw": "M",
+      "extra_photos_url": "https://t.me/mestniystore/12971"
+    },
+    "sizes": [
+      "M"
+    ],
+    "size_stock": {
+      "M": 1
+    },
+    "stock": 1,
+    "product_type": "stock",
+    "section": "stock",
+    "condition": "Отличное",
+    "extra_photos_url": "https://t.me/mestniystore/12971",
+    "images": [
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_cfacdf76.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_f0247849.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_c89102cf.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_40e064f7.jpg",
+      "https://raw.githubusercontent.com/liknine/mestniybot/main/images/product_0_b8a17b17.jpg"
+    ],
+    "created_at": "2026-11-28 08:05:16.447605"
   }
 ]
